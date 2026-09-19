@@ -1,0 +1,21 @@
+estkit
+A header-only C++17 library and benchmark of state estimators and observers
+for battery-management systems in electric aircraft, with aerospace attitude
+estimation heritage.
+
+Copyright 2026 Sreeram Anil
+
+This product contains original software written by Sreeram Anil, licensed
+under the Apache License, Version 2.0 (see LICENSE).
+
+Every estimation algorithm in this library is an original implementation made
+from its primary scientific publication, which is cited in the header comment
+of the corresponding source file, in docs/REFERENCES.md and in the report.
+The publications are cited; no third-party source code is incorporated.
+
+The report (report/), its figures and the generated benchmark data
+(results/) are licensed under the Creative Commons Attribution 4.0
+International licence (see report/LICENSE-CC-BY-4.0.txt).
+
+Third-party software used only as independent validation references and never
+incorporated into estkit is listed with its licence in THIRD_PARTY_NOTICES.md.

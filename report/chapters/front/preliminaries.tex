@@ -1,0 +1,749 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Notation and estimation preliminaries — foundational chapter
+% =============================================================================
+\chapter{Notation and estimation preliminaries}
+\label{ch:prelim}
+
+This chapter fixes the notation used throughout the report and assembles, in one place, the
+estimation-theoretic material that the seventy estimator chapters of
+Parts~II--XII draw on. Nothing here is new; the purpose is to make every later chapter
+self-contained at the level of \emph{symbols} and to state once, carefully, the four ideas that
+recur: the Bayesian filtering recursion and its Gaussian specialisation, the two ways of
+approximating a nonlinear transformation (analytic linearisation and moment matching),
+observability and its quantitative degradation, and the measures --- consistency, bounds,
+robustness --- by which the benchmark of Part~XIII judges a filter. A reader who is fluent in
+\cite{jazwinski1970,andersonmoore1979,barshalom2001,simon2006,sarkka2013} can skip to
+\cref{sec:prelim-obs}, which contains the battery-specific observability material, and to
+\cref{sec:prelim-symbols}, which is the symbol table.
+
+\section{Typographic and notational conventions}
+\label{sec:prelim-notation}
+
+\paragraph{Vectors, matrices and scalars.} Vectors are bold lowercase, $\vx$, $\vu$, $\vy$;
+matrices are bold uppercase, $\mF$, $\mH$, $\mP$; scalars are italic, $z$, $v$, $i$, $T$.
+The $j$-th component of $\vx$ is the scalar $x_j$ and the $(i,j)$ entry of $\mA$ is $A_{ij}$.
+$\mI$ (or $\mI_n$) is the identity, $\bm{0}$ the zero vector or matrix as the context requires,
+$\bm{e}_j$ the $j$-th unit vector. $\mA^\T$ is the transpose, $\mA\inv$ the inverse,
+$\tr(\mA)$ the trace, $\diag(a_1,\dots,a_n)$ the diagonal matrix with the listed entries and
+$\diag(\mA)$ the vector of diagonal entries of $\mA$. For symmetric matrices $\mA\succ 0$ and
+$\mA\succeq 0$ mean positive definite and positive semi-definite, and $\mA \succeq \mB$ means
+$\mA-\mB\succeq 0$. $\real^{n}$ and $\real^{m\times n}$ are the real vector and matrix spaces,
+$\norm{\vx}$ the Euclidean norm and $\norm{\vx}_{\mA}^2 = \vx^\T\mA\vx$ the weighted square
+norm induced by $\mA\succ 0$.
+
+\paragraph{Time.} All estimators in \estkit{} are discrete-time. The integer $k\in\{0,1,2,\dots\}$
+is the sample index and $\dt$ the (constant) sample period, so that physical time is $t_k = k\dt$.
+The benchmark uses $\dt = \SI{0.1}{\second}$ throughout, i.e.\ a \SI{10}{\hertz} measurement rate,
+which is representative of a production battery-management system (BMS). A continuous-time
+signal is written $x(t)$ and its sampled version $x_k = x(t_k)$. The shorthand
+$\vy_{1:k} = \{\vy_1,\dots,\vy_k\}$ denotes a measurement history.
+
+\paragraph{Estimates, priors and posteriors.} A hat denotes an estimate, $\xhat$. The
+superscripts $^-$ and $^+$ distinguish the two quantities that exist at every sample: $\xminus_k$
+is the \emph{prior} (predicted, \emph{a priori}) estimate, formed from $\vy_{1:k-1}$, and
+$\xplus_k$ is the \emph{posterior} (updated, \emph{a posteriori}) estimate, formed from
+$\vy_{1:k}$. The same convention applies to the error covariance, $\Pminus_k$ and $\Pplus_k$.
+Estimation errors are $\tilde{\vx}^-_k = \vx_k - \xminus_k$ and
+$\tilde{\vx}^+_k = \vx_k - \xplus_k$, so that
+\begin{equation}
+\Pminus_k = \E{\tilde{\vx}^-_k(\tilde{\vx}^-_k)^\T\mid\vy_{1:k-1}},\qquad
+\Pplus_k = \E{\tilde{\vx}^+_k(\tilde{\vx}^+_k)^\T\mid\vy_{1:k}} .
+\label{eq:prelim-Pdef}
+\end{equation}
+Where no confusion can arise the superscript is dropped and $\xhat_k$, $\mP_k$ mean the posterior.
+
+\paragraph{Probability.} $\E{\cdot}$ is expectation, $\Var{\cdot}$ variance,
+$\N{\bm{\mu}}{\bm\Sigma}$ the Gaussian distribution with mean $\bm\mu$ and covariance
+$\bm\Sigma$, and $p(\cdot)$ a probability density. $\vw_k$ always denotes process noise and
+$\vv_k$ measurement noise; $\mQ$ and $\mR$ are their covariances. The symbol
+$\veps_k = \vy_k - \yhat_k$ is reserved for the \emph{innovation} (measurement residual) and
+$\mS_k$ for its covariance.
+
+\paragraph{Battery symbols.} $\soc\in[0,1]$ is the state of charge (SOC), $\ocv(\soc,T)$ the
+open-circuit voltage, $v$ the terminal voltage, $i$ the cell current with the
+\textbf{discharge-positive} sign convention used consistently in the library and this report,
+$T$ the cell temperature in kelvin and $Q$ the cell capacity in ampere-hours. The reason for the
+discharge-positive convention is historical (it is Plett's~\cite{plett2004ekf1,plett2015bms1})
+and it makes the Coulomb-counting equation read $\soc_{k+1} = \soc_k - \eta i\dt/(3600Q)$;
+every sign in \cref{ch:ecm,ch:spm} follows from it.
+
+\paragraph{Code.} Identifiers, file names and option names taken verbatim from the library are
+set in \code{typewriter} type; estimator names as registered in the benchmark are set as
+\estname{EKF}, \estname{UKF}, and so on.
+
+\section{The model class}
+\label{sec:prelim-model}
+
+Every estimator in \estkit{} is written against a single interface: a discrete-time,
+input-driven, nonlinear model with additive noise,
+\begin{align}
+\vx_{k}   &= f(\vx_{k-1}, \vu_{k-1}) + \vw_{k-1}, & \vw_k &\sim \N{\bm 0}{\mQ_k},
+  \label{eq:prelim-proc}\\
+\vy_{k}   &= h(\vx_{k}, \vu_{k}) + \vv_{k},       & \vv_k &\sim \N{\bm 0}{\mR_k},
+  \label{eq:prelim-meas}
+\end{align}
+where $\vx_k\in\real^{n_x}$ is the state, $\vu_k\in\real^{n_u}$ the input, $\vy_k\in\real^{n_y}$
+the measurement, and $f:\real^{n_x}\times\real^{n_u}\to\real^{n_x}$,
+$h:\real^{n_x}\times\real^{n_u}\to\real^{n_y}$ are continuously differentiable. The noises are
+mutually independent white sequences, independent of the initial condition
+$\vx_0\sim\N{\xhat_0}{\mP_0}$.
+
+\begin{remark}[Inputs and scheduling variables]\label{rem:prelim-sched}
+The vector $\vu_k$ carries two logically different kinds of quantity and the distinction matters
+for the noise model. Some components are \emph{true inputs}: they excite the state and their
+measurement error propagates into the state estimate. Others are \emph{scheduling variables}:
+they do not excite the state but parameterise $f$ and $h$. For the battery cell of
+\cref{ch:ecm}, $\vu = [\,i,\ T\,]^\T$: the current $i$ is a true input, while the temperature
+$T$ merely schedules the Arrhenius-scaled resistances and time constants. Consequently the
+process-noise covariance is built from the \emph{current}-sensor specification alone
+(\cref{sec:ecm-estimator}), and a temperature-sensor error shows up as a slowly varying
+parameter error, not as process noise. Writing $\vu$ for both is a deliberate simplification
+of the software interface; the modelling consequence is stated here once so that later chapters
+can refer to it.
+\end{remark}
+
+In software, a \emph{model} is any class that provides the dimensions $n_x, n_u, n_y$ and the
+five functions $f$, $h$, $\mQ$, $\mR$ and (optionally) the Jacobians
+\begin{equation}
+\mF(\vx,\vu) = \frac{\partial f}{\partial \vx},\qquad
+\mB(\vx,\vu) = \frac{\partial f}{\partial \vu},\qquad
+\mH(\vx,\vu) = \frac{\partial h}{\partial \vx},
+\label{eq:prelim-jac}
+\end{equation}
+together with a projection $\Pi$ onto a feasible set $\mathcal{X}\subset\real^{n_x}$
+(\code{constrain}) and, for joint and dual estimation, a parameter vector
+$\vtheta\in\real^{n_\theta}$ with accessors. If an analytic Jacobian is absent the library
+substitutes a central-difference approximation with relative step
+$\varepsilon_{\mathrm{mach}}^{1/3}$ \cite[\S 5]{golubvanloan2013}; \cref{ch:ecm} gives all three
+Jacobians of the cell model in closed form, which is why the cell benchmark is cheap enough to
+run seventy estimators over twelve scenarios.
+
+\section{The Bayesian filtering recursion}
+\label{sec:prelim-bayes}
+
+\begin{definition}[Filtering, prediction, smoothing]\label{def:prelim-densities}
+Given the model \eqref{eq:prelim-proc}--\eqref{eq:prelim-meas}, the \emph{filtering density} is
+$p(\vx_k\mid\vy_{1:k})$, the \emph{one-step predictive density} is $p(\vx_k\mid\vy_{1:k-1})$, and
+the \emph{smoothing densities} are $p(\vx_k\mid\vy_{1:N})$ for $N>k$.
+\end{definition}
+
+Because \eqref{eq:prelim-proc} is a Markov chain and \eqref{eq:prelim-meas} is conditionally
+independent given the state, the filtering density obeys an exact two-step recursion
+\cite{stratonovich1960,holee1964,jazwinski1970}. The prediction step is the
+Chapman--Kolmogorov equation
+\begin{equation}
+p(\vx_k\mid\vy_{1:k-1}) = \int_{\real^{n_x}} p(\vx_k\mid\vx_{k-1})\,p(\vx_{k-1}\mid\vy_{1:k-1})\,
+  \mathrm{d}\vx_{k-1},
+\label{eq:prelim-ck}
+\end{equation}
+where $p(\vx_k\mid\vx_{k-1}) = \N{f(\vx_{k-1},\vu_{k-1})}{\mQ_{k-1}}$ evaluated at $\vx_k$ is the
+transition kernel. The correction step is Bayes' rule,
+\begin{equation}
+p(\vx_k\mid\vy_{1:k}) = \frac{p(\vy_k\mid\vx_k)\,p(\vx_k\mid\vy_{1:k-1})}
+ {\displaystyle\int p(\vy_k\mid\vx_k)\,p(\vx_k\mid\vy_{1:k-1})\,\mathrm{d}\vx_k},
+\label{eq:prelim-bayes}
+\end{equation}
+with likelihood $p(\vy_k\mid\vx_k) = \N{h(\vx_k,\vu_k)}{\mR_k}$ evaluated at $\vy_k$. The
+denominator of \eqref{eq:prelim-bayes} is the one-step \emph{evidence} $p(\vy_k\mid\vy_{1:k-1})$;
+its product over $k$ is the marginal likelihood
+\begin{equation}
+p(\vy_{1:N}) = \prod_{k=1}^{N} p(\vy_k\mid\vy_{1:k-1}),
+\label{eq:prelim-evidence}
+\end{equation}
+which is the quantity that multiple-model methods use to weight a bank of filters and that
+maximum-likelihood tuning maximises over $(\mQ,\mR)$.
+
+\eqref{eq:prelim-ck}--\eqref{eq:prelim-bayes} is a complete solution of the estimation problem
+and is also completely useless in this form, because the integrals are intractable for all but
+two model classes: the linear-Gaussian case, where the densities stay Gaussian and the recursion
+closes on two moments (\cref{sec:prelim-kf}), and the finite-state case, where the integrals are
+sums. Every chapter of this report is an answer to the question ``what do you do instead?'', and
+the answers fall into four families:
+\begin{enumerate}[nosep,leftmargin=*]
+\item \textbf{Keep the Gaussian form, approximate the moments.} Linearise ($\Rightarrow$ EKF),
+  match moments with a deterministic quadrature rule ($\Rightarrow$ UKF, CDKF, CKF, GHKF), or
+  iterate the linearisation to a fixed point ($\Rightarrow$ IEKF, IPLF).
+\item \textbf{Keep the recursion, approximate the density by samples.} Sequential importance
+  resampling and its variants ($\Rightarrow$ particle, ensemble and Gaussian-sum filters).
+\item \textbf{Abandon probability, design an error system.} Deterministic observers with
+  provable error dynamics ($\Rightarrow$ Luenberger, sliding-mode, high-gain, interval).
+\item \textbf{Solve an optimisation problem over a window.} Maximum \emph{a posteriori}
+  estimation on a moving horizon ($\Rightarrow$ MHE, batch nonlinear least squares, smoothers).
+\end{enumerate}
+
+\section{The Gaussian case: the Kalman filter}
+\label{sec:prelim-kf}
+
+Specialise \eqref{eq:prelim-proc}--\eqref{eq:prelim-meas} to the linear time-varying model
+\begin{align}
+\vx_k &= \mF_{k-1}\vx_{k-1} + \mG_{k-1}\vu_{k-1} + \vw_{k-1}, \label{eq:prelim-lin-proc}\\
+\vy_k &= \mH_k\vx_k + \vv_k. \label{eq:prelim-lin-meas}
+\end{align}
+
+\begin{theorem}[Kalman \cite{kalman1960}]\label{thm:prelim-kf}
+For the model \eqref{eq:prelim-lin-proc}--\eqref{eq:prelim-lin-meas} with
+$\vx_0\sim\N{\xhat_0}{\mP_0}$ and Gaussian, white, mutually independent $\vw_k,\vv_k$, the
+filtering density is Gaussian for every $k$, $p(\vx_k\mid\vy_{1:k}) = \N{\xplus_k}{\Pplus_k}$,
+and its moments obey
+\begin{align}
+\xminus_k &= \mF_{k-1}\xplus_{k-1} + \mG_{k-1}\vu_{k-1}, &
+\Pminus_k &= \mF_{k-1}\Pplus_{k-1}\mF_{k-1}^\T + \mQ_{k-1},
+  \label{eq:prelim-kf-tu}\\
+\veps_k &= \vy_k - \mH_k\xminus_k, &
+\mS_k &= \mH_k\Pminus_k\mH_k^\T + \mR_k, \label{eq:prelim-kf-innov}\\
+\mK_k &= \Pminus_k\mH_k^\T\mS_k\inv, &&\notag\\
+\xplus_k &= \xminus_k + \mK_k\veps_k, &
+\Pplus_k &= (\mI - \mK_k\mH_k)\Pminus_k. \label{eq:prelim-kf-mu}
+\end{align}
+$\xplus_k$ is the conditional mean and therefore the minimum-mean-square-error (MMSE) estimate
+among \emph{all} measurable functions of $\vy_{1:k}$.
+\end{theorem}
+
+\paragraph{Derivation by orthogonality.} The linear-MMSE argument is worth repeating because it
+is the one that survives when the Gaussian assumption is dropped. Seek the estimator
+$\xplus_k = \xminus_k + \mK_k\veps_k$ that minimises
+$J(\mK_k) = \E{\norm{\vx_k-\xplus_k}^2} = \tr\Pplus_k$. Substituting
+$\tilde{\vx}^+_k = \tilde{\vx}^-_k - \mK_k(\mH_k\tilde{\vx}^-_k + \vv_k)$ into
+\eqref{eq:prelim-Pdef} and using $\E{\tilde{\vx}^-_k\vv_k^\T}=\bm 0$ gives the Joseph form
+\begin{equation}
+\Pplus_k = (\mI-\mK_k\mH_k)\Pminus_k(\mI-\mK_k\mH_k)^\T + \mK_k\mR_k\mK_k^\T,
+\label{eq:prelim-joseph}
+\end{equation}
+valid for \emph{any} gain $\mK_k$. Differentiating $\tr\Pplus_k$ with respect to $\mK_k$ and
+equating to zero,
+$\partial \tr\Pplus_k/\partial\mK_k = -2\Pminus_k\mH_k^\T + 2\mK_k\mS_k = \bm0$, yields
+$\mK_k = \Pminus_k\mH_k^\T\mS_k\inv$; substituting this optimal gain back into
+\eqref{eq:prelim-joseph} collapses it to \eqref{eq:prelim-kf-mu}. Equivalently, the optimal gain
+is the one that makes the posterior error orthogonal to the innovation,
+$\E{\tilde{\vx}^+_k\veps_k^\T}=\bm 0$ --- the \emph{orthogonality principle}
+\cite{kailath2000}. This derivation uses only second moments: the Kalman filter is the best
+\emph{linear} estimator for any noise distribution with the given covariances, and the best
+estimator outright only in the Gaussian case.
+
+\begin{remark}[Why the Joseph form is used everywhere in \estkit{}]\label{rem:prelim-joseph}
+\eqref{eq:prelim-kf-mu} is a difference of two positive semi-definite matrices and can lose
+symmetry or definiteness through round-off; \eqref{eq:prelim-joseph} is a sum of two positive
+semi-definite terms and cannot \cite{bucyjoseph1968,verhaegen1986}. More important for this
+report, \eqref{eq:prelim-joseph} remains the \emph{correct} covariance when the gain has been
+deliberately modified --- by a robust weight, a fading factor, an $H_\infty$ correction or a
+constraint projection --- whereas \eqref{eq:prelim-kf-mu} does not. Every filter in
+Parts~III--V that modifies $\mK_k$ therefore uses \eqref{eq:prelim-joseph}.
+\end{remark}
+
+\paragraph{Information form.} Define the information matrix $\bm{Y} = \mP\inv$ and the
+information vector $\bm\xi = \mP\inv\xhat$. The measurement update of
+\cref{thm:prelim-kf} becomes an addition,
+\begin{equation}
+\bm{Y}^+_k = \bm{Y}^-_k + \mH_k^\T\mR_k\inv\mH_k, \qquad
+\bm{\xi}^+_k = \bm{\xi}^-_k + \mH_k^\T\mR_k\inv\vy_k,
+\label{eq:prelim-info}
+\end{equation}
+by the matrix-inversion lemma
+$(\mA+\mU\mC\bm{V})\inv = \mA\inv - \mA\inv\mU(\mC\inv+\bm{V}\mA\inv\mU)\inv\bm{V}\mA\inv$
+\cite{kailath2000}. Three properties of \eqref{eq:prelim-info} are exploited later: it admits a
+diffuse prior $\bm{Y}^-_0=\bm 0$ (total ignorance) which the covariance form cannot represent;
+it costs $\mathcal{O}(n_x^2 n_y)$ rather than $\mathcal{O}(n_x^2 n_y + n_y^3)$ when
+$n_y\gg n_x$; and the contributions of independent sensors simply add, which is the basis of
+every distributed and federated architecture in Part~XI.
+
+\paragraph{Steady state.} If the model is time-invariant and $(\mF,\mH)$ is detectable with
+$(\mF,\mQ^{1/2})$ stabilisable, $\Pminus_k$ converges to the unique stabilising solution of the
+discrete algebraic Riccati equation
+\begin{equation}
+\mP = \mF\left[\mP - \mP\mH^\T(\mH\mP\mH^\T+\mR)\inv\mH\mP\right]\mF^\T + \mQ,
+\label{eq:prelim-dare}
+\end{equation}
+and the gain becomes constant \cite{andersonmoore1979}. The steady-state Kalman filter obtained
+this way is, structurally, a Luenberger observer with a particular gain
+(\cref{sec:prelim-observers}); \estkit{} solves \eqref{eq:prelim-dare} once at \code{init()} for
+the \estname{SSKF} and for the Riccati-designed observer gains.
+
+\paragraph{Smoothing.} Post-flight analysis does not have to be causal. The
+Rauch--Tung--Striebel recursion \cite{rauch1965rts} obtains the smoothing densities of
+\cref{def:prelim-densities} by a single backward sweep over the quantities the forward filter has
+already stored,
+\begin{align}
+\bm{G}_k &= \Pplus_k\mF_k^\T\big(\Pminus_{k+1}\big)\inv, \label{eq:prelim-rtsgain}\\
+\xhat^{s}_k &= \xplus_k + \bm{G}_k\left(\xhat^{s}_{k+1} - \xminus_{k+1}\right), \qquad
+\mP^{s}_k = \Pplus_k + \bm{G}_k\left(\mP^{s}_{k+1} - \Pminus_{k+1}\right)\bm{G}_k^\T,
+\label{eq:prelim-rts}
+\end{align}
+initialised at $\xhat^s_N = \xplus_N$, $\mP^s_N = \Pplus_N$. Because
+$\mP^{s}_{k+1}\preceq\Pminus_{k+1}$, \eqref{eq:prelim-rts} can only reduce the covariance: a
+smoother is never worse than the filter and is typically two to three times better in the middle
+of a record. Part~X treats the extended, unscented and fixed-lag variants; the relevance here is
+that the smoother defines the accuracy \emph{ceiling} against which the causal estimators of the
+benchmark should be read.
+
+\paragraph{Factored implementations.} \eqref{eq:prelim-kf-tu}--\eqref{eq:prelim-kf-mu} propagate
+$\mP$, whose condition number is the \emph{square} of that of the underlying estimation problem.
+On a fixed-point or single-precision target this matters, and the classical remedy is to
+propagate a factor instead: a Cholesky factor $\mS$ with $\mP = \mS\mS^\T$, updated by QR
+(square-root filters \cite{potter1963,kaminski1971}), or the $\mU\mD\mU^\T$ decomposition with
+$\mU$ unit upper triangular and $\mD$ diagonal \cite{bierman1977,thornton1976ud}. Both are
+algebraically identical to \cref{thm:prelim-kf} --- Part~V verifies that they reproduce the EKF
+to $10^{-11}$ --- but they halve the dynamic range required of the arithmetic and make an
+indefinite covariance structurally impossible. The number to compare against
+$1/\varepsilon_{\mathrm{float}} \approx 8\times10^{6}$ when deciding whether the factored form is
+necessary is the peak condition number of $\mP$ along the trajectory.
+
+\section{Linearisation and the extended Kalman filter}
+\label{sec:prelim-ekf}
+
+The extended Kalman filter (EKF) applies \cref{thm:prelim-kf} to the first-order Taylor
+expansions of $f$ and $h$ about the current estimate,
+\begin{equation}
+\mF_{k-1} = \left.\frac{\partial f}{\partial\vx}\right|_{\xplus_{k-1},\vu_{k-1}},\qquad
+\mH_{k}   = \left.\frac{\partial h}{\partial\vx}\right|_{\xminus_{k},\vu_{k}} ,
+\label{eq:prelim-ekf-jac}
+\end{equation}
+with the nonlinear functions retained in the mean propagation,
+$\xminus_k = f(\xplus_{k-1},\vu_{k-1})$ and $\yhat_k = h(\xminus_k,\vu_k)$. Writing the second-order
+expansion of $h$ about $\xminus_k$,
+\begin{equation}
+h(\vx) = h(\xminus_k) + \mH_k\tilde{\vx}^-_k
+ + \tfrac12 \sum_{j} \bm{e}_j\,(\tilde{\vx}^-_k)^\T \bm{\nabla}^2 h_j\, \tilde{\vx}^-_k
+ + \mathcal{O}(\norm{\tilde{\vx}^-_k}^3),
+\label{eq:prelim-ekf-2nd}
+\end{equation}
+and taking expectations shows that the EKF makes two distinct errors. The predicted measurement
+is biased by $\tfrac12\sum_j \bm e_j \tr(\bm\nabla^2 h_j\,\Pminus_k)$, and the innovation
+covariance \eqref{eq:prelim-kf-innov} omits the curvature contribution
+$\tfrac12\tr(\bm\nabla^2 h_j\Pminus_k\bm\nabla^2 h_l\Pminus_k)$. The first error is
+$\mathcal{O}(\norm{\tilde{\vx}}^2)$, the second $\mathcal{O}(\norm{\tilde{\vx}}^3)$; both are
+\emph{one-sided}, in that the omitted covariance term is positive semi-definite. The EKF is
+therefore systematically \emph{over-confident}, and over-confidence is not a cosmetic defect: an
+under-sized $\mS_k$ means an over-sized $\mK_k$ at the wrong time and an under-sized $\mK_k$
+later, which is exactly the mechanism by which the EKF locks in an initial error on a curved
+$\ocv(\soc)$ characteristic. The second-order filter restores the missing terms explicitly; the
+sigma-point filters of the next section restore them implicitly.
+
+\begin{assumption}[Local linearity]\label{as:prelim-lin}
+Over a region of the state space whose diameter is set by $\mP$, $f$ and $h$ are well
+approximated by \eqref{eq:prelim-ekf-jac}.
+\end{assumption}
+
+\cref{as:prelim-lin} is the single approximation behind every filter in Part~III that carries the
+prefix ``extended'', and almost every failure recorded in Part~XIII can be traced to its
+violation. It is a joint condition on the model \emph{and} on the uncertainty: a strongly curved
+$h$ is harmless under a tight prior, and a mildly curved $h$ is fatal under a loose one.
+
+\section{Moment matching and sigma-point rules}
+\label{sec:prelim-sigma}
+
+The Gaussian filters of Part~III that are not ``extended'' replace linearisation by numerical
+integration. The observation is that \eqref{eq:prelim-ck}--\eqref{eq:prelim-bayes}, restricted to
+Gaussian densities, needs only three integrals of the form
+\begin{equation}
+\E{g(\vx)} = \int_{\real^{n_x}} g(\vx)\,\N{\vx;\,\bm\mu}{\bm\Sigma}\,\mathrm{d}\vx ,
+\label{eq:prelim-gaussint}
+\end{equation}
+namely $g = f$, $g = h$ and the corresponding outer products \cite{ito2000gaussian}. Any rule
+that evaluates \eqref{eq:prelim-gaussint} accurately will do.
+
+\begin{definition}[Sigma-point rule]\label{def:prelim-sigma}
+A sigma-point (cubature) rule of order $m$ is a set of points
+$\bm{\chi}^{(j)} = \bm\mu + \bm{L}\bm{\zeta}^{(j)}$, where $\bm{L}\bm{L}^\T = \bm\Sigma$, with
+weights $w_m^{(j)}$ and $w_c^{(j)}$ such that
+$\sum_j w_m^{(j)} g(\bm\chi^{(j)})$ reproduces \eqref{eq:prelim-gaussint} exactly for every
+polynomial $g$ of total degree $\le m$.
+\end{definition}
+
+The unscented transform \cite{julier2000newmethod,julier2004unscented,wan2000ukf} uses
+$2n_x+1$ points with $\bm\zeta^{(0)}=\bm0$ and
+$\bm\zeta^{(j)}=\pm\sqrt{n_x+\lambda}\,\bm{e}_j$, $\lambda = \alpha^2(n_x+\kappa)-n_x$,
+\begin{equation}
+w_m^{(0)} = \frac{\lambda}{n_x+\lambda},\quad
+w_c^{(0)} = w_m^{(0)} + (1-\alpha^2+\beta),\quad
+w_m^{(j)} = w_c^{(j)} = \frac{1}{2(n_x+\lambda)},
+\label{eq:prelim-utweights}
+\end{equation}
+and is exact to third order for the mean of any $g$ and captures the second-order term of the
+covariance. The spherical-radial cubature rule \cite{arasaratnam2009ckf} drops the centre point,
+uses $2n_x$ equally weighted points at radius $\sqrt{n_x}$, and is the $\alpha=1,\beta=0,\kappa=0$
+limit of \eqref{eq:prelim-utweights}; the central-difference filter \cite{norgaard2000} obtains
+the same accuracy from Stirling interpolation; Gauss--Hermite rules reach arbitrary order at a
+cost of $m^{n_x}$ points. The essential point for this report is that all of them are
+\emph{derivative-free}, so they never need $\mF$ or $\mH$, and all of them propagate the prior
+covariance through the true nonlinearity, so the innovation covariance they produce is larger
+than the EKF's --- which is why they survive the scenarios in which the EKF does not.
+
+\begin{remark}[Statistical linearisation]\label{rem:prelim-statlin}
+A sigma-point filter can equivalently be read as an EKF whose Jacobian has been replaced by the
+statistical linear regression of $g$ over the prior, $\mH^{\mathrm{slr}} =
+\bm{P}_{xy}^\T\bm\Sigma\inv$ with $\bm{P}_{xy}$ the cross-covariance estimated from the points.
+This reading explains both the robustness (the regression averages the nonlinearity over the
+prior rather than sampling its tangent at one point) and the failure mode (when the prior is
+very wide, the regression slope can be far from the local slope at the truth). The iterated
+posterior linearisation filter makes the regression point the posterior and iterates.
+\end{remark}
+
+\section{The optimisation view}
+\label{sec:prelim-map}
+
+The recursions above propagate a density. An equivalent and sometimes more convenient view is to
+write down the joint posterior over a trajectory and maximise it. Taking logarithms of
+\eqref{eq:prelim-ck}--\eqref{eq:prelim-bayes} over a window of $N$ samples and dropping constants,
+the maximum-\emph{a-posteriori} (MAP) trajectory estimate solves
+\begin{equation}
+\min_{\vx_{0:N}}\ \
+\underbrace{\norm{\vx_0 - \xhat_0}^2_{\mP_0\inv}}_{\text{arrival cost}}
++ \sum_{k=1}^{N}\norm{\vx_k - f(\vx_{k-1},\vu_{k-1})}^2_{\mQ\inv}
++ \sum_{k=1}^{N}\norm{\vy_k - h(\vx_k,\vu_k)}^2_{\mR\inv}
+\quad \text{s.t. } \vx_k\in\mathcal{X}.
+\label{eq:prelim-map}
+\end{equation}
+Three facts connect \eqref{eq:prelim-map} to the rest of the chapter. In the linear-Gaussian case
+its solution coincides exactly with the Rauch--Tung--Striebel smoother
+\eqref{eq:prelim-rtsgain}--\eqref{eq:prelim-rts}, and its last element with the Kalman filter, so
+nothing is lost by the change of view. In the nonlinear case it is \emph{not} the same as the
+EKF: \eqref{eq:prelim-map} relinearises at the optimum rather than at the prediction, which is
+precisely the difference between the EKF and the iterated EKF, and between filtering and
+full-information estimation. And it is the only formulation in which the constraint set
+$\mathcal{X}$ enters as a constraint rather than as an after-the-fact projection --- the reason
+moving-horizon estimation (Part~IX) handles hard bounds on $\soc$ natively while the Kalman family
+must clip. The price is the cost of the optimisation: truncating the window to a fixed horizon
+and summarising the discarded past by an arrival cost is what makes it tractable
+\cite{rao2003mhe,rawlings2017mpc}.
+
+\cref{tab:prelim-roadmap} summarises how the four families answer the same question.
+
+\begin{table}[H]\centering
+\caption{The approximation families and what each does to the exact recursion
+\eqref{eq:prelim-ck}--\eqref{eq:prelim-bayes}.}
+\label{tab:prelim-roadmap}
+\small
+\begin{tabular}{@{}p{30mm}p{52mm}p{50mm}@{}}\toprule
+Family & Approximation & Fails when \\ \midrule
+Analytic linearisation & first-order Taylor \eqref{eq:prelim-ekf-jac}; density stays Gaussian &
+ prior wide relative to the curvature of $f,h$ (\cref{as:prelim-lin}) \\
+Moment matching & deterministic quadrature \eqref{eq:prelim-gaussint}; density stays Gaussian &
+ posterior genuinely multi-modal or heavy-tailed \\
+Monte Carlo & density represented by weighted samples &
+ $n_x$ large, or likelihood far sharper than the proposal \\
+Deterministic observer & no density; error dynamics shaped directly &
+ an uncertainty figure is required, or the disturbance is unbounded \\
+Optimisation & MAP over a window \eqref{eq:prelim-map} &
+ the horizon must be short enough to compute, losing older information \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Observability}
+\label{sec:prelim-obs}
+
+Observability is the property that decides whether an estimation problem is solvable at all,
+and its quantitative degradation is the single best predictor of benchmark performance in
+Part~XIII.
+
+\subsection{Linear systems}
+For the time-invariant pair $(\mF,\mH)$ the $n$-step observability matrix and observability
+Gramian over a horizon of $N$ samples are
+\begin{equation}
+\mathcal{O}_N = \begin{bmatrix}\mH\\ \mH\mF\\ \vdots\\ \mH\mF^{N-1}\end{bmatrix}
+\in\real^{N n_y\times n_x},
+\qquad
+\mathcal{W}_N = \mathcal{O}_N^\T\mathcal{O}_N = \sum_{j=0}^{N-1}(\mF^{j})^\T\mH^\T\mH\mF^{j}.
+\label{eq:prelim-obsmat}
+\end{equation}
+The pair is observable if and only if $\operatorname{rank}\mathcal{O}_{n_x}=n_x$, equivalently
+$\mathcal{W}_{n_x}\succ 0$ \cite{kalman1960controllability,chenct1999linear,kailath2000}. Rank,
+however, is a yes/no statement about exact arithmetic and tells us nothing about a real filter.
+The useful object is the spectrum of $\mathcal{W}_N$: the energy that an initial state
+$\vx_0$ contributes to the noise-free output over the horizon is
+$\sum_{j}\norm{\vy_j}^2 = \vx_0^\T\mathcal{W}_N\vx_0$, so the singular values of
+$\mathcal{O}_N$ measure how visible each direction of the state space is, and the ratio
+$\sigma_{\max}/\sigma_{\min}$ is a \emph{degree of unobservability}
+\cite{kreneride2009}. A direction with $\sigma_j \approx 0$ is one whose error produces an
+output signature below the sensor noise floor; no filter, however clever, will recover it from
+that window.
+
+\subsection{Nonlinear systems}
+For \eqref{eq:prelim-proc}--\eqref{eq:prelim-meas} the corresponding notion is \emph{local weak
+observability} \cite{hermannkrener1977}: the system is locally weakly observable at $\vx^\ast$ if
+the differentials of the iterated output map
+$\{h,\ h\circ f,\ h\circ f\circ f,\dots\}$ span $\real^{n_x}$ at $\vx^\ast$. Evaluating those
+differentials along a trajectory reproduces \eqref{eq:prelim-obsmat} with the Jacobians
+\eqref{eq:prelim-ekf-jac} frozen at the operating point, which is exactly the object an EKF
+implicitly relies on. Two consequences matter here: observability is a \emph{local} and
+\emph{input-dependent} property, so a battery model can be well observed during a hover segment
+and nearly unobservable during a cruise plateau; and the linearised test is the right one to
+apply, because the EKF's error dynamics are governed by the linearisation, not by the true map.
+
+\subsection{The role of the OCV slope in battery estimation}
+\label{sec:prelim-ocvslope}
+For the cell model of \cref{ch:ecm}, $\vx = [\soc, v_1, v_2, h]^\T$ and the measurement Jacobian
+is
+\begin{equation}
+\mH = \begin{bmatrix}
+ \dfrac{\partial\ocv}{\partial\soc}(\soc,T) & -1 & -1 & M
+\end{bmatrix},
+\label{eq:prelim-battery-H}
+\end{equation}
+where $M$ is the hysteresis magnitude in volts. The SOC enters the measurement through one
+scalar, the OCV slope $\partial\ocv/\partial\soc$, and through nothing else: the state is
+otherwise a pure integrator, $\partial f_\soc/\partial\soc = 1$. Everything about SOC estimation
+follows from this observation.
+\begin{itemize}[nosep,leftmargin=*]
+\item The slope is the \emph{observability gain}. A voltage error $\delta v$ maps to an SOC
+  error $\delta\soc = \delta v / (\partial\ocv/\partial\soc)$. On the NMC811/graphite cell of
+  this report the slope varies by a factor of six over the usable window and drops to
+  $\SI{0.196}{\volt}$ near $\soc\approx0.90$; a \SI{4}{\milli\volt} model error there is worth
+  two percentage points of SOC (\cref{sec:ecm-obs} quantifies this).
+\item Where the slope vanishes, the SOC becomes unobservable from voltage and only Coulomb
+  counting remains --- which is why chemistries with flat plateaux (LFP) are much harder than
+  NMC, and why the benchmark scenarios deliberately start at $\soc_0 = 0.95$, on the flattest
+  part of the curve.
+\item A current-sensor bias is \emph{structurally} unobservable from a single voltage
+  measurement unless it is added to the state: bias and SOC enter the output through the same
+  channel, so the filter can only trade one against the other. Zhao, Duncan and
+  Howey~\cite{zhao2017observability} prove this for the ECM with augmented sensor biases and show
+  what extra excitation restores observability; Lin~\cite{lin2018sensorbias} derives the
+  resulting steady-state SOC error as an explicit function of the bias and of the OCV slope.
+  These two papers are the theoretical backdrop of the \code{current\_bias} scenario and of every
+  disturbance-observer and unknown-input method in Part~VI.
+\end{itemize}
+
+\section{Consistency}
+\label{sec:prelim-consistency}
+
+A filter that reports a covariance makes a falsifiable claim, and the benchmark checks it. The
+two standard statistics are due to Bar-Shalom \cite[\S 5.4]{barshalom2001}.
+
+\begin{definition}[NIS and NEES]\label{def:prelim-nis}
+The \emph{normalised innovation squared} and the \emph{normalised estimation error squared} at
+sample $k$ are
+\begin{equation}
+\mathrm{NIS}_k = \veps_k^\T\mS_k\inv\veps_k, \qquad
+\mathrm{NEES}_k = (\vx_k-\xplus_k)^\T(\Pplus_k)\inv(\vx_k-\xplus_k).
+\label{eq:prelim-nisnees}
+\end{equation}
+\end{definition}
+
+If the filter is consistent, $\mathrm{NIS}_k\sim\chi^2_{n_y}$ and
+$\mathrm{NEES}_k\sim\chi^2_{n_x}$, so $\E{\mathrm{NIS}_k}=n_y$ and $\E{\mathrm{NEES}_k}=n_x$. Over
+$N$ independent samples the time average $\bar{\mathrm{NIS}} = N\inv\sum_k\mathrm{NIS}_k$ has
+$N\bar{\mathrm{NIS}}\sim\chi^2_{N n_y}$, so the two-sided acceptance region at confidence
+$1-\alpha$ is
+\begin{equation}
+\bar{\mathrm{NIS}} \in
+ \left[\ \frac{1}{N}\chi^2_{Nn_y}\!\left(\tfrac{\alpha}{2}\right),\ \
+ \frac{1}{N}\chi^2_{Nn_y}\!\left(1-\tfrac{\alpha}{2}\right)\right],
+\label{eq:prelim-nistest}
+\end{equation}
+which for the cell model ($n_y=1$) and a \SI{600}{\second} window at \SI{10}{\hertz}
+($N=6000$) is $[0.964,\,1.036]$ at \SI{95}{\percent} --- a tight test, because a long record
+leaves a badly tuned filter nowhere to hide.
+
+NIS needs no ground truth and can therefore run on a real aircraft; NEES needs the true state and
+is available only in simulation. A filter with $\bar{\mathrm{NIS}}\gg n_y$ is over-confident ---
+the usual EKF failure --- and one with $\bar{\mathrm{NIS}}\ll n_y$ is conservative, wasting
+information but safe. For a certified BMS the asymmetry is deliberate: a state-of-charge
+indication with an honest or pessimistic interval is airworthy, an optimistic one is not.
+
+Two caveats apply to everything in Part~XIII. First, \eqref{eq:prelim-nistest} assumes the
+innovations are independent; when the model error is deterministic and load-correlated --- which
+is exactly the situation on the electrochemical plant of \cref{ch:spm} --- the innovation
+sequence is coloured, the effective sample size is far below $N$, and a failed test indicates
+model error rather than covariance mis-tuning. Second, a filter can be consistent and useless
+(report a huge covariance and a huge error) or inconsistent and accurate. Consistency is a
+statement about the \emph{honesty} of $\mP$, not about the size of the error; the benchmark
+therefore reports both, and neither alone.
+
+\section{Cram\'er--Rao and posterior bounds}
+\label{sec:prelim-crlb}
+
+The benchmark reports achieved errors; it is worth knowing what the best achievable error is.
+For an unbiased estimator of a deterministic parameter $\vtheta$ from data $\vy$, the
+Cram\'er--Rao bound is $\operatorname{Cov}(\hat{\vtheta})\succeq \bm{J}\inv$ with Fisher
+information $\bm{J} = \E{(\nabla_{\vtheta}\log p(\vy\mid\vtheta))(\nabla_{\vtheta}\log
+p(\vy\mid\vtheta))^\T}$ \cite{vantrees1968}. For a random state the corresponding object is the
+\emph{posterior} (Bayesian) Cram\'er--Rao lower bound, PCRLB, which for the model
+\eqref{eq:prelim-proc}--\eqref{eq:prelim-meas} obeys the Riccati-like recursion of Tichavsk\'y,
+Muravchik and Nehorai \cite{tichavsky1998pcrb},
+\begin{equation}
+\bm{J}_{k} = \left(\mQ_{k-1} + \mF_{k-1}\bm{J}_{k-1}\inv\mF_{k-1}^\T\right)\inv
+  + \E{\mH_k^\T\mR_k\inv\mH_k},
+\label{eq:prelim-pcrlb}
+\end{equation}
+where the expectation is over the true state trajectory and $\mF,\mH$ are the Jacobians
+\eqref{eq:prelim-ekf-jac} evaluated at the truth. $\E{(\vx_k-\xhat_k)(\vx_k-\xhat_k)^\T}\succeq
+\bm{J}_k\inv$ for any estimator.
+
+Two remarks make \eqref{eq:prelim-pcrlb} useful rather than decorative. First, comparing it with
+the EKF recursion \eqref{eq:prelim-kf-tu}--\eqref{eq:prelim-kf-mu} shows that they are the
+\emph{same} recursion with the Jacobians evaluated at the truth rather than at the estimate: a
+filter whose reported $\mP$ is below $\bm{J}\inv$ is provably lying. Second, for the cell model
+the $(\soc,\soc)$ entry of \eqref{eq:prelim-pcrlb} is dominated by
+$\E{(\partial\ocv/\partial\soc)^2}/\sigma_v^2$, so the achievable SOC accuracy scales as
+$\sigma_v/(\partial\ocv/\partial\soc)$ divided by the square root of the number of independent
+samples --- the same slope-driven statement as \cref{sec:prelim-ocvslope}, now with a constant.
+At $\sigma_v=\SI{2}{\milli\volt}$, a slope of $\SI{0.8}{\volt}$ and \SI{10}{\hertz} sampling, a
+one-minute window bounds the SOC standard deviation below about
+$\SI{2}{\milli\volt}/(\SI{0.8}{\volt}\sqrt{600}) \approx 10^{-4}$, i.e.\ \num{0.01}\,\%. Measured
+steady-state root-mean-square errors on the ECM plant are two orders of magnitude larger than
+this, which is the quantitative statement that the benchmark is limited by \emph{model error},
+not by sensor noise.
+
+\section{Deterministic observers versus stochastic filters}
+\label{sec:prelim-observers}
+
+Part~VI of this report treats a family of estimators that never mention probability. It is worth
+stating the relationship precisely, because the two viewpoints answer different questions and
+the benchmark rewards them differently.
+
+A Luenberger observer \cite{luenberger1964,luenberger1971} for the linear system
+\eqref{eq:prelim-lin-proc}--\eqref{eq:prelim-lin-meas} is the copy of the plant driven by the
+output error,
+\begin{equation}
+\xhat_k = \mF\xhat_{k-1} + \mG\vu_{k-1} + \mL\left(\vy_{k-1} - \mH\xhat_{k-1}\right),
+\label{eq:prelim-luen}
+\end{equation}
+whose error $\tilde{\vx}_k = \vx_k-\xhat_k$ obeys the autonomous linear recursion
+\begin{equation}
+\tilde{\vx}_k = (\mF - \mL\mH)\,\tilde{\vx}_{k-1} + \vw_{k-1} - \mL\vv_{k-1}.
+\label{eq:prelim-luen-err}
+\end{equation}
+The design problem is the placement of the eigenvalues of $\mF-\mL\mH$, which is solvable exactly
+when $(\mF,\mH)$ is observable \cite{ackermann1972}. Structurally
+\eqref{eq:prelim-luen} \emph{is} the Kalman filter with $\mL = \mF\mK$; the difference is
+entirely in how $\mL$ is chosen and what is claimed about it:
+\begin{itemize}[nosep,leftmargin=*]
+\item The Kalman filter chooses $\mL$ to minimise the error covariance under an assumed noise
+  model, and \emph{reports} that covariance. Its claim is statistical and is testable with
+  \cref{def:prelim-nis}.
+\item The observer chooses $\mL$ to shape the transient of \eqref{eq:prelim-luen-err} and
+  typically claims a deterministic bound: exponential convergence with a given rate, or
+  input-to-state stability with a given gain from $(\vw,\vv)$ to $\tilde{\vx}$
+  \cite{khalil2002}. It reports no covariance, so it cannot be inconsistent --- and cannot be
+  used to publish a confidence interval either.
+\end{itemize}
+The observer viewpoint dominates when the noise statistics are unknown or plainly non-Gaussian,
+when the uncertainty is better described as a bounded disturbance than as a random variable
+(sliding-mode and interval observers), or when a hard guarantee is required for certification.
+The filter viewpoint dominates when the statistics are known and an uncertainty figure is part of
+the deliverable. Both appear in this report on the same twelve scenarios, and the comparison is
+one of its more interesting outcomes.
+
+\section{Robustness}
+\label{sec:prelim-robust}
+
+``Robustness'' names three different problems in this report and they require three different
+remedies.
+
+\paragraph{Unknown noise statistics ($\mQ,\mR$ wrong).} The remedy is adaptation: estimate the
+covariances online from the innovation sequence \cite{mehra1970,sagehusa1969,mohamed1999adaptive},
+discount old data with a fading factor \cite{sorenson1971fading}, or treat the covariance as a
+random variable with a conjugate prior and update it variationally
+\cite{sarkka2009vb}. Part~IV is devoted to these.
+
+\paragraph{Heavy-tailed or contaminated measurements.} A Gaussian likelihood assigns an
+influence to a residual that grows linearly without bound, so a single \SI{50}{\milli\volt}
+outlier moves a \SI{2}{\milli\volt}-noise filter by twenty-five standard deviations. The remedies
+replace the quadratic loss with one whose influence function is bounded --- Huber's
+$\rho$ \cite{huber1964,masreliez1975,karlgaard2007huber}, the correntropy criterion
+\cite{chen2017mckf} --- or replace the Gaussian by a Student-$t$ whose tails accommodate the
+outlier \cite{roth2013studentt}. Formally, the maximum-\emph{a-posteriori} update solves
+\begin{equation}
+\xplus_k = \argmin_{\vx}\ \rho\!\left(\vy_k - h(\vx,\vu_k);\,\mR_k\right)
+  + \norm{\vx-\xminus_k}^2_{(\Pminus_k)\inv},
+\label{eq:prelim-robustmap}
+\end{equation}
+with $\rho$ quadratic for the Kalman filter and sub-quadratic in the tails for the robust
+variants; the iteratively reweighted least-squares solution of \eqref{eq:prelim-robustmap} is
+literally a Kalman update with an inflated $\mR$.
+
+\paragraph{Unknown model error.} Here the minimax view is the right one. The $H_\infty$
+(minimax) filter makes no stochastic assumption at all and instead bounds the induced
+$\ell_2$ gain from the disturbances to the estimation error,
+\begin{equation}
+\sup_{\vw,\vv,\vx_0\ne 0}\
+\frac{\sum_k \norm{\vx_k-\xhat_k}^2_{\bm{S}}}
+     {\norm{\vx_0-\xhat_0}^2_{\mP_0\inv} + \sum_k\left(\norm{\vw_k}^2_{\mQ\inv}+\norm{\vv_k}^2_{\mR\inv}\right)}
+ < \gamma^2 ,
+\label{eq:prelim-hinf}
+\end{equation}
+for a prescribed level $\gamma$ \cite{shen1997hinf,hassibi1996hinf,simon2006}. The resulting
+recursion is a Kalman filter with an indefinite correction term in the Riccati equation; as
+$\gamma\to\infty$ it reduces to the Kalman filter, and as $\gamma$ decreases it trades nominal
+optimality for a guaranteed worst case. This is precisely the trade the SPM-plant benchmark of
+\cref{ch:spm} probes, because there the model error is structured, deterministic and of the same
+order as the sensor noise --- the regime in which the stochastic assumption is simply false.
+
+\section{Symbols used throughout the report}
+\label{sec:prelim-symbols}
+
+\cref{tab:prelim-symbols} collects the recurring symbols with their units. Symbols local to a
+single chapter are defined where they appear.
+
+\begin{longtable}{@{}llp{78mm}@{}}
+\caption{Principal symbols, with SI units where applicable.}\label{tab:prelim-symbols}\\
+\toprule
+Symbol & Unit & Meaning \\ \midrule
+\endfirsthead
+\toprule Symbol & Unit & Meaning \\ \midrule \endhead
+\bottomrule \endfoot
+\multicolumn{3}{@{}l}{\emph{Estimation}}\\
+$k$ & --- & discrete sample index, $t_k = k\dt$ \\
+$\dt$ & \si{\second} & sample period (\num{0.1} throughout the benchmark) \\
+$\vx_k$ & --- & state vector, $\vx\in\real^{n_x}$ \\
+$\vu_k$ & --- & input vector (true inputs and scheduling variables), $\vu\in\real^{n_u}$ \\
+$\vy_k$ & --- & measurement vector, $\vy\in\real^{n_y}$ \\
+$\vw_k,\vv_k$ & --- & process and measurement noise \\
+$\mQ,\mR$ & --- & process- and measurement-noise covariances \\
+$\xminus_k,\xplus_k$ & --- & prior and posterior state estimate \\
+$\Pminus_k,\Pplus_k$ & --- & prior and posterior error covariance \\
+$\mF,\mB,\mH$ & --- & Jacobians $\partial f/\partial\vx$, $\partial f/\partial\vu$, $\partial h/\partial\vx$ \\
+$\mK_k$ & --- & Kalman gain; $\mL$ observer gain \\
+$\veps_k$ & \si{\volt} & innovation $\vy_k-\yhat_k$ (voltage residual for the cell model) \\
+$\mS_k$ & \si{\volt\squared} & innovation covariance \\
+$\bm{Y},\bm\xi$ & --- & information matrix $\mP\inv$ and information vector $\mP\inv\xhat$ \\
+$\bm{J}_k$ & --- & posterior Cram\'er--Rao information matrix \\
+$\vtheta$ & --- & parameter vector for joint/dual estimation, $\vtheta=[Q,R_0]^\T$ \\
+$\Pi,\mathcal{X}$ & --- & projection onto the feasible set and the feasible set itself \\[1mm]
+\multicolumn{3}{@{}l}{\emph{Cell}}\\
+$\soc$ & --- & state of charge, $\soc\in[0,1]$ \\
+$v$ & \si{\volt} & terminal voltage (measurement) \\
+$i$ & \si{\ampere} & cell current, discharge positive \\
+$T$ & \si{\kelvin} & cell temperature ($T_{\mathrm{amb}}$ ambient, $T_{\mathrm{ref}}=\SI{298.15}{\kelvin}$) \\
+$Q$ & \si{\ampere\hour} & present total cell capacity \\
+$\ocv(\soc,T)$ & \si{\volt} & open-circuit voltage \\
+$\partial\ocv/\partial\soc$ & \si{\volt} & OCV slope (observability gain) \\
+$\partial U/\partial T$ & \si{\volt\per\kelvin} & entropic coefficient \\
+$R_0$ & \si{\ohm} & series (ohmic) resistance \\
+$R_1,R_2$ & \si{\ohm} & RC-branch resistances \\
+$\tau_1,\tau_2$ & \si{\second} & RC-branch time constants \\
+$v_1,v_2$ & \si{\volt} & RC-branch (diffusion/polarisation) voltages \\
+$h$ & --- & one-state hysteresis variable, $h\in[-1,1]$ \\
+$M$ & \si{\volt} & hysteresis magnitude; $\gamma$ hysteresis rate constant \\
+$\eta_c$ & --- & coulombic efficiency on charge \\
+$E_a$ & \si{\joule\per\mole} & Arrhenius activation energy \\
+$C_{\mathrm{th}},R_{\mathrm{th}}$ & \si{\joule\per\kelvin}, \si{\kelvin\per\watt} & lumped heat capacity and thermal resistance \\
+$\sigma_v,\sigma_i,\sigma_T$ & \si{\volt},\si{\ampere},\si{\kelvin} & sensor noise standard deviations \\[1mm]
+\multicolumn{3}{@{}l}{\emph{Electrochemical model}}\\
+$c_{\mathrm{n}},c_{\mathrm{p}}$ & \si{\mole\per\cubic\metre} & solid lithium concentration, negative/positive particle \\
+$c_{\max}$ & \si{\mole\per\cubic\metre} & maximum solid concentration \\
+$x,y$ & --- & electrode stoichiometries $c/c_{\max}$, negative/positive \\
+$D_{\mathrm{n}},D_{\mathrm{p}}$ & \si{\square\metre\per\second} & solid diffusivities \\
+$R_{\mathrm{n}},R_{\mathrm{p}}$ & \si{\metre} & particle radii \\
+$a_{\mathrm{n}},a_{\mathrm{p}}$ & \si{\per\metre} & specific interfacial area $3\varepsilon/R$ \\
+$J$ & \si{\mole\per\square\metre\per\second} & molar surface flux \\
+$j_0$ & \si{\ampere\per\square\metre} & exchange-current density \\
+$\eta_{\mathrm{n}},\eta_{\mathrm{p}}$ & \si{\volt} & kinetic (Butler--Volmer) overpotentials \\
+$U_{\mathrm{n}},U_{\mathrm{p}}$ & \si{\volt} & electrode equilibrium potentials vs Li/Li$^+$ \\
+$F$ & \SI{96485.33}{\coulomb\per\mole} & Faraday constant; $R_g=\SI{8.3145}{\joule\per\mole\per\kelvin}$ \\
+\end{longtable}
+
+\section{Summary}
+
+The recursion \eqref{eq:prelim-ck}--\eqref{eq:prelim-bayes} is the problem; everything else in
+this report is an approximation to it, chosen under a different combination of computational
+budget, knowledge of the noise, and required guarantee. The Kalman filter solves it exactly in
+the linear-Gaussian case and optimally among linear estimators otherwise; linearisation and
+moment matching are the two ways to keep its form when the model is nonlinear; observability, and
+in particular the OCV slope of \eqref{eq:prelim-battery-H}, decides what is recoverable at all;
+consistency and the posterior Cram\'er--Rao bound decide whether a filter's own uncertainty claim
+is honest and whether its error is close to the physical limit. \cref{ch:ecm} instantiates this
+machinery on the equivalent-circuit cell model, and \cref{ch:spm} builds the electrochemical
+plant against which the whole construction is tested.

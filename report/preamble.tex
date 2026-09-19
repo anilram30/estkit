@@ -1,0 +1,99 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% Shared preamble for the estkit report
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm,bm,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage{geometry}
+\geometry{a4paper, margin=25mm}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[numbers,sort&compress]{natbib}
+
+% --- running heads: truncated chapter / section marks so long titles never overflow ---
+\usepackage{fancyhdr}
+\usepackage{truncate}
+\renewcommand{\TruncateMarker}{\,\ldots}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\ifnum\value{chapter}>0 Chapter~\thechapter.\ \fi #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\ifnum\value{section}>0 \thesection.\ \fi #1}}
+\fancyhead[LE]{\small\nouppercase{\truncate{0.82\textwidth}{\leftmark}}}
+\fancyhead[RO]{\small\nouppercase{\truncate{0.82\textwidth}{\rightmark}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+
+\hypersetup{colorlinks=true, linkcolor=blue!50!black, citecolor=green!40!black, urlcolor=blue!60!black}
+\graphicspath{{./}{figures/}}
+\lstset{basicstyle=\ttfamily\small, breaklines=true, columns=fullflexible, keepspaces=true,
+  language=C++, keywordstyle=\color{blue!60!black}, commentstyle=\color{green!40!black}, stringstyle=\color{red!60!black},
+  frame=single, framerule=0.3pt, xleftmargin=2mm}
+\sisetup{detect-all, per-mode=symbol}
+
+% ---- notation macros --------------------------------------------------------
+\newcommand{\vx}{\bm{x}}   \newcommand{\vu}{\bm{u}}   \newcommand{\vy}{\bm{y}}
+\newcommand{\vw}{\bm{w}}   \newcommand{\vv}{\bm{v}}   \newcommand{\vz}{\bm{z}}
+\newcommand{\vtheta}{\bm{\theta}} \newcommand{\veps}{\bm{\varepsilon}}
+\newcommand{\mA}{\bm{A}} \newcommand{\mB}{\bm{B}} \newcommand{\mC}{\bm{C}} \newcommand{\mD}{\bm{D}}
+\newcommand{\mF}{\bm{F}} \newcommand{\mG}{\bm{G}} \newcommand{\mH}{\bm{H}} \newcommand{\mI}{\bm{I}}
+\newcommand{\mK}{\bm{K}} \newcommand{\mL}{\bm{L}} \newcommand{\mP}{\bm{P}} \newcommand{\mQ}{\bm{Q}}
+\newcommand{\mR}{\bm{R}} \newcommand{\mS}{\bm{S}} \newcommand{\mU}{\bm{U}} \newcommand{\mW}{\bm{W}}
+\newcommand{\xhat}{\hat{\vx}} \newcommand{\xminus}{\hat{\vx}^{-}} \newcommand{\xplus}{\hat{\vx}^{+}}
+\newcommand{\yhat}{\hat{\vy}} \newcommand{\Pminus}{\mP^{-}} \newcommand{\Pplus}{\mP^{+}}
+\newcommand{\T}{\mathsf{T}} \newcommand{\inv}{^{-1}}
+\newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\Var}[1]{\operatorname{Var}\left[#1\right]}
+\newcommand{\N}[2]{\mathcal{N}\!\left(#1,\,#2\right)}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\soc}{z} \newcommand{\ocv}{\mathrm{OCV}} \newcommand{\dt}{\Delta t}
+\newcommand{\sgn}{\operatorname{sgn}} \newcommand{\sat}{\operatorname{sat}}
+\newcommand{\diag}{\operatorname{diag}} \newcommand{\tr}{\operatorname{tr}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\code}[1]{\texttt{#1}}
+% --- long typewriter identifiers: allow a break after every underscore, and let paragraphs stretch ---
+\makeatletter
+\expandafter\let\expandafter\estkitOrigUnderscore\csname _ \endcsname
+\ifx\estkitOrigUnderscore\relax \let\estkitOrigUnderscore\_ \fi
+\DeclareRobustCommand{\_}{\estkitOrigUnderscore\ifmmode\else\allowbreak\fi}
+\makeatother
+\setlength{\emergencystretch}{3em}
+
+\newcommand{\estname}[1]{\textsf{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+
+% cleveref names for the theorem-like environments (declared after cleveref is loaded)
+\crefname{assumption}{Assumption}{Assumptions}\Crefname{assumption}{Assumption}{Assumptions}
+\crefname{proposition}{Proposition}{Propositions}\Crefname{proposition}{Proposition}{Propositions}
+\crefname{theorem}{Theorem}{Theorems}\Crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{remark}{Remark}{Remarks}\Crefname{remark}{Remark}{Remarks}
+\crefname{definition}{Definition}{Definitions}\Crefname{definition}{Definition}{Definitions}

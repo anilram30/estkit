@@ -1,0 +1,19 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Particle / ensemble / Gaussian-sum family.
+%  Order: the bootstrap filter first (it carries the sequential-importance-sampling
+%  derivation, the resampling algorithms and the roughening analysis that the other
+%  chapters refer to), then its embedded and kernel-smoothed variants, then the
+%  filters that change the proposal, then the ensemble (square-root) filters, then
+%  the Gaussian-sum bank.
+% =============================================================================
+\input{chapters/particle/PFBootstrap.tex}
+\input{chapters/particle/PFFast.tex}
+\input{chapters/particle/PFRegularized.tex}
+\input{chapters/particle/PFAuxiliary.tex}
+\input{chapters/particle/RBPF.tex}
+\input{chapters/particle/UPF.tex}
+\input{chapters/particle/EnKF.tex}
+\input{chapters/particle/ETKF.tex}
+\input{chapters/particle/GSF.tex}

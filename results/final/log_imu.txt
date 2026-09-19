@@ -1,0 +1,162 @@
+[imu|nominal        |s1] Complementary          rms= 5.892 deg (roll 2.263 pitch 1.137 yaw 5.335) ss=6.641 max=18.10 conv=-1.0s div=0     365 ns/step
+[imu|nominal        |s1] Madgwick               rms=17.604 deg (roll 9.044 pitch 1.295 yaw 15.308) ss=18.977 max=71.25 conv=-1.0s div=1     112 ns/step
+[imu|nominal        |s1] Madgwick-Gated         rms= 4.805 deg (roll 2.069 pitch 1.836 yaw 3.937) ss=6.184 max=17.15 conv=-1.0s div=0     140 ns/step
+[imu|nominal        |s1] Mahony                 rms=18.457 deg (roll 6.252 pitch 2.945 yaw 17.363) ss=19.300 max=76.94 conv=27.5s div=1     132 ns/step
+[imu|nominal        |s1] Mahony-Gated           rms= 1.765 deg (roll 0.517 pitch 0.494 yaw 1.617) ss=1.752 max=5.68 conv=27.6s div=0     133 ns/step
+[imu|nominal        |s1] MEKF                   rms= 2.113 deg (roll 0.734 pitch 0.557 yaw 1.898) ss=2.538 max=14.70 conv=0.0s div=0    2037 ns/step
+[imu|nominal        |s1] InvariantEKF           rms= 2.135 deg (roll 0.742 pitch 0.562 yaw 1.919) ss=2.575 max=14.74 conv=0.0s div=0    1877 ns/step
+[imu|nominal        |s1] TRIAD                  rms=19.593 deg (roll 9.369 pitch 1.450 yaw 17.176) ss=21.596 max=88.61 conv=-1.0s div=1     129 ns/step
+[imu|nominal        |s1] QUEST                  rms=19.227 deg (roll 8.679 pitch 1.436 yaw 17.181) ss=21.180 max=88.24 conv=-1.0s div=1     214 ns/step
+[imu|nominal        |s2] Complementary          rms= 7.309 deg (roll 3.156 pitch 1.197 yaw 6.438) ss=8.766 max=19.38 conv=-1.0s div=0     357 ns/step
+[imu|nominal        |s2] Madgwick               rms=17.621 deg (roll 9.056 pitch 1.285 yaw 15.312) ss=19.080 max=70.64 conv=-1.0s div=1     107 ns/step
+[imu|nominal        |s2] Madgwick-Gated         rms= 7.431 deg (roll 3.120 pitch 3.284 yaw 5.856) ss=9.379 max=31.32 conv=-1.0s div=0     137 ns/step
+[imu|nominal        |s2] Mahony                 rms=18.255 deg (roll 6.229 pitch 2.920 yaw 17.149) ss=19.397 max=74.72 conv=28.2s div=1     130 ns/step
+[imu|nominal        |s2] Mahony-Gated           rms= 2.818 deg (roll 0.833 pitch 0.796 yaw 2.555) ss=3.016 max=11.26 conv=28.2s div=0     132 ns/step
+[imu|nominal        |s2] MEKF                   rms= 2.978 deg (roll 0.965 pitch 0.828 yaw 2.679) ss=3.669 max=15.95 conv=0.0s div=0    2020 ns/step
+[imu|nominal        |s2] InvariantEKF           rms= 2.987 deg (roll 0.968 pitch 0.831 yaw 2.688) ss=3.680 max=15.96 conv=0.0s div=0    1916 ns/step
+[imu|nominal        |s2] TRIAD                  rms=19.583 deg (roll 9.369 pitch 1.452 yaw 17.164) ss=21.602 max=85.37 conv=-1.0s div=1     129 ns/step
+[imu|nominal        |s2] QUEST                  rms=19.217 deg (roll 8.678 pitch 1.437 yaw 17.169) ss=21.186 max=84.98 conv=-1.0s div=1     215 ns/step
+[imu|nominal        |s3] Complementary          rms= 6.507 deg (roll 2.920 pitch 1.200 yaw 5.623) ss=8.326 max=14.99 conv=113.0s div=0     362 ns/step
+[imu|nominal        |s3] Madgwick               rms=17.579 deg (roll 9.078 pitch 1.274 yaw 15.234) ss=18.815 max=72.38 conv=-1.0s div=1     112 ns/step
+[imu|nominal        |s3] Madgwick-Gated         rms= 5.114 deg (roll 2.252 pitch 2.274 yaw 3.995) ss=6.733 max=19.93 conv=-1.0s div=0     138 ns/step
+[imu|nominal        |s3] Mahony                 rms=18.481 deg (roll 6.246 pitch 2.957 yaw 17.400) ss=19.294 max=77.17 conv=15.1s div=1     130 ns/step
+[imu|nominal        |s3] Mahony-Gated           rms= 1.848 deg (roll 0.513 pitch 0.630 yaw 1.659) ss=1.315 max=8.03 conv=15.1s div=0     132 ns/step
+[imu|nominal        |s3] MEKF                   rms= 2.356 deg (roll 0.807 pitch 0.644 yaw 2.115) ss=2.992 max=14.72 conv=0.0s div=0    2050 ns/step
+[imu|nominal        |s3] InvariantEKF           rms= 2.355 deg (roll 0.807 pitch 0.641 yaw 2.114) ss=2.989 max=14.70 conv=0.0s div=0    1910 ns/step
+[imu|nominal        |s3] TRIAD                  rms=19.594 deg (roll 9.369 pitch 1.452 yaw 17.177) ss=21.598 max=90.59 conv=-1.0s div=1     130 ns/step
+[imu|nominal        |s3] QUEST                  rms=19.228 deg (roll 8.680 pitch 1.438 yaw 17.182) ss=21.183 max=89.88 conv=-1.0s div=1     212 ns/step
+[imu|init_error     |s1] Complementary          rms= 6.132 deg (roll 2.378 pitch 1.336 yaw 5.535) ss=6.641 max=46.27 conv=-1.0s div=0     364 ns/step
+[imu|init_error     |s1] Madgwick               rms=17.739 deg (roll 9.123 pitch 1.735 yaw 15.398) ss=18.977 max=71.25 conv=-1.0s div=1     112 ns/step
+[imu|init_error     |s1] Madgwick-Gated         rms= 5.250 deg (roll 2.380 pitch 2.150 yaw 4.253) ss=6.184 max=46.49 conv=-1.0s div=0     140 ns/step
+[imu|init_error     |s1] Mahony                 rms=18.569 deg (roll 6.288 pitch 2.979 yaw 17.468) ss=19.300 max=76.94 conv=71.2s div=1     130 ns/step
+[imu|init_error     |s1] Mahony-Gated           rms= 3.497 deg (roll 1.209 pitch 0.747 yaw 3.222) ss=1.752 max=45.97 conv=88.6s div=0     131 ns/step
+[imu|init_error     |s1] MEKF                   rms= 2.156 deg (roll 0.759 pitch 0.557 yaw 1.937) ss=2.538 max=14.70 conv=5.2s div=0    2039 ns/step
+[imu|init_error     |s1] InvariantEKF           rms= 2.136 deg (roll 0.743 pitch 0.562 yaw 1.919) ss=2.575 max=14.74 conv=0.0s div=0    1921 ns/step
+[imu|init_error     |s1] TRIAD                  rms=19.593 deg (roll 9.369 pitch 1.450 yaw 17.176) ss=21.596 max=88.61 conv=-1.0s div=1     130 ns/step
+[imu|init_error     |s1] QUEST                  rms=19.227 deg (roll 8.679 pitch 1.436 yaw 17.181) ss=21.180 max=88.24 conv=-1.0s div=1     213 ns/step
+[imu|init_error     |s2] Complementary          rms= 7.502 deg (roll 3.239 pitch 1.387 yaw 6.602) ss=8.766 max=46.26 conv=-1.0s div=0     363 ns/step
+[imu|init_error     |s2] Madgwick               rms=17.754 deg (roll 9.135 pitch 1.727 yaw 15.401) ss=19.080 max=70.64 conv=-1.0s div=1     111 ns/step
+[imu|init_error     |s2] Madgwick-Gated         rms= 7.725 deg (roll 3.335 pitch 3.469 yaw 6.073) ss=9.379 max=46.49 conv=-1.0s div=0     140 ns/step
+[imu|init_error     |s2] Mahony                 rms=18.366 deg (roll 6.265 pitch 2.955 yaw 17.253) ss=19.397 max=74.72 conv=69.2s div=1     130 ns/step
+[imu|init_error     |s2] Mahony-Gated           rms= 4.146 deg (roll 1.390 pitch 0.971 yaw 3.792) ss=3.016 max=45.97 conv=51.2s div=0     132 ns/step
+[imu|init_error     |s2] MEKF                   rms= 2.978 deg (roll 0.966 pitch 0.828 yaw 2.680) ss=3.669 max=15.95 conv=0.5s div=0    2047 ns/step
+[imu|init_error     |s2] InvariantEKF           rms= 2.987 deg (roll 0.968 pitch 0.831 yaw 2.688) ss=3.680 max=15.96 conv=0.0s div=0    1910 ns/step
+[imu|init_error     |s2] TRIAD                  rms=19.583 deg (roll 9.369 pitch 1.452 yaw 17.164) ss=21.602 max=85.37 conv=-1.0s div=1     129 ns/step
+[imu|init_error     |s2] QUEST                  rms=19.217 deg (roll 8.678 pitch 1.437 yaw 17.169) ss=21.186 max=84.98 conv=-1.0s div=1     214 ns/step
+[imu|init_error     |s3] Complementary          rms= 6.727 deg (roll 3.010 pitch 1.390 yaw 5.815) ss=8.326 max=46.27 conv=113.0s div=0     360 ns/step
+[imu|init_error     |s3] Madgwick               rms=17.713 deg (roll 9.157 pitch 1.719 yaw 15.324) ss=18.815 max=72.38 conv=-1.0s div=1     112 ns/step
+[imu|init_error     |s3] Madgwick-Gated         rms= 5.535 deg (roll 2.542 pitch 2.534 yaw 4.308) ss=6.733 max=46.49 conv=-1.0s div=0     141 ns/step
+[imu|init_error     |s3] Mahony                 rms=18.597 deg (roll 6.282 pitch 2.991 yaw 17.510) ss=19.294 max=77.17 conv=70.8s div=1     137 ns/step
+[imu|init_error     |s3] Mahony-Gated           rms= 3.623 deg (roll 1.233 pitch 0.850 yaw 3.322) ss=1.315 max=45.98 conv=73.1s div=0     145 ns/step
+[imu|init_error     |s3] MEKF                   rms= 2.375 deg (roll 0.818 pitch 0.644 yaw 2.132) ss=2.992 max=14.72 conv=4.4s div=0    2014 ns/step
+[imu|init_error     |s3] InvariantEKF           rms= 2.355 deg (roll 0.808 pitch 0.641 yaw 2.114) ss=2.989 max=14.70 conv=0.1s div=0    1907 ns/step
+[imu|init_error     |s3] TRIAD                  rms=19.594 deg (roll 9.369 pitch 1.452 yaw 17.177) ss=21.598 max=90.59 conv=-1.0s div=1     129 ns/step
+[imu|init_error     |s3] QUEST                  rms=19.228 deg (roll 8.680 pitch 1.438 yaw 17.182) ss=21.183 max=89.88 conv=-1.0s div=1     213 ns/step
+[imu|gyro_bias      |s1] Complementary          rms=20.065 deg (roll 8.363 pitch 1.998 yaw 18.223) ss=20.849 max=28.04 conv=-1.0s div=0     373 ns/step
+[imu|gyro_bias      |s1] Madgwick               rms=17.698 deg (roll 8.994 pitch 1.310 yaw 15.445) ss=19.566 max=69.01 conv=-1.0s div=1     111 ns/step
+[imu|gyro_bias      |s1] Madgwick-Gated         rms= 4.810 deg (roll 2.071 pitch 1.832 yaw 3.944) ss=6.184 max=17.15 conv=-1.0s div=0     138 ns/step
+[imu|gyro_bias      |s1] Mahony                 rms=18.504 deg (roll 6.262 pitch 2.942 yaw 17.410) ss=19.300 max=76.94 conv=32.2s div=1     130 ns/step
+[imu|gyro_bias      |s1] Mahony-Gated           rms= 2.425 deg (roll 0.713 pitch 0.476 yaw 2.273) ss=1.752 max=12.98 conv=32.7s div=0     134 ns/step
+[imu|gyro_bias      |s1] MEKF                   rms= 2.113 deg (roll 0.734 pitch 0.557 yaw 1.899) ss=2.538 max=14.70 conv=1.9s div=0    2053 ns/step
+[imu|gyro_bias      |s1] InvariantEKF           rms= 2.136 deg (roll 0.743 pitch 0.562 yaw 1.919) ss=2.575 max=14.74 conv=1.9s div=0    1915 ns/step
+[imu|gyro_bias      |s1] TRIAD                  rms=19.593 deg (roll 9.369 pitch 1.450 yaw 17.176) ss=21.596 max=88.61 conv=-1.0s div=1     130 ns/step
+[imu|gyro_bias      |s1] QUEST                  rms=19.227 deg (roll 8.679 pitch 1.436 yaw 17.181) ss=21.180 max=88.24 conv=-1.0s div=1     215 ns/step
+[imu|gyro_bias      |s2] Complementary          rms=21.270 deg (roll 9.090 pitch 2.467 yaw 19.058) ss=22.888 max=36.34 conv=-1.0s div=0     378 ns/step
+[imu|gyro_bias      |s2] Madgwick               rms=17.734 deg (roll 9.000 pitch 1.319 yaw 15.476) ss=19.666 max=68.72 conv=-1.0s div=1     111 ns/step
+[imu|gyro_bias      |s2] Madgwick-Gated         rms= 7.432 deg (roll 3.121 pitch 3.281 yaw 5.859) ss=9.379 max=31.32 conv=-1.0s div=0     142 ns/step
+[imu|gyro_bias      |s2] Mahony                 rms=18.303 deg (roll 6.240 pitch 2.918 yaw 17.197) ss=19.397 max=74.72 conv=32.0s div=1     131 ns/step
+[imu|gyro_bias      |s2] Mahony-Gated           rms= 3.301 deg (roll 0.978 pitch 0.788 yaw 3.041) ss=3.016 max=13.03 conv=58.6s div=0     132 ns/step
+[imu|gyro_bias      |s2] MEKF                   rms= 2.978 deg (roll 0.965 pitch 0.829 yaw 2.680) ss=3.669 max=15.95 conv=2.2s div=0    2041 ns/step
+[imu|gyro_bias      |s2] InvariantEKF           rms= 2.987 deg (roll 0.968 pitch 0.831 yaw 2.688) ss=3.680 max=15.96 conv=2.3s div=0    1956 ns/step
+[imu|gyro_bias      |s2] TRIAD                  rms=19.583 deg (roll 9.369 pitch 1.452 yaw 17.164) ss=21.602 max=85.37 conv=-1.0s div=1     129 ns/step
+[imu|gyro_bias      |s2] QUEST                  rms=19.217 deg (roll 8.678 pitch 1.437 yaw 17.169) ss=21.186 max=84.98 conv=-1.0s div=1     215 ns/step
+[imu|gyro_bias      |s3] Complementary          rms=11.411 deg (roll 4.764 pitch 2.147 yaw 10.375) ss=8.572 max=21.15 conv=-1.0s div=0     372 ns/step
+[imu|gyro_bias      |s3] Madgwick               rms=17.422 deg (roll 9.047 pitch 1.255 yaw 15.058) ss=18.990 max=70.34 conv=846.5s div=1     111 ns/step
+[imu|gyro_bias      |s3] Madgwick-Gated         rms= 5.118 deg (roll 2.254 pitch 2.270 yaw 4.001) ss=6.733 max=19.93 conv=-1.0s div=0     138 ns/step
+[imu|gyro_bias      |s3] Mahony                 rms=18.527 deg (roll 6.256 pitch 2.955 yaw 17.446) ss=19.294 max=77.18 conv=31.2s div=1     130 ns/step
+[imu|gyro_bias      |s3] Mahony-Gated           rms= 2.491 deg (roll 0.718 pitch 0.615 yaw 2.306) ss=1.315 max=13.27 conv=56.6s div=0     134 ns/step
+[imu|gyro_bias      |s3] MEKF                   rms= 2.357 deg (roll 0.807 pitch 0.644 yaw 2.115) ss=2.992 max=14.72 conv=2.5s div=0    2056 ns/step
+[imu|gyro_bias      |s3] InvariantEKF           rms= 2.355 deg (roll 0.808 pitch 0.641 yaw 2.114) ss=2.989 max=14.70 conv=2.5s div=0    1934 ns/step
+[imu|gyro_bias      |s3] TRIAD                  rms=19.594 deg (roll 9.369 pitch 1.452 yaw 17.177) ss=21.598 max=90.59 conv=-1.0s div=1     128 ns/step
+[imu|gyro_bias      |s3] QUEST                  rms=19.228 deg (roll 8.680 pitch 1.438 yaw 17.182) ss=21.183 max=89.88 conv=-1.0s div=1     215 ns/step
+[imu|mag_disturbance|s1] Complementary          rms= 5.866 deg (roll 2.263 pitch 1.137 yaw 5.305) ss=6.641 max=18.10 conv=-1.0s div=0     367 ns/step
+[imu|mag_disturbance|s1] Madgwick               rms=18.991 deg (roll 9.047 pitch 1.488 yaw 16.865) ss=18.977 max=71.25 conv=-1.0s div=1     107 ns/step
+[imu|mag_disturbance|s1] Madgwick-Gated         rms= 4.806 deg (roll 2.069 pitch 1.836 yaw 3.938) ss=6.184 max=17.15 conv=-1.0s div=0     136 ns/step
+[imu|mag_disturbance|s1] Mahony                 rms=20.442 deg (roll 6.338 pitch 3.177 yaw 19.384) ss=19.299 max=76.94 conv=27.5s div=1     131 ns/step
+[imu|mag_disturbance|s1] Mahony-Gated           rms= 1.852 deg (roll 0.553 pitch 0.517 yaw 1.693) ss=1.764 max=5.74 conv=27.6s div=0     132 ns/step
+[imu|mag_disturbance|s1] MEKF                   rms= 2.475 deg (roll 0.750 pitch 0.564 yaw 2.287) ss=2.538 max=14.70 conv=0.0s div=0    2059 ns/step
+[imu|mag_disturbance|s1] InvariantEKF           rms= 2.510 deg (roll 0.759 pitch 0.569 yaw 2.321) ss=2.575 max=14.74 conv=0.0s div=0    1902 ns/step
+[imu|mag_disturbance|s1] TRIAD                  rms=20.976 deg (roll 9.369 pitch 1.450 yaw 18.738) ss=21.596 max=88.61 conv=-1.0s div=1     129 ns/step
+[imu|mag_disturbance|s1] QUEST                  rms=20.637 deg (roll 8.685 pitch 1.437 yaw 18.738) ss=21.180 max=88.24 conv=-1.0s div=1     222 ns/step
+[imu|mag_disturbance|s2] Complementary          rms= 7.317 deg (roll 3.156 pitch 1.197 yaw 6.448) ss=8.766 max=19.38 conv=-1.0s div=0     357 ns/step
+[imu|mag_disturbance|s2] Madgwick               rms=18.985 deg (roll 9.060 pitch 1.475 yaw 16.846) ss=19.080 max=70.64 conv=-1.0s div=1     109 ns/step
+[imu|mag_disturbance|s2] Madgwick-Gated         rms= 7.429 deg (roll 3.120 pitch 3.284 yaw 5.854) ss=9.379 max=31.32 conv=-1.0s div=0     136 ns/step
+[imu|mag_disturbance|s2] Mahony                 rms=20.280 deg (roll 6.317 pitch 3.152 yaw 19.215) ss=19.396 max=74.72 conv=28.2s div=1     130 ns/step
+[imu|mag_disturbance|s2] Mahony-Gated           rms= 2.853 deg (roll 0.852 pitch 0.806 yaw 2.584) ss=3.002 max=11.21 conv=28.2s div=0     133 ns/step
+[imu|mag_disturbance|s2] MEKF                   rms= 3.273 deg (roll 0.977 pitch 0.833 yaw 2.999) ss=3.669 max=15.95 conv=0.0s div=0    2033 ns/step
+[imu|mag_disturbance|s2] InvariantEKF           rms= 3.296 deg (roll 0.980 pitch 0.835 yaw 3.023) ss=3.680 max=15.96 conv=0.0s div=0    1886 ns/step
+[imu|mag_disturbance|s2] TRIAD                  rms=20.967 deg (roll 9.369 pitch 1.452 yaw 18.727) ss=21.602 max=85.37 conv=-1.0s div=1     128 ns/step
+[imu|mag_disturbance|s2] QUEST                  rms=20.628 deg (roll 8.685 pitch 1.438 yaw 18.726) ss=21.186 max=84.98 conv=-1.0s div=1     215 ns/step
+[imu|mag_disturbance|s3] Complementary          rms= 6.961 deg (roll 2.920 pitch 1.200 yaw 6.147) ss=8.326 max=22.92 conv=113.0s div=0     355 ns/step
+[imu|mag_disturbance|s3] Madgwick               rms=19.053 deg (roll 9.081 pitch 1.468 yaw 16.895) ss=18.815 max=72.38 conv=-1.0s div=1     109 ns/step
+[imu|mag_disturbance|s3] Madgwick-Gated         rms= 5.108 deg (roll 2.252 pitch 2.274 yaw 3.987) ss=6.734 max=19.93 conv=-1.0s div=0     133 ns/step
+[imu|mag_disturbance|s3] Mahony                 rms=20.493 deg (roll 6.332 pitch 3.190 yaw 19.449) ss=19.294 max=77.17 conv=15.1s div=1     129 ns/step
+[imu|mag_disturbance|s3] Mahony-Gated           rms= 2.215 deg (roll 0.561 pitch 0.666 yaw 2.037) ss=1.315 max=9.03 conv=15.1s div=0     132 ns/step
+[imu|mag_disturbance|s3] MEKF                   rms= 2.835 deg (roll 0.822 pitch 0.651 yaw 2.630) ss=2.992 max=16.57 conv=0.0s div=0    2029 ns/step
+[imu|mag_disturbance|s3] InvariantEKF           rms= 2.848 deg (roll 0.823 pitch 0.648 yaw 2.645) ss=2.989 max=16.96 conv=0.0s div=0    1901 ns/step
+[imu|mag_disturbance|s3] TRIAD                  rms=20.978 deg (roll 9.369 pitch 1.452 yaw 18.740) ss=21.598 max=90.59 conv=-1.0s div=1     129 ns/step
+[imu|mag_disturbance|s3] QUEST                  rms=20.639 deg (roll 8.686 pitch 1.439 yaw 18.739) ss=21.183 max=89.88 conv=-1.0s div=1     215 ns/step
+[imu|vibration      |s1] Complementary          rms= 5.859 deg (roll 2.280 pitch 1.171 yaw 5.280) ss=6.657 max=17.71 conv=-1.0s div=0     381 ns/step
+[imu|vibration      |s1] Madgwick               rms=14.035 deg (roll 8.335 pitch 1.670 yaw 11.421) ss=15.360 max=49.81 conv=-1.0s div=0     111 ns/step
+[imu|vibration      |s1] Madgwick-Gated         rms= 2.433 deg (roll 1.470 pitch 1.373 yaw 1.357) ss=2.679 max=8.87 conv=108.9s div=0     138 ns/step
+[imu|vibration      |s1] Mahony                 rms=18.292 deg (roll 6.243 pitch 2.948 yaw 17.173) ss=19.220 max=75.73 conv=89.6s div=1     130 ns/step
+[imu|vibration      |s1] Mahony-Gated           rms= 1.700 deg (roll 0.568 pitch 0.505 yaw 1.523) ss=1.906 max=5.52 conv=28.7s div=0     132 ns/step
+[imu|vibration      |s1] MEKF                   rms= 1.745 deg (roll 0.599 pitch 0.443 yaw 1.573) ss=1.968 max=18.19 conv=1.8s div=0    2028 ns/step
+[imu|vibration      |s1] InvariantEKF           rms= 1.749 deg (roll 0.601 pitch 0.444 yaw 1.576) ss=1.982 max=16.36 conv=1.8s div=0    1906 ns/step
+[imu|vibration      |s1] TRIAD                  rms=27.198 deg (roll 11.207 pitch 6.234 yaw 24.186) ss=29.287 max=179.80 conv=-1.0s div=1     129 ns/step
+[imu|vibration      |s1] QUEST                  rms=25.831 deg (roll 9.072 pitch 4.923 yaw 24.217) ss=27.865 max=179.82 conv=-1.0s div=1     225 ns/step
+[imu|vibration      |s2] Complementary          rms= 7.317 deg (roll 3.162 pitch 1.277 yaw 6.428) ss=8.830 max=19.62 conv=-1.0s div=0     385 ns/step
+[imu|vibration      |s2] Madgwick               rms=14.239 deg (roll 8.417 pitch 1.641 yaw 11.598) ss=15.802 max=49.26 conv=-1.0s div=0     112 ns/step
+[imu|vibration      |s2] Madgwick-Gated         rms= 4.279 deg (roll 2.149 pitch 2.270 yaw 2.891) ss=4.581 max=14.35 conv=590.5s div=0     137 ns/step
+[imu|vibration      |s2] Mahony                 rms=18.129 deg (roll 6.194 pitch 2.930 yaw 17.026) ss=19.270 max=74.36 conv=53.5s div=1     130 ns/step
+[imu|vibration      |s2] Mahony-Gated           rms= 3.525 deg (roll 1.048 pitch 1.019 yaw 3.186) ss=3.940 max=14.63 conv=53.6s div=0     132 ns/step
+[imu|vibration      |s2] MEKF                   rms= 2.761 deg (roll 0.887 pitch 0.759 yaw 2.487) ss=3.275 max=16.29 conv=4.8s div=0    2051 ns/step
+[imu|vibration      |s2] InvariantEKF           rms= 2.768 deg (roll 0.888 pitch 0.762 yaw 2.493) ss=3.284 max=16.31 conv=4.8s div=0    1905 ns/step
+[imu|vibration      |s2] TRIAD                  rms=27.297 deg (roll 11.193 pitch 6.229 yaw 24.302) ss=29.350 max=179.83 conv=-1.0s div=1     129 ns/step
+[imu|vibration      |s2] QUEST                  rms=25.931 deg (roll 9.106 pitch 4.940 yaw 24.335) ss=27.940 max=179.95 conv=-1.0s div=1     224 ns/step
+[imu|vibration      |s3] Complementary          rms= 6.550 deg (roll 2.936 pitch 1.273 yaw 5.649) ss=8.341 max=15.19 conv=112.8s div=0     384 ns/step
+[imu|vibration      |s3] Madgwick               rms=16.058 deg (roll 8.440 pitch 1.975 yaw 13.776) ss=18.429 max=53.53 conv=-1.0s div=1     112 ns/step
+[imu|vibration      |s3] Madgwick-Gated         rms= 2.958 deg (roll 1.386 pitch 1.692 yaw 1.990) ss=3.313 max=14.23 conv=88.9s div=0     138 ns/step
+[imu|vibration      |s3] Mahony                 rms=18.415 deg (roll 6.245 pitch 2.969 yaw 17.326) ss=19.249 max=76.72 conv=70.5s div=1     130 ns/step
+[imu|vibration      |s3] Mahony-Gated           rms= 2.195 deg (roll 0.655 pitch 0.744 yaw 1.958) ss=2.116 max=9.17 conv=27.9s div=0     132 ns/step
+[imu|vibration      |s3] MEKF                   rms= 1.909 deg (roll 0.637 pitch 0.503 yaw 1.725) ss=2.301 max=17.12 conv=26.0s div=0    2068 ns/step
+[imu|vibration      |s3] InvariantEKF           rms= 1.906 deg (roll 0.637 pitch 0.501 yaw 1.723) ss=2.296 max=17.07 conv=26.0s div=0    1924 ns/step
+[imu|vibration      |s3] TRIAD                  rms=27.276 deg (roll 11.204 pitch 6.239 yaw 24.273) ss=29.421 max=179.58 conv=-1.0s div=1     130 ns/step
+[imu|vibration      |s3] QUEST                  rms=25.912 deg (roll 9.109 pitch 4.939 yaw 24.297) ss=28.012 max=179.45 conv=-1.0s div=1     226 ns/step
+[imu|high_dynamics  |s1] Complementary          rms= 5.909 deg (roll 2.281 pitch 1.144 yaw 5.345) ss=6.650 max=17.95 conv=-1.0s div=0     368 ns/step
+[imu|high_dynamics  |s1] Madgwick               rms=18.392 deg (roll 9.398 pitch 1.419 yaw 16.010) ss=19.537 max=81.59 conv=-1.0s div=1     111 ns/step
+[imu|high_dynamics  |s1] Madgwick-Gated         rms= 4.912 deg (roll 2.598 pitch 2.425 yaw 3.400) ss=5.713 max=13.20 conv=-1.0s div=0     129 ns/step
+[imu|high_dynamics  |s1] Mahony                 rms=18.808 deg (roll 6.425 pitch 3.010 yaw 17.689) ss=19.587 max=77.92 conv=-1.0s div=1     130 ns/step
+[imu|high_dynamics  |s1] Mahony-Gated           rms= 6.430 deg (roll 2.148 pitch 1.312 yaw 5.860) ss=8.433 max=21.88 conv=49.9s div=0     130 ns/step
+[imu|high_dynamics  |s1] MEKF                   rms= 3.237 deg (roll 1.126 pitch 0.742 yaw 2.960) ss=3.787 max=11.89 conv=195.1s div=0    2054 ns/step
+[imu|high_dynamics  |s1] InvariantEKF           rms= 3.194 deg (roll 1.113 pitch 0.729 yaw 2.921) ss=3.716 max=11.99 conv=194.7s div=0    1915 ns/step
+[imu|high_dynamics  |s1] TRIAD                  rms=20.989 deg (roll 9.795 pitch 1.589 yaw 18.574) ss=22.995 max=135.69 conv=-1.0s div=1     128 ns/step
+[imu|high_dynamics  |s1] QUEST                  rms=20.634 deg (roll 9.123 pitch 1.541 yaw 18.583) ss=22.593 max=135.38 conv=-1.0s div=1     216 ns/step
+[imu|high_dynamics  |s2] Complementary          rms= 7.318 deg (roll 3.169 pitch 1.201 yaw 6.442) ss=8.764 max=19.23 conv=-1.0s div=0     364 ns/step
+[imu|high_dynamics  |s2] Madgwick               rms=18.401 deg (roll 9.414 pitch 1.411 yaw 16.004) ss=19.632 max=80.84 conv=-1.0s div=1     111 ns/step
+[imu|high_dynamics  |s2] Madgwick-Gated         rms= 5.754 deg (roll 3.205 pitch 2.995 yaw 3.755) ss=6.603 max=17.67 conv=-1.0s div=0     130 ns/step
+[imu|high_dynamics  |s2] Mahony                 rms=18.593 deg (roll 6.402 pitch 2.985 yaw 17.460) ss=19.685 max=75.70 conv=-1.0s div=1     128 ns/step
+[imu|high_dynamics  |s2] Mahony-Gated           rms= 4.289 deg (roll 1.412 pitch 0.954 yaw 3.910) ss=5.321 max=14.01 conv=693.4s div=0     127 ns/step
+[imu|high_dynamics  |s2] MEKF                   rms= 3.498 deg (roll 1.208 pitch 0.805 yaw 3.190) ss=4.179 max=14.33 conv=-1.0s div=0    2032 ns/step
+[imu|high_dynamics  |s2] InvariantEKF           rms= 3.471 deg (roll 1.200 pitch 0.798 yaw 3.166) ss=4.132 max=14.36 conv=-1.0s div=0    1898 ns/step
+[imu|high_dynamics  |s2] TRIAD                  rms=20.985 deg (roll 9.795 pitch 1.589 yaw 18.569) ss=23.002 max=144.06 conv=-1.0s div=1     128 ns/step
+[imu|high_dynamics  |s2] QUEST                  rms=20.629 deg (roll 9.123 pitch 1.541 yaw 18.577) ss=22.601 max=143.80 conv=-1.0s div=1     216 ns/step
+[imu|high_dynamics  |s3] Complementary          rms= 6.519 deg (roll 2.928 pitch 1.207 yaw 5.632) ss=8.326 max=15.06 conv=113.2s div=0     351 ns/step
+[imu|high_dynamics  |s3] Madgwick               rms=18.497 deg (roll 9.433 pitch 1.416 yaw 16.096) ss=19.583 max=83.01 conv=-1.0s div=1     111 ns/step
+[imu|high_dynamics  |s3] Madgwick-Gated         rms= 5.350 deg (roll 2.535 pitch 2.308 yaw 4.131) ss=6.297 max=18.83 conv=-1.0s div=0     129 ns/step
+[imu|high_dynamics  |s3] Mahony                 rms=18.844 deg (roll 6.420 pitch 3.023 yaw 17.738) ss=19.591 max=78.13 conv=-1.0s div=1     130 ns/step
+[imu|high_dynamics  |s3] Mahony-Gated           rms= 3.777 deg (roll 1.094 pitch 1.069 yaw 3.463) ss=4.451 max=13.50 conv=33.4s div=0     130 ns/step
+[imu|high_dynamics  |s3] MEKF                   rms= 3.260 deg (roll 1.138 pitch 0.750 yaw 2.977) ss=3.880 max=11.81 conv=470.9s div=0    2040 ns/step
+[imu|high_dynamics  |s3] InvariantEKF           rms= 3.240 deg (roll 1.132 pitch 0.744 yaw 2.958) ss=3.845 max=11.79 conv=470.9s div=0    1909 ns/step
+[imu|high_dynamics  |s3] TRIAD                  rms=20.973 deg (roll 9.796 pitch 1.590 yaw 18.556) ss=23.001 max=137.36 conv=-1.0s div=1     125 ns/step
+[imu|high_dynamics  |s3] QUEST                  rms=20.618 deg (roll 9.123 pitch 1.542 yaw 18.564) ss=22.600 max=137.09 conv=-1.0s div=1     214 ns/step

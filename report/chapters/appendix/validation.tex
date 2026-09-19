@@ -1,0 +1,316 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Appendix: validation details
+% =============================================================================
+\chapter{Validation details}
+\label{app:validation}
+
+Chapter~\ref{ch:metrics}, \S\ref{sec:me-crossval} reported what the cross-validation against
+independent implementations found. This appendix gives the procedures in enough detail to repeat
+them, records the exact versions used, and documents the convention mismatches that had to be
+resolved --- which are, in practice, the most reusable part of the exercise, because each one is a
+trap that any reimplementation of these algorithms will hit.
+
+\section{Reference-library versions}
+
+\begin{table}[H]\centering\small
+\caption{Reference implementations used.}
+\label{tab:av-versions}
+\begin{tabular}{@{}lllp{0.30\textwidth}@{}}\toprule
+library & version & reference & what it validates \\ \midrule
+FilterPy & 1.4.5 & \cite{labbe2014filterpy,labbe2020book} & the EKF, the UKF and the RTS smoother \\
+PyBaMM & 26.8.0 & \cite{sulzer2021pybamm} & the single-particle-model plant \\
+\code{ahrs} & 0.4.0 & \cite{ahrs2019} & the Madgwick and Mahony attitude filters, and the frame conventions of the inertial dataset \\
+NumPy & (as installed) & \cite{harris2020numpy} & the arithmetic substrate of the first and third \\
+\bottomrule\end{tabular}
+\end{table}
+
+All three comparisons consume files written by \code{tools/export\_validation}, which prints every
+floating-point value with \code{\%.17g} --- enough digits to round-trip an IEEE~754 binary64
+value~\cite{ieee754_2019} --- so that no agreement figure in Chapter~\ref{ch:metrics} is limited by
+the file format.
+
+\begin{lstlisting}[language=bash]
+./build/export_validation results/validation
+python3 scripts/validate_filterpy.py results/validation report/tables
+python3 scripts/validate_pybamm.py   results/validation report/tables report/figures
+python3 scripts/validate_ahrs.py     results/validation report/tables
+\end{lstlisting}
+
+Each script prints its findings and, when given a table directory, writes the corresponding
+\code{validation\_*.tex} that Chapter~\ref{ch:metrics} inputs.
+
+\begin{table}[H]\centering\small
+\caption{Files written by \code{export\_validation}.}
+\label{tab:av-files}
+\begin{tabular}{@{}lp{0.58\textwidth}@{}}\toprule
+file & contents \\ \midrule
+\code{val\_cell\_dataset.csv} & \code{t, i\_meas, v\_meas, T\_meas, soc\_true, v\_true} --- the nominal eVTOL dataset, ECM plant, seed~1, \num{20100} samples \\
+\code{val\_ocv\_table.csv} & \code{z, ocv} --- the 241 table points, so the Python model interpolates the same table rather than re-evaluating the closed form \\
+\code{val\_params.csv} & \code{Q\_Ah, eta\_c, R0, R1, tau1, R2, tau2, M, gamma, Ea\_R0, Ea\_R1, Ea\_R2, Ea\_tau, T\_ref, dt, z0, sigma\_z0, sigma\_v, sigma\_i, qf0..qf3} \\
+\code{val\_ekf.csv}, \code{val\_ukf.csv} & \code{z, v1, v2, h, P00, P11, P22, P33, ypred} --- the C++ posterior state, the covariance diagonal and the prior voltage prediction at every sample \\
+\code{val\_erts.csv} & \code{z\_smooth} --- the smoothed SOC trajectory \\
+\code{val\_spm\_0.5C.csv}, \code{\_1.0C}, \code{\_2.0C} & \code{t, v, soc, x\_surf, y\_surf} --- constant-current discharges of the published-parameter SPM, isothermal, recorded every \SI{1}{\second} \\
+\code{val\_ahrs.csv} & \code{t}, the nine sensor channels, the truth quaternion and the estkit Madgwick and Mahony quaternions, \num{90000} rows \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{FilterPy: EKF, UKF and RTS smoother}
+
+\subsection{Procedure}
+
+\code{scripts/validate\_filterpy.py} re-implements \code{estkit::EcmModel} from scratch in NumPy.
+The replica is not a wrapper: it re-derives $f$, $h$, $\mF$, $\mH$, $\mB$, $\mQ$ and $\mR$ from the
+equations of Chapter~\ref{ch:ecm}, including the Arrhenius scaling, the coulombic efficiency, the
+one-state hysteresis, the entropic OCV term and the piecewise-linear table interpolation with its
+\code{floor}-and-clamp index arithmetic. It reads the parameters from \code{val\_params.csv} and the
+table from \code{val\_ocv\_table.csv} so that the only shared quantity is data, never code.
+
+The three estimators are then driven sample by sample over the exported dataset and compared
+against the exported C++ trajectories with $\max_k\abs{\Delta\cdot}$ over all \num{20100} samples.
+
+\subsection{Conventions that had to be matched}
+
+\paragraph{Evaluation point of $\mQ$.} \code{Ekf::predict} computes $\xminus_k = f(\xplus_{k-1},\vu_{k-1})$
+\emph{first} and then forms $\mQ(\xminus_k,\vu_{k-1})$, so the process-noise covariance --- which for
+this model depends on the state through the hysteresis row of $\partial f/\partial i$ --- is
+evaluated at the predicted state. FilterPy's \code{predict()} adds a pre-set \code{self.Q}. The
+driver therefore evaluates the predicted mean itself, sets \code{ekf.Q = m.Q(xpred, i, T)}, and only
+then calls \code{predict}.
+
+\paragraph{Input timing.} The $\vu_{k-1}$/$\vu_k$ convention of \S\ref{sec:me-timing-convention} is
+reproduced exactly: \code{predict} is skipped at $k=0$ and otherwise called with the previous
+sample's measured current and temperature, while the measurement update uses the current sample's.
+
+\paragraph{Symmetrisation and the state constraint.} $\mP\gets\frac12(\mP+\mP^\T)$ after both
+updates, and the clamp $\soc\in[-0.05,1.05]$, $h\in[-1,1]$ after the measurement update.
+
+\paragraph{Nonlinear propagation in FilterPy's EKF.} \code{filterpy.kalman.ExtendedKalmanFilter}
+propagates linearly by default; the driver subclasses it and overrides \code{predict\_x} so that the
+nonlinear $f$ is used, with \code{self.F} set to the analytic Jacobian.
+
+\subsection{The two unscented variants}
+
+The \code{estkit} UKF supports two measurement updates, selected by
+\code{opts.redraw\_sigma\_points}:
+
+\begin{itemize}[leftmargin=*,topsep=2pt,itemsep=2pt]
+\item \code{true} (default, used everywhere in the benchmark): the sigma points are \emph{redrawn}
+from $(\xminus_k,\Pminus_k)$ before the measurement update, so that the additive $\mQ$ added during
+the time update is reflected in the spread of the points and therefore in $\mP_{yy}$. This is
+Särkkä~\cite[Alg.~5.14]{sarkka2013} and Plett~\cite{plett2006spkf1}.
+\item \code{false} (used only for this comparison): the propagated points $\mathcal{X}^f$ are
+\emph{reused}, which is Wan and van der Merwe's original formulation~\cite[Alg.~3.1]{wan2000ukf}
+and what FilterPy implements.
+\end{itemize}
+
+These are not algebraically equivalent --- reuse under-represents $\mQ$ in $\mP_{yy}$ and is
+therefore mildly over-confident --- so the comparison is run with
+\code{f.opts.redraw\_sigma\_points = false} (see the \code{CellEstimator} construction in
+\code{tools/export\_validation.cpp}). Any report of a ``UKF'' result that does not state which
+variant it used is under-specified.
+
+\paragraph{The $k=0$ sigma points.} FilterPy's \code{UnscentedKalmanFilter.update()} reads
+\code{self.sigmas\_f}, which is an array of zeros until \code{predict()} has been called once. At
+$k=0$ no time update is performed, so the driver explicitly seeds
+\code{ukf.sigmas\_f = pts.sigma\_points(x0, P0)} --- which is what \code{estkit} does internally
+(\code{have\_propagated\_ == false} makes it draw from the current $(\vx,\mP)$). Without this the
+first update runs on zeroed sigma points and the two trajectories diverge from the very first
+sample. Sigma-point parameters are $\alpha = 0.1$, $\beta = 2$, $\kappa = 0$ on both sides.
+
+\paragraph{The predicted measurement.} Both sides compute
+$\hat y_k = \sum_s w^m_s\, h(\mathcal{X}^f_s,\vu_k)$, the sigma-weighted mean, rather than
+$h(\xminus_k,\vu_k)$. The two differ by the curvature of $h$ and the difference is not negligible
+on the OCV plateau.
+
+\subsection{The RTS smoother and the affine change of variables}
+
+\code{filterpy.kalman.rts\_smoother(Xs, Ps, Fs, Qs)} implements the strictly linear
+Rauch--Tung--Striebel recursion~\cite{rauch1965rts}. It reconstructs the predicted mean internally as
+$\mF_k\xplus_k$ and therefore assumes a system with no input term, whereas the battery model has
+one. The model is, however, \emph{affine} in the state --- $\mF_k$ does not depend on $\vx$ --- so
+the input can be removed exactly. With
+\begin{equation}
+\vx_{k+1} = \mF_k\vx_k + \bm{b}_k + \vw_k,\qquad \bm{b}_k = f(\bm 0,\vu_k),
+\qquad \bm{c}_0 = \bm 0,\quad \bm{c}_{k+1} = \mF_k\bm{c}_k + \bm{b}_k,
+\label{eq:av-affine}
+\end{equation}
+the shifted state $\tilde{\vx}_k = \vx_k - \bm{c}_k$ satisfies $\tilde{\vx}_{k+1} = \mF_k\tilde{\vx}_k
++ \vw_k$ with the same $\mF_k$ and $\mQ_k$, and all covariances are unchanged because the shift is
+deterministic. The driver therefore runs the forward EKF storing $(\xplus_k,\Pplus_k,\mF_k,\mQ_k)$,
+subtracts $\bm{c}_k$, calls \code{rts\_smoother}, and adds $\bm{c}_k$ back.
+
+Two indexing details matter. \code{rts\_smoother} expects $\mF_k,\mQ_k$ to be the matrices that
+carry the state from $k$ to $k+1$, whereas the forward loop naturally records the ones used to
+arrive \emph{at} $k$; the arrays are therefore shifted by one, with the last entry repeated. And the
+particular solution \eqref{eq:av-affine} must be accumulated with the shifted $\mF_k$, not the
+recorded one.
+
+The residual disagreement is $7.3\times10^{-9}$ in the smoothed SOC, against $10^{-15}$ for the
+forward EKF. Two mechanisms explain the difference and neither is a defect. The backward pass forms
+$\hat{\vx}^s_k = \tilde{\vx}^+_k + \mC_k(\tilde{\vx}^s_{k+1} - \tilde{\vx}^-_{k+1}) + \bm{c}_k$, a
+difference of nearly equal $O(1)$ quantities once $\bm{c}_k$ has grown to $O(1)$, so there is genuine
+cancellation; and the forward pass applies the state clamp, which is a nonlinearity that the change
+of variables does not commute with, so the two implementations see slightly different stored
+posteriors whenever the clamp is active. Both effects are four orders of magnitude below the
+\num{1e-4} scale at which any SOC result is quoted.
+
+\section{PyBaMM: the single-particle plant}
+
+\subsection{Procedure}
+
+\code{scripts/validate\_pybamm.py} builds the PyBaMM model \code{lithium\_ion.SPM()} with the
+parameter set \code{ParameterValues('Chen2020')}~\cite{chen2020parameterization}, sets the current to
+$C\times\SI{5}{\ampere}$, fixes ambient and initial temperature at \SI{298.15}{\kelvin}, and sets
+\code{Contact resistance [Ohm]} to zero where the installed version exposes it. The C++ side is the
+same model at its published-parameter settings: \code{SpmPlant<20>} with
+\code{enable\_thermal = false}, \code{R\_ohm\_ref = 0}, \code{r\_scale = k\_scale = 1}, discharged at
+constant current from $\soc=1$ until the terminal voltage falls below \SI{2.5}{\volt}, recorded
+every \SI{1}{\second}.
+
+Both voltage traces are interpolated onto a common \SI{1}{\second} grid spanning the shorter of the
+two, and the RMSE and maximum absolute difference are reported, together with the time at which each
+reaches cut-off. Three C-rates are used: \SIlist{0.5;1.0;2.0}{} C.
+
+\subsection{Interpretation}
+
+The results (Chapter~\ref{ch:metrics}) are \SIrange{0.64}{3.17}{\milli\volt} RMSE with maximum
+differences of \SIrange{13}{46}{\milli\volt}, and identical times to cut-off --- \SIlist{7230;3567;1735}{\second}
+--- at all three rates. The agreement in cut-off time is the stronger result: it says the two
+implementations share the same capacity, the same stoichiometry mapping
+($x_{100}=0.9014$, $y_{100}=0.2700$, $\Delta x = 0.85798$, $\Delta y = 0.57259$) and the same
+lithium balance, because a discrepancy in any of those would shift the knee.
+
+The maximum differences all occur in the last few seconds before cut-off, where
+$\abs{\mathrm{d}v/\mathrm{d}t}$ exceeds \SI{50}{\milli\volt\per\second} and a sub-second timing
+difference becomes a large voltage difference. Away from the knee the difference is below
+\SI{5}{\milli\volt} everywhere. The residual is discretisation, not physics: \code{estkit} uses 20
+finite-volume shells per particle, backward Euler at $\dt=\SI{0.1}{\second}$, and a linear
+reconstruction of the surface concentration from the flux boundary condition, while PyBaMM uses its
+default mesh and an adaptive DAE solver~\cite{andersson2019casadi}. The error growing with C-rate is
+exactly what a fixed-mesh solid-diffusion discretisation should do, because the concentration
+gradient inside the particle steepens.
+
+\paragraph{What this does not show.} Agreement between two single-particle models is not evidence
+that a single-particle model describes a cell. The SPM neglects electrolyte transport entirely, and
+its error against a full Doyle--Fuller--Newman model grows with C-rate and with electrode thickness.
+The plant is used here because it is a \emph{different model class} from the estimators' 2-RC
+circuit, which is what makes the \code{spm} columns of the results tables a test of structural
+model error; it is not used as a claim of physical fidelity.
+
+\section{The \texttt{ahrs} library: Madgwick and Mahony}
+
+\subsection{Procedure}
+
+\code{scripts/validate\_ahrs.py} loads \code{val\_ahrs.csv} and runs
+\code{ahrs.filters.Madgwick} (\code{frequency=100}, \code{beta=0.1}) and
+\code{ahrs.filters.Mahony} (\code{frequency=100}, \code{k\_P=1.0}, \code{k\_I=0.1}) in their \code{updateMARG} (nine-axis)
+mode, initialised from the true quaternion of the first sample. The \code{estkit} filters were
+configured identically in \code{export\_validation.cpp} --- $\beta = 0.1$, $\zeta = 0$;
+$k_P = 1$, $k_I = 0.1$ --- with \code{opts.gate = false} on both, so that neither implementation
+applies the accelerometer-magnitude gating that the benchmark variants use, and
+\code{opts.mag\_ref\_measured = true} on the Mahony so that both derive the magnetic reference the
+same way.
+
+The comparison metric is the angular distance between the two implementations' quaternions,
+$2\arccos\abs{\langle q_a, q_b\rangle}$, which is sign-invariant and therefore immune to the double
+cover of $SO(3)$.
+
+\subsection{Convention mismatch 1: specific force versus gravity}
+
+\code{estkit} stores the accelerometer channel as \emph{specific force},
+$f = R^\T(a_{\text{nav}} - g_{\text{nav}})$, which at rest in the FRD body frame reads
+$[0,0,-g]^\T$. The \code{ahrs} filters expect an accelerometer that reads $+g$ along body $z$ at
+rest. The driver negates the channel before passing it to \code{ahrs}:
+\code{acc = -d[:, [ax, ay, az]]}.
+
+This is worth stating loudly because a sign error here does not produce an obvious failure: the
+filter converges smoothly and confidently to an attitude that is upside down, which looks like a
+working filter until the Euler angles are inspected.
+
+\subsection{Convention mismatch 2: \texttt{ahrs}'s Mahony is hard-coded ENU}
+
+\code{ahrs.filters.Madgwick} constructs its magnetic reference from the measurement, so it is
+frame-agnostic. \code{ahrs.filters.Mahony} does not: it builds
+$b = [\,0,\ \sqrt{h_x^2+h_y^2},\ h_z\,]$ --- magnetic north along the $+y$ axis --- which is an
+East--North--Up navigation frame, incompatible with the NED/FRD dataset.
+
+The two frame pairs are related by the proper rotation
+\begin{equation}
+\mP = \begin{bmatrix} 0&1&0\\ 1&0&0\\ 0&0&-1\end{bmatrix},
+\qquad \det\mP = +1,
+\qquad q_P = \Bigl[\,0,\ \tfrac{1}{\sqrt2},\ \tfrac{1}{\sqrt2},\ 0\,\Bigr],
+\label{eq:av-enu}
+\end{equation}
+a \SI{180}{\degree} rotation about the axis $(1,1,0)/\sqrt2$, which swaps the first two axes and
+inverts the third. The same matrix maps FRD to FLU, so it transforms body-frame and navigation-frame
+vectors alike:
+\begin{equation}
+v_{\text{ENU}} = \mP\, v_{\text{NED}},
+\qquad v_{\text{FLU}} = \mP\, v_{\text{FRD}},
+\qquad q_{\text{ENU}} = q_P \otimes q_{\text{NED}} \otimes q_P^{-1}.
+\label{eq:av-enuq}
+\end{equation}
+The driver rotates all three sensor vectors and the initial quaternion into the ENU/FLU pair, runs
+\code{ahrs}, and rotates each output quaternion back with $q_P^{-1}\otimes\cdot\otimes q_P$. Note
+that in the ENU/FLU pair the specific force is already what \code{ahrs} expects, so the negation of
+the previous subsection is undone again for the Mahony path (\code{acc\_e = -acc @ P.T} in the
+script, where \code{acc} has already been negated once).
+
+Checking that $\det\mP = +1$ is not pedantry: the naive ``swap $x$ and $y$'' matrix without the sign
+flip on $z$ is a reflection, and quaternions cannot represent it. A reflection substituted here
+would silently mirror the attitude.
+
+\subsection{Convention mismatch 3: quaternion propagation}
+
+\code{estkit} propagates with the exact exponential map,
+$\hat q_k = \hat q_{k-1}\otimes\exp(\bm\omega\dt)$ where $\exp(\bm\rho) = [\cos\frac{\norm{\bm\rho}}{2},\
+\frac{\bm\rho}{\norm{\bm\rho}}\sin\frac{\norm{\bm\rho}}{2}]$; \code{ahrs} takes a first-order Euler
+step of $\dot q = \frac12 q\otimes[0,\bm\omega]$ followed by renormalisation. The per-step
+discrepancy is $O\bigl((\norm{\bm\omega}\dt)^2\bigr)$; at the dataset's peak rate of
+\SI{14.3}{\degree\per\second} and $\dt = \SI{0.01}{\second}$ that is about
+\SI{5e-5}{\degree} per step, which the filters' own feedback keeps bounded. This is the mechanism
+behind the observed \SI{0.0014}{\degree} peak difference, and it is irreducible without changing one
+implementation or the other.
+
+\subsection{Why the attitude errors are large}
+
+Both implementations report attitude RMS errors against the truth of \SI{17.604}{\degree}
+(Madgwick) and \SI{22.639}{\degree} (Mahony) --- identical to three decimals. These are not
+implementation defects and they are not a criticism of the published algorithms. They are the
+coordinated turns of the dataset (Chapter~\ref{ch:datasets}, \S\ref{sec:ds-imu}): an ungated
+gravity-referenced filter reads the \SI{0.47}{}g sustained lateral specific force of a
+\SI{25}{\degree} banked turn as tilt and rolls its estimate into it, and these two configurations
+have gating disabled precisely so that the two implementations compute the same thing.
+
+Reproducing a \emph{large} error with independent code is a stronger validation than reproducing a
+small one: it confirms that the dataset, the frame conventions, the sensor model and the algorithm
+all agree, since any mismatch in any of them would have produced two different large errors rather
+than the same one. The gated variants registered in the benchmark
+(\code{Madgwick-Gated}, \code{Mahony-Gated}) do substantially better, and the difference between the
+gated and ungated rows in the attitude results is attributable entirely to the gate.
+
+\section{What the cross-validation covers}
+
+\begin{table}[H]\centering\small
+\caption{Coverage of the external cross-validation.}
+\label{tab:av-coverage}
+\begin{tabular}{@{}lp{0.62\textwidth}@{}}\toprule
+covered & the EKF, the UKF (reuse variant), the RTS smoother, the SPM plant, Madgwick and Mahony; and by extension the shared infrastructure they all use --- \code{core/linalg.hpp}, the OCV table and its interpolation, \code{EcmModel}'s $f,h,\mF,\mH,\mB,\mQ,\mR$, the quaternion algebra, the dataset generator and the harness timing convention \\[3pt]
+not covered & the other sixty-odd estimators, for which the evidence is the unit tests, the internal consistency checks (the information filter, the square-root EKF and the $U$--$D$ filter reproduce the EKF to round-off) and the derivations in their chapters; the UKF's default redraw variant; the plants' physical fidelity; and the behaviour of any of it on real measured data \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{A note on the bibliography}
+
+The reference lists in this report were compiled by the authors from the primary literature and from
+the reference headers of the source files they document. Volume and page numbers, and in particular
+any DOIs, should be treated as \emph{transcribed from memory} rather than verified against the
+publisher record, and should be checked before this bibliography is reused in a formal
+publication. Where a bibliographic detail was uncertain it was recorded as given in the
+implementation's own reference header, so that the report and the code at least agree with each
+other; two entries known to warrant checking are the doubling-algorithm
+references~\cite{anderson1978doubling,chu2004doubling}, whose venue and pagination the authors were
+unable to confirm independently. The substantive content of every citation --- which algorithm,
+which author, which year --- is reliable; the metadata is not.

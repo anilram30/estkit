@@ -1,0 +1,23 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Baseline methods — chapter order
+%
+%  Reading order:
+%    1. Coulomb counting: the ampere-hour integral. Perfect dynamics, no
+%       feedback; its error is a closed-form function of the sensor calibration
+%       and the capacity error, and that formula is the yardstick for every
+%       "current-bias" and "aged-cell" result in the rest of the report.
+%    2. OCV inversion: the dual failure. No memory, no drift, but an error
+%       equal to the voltage-model error divided by the OCV slope.
+%    3. The industrial hybrid: Coulomb counting pulled towards the IR/RC-compensated
+%       OCV inversion whenever the load drops below 0.3 C (60 s time constant).
+%       It beats both of its parents and shows what a scheduled gain buys.
+%
+%  These three are not competitive estimators and are not presented as such.
+%  They are the two error mechanisms that every model-based filter in Parts
+%  III-X exists to trade off against each other, in their pure form.
+% =============================================================================
+\input{chapters/baselines/CoulombCounting.tex}
+\input{chapters/baselines/OCVLookup.tex}
+\input{chapters/baselines/CoulombOCVHybrid.tex}

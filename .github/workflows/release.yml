@@ -1,0 +1,41 @@
+# Copyright 2026 Sreeram Anil
+# SPDX-License-Identifier: Apache-2.0
+name: release
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  report-and-release:
+    name: "Build the report and publish the release"
+    runs-on: ubuntu-latest
+    container: texlive/texlive:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the 958-page report
+        working-directory: report
+        run: |
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          bibtex main
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          test -f main.pdf
+      - name: Package the figures and result summaries
+        run: |
+          apt-get update && apt-get install -y zip
+          cp report/main.pdf estkit_report.pdf
+          zip -qr estkit_figures.zip report/figures
+          zip -qr estkit_results_summaries.zip results/final -x 'results/final/ts/*' -x 'results/final/validation/*'
+      - name: Create the release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            estkit_report.pdf
+            estkit_figures.zip
+            estkit_results_summaries.zip
+          generate_release_notes: true

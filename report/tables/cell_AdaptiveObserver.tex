@@ -1,0 +1,53 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{AdaptiveObserver: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_AdaptiveObserver}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.18 & 0.05 & 0.59 & 0 & 0.81 & no & 0.05 & 900 \\
+ECM & init\_error & 4.16 & 0.06 & 33.70 & 342 & 5.27 & no & 0.05 & 960 \\
+ECM & current\_bias & 0.78 & 0.74 & 1.52 & 0 & 0.84 & no & 0.61 & 904 \\
+ECM & noise\_step & 0.32 & 0.32 & 1.19 & 0 & 3.22 & no & 0.12 & 2539 \\
+ECM & outliers & 0.18 & 0.17 & 0.86 & 0 & 2.25 & no & 0.21 & 1362 \\
+ECM & cold & 0.91 & 0.25 & 6.70 & 0 & 1.93 & no & 0.16 & 1590 \\
+ECM & hot & 0.17 & 0.04 & 0.58 & 0 & 0.58 & no & 0.03 & 906 \\
+ECM & aged\_cell & 1.21 & 1.13 & 3.52 & 0 & 2.53 & no & 1.52 & 970 \\
+ECM & param\_mismatch & 0.83 & 0.83 & 3.19 & 0 & 2.26 & no & 1.36 & 940 \\
+ECM & sensor\_dropout & 0.19 & 0.07 & 1.41 & 0 & 1.73 & no & 0.46 & 903 \\
+ECM & preisach & 0.80 & 0.97 & 1.65 & 0 & 0.85 & no & 0.20 & 904 \\
+ECM & combined & 4.39 & 0.80 & 24.28 & 425 & 4.31 & no & 12.44 & 807 \\
+\midrule
+SPM & nominal & 0.80 & 0.45 & 3.26 & 0 & 0.99 & no & 3.73 & 704 \\
+SPM & init\_error & 7.06 & 2.67 & 33.71 & 1585 & 5.01 & no & 3.81 & 688 \\
+SPM & current\_bias & 0.66 & 0.38 & 3.05 & 0 & 1.03 & no & 5.69 & 682 \\
+SPM & noise\_step & 0.83 & 0.53 & 3.26 & 0 & 3.33 & no & 3.30 & 1495 \\
+SPM & outliers & 0.83 & 0.47 & 3.76 & 0 & 2.35 & no & 1.99 & 959 \\
+SPM & cold & 3.10 & 1.79 & 6.22 & 0 & 2.86 & no & 7.35 & 697 \\
+SPM & hot & 0.72 & 0.55 & 4.30 & 0 & 0.72 & no & 2.16 & 691 \\
+SPM & param\_mismatch & 1.62 & 1.02 & 5.11 & 0 & 1.70 & no & 3.13 & 666 \\
+SPM & sensor\_dropout & 0.85 & 0.48 & 6.20 & 0 & 1.94 & no & 5.31 & 704 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[H]\centering\small\caption{AdaptiveObserver: additional outputs (capacity error at the end of the mission in Ah, averaged over the last 10\,\% of the run; interval-bound violation rate).}\label{tab:cellx_AdaptiveObserver}
+\begin{tabular}{llrr}\toprule plant & scenario & $\hat Q - Q$ [Ah] & bound violation [\%] \\ \midrule
+ECM & nominal & +0.016 & -- \\
+ECM & init\_error & +0.018 & -- \\
+ECM & current\_bias & +0.016 & -- \\
+ECM & noise\_step & +0.016 & -- \\
+ECM & outliers & +0.016 & -- \\
+ECM & cold & +0.012 & -- \\
+ECM & hot & +0.033 & -- \\
+ECM & aged\_cell & +0.766 & -- \\
+ECM & param\_mismatch & +0.016 & -- \\
+ECM & sensor\_dropout & +0.016 & -- \\
+ECM & preisach & +0.017 & -- \\
+ECM & combined & +0.436 & -- \\
+SPM & nominal & -0.000 & -- \\
+SPM & init\_error & +0.002 & -- \\
+SPM & current\_bias & +0.000 & -- \\
+SPM & noise\_step & -0.002 & -- \\
+SPM & outliers & -0.000 & -- \\
+SPM & cold & +0.001 & -- \\
+SPM & hot & -0.000 & -- \\
+SPM & param\_mismatch & +0.000 & -- \\
+SPM & sensor\_dropout & +0.001 & -- \\
+\bottomrule\end{tabular}\end{table}

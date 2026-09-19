@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{SVSF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_SVSF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.18 & 0.04 & 0.68 & 0 & 0.78 & no & 0.05 & 583 \\
+ECM & init\_error & 0.17 & 0.04 & 0.70 & 0 & 2.12 & no & 0.05 & 585 \\
+ECM & current\_bias & 0.58 & 0.55 & 1.51 & 0 & 0.90 & no & 0.61 & 584 \\
+ECM & noise\_step & 1.39 & 1.71 & 4.55 & 0 & 8.84 & no & 0.12 & 585 \\
+ECM & outliers & 2.31 & 1.80 & 6.51 & 9 & 9.08 & no & 0.21 & 587 \\
+ECM & cold & 0.31 & 0.11 & 1.06 & 0 & 1.90 & no & 0.16 & 584 \\
+ECM & hot & 0.18 & 0.03 & 0.67 & 0 & 0.52 & no & 0.03 & 586 \\
+ECM & aged\_cell & 1.21 & 1.02 & 4.77 & 0 & 2.76 & no & 1.52 & 588 \\
+ECM & param\_mismatch & 1.82 & 1.75 & 4.18 & 0 & 2.21 & no & 1.36 & 583 \\
+ECM & sensor\_dropout & 0.99 & 0.58 & 3.37 & 0 & 2.00 & no & 0.46 & 583 \\
+ECM & preisach & 0.77 & 0.22 & 2.59 & 212 & 0.83 & no & 0.20 & 582 \\
+ECM & combined & 4.65 & 1.91 & 13.06 & 1398 & 3.37 & no & 12.44 & 586 \\
+\midrule
+SPM & nominal & 3.68 & 3.73 & 4.54 & 0 & 1.04 & no & 3.73 & 552 \\
+SPM & init\_error & 3.94 & 3.93 & 4.97 & 0 & 2.19 & no & 3.81 & 550 \\
+SPM & current\_bias & 5.15 & 5.87 & 6.61 & 0 & 1.15 & no & 5.69 & 556 \\
+SPM & noise\_step & 12.40 & 17.24 & 24.67 & 0 & 8.91 & no & 3.30 & 555 \\
+SPM & outliers & 14.10 & 17.12 & 19.22 & 76 & 9.18 & yes & 1.99 & 543 \\
+SPM & cold & 6.82 & 6.91 & 9.18 & -- & 3.10 & no & 7.35 & 554 \\
+SPM & hot & 2.37 & 2.37 & 2.96 & 0 & 0.72 & no & 2.16 & 552 \\
+SPM & param\_mismatch & 3.89 & 4.08 & 4.79 & 0 & 1.71 & no & 3.13 & 554 \\
+SPM & sensor\_dropout & 5.88 & 6.06 & 6.78 & 0 & 2.07 & no & 5.31 & 552 \\
+\bottomrule\end{tabular}\end{table}

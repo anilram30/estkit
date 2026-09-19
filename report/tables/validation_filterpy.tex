@@ -1,0 +1,8 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\caption{Cross-validation against FilterPy 1.4.5 on the nominal eVTOL dataset (20100 samples): maximum absolute differences between the estkit C++ trajectories and the FilterPy trajectories computed with an identical NumPy model.}\label{tab:val_filterpy}
+\begin{tabular}{llccc}\toprule estkit & FilterPy reference & $\max|\Delta \hat z|$ & $\max|\Delta P_{zz}|$ & $\max|\Delta \hat y|$ [V] \\ \midrule
+EKF & ExtendedKalmanFilter & 1.0e-15 & 1.1e-19 & 1.8e-15 \\
+UKF & UnscentedKalmanFilter (Merwe sigma points) & 2.5e-12 & 1.7e-14 & 2.9e-12 \\
+ERTS & \texttt{rts\_smoother} on the EKF forward pass & 7.3e-09 & -- & -- \\
+\bottomrule\end{tabular}\end{table}

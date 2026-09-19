@@ -1,0 +1,31 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  ROBUST / EMBEDDED KALMAN family — chapter index
+%
+%  Order: (1) parameter uncertainty, (2) worst-case design, (3) the three
+%  residual-reweighting M-estimators (Huber -> correntropy -> Student's t, in
+%  order of increasing rejection depth), (4) hard state constraints,
+%  (5) model-order reduction, (6) the sliding-mode (non-stochastic) filter.
+%
+%  Bibliography keys come from report/refs.bib and
+%  report/refs_additions_robust_kalman.bib.
+% =============================================================================
+
+% Notation macros used by this family that are not in report/preamble.tex.
+% \providecommand is idempotent, so the chapter files may (and do) repeat them.
+\providecommand{\vf}{\bm{f}}   % model transition function
+\providecommand{\vh}{\bm{h}}   % model output function
+\providecommand{\vd}{\bm{d}}   % stacked regression data vector
+\providecommand{\mM}{\bm{M}}   % stacked regression matrix
+\providecommand{\va}{\bm{a}}
+\providecommand{\vb}{\bm{b}}
+
+\input{chapters/robust_kalman/SchmidtKF.tex}
+\input{chapters/robust_kalman/HinfEKF.tex}
+\input{chapters/robust_kalman/HuberEKF.tex}
+\input{chapters/robust_kalman/MCEKF.tex}
+\input{chapters/robust_kalman/StudentTKF.tex}
+\input{chapters/robust_kalman/ConstrainedEKF.tex}
+\input{chapters/robust_kalman/ReducedOrderEKF.tex}
+\input{chapters/robust_kalman/SVSF.tex}

@@ -1,0 +1,79 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  CHAPTER TEMPLATE — one chapter per estimator. Copy to
+%  report/chapters/<family>/<name>.tex and fill every section. Keep the section
+%  order; delete only sections that truly do not apply (say so in the text).
+%
+%  Available notation macros (report/preamble.tex):
+%    \vx \vu \vy \vw \vv  bold vectors x u y w v        \mF \mH \mP \mQ \mR \mK \mS  bold matrices
+%    \xhat \xminus \xplus = \hat{x}, \hat{x}^-, \hat{x}^+    \Pminus \Pplus
+%    \E{.} expectation, \N{\mu}{\Sigma} Gaussian, \T transpose, \inv inverse, \norm{.}
+%    \soc = z (state of charge), \ocv = \mathrm{OCV}, \dt = \Delta t
+%  Auto-generated result files (do not edit by hand; they exist after the benchmark run):
+%    tables/cell_<ESTNAME>.tex        per-scenario metrics table for this estimator
+%    figures/cell_<ESTNAME>_nominal.png, figures/cell_<ESTNAME>_init_error.png, ...
+%  where <ESTNAME> is the registered estimator name with non-alphanumerics removed.
+% =============================================================================
+\chapter{<Full algorithm name> (<ACRONYM>)}
+\label{ch:<estname>}
+
+\section*{At a glance}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.76\textwidth}@{}}
+Family & <classical Kalman / embedded robust / observer / ...> \\
+Header & \texttt{include/estkit/<family>/<file>.hpp} \\
+Registered name & \texttt{<ESTNAME>} \\
+State dimension & $n_x = 4$ (cell model) — generic in $n_x, n_u, n_y$ \\
+Cost per step & $\mathcal{O}(\cdot)$, <number> flops for the cell model, no heap \\
+Primary references & \cite{key1,key2} \\
+\end{tabular}
+
+\section{Motivation and aerospace/BMS relevance}
+Why this method exists, what failure mode of the simpler methods it addresses, and where it is
+used (avionics, GNC heritage, automotive BMS ...).  2--4 paragraphs.
+
+\section{Problem statement and assumptions}
+State precisely the model class the method assumes (linear/nonlinear, Gaussian/heavy-tailed,
+bounded/unbounded uncertainty), and the quantities it estimates.  Define every symbol on first
+use.
+
+\section{Derivation}
+Full derivation with numbered equations.  Every symbol defined where it first appears
+("where $\mK_k\in\mathbb{R}^{n_x\times n_y}$ is the Kalman gain ...").  Include the key lemma /
+optimality argument or stability proof sketch from the primary reference, with citation.
+
+\section{Algorithm}
+\begin{algorithm}[H]
+\caption{<ACRONYM> — one sampling period}
+\begin{algorithmic}[1]
+\Require $\xplus_{k-1}, \Pplus_{k-1}, \vu_{k-1}, \vy_k, \vu_k$
+\State \textbf{Time update:} ...
+\State \textbf{Measurement update:} ...
+\Ensure $\xplus_k, \Pplus_k$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Application to the battery model}
+How the generic algorithm is instantiated for $\vx=[\soc, v_1, v_2, h]^\T$, $\vu=[i,T]^\T$,
+$y = v$ (Chapter~\ref{ch:ecm}); the specific Jacobians/tuning; which \texttt{Options} were used
+in the benchmark and why.
+
+\section{Implementation notes}
+Numerical safeguards (symmetrisation, Joseph form, Cholesky jitter...), memory footprint,
+flop count, float32 behaviour, what happens on an MCU (Cortex-M7 estimate), limitations.
+
+\section{Benchmark results}
+\input{tables/cell_<ESTNAME>.tex}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/cell_<ESTNAME>_nominal.png}
+\caption{<ESTNAME> on the nominal eVTOL mission: true and estimated SOC (top), estimation error with the $\pm 2\sigma$ band when available (middle), voltage residual (bottom).}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/cell_<ESTNAME>_init_error.png}
+\caption{<ESTNAME> with a 35\,\% initial SOC error.}
+\end{figure}
+Discussion of the numbers: which scenarios it handles well, where it fails and why (tie the
+explanation back to the assumptions), comparison with the EKF baseline.
+
+\section{Summary}
+Three to five sentences: when to use it, when not to.

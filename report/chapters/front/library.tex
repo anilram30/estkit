@@ -1,0 +1,618 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  The estkit library: architecture and embedded considerations
+% =============================================================================
+\chapter{The \estkit\ library: architecture and embedded considerations}
+\label{ch:library}
+
+The benchmark of this report is a by-product. The artefact is \estkit: a header-only C++17 library
+of seventy state estimators and observers, written once, against one abstract model interface, and
+instantiated for a battery cell, a twelve-cell module, an inertial attitude problem and --- as
+\S\ref{sec:lib-example} demonstrates in fifty lines --- for anything else with a discrete-time
+state-space description. This chapter documents the architecture, the numerical conventions, and
+what it takes to run the result on a flight computer.
+
+\section{Design goals}
+
+Six constraints shaped every decision, and they are worth stating because most of the design
+follows mechanically from them.
+
+\begin{enumerate}[leftmargin=*,topsep=2pt,itemsep=3pt]
+\item \textbf{Model-agnostic.} No estimator may contain battery-specific code. A filter sees only
+$f$, $h$, $\mQ$, $\mR$ and the compile-time dimensions $n_x, n_u, n_y$. This is the difference
+between a library and a product, and it is enforced by the fact that the same filter templates are
+instantiated for the ECM cell model, a reduced two-state cell model, an augmented
+state-and-parameter model, and the attitude problem.
+
+\item \textbf{Header-only.} Every algorithm lives in one header under
+\code{include/estkit/}; the only compiled translation units are the twelve registry files, which
+exist solely to populate the benchmark's lists, and the benchmark executables themselves.
+Consequences: template instantiation happens at the point of use, so dimensions are compile-time
+constants and the optimiser sees through everything; and integration into a target project is a
+copy of one directory.
+
+\item \textbf{No heap, no exceptions, no I/O in the hot path.} Every matrix has compile-time
+dimensions and lives in the object or on the stack. No estimator calls \code{new},
+\code{malloc}, \code{throw}, \code{printf} or anything from \code{<iostream>}.
+\code{std::vector} appears only in batch smoothers (which are explicitly offline) and in the
+host-side benchmark. \code{std::function} appears only in the \code{CellEstimator} adapter's
+configuration hook, which runs once at \code{reset}, never inside \code{step}.
+
+\item \textbf{Deterministic execution time.} No data-dependent loop bounds, no early exits that
+depend on the measurement, no dynamic dispatch inside an algorithm. The number of floating-point
+operations a filter performs at sample $k$ is a function of $n_x, n_u, n_y$ alone. Where an
+algorithm is inherently iterative (the IEKF, the IPLF, the moving-horizon estimators) the
+iteration count is a compile-time or configuration bound and the loop always runs to it or to a
+fixed maximum.
+
+\item \textbf{One switchable arithmetic type.} \code{estkit::Real} is \code{double} by default and
+\code{float} with \code{-DESTKIT\_FLOAT=ON}. There are no \code{double} literals anywhere in the
+library --- every constant is written \code{Real(0.5)} --- so the float build is not a
+recompilation hazard but a supported configuration, measured in \S\ref{sec:me-float}.
+
+\item \textbf{Reproducible.} All randomness comes from one deterministic generator
+(\S\ref{sec:lib-hygiene}); no algorithm reads a clock or a device.
+\end{enumerate}
+
+\section{Directory layout}
+
+\begin{table}[H]\centering\small
+\caption{Layout of \code{include/estkit/} (96 headers, about \num{19000} lines including the
+benchmark and tools).}
+\label{tab:lib-layout}
+\begin{tabular}{@{}lrp{0.52\textwidth}@{}}\toprule
+directory & headers & contents \\ \midrule
+\code{core/} & 4 & \code{linalg.hpp} (fixed-size \code{Mat}/\code{Vec}, LU, Cholesky, QR, rank-one update, DARE, Ackermann), \code{model.hpp} (the model concept and its adapters), \code{rng.hpp}, \code{quaternion.hpp} \\
+\code{filters/} & 30 & Kalman-type filters: EKF/UKF/CKF/CDKF/GHKF families, square-root and $U$--$D$ forms, information filter, adaptive filters, robust filters \\
+\code{observers/} & 10 & deterministic observers: Luenberger, PI, high-gain, sliding-mode, super-twisting, ESO, UIO, DOB, adaptive, interval \\
+\code{parameter/} & 6 & joint and dual state--parameter estimation, RLS, AWTLS capacity \\
+\code{particle/} & 10 & bootstrap, auxiliary, regularised, fast and unscented particle filters, Rao--Blackwellised PF, EnKF, ETKF, Gaussian-sum \\
+\code{smoothers/} & 4 & RTS, unscented RTS, fixed-lag, batch nonlinear least squares \\
+\code{learning/} & 5 & MLP, extreme-learning machine, direct NN regression, NN-augmented EKF \\
+\code{optimization/} & 1 & moving-horizon estimation (full and real-time-iteration variants) \\
+\code{battery/} & 10 & \code{cell.hpp} (parameters, OCV, Preisach, ageing), the ECM and SPM plants, \code{ecm\_model.hpp} (the estimator-side model), datasets, metrics, the \code{CellEstimator} adapter and the registry \\
+\code{pack/} & 7 & pack dataset and pack-level architectures (decentralised, bar--delta, federated, consensus, distributed information) \\
+\code{attitude/} & 9 & IMU dataset and attitude filters (complementary, Madgwick, Mahony, MEKF, invariant EKF, TRIAD/QUEST) \\
+\bottomrule\end{tabular}
+\end{table}
+
+The dependency graph is strictly layered and acyclic: \code{core/} depends on nothing but the
+standard library; \code{filters/}, \code{observers/}, \code{particle/}, \code{smoothers/},
+\code{parameter/}, \code{learning/} and \code{optimization/} depend only on \code{core/}; and
+\code{battery/}, \code{pack/} and \code{attitude/} are the application layers that instantiate them.
+No estimator header includes a battery header. That property is the machine-checkable form of
+design goal~1, and it is why the example of \S\ref{sec:lib-example} works without touching the
+library.
+
+\section{The model concept}
+\label{sec:lib-model}
+
+\estkit\ does not use C++20 \code{concept} syntax (the target is C++17~\cite{iso2017cpp}); a
+``model'' is a duck-typed class that provides the members of Table~\ref{tab:lib-concept}. Optional
+members are detected at compile time with \code{std::void\_t} detection idioms and substituted by
+fall-backs, so a model author writes only what they have.
+
+\begin{table}[H]\centering\small
+\caption{The model concept (\code{core/model.hpp}). $\vx\in\real^{n_x}$, $\vu\in\real^{n_u}$,
+$\vy\in\real^{n_y}$.}
+\label{tab:lib-concept}
+\begin{tabular}{@{}llp{0.46\textwidth}@{}}\toprule
+member & required? & meaning \\ \midrule
+\code{static constexpr int NX, NU, NY} & yes & state, input and measurement dimensions, known at compile time \\
+\code{Vec<NX> f(x, u)} & yes & one-step state transition $\vx_{k+1} = f(\vx_k,\vu_k)$ \\
+\code{Vec<NY> h(x, u)} & yes & measurement map $\vy_k = h(\vx_k,\vu_k)$ (a direct feed-through of $\vu$ is allowed and used) \\
+\code{Mat<NX,NX> Q(x, u)} & yes & process-noise covariance, allowed to depend on the state and input \\
+\code{Mat<NY,NY> R(x, u)} & yes & measurement-noise covariance \\ \midrule
+\code{Mat<NX,NX> F(x, u)} & optional & $\partial f/\partial\vx$; central differences if absent \\
+\code{Mat<NY,NX> H(x, u)} & optional & $\partial h/\partial\vx$; central differences if absent \\
+\code{Mat<NX,NU> B(x, u)} & optional & $\partial f/\partial\vu$; central differences if absent \\
+\code{Vec<NX> constrain(x)} & optional & projection onto the feasible set; identity if absent \\
+\code{static constexpr int NP} & optional & number of tunable parameters \\
+\code{Vec<NP> params()}, \code{set\_params(...)} & optional & parameter access, required for joint/dual estimation \\
+\bottomrule\end{tabular}
+\end{table}
+
+Two design points deserve comment.
+
+\emph{$\mQ$ and $\mR$ are functions, not constants.} This is unusual and it is what lets the
+battery model map current-sensor noise through the input Jacobian,
+$\mQ = \bm b\bm b^\T\sigma_i^2 + \diag(q_{\text{floor}}^2)$ with $\bm b = \partial f/\partial i$,
+so that the process noise is derived from a data-sheet number rather than tuned. It also lets
+$\mR$ carry the feed-through term $\mR = \sigma_v^2 + (R_0(T)\sigma_i)^2$.
+
+\emph{The Jacobian fall-backs are real, not decorative.} The free functions
+\code{jac\_F}, \code{jac\_H}, \code{jac\_B} dispatch at compile time with \code{if constexpr} to
+the analytic member if it exists and to a central-difference approximation otherwise:
+\begin{equation}
+\bigl[\text{numeric\_F}\bigr]_{ij} = \frac{f_i(\vx + \delta_j \bm e_j,\vu) - f_i(\vx - \delta_j\bm e_j,\vu)}{2\delta_j},
+\qquad \delta_j = \epsilon\,\bigl(1 + \abs{x_j}\bigr),
+\label{eq:lib-numjac}
+\end{equation}
+with $\epsilon = 10^{-6}$ in double and $2\times10^{-3}$ in float. The step is relative-plus-absolute
+so that a state near zero is still perturbed usefully, and $\epsilon$ follows the
+$\varepsilon_{\text{mach}}^{1/3}$ rule that balances truncation against cancellation error for
+central differences~\cite{golubvanloan2013}. The cost is $2n_x$ extra evaluations of $f$ per step;
+the benefit is that a model author can get a working EKF before writing any calculus. The unit
+tests check that the ECM model's analytic Jacobians agree with the numeric ones
+(\S\ref{sec:me-timing} notwithstanding, this is a correctness test, not a timing one).
+
+\subsection{\code{AugmentedModel}: parameters as states}
+
+Joint state--parameter estimation is implemented once, as a model adapter, rather than once per
+filter. \code{AugmentedModel<M>} wraps any model that exposes \code{NP}/\code{params()} and
+presents a new model of dimension $n_x + n_p$ with
+\begin{equation}
+\vx^{\text{aug}} = \begin{bmatrix}\vx\\ \vtheta\end{bmatrix},\qquad
+\vtheta_{k+1} = \vtheta_k + \vw^\theta_k,\quad \vw^\theta_k\sim\N{\bm 0}{\diag(\bm q_\theta)},
+\label{eq:lib-aug}
+\end{equation}
+the random-walk parameter model of Plett~\cite{plett2004ekf3}. Its $f$ and $h$ apply the current
+$\vtheta$ to a copy of the base model before evaluating; its $\mF$ and $\mH$ take the base
+Jacobians in the top-left block and fill the $\partial/\partial\vtheta$ columns by central
+differences, because the derivative of a model with respect to its own parameters is rarely
+available in closed form. Because \code{AugmentedModel<M>} \emph{is} a model, every filter in the
+library becomes a joint estimator for free: \code{Ekf<AugmentedModel<EcmModel>>} is the joint EKF of
+Chapter~\ref{ch:jointekf} and \code{Ukf<AugmentedModel<EcmModel>>} the joint UKF of
+Chapter~\ref{ch:jointukf}, with no filter code written.
+
+\subsection{\code{constrain}: keeping estimates physical}
+
+\code{constrain} is the library's minimal answer to constrained estimation~\cite{simon2010constraints}.
+For the cell model it is the clip $\soc\in[-0.05,1.05]$, $h\in[-1,1]$; the tolerance beyond
+$[0,1]$ is deliberate, so that the filter can report a small excursion (which is diagnostic
+information) rather than being silently saturated at the boundary. Filters apply it after the
+measurement update when \code{opts.apply\_constraints} is set, and skip it when the algorithm is
+explicitly unconstrained. Note that clipping is a projection of the \emph{mean} only: it does not
+condition the covariance, which is why the constrained EKF of Chapter~\ref{ch:constrainedekf}
+exists as a separate, more principled treatment.
+
+\section{The generic filter interface}
+\label{sec:lib-filter}
+
+A filter is likewise duck-typed. \code{CellEstimator<Filter>} --- and any user code --- requires:
+
+\begin{lstlisting}
+template <class Model>
+class MyFilter {
+public:
+  static constexpr int NX = Model::NX, NU = Model::NU, NY = Model::NY;
+  using X = Vec<NX>; using U = Vec<NU>; using Y = Vec<NY>;
+
+  struct Options { /* every tuning knob, with a sensible default */ } opts;
+
+  explicit MyFilter(const Model& m);              // stores a copy of the model
+  void init(const X& x0, const Mat<NX,NX>& P0);   // P0 may be ignored by observers
+  void predict(const U& u);                       // time update with u_{k-1}
+  Y    predict_measurement(const U& u) const;     // h(x^-, u_k), BEFORE update()
+  void update(const Y& y, const U& u);            // measurement update with y_k, u_k
+  const X& x() const;                             // current estimate
+  const Mat<NX,NX>& P() const;                    // OPTIONAL: omit if there is no covariance
+  Model& model(); const Model& model() const;
+};
+\end{lstlisting}
+
+Tuning is a public \code{opts} member rather than constructor arguments, so that a registry entry
+can configure a filter with a lambda without the filter knowing anything about the benchmark.
+\code{P()} is optional and detected the same way the model's optional members are: an estimator
+that publishes a covariance gets a $\pm2\sigma$ band in its figures and a \code{soc\_std} column,
+and one that does not reports $-1$ and is simply not scored on it. Filters whose predict and update
+are structurally inseparable --- moving-horizon estimation, the particle filters --- are permitted
+to do all the work in \code{update()} and keep \code{predict()} cheap, provided the external
+contract of \S\ref{sec:me-timing-convention} still holds.
+
+\subsection{The adapter and the registries}
+
+\code{CellEstimator<Filter, Model>} (\code{battery/cell\_estimator.hpp}) is the bridge between the
+generic world and the benchmark's \code{Estimator} interface. It owns a \code{Model} and a
+\code{Filter}, rebuilds both on \code{reset}, applies the optional configuration lambda, calls
+\code{init(model.x0(cfg), model.P0(cfg))}, and then implements \code{step} exactly as the algorithm
+box in \S\ref{sec:me-timing-convention}. It exposes \code{soc()} as \code{x()[Model::IZ]} and
+\code{soc\_std()} as $\sqrt{\mP_{\soc\soc}}$ when the filter has a covariance. Two optional hooks
+extend it without subclassing:
+\begin{lstlisting}
+add_cell_estimator<JointEkf<EcmModel>>(list, "JointEKF", "soh")
+    .with_capacity([](const JointEkf<EcmModel>& f) { return f.x()[4]; });
+add_cell_estimator<IntervalObserver<EcmModel>>(list, "IntervalObserver", "observers")
+    .with_bounds([](const auto& f) { return f.lower()[0]; },
+                 [](const auto& f) { return f.upper()[0]; });
+\end{lstlisting}
+Methods that are not model-generic by nature --- Coulomb counting, direct neural regression, the
+pack architectures --- implement \code{estkit::Estimator} directly instead of going through the
+adapter.
+
+Registration is one function per family in one translation unit
+(\code{benchmarks/\allowbreak registry\_<family>.cpp}), each appending to a \code{std::vector<std::unique\_ptr<Estimator>>}.
+Splitting the registries this way is not organisational tidiness: instantiating seventy filter
+templates against a four-state model in a single translation unit takes minutes and gigabytes, and
+twelve independent units compile in parallel.
+
+\section{A worked example: a completely different model}
+\label{sec:lib-example}
+
+The claim that these estimators are model-agnostic is cheap to make and easy to check. What
+follows is a complete, self-contained navigation model --- a two-dimensional constant-velocity
+vehicle (a small drone) with a commanded acceleration input and a \emph{range} measurement to a
+fixed beacon --- and its use with the same \code{Ekf} and \code{Ukf} templates that produce the
+battery results. Nothing in the library changes. The model is nonlinear in the measurement, which
+is what makes the comparison interesting.
+
+The state is $\vx = [p_x, p_y, v_x, v_y]^\T$ in metres and metres per second, the input
+$\vu = [a_x, a_y]^\T$ the commanded acceleration, and the measurement the range to a beacon at
+$(b_x,b_y)$:
+\begin{equation}
+\vx_{k+1} = \underbrace{\begin{bmatrix}1&0&\dt&0\\0&1&0&\dt\\0&0&1&0\\0&0&0&1\end{bmatrix}}_{\mF}\vx_k
+ + \underbrace{\begin{bmatrix}\tfrac12\dt^2&0\\0&\tfrac12\dt^2\\ \dt&0\\0&\dt\end{bmatrix}}_{\mG}\vu_k
+ + \mG\,\bm\eta_k,
+\qquad
+y_k = \sqrt{(p_x-b_x)^2 + (p_y-b_y)^2} + v_k,
+\label{eq:lib-cv}
+\end{equation}
+with $\bm\eta_k\sim\N{\bm 0}{\sigma_a^2\mI_2}$ an unmodelled acceleration and
+$v_k\sim\N{0}{\sigma_r^2}$. The process-noise covariance is the standard piecewise-white
+acceleration form $\mQ = \mG\mG^\T\sigma_a^2$~\cite{barshalom2001}. Note what is \emph{not}
+written below: there is no \code{H} member, so the library supplies $\partial h/\partial\vx$ by
+central differences.
+
+\begin{lstlisting}
+#include "estkit/core/model.hpp"
+#include "estkit/filters/ekf.hpp"
+#include "estkit/filters/ukf.hpp"
+using namespace estkit;
+
+// 2-D constant-velocity drone with a commanded acceleration and a beacon range.
+struct RangeCV {
+    static constexpr int NX = 4, NU = 2, NY = 1;   // x=[px,py,vx,vy], u=[ax,ay], y=range
+    Real dt = Real(0.1);
+    Real bx = Real(0), by = Real(0);   // beacon position [m]
+    Real sigma_a = Real(0.30);         // process noise on acceleration [m/s^2]
+    Real sigma_r = Real(0.50);         // range measurement noise [m]
+
+    Vec<NX> f(const Vec<NX>& x, const Vec<NU>& u) const {
+        Vec<NX> xn;
+        xn[0] = x[0] + dt * x[2] + Real(0.5) * dt * dt * u[0];
+        xn[1] = x[1] + dt * x[3] + Real(0.5) * dt * dt * u[1];
+        xn[2] = x[2] + dt * u[0];
+        xn[3] = x[3] + dt * u[1];
+        return xn;
+    }
+    Mat<NX, NX> F(const Vec<NX>&, const Vec<NU>&) const {
+        Mat<NX, NX> Fm = Mat<NX, NX>::identity();
+        Fm(0, 2) = dt; Fm(1, 3) = dt;
+        return Fm;
+    }
+    Vec<NY> h(const Vec<NX>& x, const Vec<NU>&) const {
+        Vec<NY> y;
+        y[0] = std::sqrt(sq(x[0] - bx) + sq(x[1] - by) + Real(1e-9));
+        return y;
+    }
+    // No H(): core/model.hpp supplies dh/dx by central differences.
+    Mat<NX, NX> Q(const Vec<NX>&, const Vec<NU>&) const {
+        Mat<NX, 2> G;                                    // piecewise-white acceleration
+        G(0, 0) = Real(0.5) * dt * dt;  G(1, 1) = Real(0.5) * dt * dt;
+        G(2, 0) = dt;                   G(3, 1) = dt;
+        return G * G.t() * sq(sigma_a);
+    }
+    Mat<NY, NY> R(const Vec<NX>&, const Vec<NU>&) const {
+        Mat<NY, NY> Rm; Rm(0, 0) = sq(sigma_r); return Rm;
+    }
+};
+\end{lstlisting}
+
+That is the entire model. Using it is fifteen lines, and the loop is the same four calls the
+battery adapter makes:
+
+\begin{lstlisting}
+RangeCV m;  m.bx = Real(120);  m.by = Real(-40);
+
+Ekf<RangeCV> ekf(m);
+Ukf<RangeCV> ukf(m);  ukf.opts.alpha = Real(0.5);     // wider sigma points for the range arc
+
+Vec<4> x0;  x0[0] = 0; x0[1] = 0; x0[2] = 12; x0[3] = 0;
+Mat<4,4> P0;  P0(0,0) = P0(1,1) = Real(25);  P0(2,2) = P0(3,3) = Real(4);
+ekf.init(x0, P0);   ukf.init(x0, P0);
+
+Vec<2> u_prev;  bool have_prev = false;
+for (int k = 0; k < n; ++k) {
+    const Vec<2> u = command(k);                       // [ax, ay] from the autopilot
+    if (have_prev) { ekf.predict(u_prev); ukf.predict(u_prev); }
+    const Real r_pred = ekf.predict_measurement(u)[0];  // predicted range, for gating
+    Vec<1> y;  y[0] = range_meas[k];
+    ekf.update(y, u);   ukf.update(y, u);
+    u_prev = u;  have_prev = true;
+}
+// ekf.x()[0], ekf.x()[1] are the position estimate; ekf.P() its covariance.
+\end{lstlisting}
+
+This listing is shipped as \code{examples/drone\_range\_ekf\_ukf.cpp} and is built and run by the
+test suite. On its \SI{60}{\second} synthetic trajectory --- cruise at \SI{12}{\metre\per\second}
+with a \SI{20}{\second} banked turn, $\sigma_r=\SI{0.5}{\metre}$ at \SI{10}{\hertz} --- the EKF
+reaches a position RMSE of \SI{1.9}{\metre}, the UKF and SR-UKF \SI{2.6}{\metre} and a
+500-particle bootstrap filter \SI{5.1}{\metre}: on this well-observed geometry the tangent
+linearisation is adequate, the wider sigma points chosen for the UKF ($\alpha=0.5$) trade a
+little accuracy for robustness to a large initial error, and the particle cloud is limited by its
+sample size. \code{sizeof(Ekf<RangeCV>)} is \SI{272}{\byte} and \code{sizeof(Ukf<RangeCV>)}
+\SI{712}{\byte} --- the whole estimator, model included, because this model has no lookup table.
+The same substitution works for every one of the seventy estimators: \code{SqrtUkf<RangeCV>},
+\code{BootstrapPf<RangeCV>}, \code{Mhe<RangeCV>} and \code{Rts<RangeCV>} all compile and run
+against the listing above without modification.
+
+\section{The linear-algebra kernel}
+\label{sec:lib-linalg}
+
+\code{core/linalg.hpp} is about 430 lines and contains no more than the estimators actually need.
+\code{Mat<R,C>} is a row-major \code{Real d[R*C]} with compile-time dimensions; \code{Vec<N>} is
+\code{Mat<N,1>}. There is no expression-template machinery: at these sizes ($n_x \le 6$ for the
+cell models, $\le 7$ for attitude with bias) the temporaries are a handful of registers and cache
+lines, and readable code that the optimiser fully unrolls beats a template metaprogram that it
+does not. Table~\ref{tab:lib-linalg} lists the decompositions and why each one is present.
+
+\begin{table}[H]\centering\small
+\caption{The linear-algebra kernel and its clients.}
+\label{tab:lib-linalg}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.2\textwidth}>{\raggedright\arraybackslash}p{0.2\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}@{}}\toprule
+routine & reference & why it exists \\ \midrule
+LU with partial pivoting & \cite[Alg.~3.4.1]{golubvanloan2013} & general \code{inverse}, \code{solve}, \code{det}; the innovation-covariance inverse $\mS^{-1}$ for $n_y>2$. Specialised closed forms for $1\times1$ and $2\times2$ avoid it in the common case \\
+Cholesky $\mA=\mL\mL^\T$ & \cite[Alg.~4.2.1]{golubvanloan2013} & \code{solve\_spd}; the matrix square root of $\mP$ that every sigma-point filter needs; detection of a lost positive definiteness (it returns \code{false}) \\
+\code{cholesky\_safe} & --- & the same with a diagonal jitter ladder ($0$, $10^{-12}(1+\norm{\mA}_\infty)$, then $\times100$ up to eight times) so that a sigma-point filter degrades instead of aborting when $\mP$ loses definiteness by round-off \\
+Householder QR ($\mR$ only) & \cite[Alg.~5.2.1]{golubvanloan2013}, \cite[Ch.~12]{kailath2000} & the array form of the square-root filters: the post-array is the triangular factor of the pre-array, so SR-EKF and SR-UKF never form $\mP$ explicitly. The diagonal is forced non-negative so the factor is unique \\
+Rank-one Cholesky update/downdate & \cite[\S6.5.4]{golubvanloan2013}, \cite{gill1974modifying} & the SR-UKF's measurement update, which adds and subtracts rank-one terms from $\mS_x$ directly; returns \code{false} if a downdate would destroy definiteness \\
+DARE by structure-preserving doubling & \cite{anderson1978doubling,chu2004doubling} & the steady-state Kalman gain of the SSKF (Chapter~\ref{ch:sskf}) and the initial covariance of several observers. Doubling converges quadratically; the plain fixed-point iteration has rate $\rho((\mI-\mK\mC)\mA)^2 \approx 0.9994$ per step at \SI{10}{\hertz} and needs $10^5$ iterations, which is why \code{dare\_iterate} warm-starts from the doubling result \\
+Conditioned Ackermann pole placement & \cite{ackermann1972,ogata2010}, cf.~\cite{kautsky1985} & observer gains for the Luenberger, PI, high-gain and sliding-mode observers \\
+\bottomrule\end{tabular}
+\end{table}
+
+The last entry is worth a paragraph, because it is the one place where the textbook formula fails
+outright on this problem. Ackermann's formula
+$\mL = \varphi(\mA)\,\mathcal{O}^{-1}\bm e_{n}$, with $\mathcal{O}$ the observability matrix and
+$\varphi$ the desired characteristic polynomial, is exact in real arithmetic and useless in
+floating point when the plant is finely sampled: at \SI{10}{\hertz} all four poles of the cell
+model sit within $10^{-3}$ of $z=1$, $\varphi(\mA)$ is a difference of nearly-cancelling terms, and
+$\det\mathcal{O} \sim 10^{-18}$. \code{ackermann\_observer\_poles} therefore shifts and scales the
+pair before applying the formula:
+\begin{equation}
+\mA' = \frac{\mA - \sigma\mI}{\gamma},\qquad p_i' = \frac{p_i-\sigma}{\gamma},
+\qquad \sigma = \frac{1}{n}\sum_i p_i,
+\qquad \gamma = \max\Bigl(\abs{1-\sigma},\ \max_i\abs{p_i-\sigma}\Bigr),
+\label{eq:lib-ackermann}
+\end{equation}
+computes $\mL'$ for the transformed pair and returns $\mL = \gamma\mL'$, which is exact because the
+transformation is a similarity in the relevant sense --- $\mathcal{O}$ is unchanged up to row
+scaling and $\varphi'(\mA') = \gamma^{-n}\varphi(\mA)$. This is the same balancing idea that robust
+pole-placement codes use~\cite{kautsky1985}, reduced to what a scalar-output observer needs. The
+unit tests verify the placement through Cayley--Hamilton for both a benign pair and a battery-like
+pair with all poles at $0.990$--$0.996$.
+
+\section{Numerical hygiene conventions}
+\label{sec:lib-hygiene}
+
+The library applies six rules uniformly, and every one of them exists because of a failure observed
+during development.
+
+\begin{enumerate}[leftmargin=*,topsep=2pt,itemsep=3pt]
+\item \textbf{Symmetrise after every covariance update.} \code{P.symmetrize()} replaces $\mP$ by
+$\frac12(\mP+\mP^\T)$ in place. Asymmetry of order $\varepsilon_{\text{mach}}$ per step accumulates,
+and once $\mP$ is asymmetric the Cholesky factorisation inside a sigma-point filter is factorising
+something that is not a covariance.
+
+\item \textbf{Joseph form where the gain may not be optimal.} The standard update
+$\Pplus = (\mI-\mK\mH)\Pminus$ is a difference of positive semi-definite matrices and is guaranteed
+positive semi-definite only for the optimal $\mK$. The Joseph
+form~\cite{bucyjoseph1968} $\Pplus = (\mI-\mK\mH)\Pminus(\mI-\mK\mH)^\T + \mK\mR\mK^\T$ is a sum of
+two positive semi-definite terms and holds for \emph{any} $\mK$ --- which is exactly the situation
+in every robust, fading-memory, constrained or gain-modified filter in Parts~IV--VI. It costs one
+extra $n_x\times n_x$ product and is the default (\code{opts.joseph = true}).
+
+\item \textbf{Never produce a \code{NaN}; keep the last good estimate.} Divisions by an innovation
+covariance are floored; \code{inverse} returns a \code{NaN}-filled matrix on a singular input, which
+callers test with \code{is\_finite()} rather than propagating. A filter that cannot compute an
+update keeps $\xplus_k = \xminus_k$. This matters because the benchmark's divergence criterion
+(Definition~\ref{def:me-div}) treats a \code{NaN} as a hard failure, which is the correct
+operational semantics: a BMS that publishes \code{NaN} has failed, one that publishes a stale value
+has degraded.
+
+\item \textbf{Guard the exponential.} \code{safe\_exp} clamps its argument to $[-700,700]$ before
+\code{std::exp}. The Arrhenius factors in the cell model evaluate
+$\exp(E_a/R\,(1/T - 1/T_{\text{ref}}))$, and a transient $T\to0$ during a bad update would otherwise
+produce an infinity that propagates into every subsequent state.
+
+\item \textbf{No \code{double} literals.} Every constant is \code{Real(...)}; \code{-Wall -Wextra
+-Wpedantic -Werror} is enforced in both the double and the float build, so an accidental
+double-precision constant in the float build is a compile error rather than a silent promotion.
+
+\item \textbf{One generator, explicitly seeded.} \code{Rng} is xoshiro256$^{**}$ with
+\code{splitmix64} seeding~\cite{blackman2021xoshiro} and Marsaglia-polar
+normals~\cite{marsaglia1964polar}: 64-bit integer arithmetic only, identical streams on every
+platform, no \code{std::random\_device}, no standard-library distribution objects (whose algorithms
+are implementation-defined and therefore not reproducible across toolchains).
+\end{enumerate}
+
+\section{Memory and timing by family}
+
+The detailed per-estimator numbers are in the results chapters (Part~XIII); the orders of magnitude
+are worth having here, because they determine what is deployable.
+
+\begin{table}[H]\centering\small
+\caption{Order-of-magnitude cost per family for the four-state cell model, double precision,
+measured as in \S\ref{sec:me-timing}. ``Filter state'' excludes the \SI{4.1}{\kilo\byte} model copy
+that \code{sizeof} includes (\S\ref{sec:me-timing} and Table~\ref{tab:me-mem}).}
+\label{tab:lib-cost}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}rr>{\raggedright\arraybackslash}p{0.38\textwidth}@{}}\toprule
+family & ns/step & filter state & dominant cost \\ \midrule
+Coulomb counting, OCV lookup & 60--1100 & $<100$\,B & one model evaluation; OCV inversion is 40 bisection steps \\
+Luenberger / PI / SMO / ESO observers & 60--200 & $\sim100$\,B & one gain--residual product; the gain is computed at \code{reset} \\
+EKF and its exact re-implementations & 330--700 & $\sim250$\,B & $\mF\mP\mF^\T$ and the Joseph form: $\mathcal{O}(n_x^3)$ \\
+Sigma-point filters (UKF, CKF, CDKF, SR-UKF) & 1--4\,\si{\micro\second} & 0.4--1\,kB & $2n_x+1$ model evaluations plus a Cholesky per step \\
+Joint / dual state--parameter filters & 2--20\,\si{\micro\second} & 0.5--2\,kB & numeric $\partial/\partial\vtheta$ columns: $2n_p$ extra model evaluations \\
+Particle / ensemble filters & 20--200\,\si{\micro\second} & 5--60\,kB & $N_p$ model evaluations and a resampling pass per step \\
+Moving-horizon estimation & 20--300\,\si{\micro\second} & 2--20\,kB & a Gauss--Newton solve over a window of length $N$ per step \\
+\bottomrule\end{tabular}
+\end{table}
+
+The span is four orders of magnitude in time and three in memory, which is the single most useful
+fact in this report for an implementer: on a \SI{10}{\hertz} twelve-cell BMS, everything down to
+the sigma-point filters is free, the joint estimators are affordable, and the particle filters are
+a deliberate architectural commitment.
+
+\section{Running on a microcontroller}
+\label{sec:lib-mcu}
+
+Nothing in the library targets a specific device, and nothing in it prevents deployment on one. The
+practical checklist is short.
+
+\paragraph{Floating-point unit.} The Cortex-M7 may be configured with an FPv5-D16 unit that
+implements double precision in hardware; the Cortex-M4 and the smaller M7 variants have
+single-precision only~\cite{arm2021cortexm7}. On a single-precision part the \code{double} build
+runs in software emulation, an order of magnitude slower, and the float build
+(\code{-DESTKIT\_FLOAT=ON}) is effectively mandatory. \S\ref{sec:me-float} is the evidence base for
+which estimators survive that: the short answer is that the factored forms (SR-EKF, $U$--$D$,
+SR-UKF) are indifferent to the precision and the conventional covariance recursions are not.
+
+\paragraph{Compiler flags.} \code{-fno-exceptions -fno-rtti} compile the library as written; the
+only \code{dynamic\_cast} in the whole tree is in the host-side benchmark, where it distinguishes
+batch from recursive estimators, and never in an estimator. \code{-ffast-math} should \emph{not} be
+used: it permits reassociation, which breaks the compensated orderings the factored filters rely
+on, and it disables the \code{isfinite} tests that rule~3 of \S\ref{sec:lib-hygiene} depends on.
+
+\paragraph{Allocation and stack.} Instantiate estimators as file-scope or member objects, never on
+the stack of a task with a small stack and never with \code{new}. \code{sizeof(Filter)} is the
+complete static cost, but it is \emph{not} the peak stack usage: the library returns matrices by
+value, so a step transiently holds several $n_x\times n_x$ temporaries. For the EKF at $n_x=4$
+this is a few hundred bytes. It is not negligible for the sigma-point filters, which materialise
+$2n_x+1$ sigma points ($\approx 300$\,B at $n_x=4$ in double, and a $7\times7$ attitude model needs
+about \SI{1.7}{\kilo\byte}), nor for the particle filters, whose per-step temporaries scale with
+$N_p$ and which should be given a dedicated task stack of at least twice \code{sizeof(Filter)}.
+Measure the high-water mark on target; do not infer it.
+
+\paragraph{Shared read-only data.} As noted in \S\ref{sec:me-timing}, a per-estimator model copy
+carries a \SI{3.9}{\kilo\byte} OCV table. On a target, place one \code{const} table in flash and
+make the model hold a pointer to it; this turns a twelve-cell decentralised EKF from
+\SI{52}{\kilo\byte} of RAM into about \SI{6}{\kilo\byte}. The library does not do this itself
+because the benchmark measures a self-contained object.
+
+\paragraph{Determinism and scheduling.} Execution time is data-independent by construction
+(design goal~4), so the estimator can be given a fixed budget in a rate-monotonic schedule rather
+than a worst-case-plus-margin. The exceptions to name in a timing analysis are: the OCV inversion in
+the OCV-lookup baseline and the hybrid (a fixed 40-step bisection --- bounded, but not free); the
+iterated filters, whose iteration count is bounded by \code{opts.max\_iter}; \code{cholesky\_safe},
+whose jitter ladder can take up to eight factorisation attempts; and the particle filters'
+resampling, which is $\mathcal{O}(N_p)$ with a data-independent trip count.
+
+\paragraph{No I/O.} No estimator performs any input or output. Logging, if wanted, belongs in the
+caller.
+
+\section{Certification-relevant properties}
+
+The library is not certified and has not been developed under a DO-178C
+process~\cite{rtca2011do178c}. What can honestly be said is that several of the properties that
+such a process demands of the \emph{code} hold by construction here, which reduces the distance
+that a future qualification effort would have to cover. Stating them precisely also makes clear
+what is missing.
+
+\begin{table}[H]\centering\small
+\caption{Properties that hold by construction, and what is still absent. The right-hand column
+names the kind of objective a software-assurance process would raise; it is \emph{not} a claim of
+compliance.}
+\label{tab:lib-cert}
+\begin{tabular}{@{}p{0.36\textwidth}p{0.26\textwidth}p{0.30\textwidth}@{}}\toprule
+property of \estkit & holds? & relevance \\ \midrule
+No dynamic memory allocation after initialisation & yes, in every estimator & removes an entire class of objectives about heap exhaustion and fragmentation; rule~3 of the ``Power of Ten''~\cite{holzmann2006power} \\
+All loops have statically bounded trip counts & yes & worst-case execution time is analysable; rule~2 of~\cite{holzmann2006power} \\
+No recursion & yes & bounded stack depth \\
+No exceptions, no RTTI in estimator code & yes & no non-local control flow to analyse \\
+Data-independent control flow & yes, except where named in \S\ref{sec:lib-mcu} & a single measured execution time is representative \\
+Deterministic, bit-reproducible results for a given input and build & yes & re-running a recorded flight reproduces the recorded output exactly, which is what a post-incident analysis needs \\
+Return values checked & partially: factorisations return \code{bool} and callers act on it & \\
+\midrule
+Requirements-to-code traceability & \textbf{no} & would have to be created \\
+Structural coverage (MC/DC) evidence & \textbf{no} & the unit tests are functional, not coverage-driven \\
+Coding-standard compliance evidence (e.g.\ MISRA C++~\cite{misra2008cpp}) & \textbf{no} & templates and \code{auto} are used freely; a subset would need justification \\
+Tool qualification for the compiler & \textbf{no} & \\
+Verification of the floating-point behaviour on target & \textbf{no} & only the host build is measured here \\
+\bottomrule\end{tabular}
+\end{table}
+
+The honest summary is that \estkit\ is written in a style that would not have to be rewritten for a
+qualification effort, and that everything a qualification effort actually consists of --- the
+requirements, the traceability, the coverage, the target-hardware verification --- remains to be
+done.
+
+\section{Test strategy}
+
+Three layers, in increasing scope and decreasing strength.
+
+\emph{Invariants (unit tests).} \code{tests/unit\_tests.cpp}, described in \S\ref{sec:me-timing},
+checks algebraic identities rather than recorded numbers: $\mA\mA^{-1}=\mI$,
+$\mL\mL^\T=\mA$, $\mR^\T\mR = \mB^\T\mB$, update-then-downdate is the identity, Cayley--Hamilton
+for the placed observer poles, the Riccati residual, analytic-versus-numeric Jacobians, OCV
+monotonicity and range, the lithium balance, and Coulombic consistency of both plants. It runs in
+both precisions and is the gate in \code{run\_all.sh}.
+
+\emph{Acceptance (benchmark).} Every estimator must, on the ECM plant and the nominal scenario,
+reach $\text{RMSE}_{\text{ss}} < 0.02$, and on \code{init\_error} must converge without diverging
+(\code{docs/ESTIMATOR\_API.md} \S5). Robustness-oriented methods must additionally do what they
+claim on their target scenario --- a Huber filter that does not beat the EKF on \code{outliers} has
+failed its own specification, and the report says so where it happens.
+
+\emph{External cross-validation.} \S\ref{sec:me-crossval}: FilterPy for the EKF, UKF and RTS
+smoother; PyBaMM for the SPM plant; \code{ahrs} for Madgwick and Mahony. This is the only layer
+that can catch an error shared between the implementation and its own tests, and it is the reason
+the shared infrastructure --- linear algebra, OCV table, harness timing --- can be trusted.
+
+A fourth layer that is deliberately \emph{not} used: comparing against previously recorded outputs
+of the library itself. Golden-output tests lock in whatever the code did on the day they were
+written, including its bugs.
+
+\section{Adding a new estimator}
+\label{sec:lib-newest}
+
+The checklist below is \code{docs/ESTIMATOR\_API.md} condensed; it is the contract a contributor
+works to.
+
+\begin{enumerate}[leftmargin=*,topsep=2pt,itemsep=3pt]
+\item \textbf{Write one header} under the family directory, \code{namespace estkit}, templated on
+\code{class Model}, satisfying the interface of \S\ref{sec:lib-filter}. Begin the file with a
+comment block giving the algorithm's exact primary references (authors, year, title, venue,
+volume, pages) and the recursion in four or five lines.
+
+\item \textbf{Touch the model only through the concept.} Use \code{jac\_F}, \code{jac\_H},
+\code{jac\_B}, \code{constrain} from \code{core/model.hpp}; never \code{\#include} a battery
+header; never assume $n_y=1$ or that $\mF$ is diagonal. If the algorithm needs a linear system,
+obtain it by linearising at the current estimate (gain scheduling) or once at \code{init} (fixed
+gain) --- both are legitimate, but say which in the chapter.
+
+\item \textbf{Respect the numerical rules} of \S\ref{sec:lib-hygiene}: symmetrise, prefer Joseph,
+use \code{cholesky\_safe}/\code{qr\_r}/\code{chol\_update}/\code{solve\_spd} rather than rolling
+your own, floor every division, never emit a \code{NaN}, and keep the step
+$\mathcal{O}(n_x^3)$ or better with no allocation and no I/O.
+
+\item \textbf{Put every tuning knob in \code{struct Options}} with a default that works, so the
+registry entry needs no arguments in the common case.
+
+\item \textbf{Register it} in the family's \code{benchmarks/registry\_*.cpp}:\\
+\code{add\_cell\_estimator<MyFilter<EcmModel>>(list, "MyFilter", "family")},\\
+adding
+\code{.with\_capacity(...)} or \code{.with\_bounds(...)} if the method reports a capacity or an
+interval. A second registration with a configuration lambda is the way to benchmark a tuned
+variant against the default.
+
+\item \textbf{Build warning-free in both precisions}:
+\code{cmake -S . -B build \&\& cmake --build build} and
+\code{cmake -S . -B build\_f -DESTKIT\_FLOAT=ON \&\& cmake --build build\_f}, with
+\code{-Wall -Wextra -Wpedantic -Werror}.
+
+\item \textbf{Run it and read the table}:
+\code{./build/bench\_cell --plant ecm --profile evtol --scenario all --only MyFilter --out results/dev},
+then \code{./build/unit\_tests}. Check the acceptance criteria above.
+
+\item \textbf{Write the chapter} as \code{<family>/<Name>.tex} under \code{report/chapters/},
+following the \code{TEMPLATE.tex} in that directory --- motivation, assumptions, derivation with every symbol
+defined, algorithm box, instantiation for the battery model, implementation notes (flop count,
+memory, float32 behaviour, MCU estimate), the results discussion, and a summary that says when
+\emph{not} to use the method. Citations go to \code{refs.bib} or to
+\code{refs\_additions\_<family>.bib} with complete bibliographic data.
+\end{enumerate}
+
+Steps 1--6 take an afternoon for a filter of the Kalman family. Step 8 takes longer, and that
+asymmetry is the point: the value of this library is not that it contains seventy algorithms but
+that each of them is documented well enough to be chosen against.

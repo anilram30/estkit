@@ -1,0 +1,840 @@
+[ecm|evtol|nominal       |s1] CoulombCounting            rmse= 0.0028 ss= 0.0036 max= 0.004 conv=    0.0s div=0        61 ns/step
+[ecm|evtol|nominal       |s1] OCVLookup                  rmse= 0.0154 ss= 0.0131 max= 0.043 conv=    0.0s div=0      1250 ns/step
+[ecm|evtol|nominal       |s1] CoulombOCVHybrid           rmse= 0.0028 ss= 0.0017 max= 0.005 conv=    0.0s div=0       189 ns/step
+[ecm|evtol|nominal       |s1] EKF                        rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       360 ns/step
+[ecm|evtol|nominal       |s1] UKF                        rmse= 0.0022 ss= 0.0005 max= 0.040 conv=    0.4s div=0      1059 ns/step
+[ecm|evtol|nominal       |s1] LKF                        rmse= 0.0324 ss= 0.0119 max= 0.063 conv=    0.0s div=0       294 ns/step
+[ecm|evtol|nominal       |s1] IEKF                       rmse= 0.0031 ss= 0.0003 max= 0.014 conv=    0.0s div=0       439 ns/step
+[ecm|evtol|nominal       |s1] CKF                        rmse= 0.0006 ss= 0.0005 max= 0.010 conv=    0.0s div=0       971 ns/step
+[ecm|evtol|nominal       |s1] SCKF                       rmse= 0.0006 ss= 0.0005 max= 0.010 conv=    0.0s div=0      1328 ns/step
+[ecm|evtol|nominal       |s1] CKF5                       rmse= 0.0007 ss= 0.0005 max= 0.015 conv=    0.0s div=0      2823 ns/step
+[ecm|evtol|nominal       |s1] CDKF                       rmse= 0.0006 ss= 0.0004 max= 0.015 conv=    0.0s div=0      1090 ns/step
+[ecm|evtol|nominal       |s1] GHKF                       rmse= 0.0006 ss= 0.0002 max= 0.015 conv=    0.0s div=0      9300 ns/step
+[ecm|evtol|nominal       |s1] IPLF                       rmse= 0.0048 ss= 0.0006 max= 0.035 conv=    0.3s div=0      1866 ns/step
+[ecm|evtol|nominal       |s1] EIF                        rmse= 0.0025 ss= 0.0003 max= 0.013 conv=    0.0s div=0       891 ns/step
+[ecm|evtol|nominal       |s1] SR-EKF                     rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       689 ns/step
+[ecm|evtol|nominal       |s1] SR-UKF                     rmse= 0.0024 ss= 0.0014 max= 0.040 conv=    0.4s div=0      1305 ns/step
+[ecm|evtol|nominal       |s1] UD-EKF                     rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       382 ns/step
+[ecm|evtol|nominal       |s1] SO-EKF                     rmse= 0.0039 ss= 0.0007 max= 0.039 conv=    0.4s div=0      2880 ns/step
+[ecm|evtol|nominal       |s1] SageHusa-AKF               rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       370 ns/step
+[ecm|evtol|nominal       |s1] IAE-AKF                    rmse= 0.0012 ss= 0.0005 max= 0.013 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|nominal       |s1] VB-AKF                     rmse= 0.0016 ss= 0.0003 max= 0.013 conv=    0.0s div=0       632 ns/step
+[ecm|evtol|nominal       |s1] STF                        rmse= 0.0024 ss= 0.0009 max= 0.031 conv=    0.0s div=0       418 ns/step
+[ecm|evtol|nominal       |s1] Fading-EKF                 rmse= 0.0019 ss= 0.0006 max= 0.013 conv=    0.0s div=0       344 ns/step
+[ecm|evtol|nominal       |s1] Fuzzy-AKF                  rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       579 ns/step
+[ecm|evtol|nominal       |s1] IMM                        rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0      1275 ns/step
+[ecm|evtol|nominal       |s1] MMAE                       rmse= 0.0043 ss= 0.0037 max= 0.013 conv=    0.0s div=0      1151 ns/step
+[ecm|evtol|nominal       |s1] Schmidt-KF                 rmse= 0.0039 ss= 0.0051 max= 0.013 conv=    0.0s div=0      1029 ns/step
+[ecm|evtol|nominal       |s1] Hinf-EKF                   rmse= 0.0028 ss= 0.0002 max= 0.013 conv=    0.0s div=0       582 ns/step
+[ecm|evtol|nominal       |s1] Huber-EKF                  rmse= 0.0011 ss= 0.0005 max= 0.013 conv=    0.0s div=0       476 ns/step
+[ecm|evtol|nominal       |s1] MC-EKF                     rmse= 0.0014 ss= 0.0003 max= 0.013 conv=    0.0s div=0       736 ns/step
+[ecm|evtol|nominal       |s1] StudentT-KF                rmse= 0.0016 ss= 0.0004 max= 0.013 conv=    0.0s div=0       529 ns/step
+[ecm|evtol|nominal       |s1] Constrained-EKF            rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       422 ns/step
+[ecm|evtol|nominal       |s1] ReducedOrder-EKF           rmse= 0.0022 ss= 0.0008 max= 0.013 conv=    0.0s div=0       309 ns/step
+[ecm|evtol|nominal       |s1] SVSF                       rmse= 0.0018 ss= 0.0005 max= 0.007 conv=    0.0s div=0       478 ns/step
+[ecm|evtol|nominal       |s1] Luenberger                 rmse= 0.0020 ss= 0.0008 max= 0.006 conv=    0.0s div=0       373 ns/step
+[ecm|evtol|nominal       |s1] SSKF                       rmse= 0.0020 ss= 0.0008 max= 0.006 conv=    0.0s div=0       327 ns/step
+[ecm|evtol|nominal       |s1] PI-Observer                rmse= 0.0026 ss= 0.0010 max= 0.012 conv=    0.0s div=0      1256 ns/step
+[ecm|evtol|nominal       |s1] SMO                        rmse= 0.0020 ss= 0.0008 max= 0.006 conv=    0.0s div=0       402 ns/step
+[ecm|evtol|nominal       |s1] SMO-Adaptive               rmse= 0.0020 ss= 0.0008 max= 0.006 conv=    0.0s div=0       407 ns/step
+[ecm|evtol|nominal       |s1] SuperTwisting-SMO          rmse= 0.0027 ss= 0.0009 max= 0.014 conv=    0.0s div=0       120 ns/step
+[ecm|evtol|nominal       |s1] HGO                        rmse= 0.0020 ss= 0.0008 max= 0.006 conv=    0.0s div=0       379 ns/step
+[ecm|evtol|nominal       |s1] ESO                        rmse= 0.0026 ss= 0.0010 max= 0.012 conv=    0.0s div=0      1302 ns/step
+[ecm|evtol|nominal       |s1] UIO                        rmse= 0.0018 ss= 0.0007 max= 0.008 conv=    0.0s div=0       460 ns/step
+[ecm|evtol|nominal       |s1] DOB                        rmse= 0.0008 ss= 0.0002 max= 0.003 conv=    0.0s div=0       541 ns/step
+[ecm|evtol|nominal       |s1] AdaptiveObserver           rmse= 0.0019 ss= 0.0005 max= 0.006 conv=    0.0s div=0       677 ns/step
+[ecm|evtol|nominal       |s1] IntervalObserver           rmse= 0.0020 ss= 0.0008 max= 0.006 conv=    0.0s div=0       614 ns/step
+[ecm|evtol|nominal       |s1] JointEKF                   rmse= 0.0014 ss= 0.0008 max= 0.013 conv=    0.0s div=0       995 ns/step
+[ecm|evtol|nominal       |s1] JointUKF                   rmse= 0.0011 ss= 0.0006 max= 0.040 conv=    0.4s div=0      2699 ns/step
+[ecm|evtol|nominal       |s1] DualEKF                    rmse= 0.0017 ss= 0.0012 max= 0.013 conv=    0.0s div=0       905 ns/step
+[ecm|evtol|nominal       |s1] DualUKF                    rmse= 0.0020 ss= 0.0005 max= 0.040 conv=    0.4s div=0      1698 ns/step
+[ecm|evtol|nominal       |s1] RLS-EKF                    rmse= 0.0068 ss= 0.0051 max= 0.013 conv=    0.0s div=0       372 ns/step
+[ecm|evtol|nominal       |s1] AWTLS                      rmse= 0.0012 ss= 0.0002 max= 0.013 conv=    0.0s div=0       361 ns/step
+[ecm|evtol|nominal       |s1] PF-Bootstrap               rmse= 0.0013 ss= 0.0017 max= 0.007 conv=    0.0s div=0     67829 ns/step
+[ecm|evtol|nominal       |s1] PF-Fast                    rmse= 0.0024 ss= 0.0022 max= 0.012 conv=    0.0s div=0     13648 ns/step
+[ecm|evtol|nominal       |s1] PF-Regularized             rmse= 0.0012 ss= 0.0008 max= 0.007 conv=    0.0s div=0     74763 ns/step
+[ecm|evtol|nominal       |s1] PF-Auxiliary               rmse= 0.0016 ss= 0.0013 max= 0.007 conv=    0.0s div=0     90242 ns/step
+[ecm|evtol|nominal       |s1] RBPF                       rmse= 0.0010 ss= 0.0005 max= 0.009 conv=    0.0s div=0     32089 ns/step
+[ecm|evtol|nominal       |s1] UPF                        rmse= 0.0069 ss= 0.0048 max= 0.041 conv=    0.0s div=0     16652 ns/step
+[ecm|evtol|nominal       |s1] EnKF                       rmse= 0.0027 ss= 0.0025 max= 0.026 conv=    0.1s div=0      7543 ns/step
+[ecm|evtol|nominal       |s1] ETKF                       rmse= 0.0021 ss= 0.0025 max= 0.029 conv=    0.1s div=0      8107 ns/step
+[ecm|evtol|nominal       |s1] GSF                        rmse= 0.0015 ss= 0.0003 max= 0.006 conv=    0.0s div=0      1228 ns/step
+[ecm|evtol|nominal       |s1] NN-Direct                  rmse= 0.0087 ss= 0.0117 max= 0.042 conv=    0.0s div=0       487 ns/step
+[ecm|evtol|nominal       |s1] NN-EKF                     rmse= 0.0084 ss= 0.0028 max= 0.036 conv=  196.5s div=0      1296 ns/step
+[ecm|evtol|nominal       |s1] ELM-RLS-EKF                rmse= 0.0012 ss= 0.0005 max= 0.013 conv=    0.0s div=0      2921 ns/step
+[ecm|evtol|nominal       |s1] MHE-RTI                    rmse= 0.0023 ss= 0.0008 max= 0.013 conv=    0.0s div=0     11630 ns/step
+[ecm|evtol|nominal       |s1] MHE                        rmse= 0.0020 ss= 0.0010 max= 0.011 conv=    0.0s div=0     21760 ns/step
+[ecm|evtol|nominal       |s1] ERTS                       rmse= 0.0012 ss= 0.0004 max= 0.003 conv=    0.0s div=0       605 ns/step
+[ecm|evtol|nominal       |s1] URTS                       rmse= 0.0015 ss= 0.0007 max= 0.004 conv=    0.0s div=0      1691 ns/step
+[ecm|evtol|nominal       |s1] Batch-NLS                  rmse= 0.0013 ss= 0.0004 max= 0.003 conv=    0.0s div=0      3059 ns/step
+[ecm|evtol|nominal       |s1] FixedLag-EKF               rmse= 0.0014 ss= 0.0004 max= 0.013 conv=    0.0s div=0      3570 ns/step
+[ecm|evtol|init_error    |s1] CoulombCounting            rmse= 0.3525 ss= 0.3535 max= 0.354 conv=   -1.0s div=1        60 ns/step
+[ecm|evtol|init_error    |s1] OCVLookup                  rmse= 0.0333 ss= 0.0131 max= 0.349 conv=   76.8s div=0      1249 ns/step
+[ecm|evtol|init_error    |s1] CoulombOCVHybrid           rmse= 0.0598 ss= 0.0443 max= 0.349 conv=   -1.0s div=0       188 ns/step
+[ecm|evtol|init_error    |s1] EKF                        rmse= 0.0009 ss= 0.0004 max= 0.005 conv=    0.0s div=0       359 ns/step
+[ecm|evtol|init_error    |s1] UKF                        rmse= 0.0012 ss= 0.0004 max= 0.030 conv=    0.1s div=0      1062 ns/step
+[ecm|evtol|init_error    |s1] LKF                        rmse= 0.0329 ss= 0.0217 max= 0.057 conv=    0.0s div=0       292 ns/step
+[ecm|evtol|init_error    |s1] IEKF                       rmse= 0.0024 ss= 0.0003 max= 0.010 conv=    0.0s div=0       440 ns/step
+[ecm|evtol|init_error    |s1] CKF                        rmse= 0.0158 ss= 0.0009 max= 0.063 conv=  219.9s div=0       968 ns/step
+[ecm|evtol|init_error    |s1] SCKF                       rmse= 0.0158 ss= 0.0009 max= 0.063 conv=  219.9s div=0      1348 ns/step
+[ecm|evtol|init_error    |s1] CKF5                       rmse= 0.0180 ss= 0.0011 max= 0.070 conv=  227.4s div=0      2814 ns/step
+[ecm|evtol|init_error    |s1] CDKF                       rmse= 0.0180 ss= 0.0010 max= 0.070 conv=  227.4s div=0      1109 ns/step
+[ecm|evtol|init_error    |s1] GHKF                       rmse= 0.0179 ss= 0.0006 max= 0.070 conv=  227.4s div=0      9403 ns/step
+[ecm|evtol|init_error    |s1] IPLF                       rmse= 0.0030 ss= 0.0004 max= 0.011 conv=    0.0s div=0      1872 ns/step
+[ecm|evtol|init_error    |s1] EIF                        rmse= 0.0009 ss= 0.0006 max= 0.005 conv=    0.0s div=0       900 ns/step
+[ecm|evtol|init_error    |s1] SR-EKF                     rmse= 0.0009 ss= 0.0005 max= 0.005 conv=    0.0s div=0       694 ns/step
+[ecm|evtol|init_error    |s1] SR-UKF                     rmse= 0.0012 ss= 0.0004 max= 0.030 conv=    0.1s div=0      1301 ns/step
+[ecm|evtol|init_error    |s1] UD-EKF                     rmse= 0.0009 ss= 0.0004 max= 0.005 conv=    0.0s div=0       385 ns/step
+[ecm|evtol|init_error    |s1] SO-EKF                     rmse= 0.0012 ss= 0.0006 max= 0.031 conv=    0.1s div=0      2988 ns/step
+[ecm|evtol|init_error    |s1] SageHusa-AKF               rmse= 0.0012 ss= 0.0005 max= 0.006 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|init_error    |s1] IAE-AKF                    rmse= 0.0013 ss= 0.0009 max= 0.005 conv=    0.0s div=0       374 ns/step
+[ecm|evtol|init_error    |s1] VB-AKF                     rmse= 0.0010 ss= 0.0004 max= 0.005 conv=    0.0s div=0       673 ns/step
+[ecm|evtol|init_error    |s1] STF                        rmse= 0.0023 ss= 0.0009 max= 0.031 conv=    0.0s div=0       412 ns/step
+[ecm|evtol|init_error    |s1] Fading-EKF                 rmse= 0.0018 ss= 0.0006 max= 0.006 conv=    0.0s div=0       357 ns/step
+[ecm|evtol|init_error    |s1] Fuzzy-AKF                  rmse= 0.0008 ss= 0.0006 max= 0.005 conv=    0.0s div=0       580 ns/step
+[ecm|evtol|init_error    |s1] IMM                        rmse= 0.0007 ss= 0.0008 max= 0.018 conv=    0.0s div=0      1286 ns/step
+[ecm|evtol|init_error    |s1] MMAE                       rmse= 0.0040 ss= 0.0035 max= 0.006 conv=    0.0s div=0      1195 ns/step
+[ecm|evtol|init_error    |s1] Schmidt-KF                 rmse= 0.0041 ss= 0.0051 max= 0.008 conv=    0.0s div=0      1071 ns/step
+[ecm|evtol|init_error    |s1] Hinf-EKF                   rmse= 0.0016 ss= 0.0002 max= 0.008 conv=    0.0s div=0       603 ns/step
+[ecm|evtol|init_error    |s1] Huber-EKF                  rmse= 0.0011 ss= 0.0008 max= 0.005 conv=    0.0s div=0       505 ns/step
+[ecm|evtol|init_error    |s1] MC-EKF                     rmse= 0.0009 ss= 0.0005 max= 0.005 conv=    0.0s div=0       747 ns/step
+[ecm|evtol|init_error    |s1] StudentT-KF                rmse= 0.0016 ss= 0.0003 max= 0.006 conv=    0.0s div=0       524 ns/step
+[ecm|evtol|init_error    |s1] Constrained-EKF            rmse= 0.0009 ss= 0.0005 max= 0.005 conv=    0.0s div=0       429 ns/step
+[ecm|evtol|init_error    |s1] ReducedOrder-EKF           rmse= 0.0022 ss= 0.0008 max= 0.009 conv=    0.0s div=0       328 ns/step
+[ecm|evtol|init_error    |s1] SVSF                       rmse= 0.0025 ss= 0.0003 max= 0.008 conv=    0.0s div=0       493 ns/step
+[ecm|evtol|init_error    |s1] Luenberger                 rmse= 0.0411 ss= 0.0008 max= 0.337 conv=  333.4s div=0       422 ns/step
+[ecm|evtol|init_error    |s1] SSKF                       rmse= 0.0411 ss= 0.0008 max= 0.337 conv=  333.4s div=0       353 ns/step
+[ecm|evtol|init_error    |s1] PI-Observer                rmse= 0.0145 ss= 0.0010 max= 0.331 conv=   85.4s div=0      1380 ns/step
+[ecm|evtol|init_error    |s1] SMO                        rmse= 0.0406 ss= 0.0008 max= 0.337 conv=  323.4s div=0       418 ns/step
+[ecm|evtol|init_error    |s1] SMO-Adaptive               rmse= 0.0395 ss= 0.0008 max= 0.337 conv=  318.5s div=0       432 ns/step
+[ecm|evtol|init_error    |s1] SuperTwisting-SMO          rmse= 0.0517 ss= 0.0009 max= 0.350 conv=  125.0s div=0       119 ns/step
+[ecm|evtol|init_error    |s1] HGO                        rmse= 0.0394 ss= 0.0008 max= 0.337 conv=  329.1s div=0       409 ns/step
+[ecm|evtol|init_error    |s1] ESO                        rmse= 0.0145 ss= 0.0010 max= 0.331 conv=   85.7s div=0      1450 ns/step
+[ecm|evtol|init_error    |s1] UIO                        rmse= 0.0650 ss= 0.0007 max= 0.350 conv=  360.1s div=0       454 ns/step
+[ecm|evtol|init_error    |s1] DOB                        rmse= 0.0398 ss= 0.0024 max= 0.335 conv=  339.2s div=0       610 ns/step
+[ecm|evtol|init_error    |s1] AdaptiveObserver           rmse= 0.0413 ss= 0.0005 max= 0.337 conv=  339.2s div=0       755 ns/step
+[ecm|evtol|init_error    |s1] IntervalObserver           rmse= 0.0411 ss= 0.0008 max= 0.337 conv=  333.4s div=0       646 ns/step
+[ecm|evtol|init_error    |s1] JointEKF                   rmse= 0.0018 ss= 0.0008 max= 0.008 conv=    0.0s div=0      1035 ns/step
+[ecm|evtol|init_error    |s1] JointUKF                   rmse= 0.0074 ss= 0.0008 max= 0.035 conv=  180.0s div=0      2705 ns/step
+[ecm|evtol|init_error    |s1] DualEKF                    rmse= 0.0010 ss= 0.0010 max= 0.004 conv=    0.0s div=0       891 ns/step
+[ecm|evtol|init_error    |s1] DualUKF                    rmse= 0.0038 ss= 0.0016 max= 0.030 conv=    0.1s div=0      1745 ns/step
+[ecm|evtol|init_error    |s1] RLS-EKF                    rmse= 0.0064 ss= 0.0046 max= 0.012 conv=    0.0s div=0       373 ns/step
+[ecm|evtol|init_error    |s1] AWTLS                      rmse= 0.0009 ss= 0.0001 max= 0.005 conv=    0.0s div=0       360 ns/step
+[ecm|evtol|init_error    |s1] PF-Bootstrap               rmse= 0.0019 ss= 0.0013 max= 0.034 conv=    2.4s div=0     68760 ns/step
+[ecm|evtol|init_error    |s1] PF-Fast                    rmse= 0.0043 ss= 0.0019 max= 0.120 conv=    5.5s div=0     13679 ns/step
+[ecm|evtol|init_error    |s1] PF-Regularized             rmse= 0.0019 ss= 0.0012 max= 0.034 conv=    1.7s div=0     75841 ns/step
+[ecm|evtol|init_error    |s1] PF-Auxiliary               rmse= 0.0040 ss= 0.0017 max= 0.034 conv=   10.7s div=0     90488 ns/step
+[ecm|evtol|init_error    |s1] RBPF                       rmse= 0.0244 ss= 0.0039 max= 0.070 conv=  323.1s div=0     31799 ns/step
+[ecm|evtol|init_error    |s1] UPF                        rmse= 0.0083 ss= 0.0045 max= 0.161 conv=  218.1s div=0     16643 ns/step
+[ecm|evtol|init_error    |s1] EnKF                       rmse= 0.0130 ss= 0.0025 max= 0.061 conv=  222.7s div=0      7639 ns/step
+[ecm|evtol|init_error    |s1] ETKF                       rmse= 0.0188 ss= 0.0089 max= 0.063 conv=  249.8s div=0      8177 ns/step
+[ecm|evtol|init_error    |s1] GSF                        rmse= 0.0015 ss= 0.0006 max= 0.065 conv=    0.2s div=0      1217 ns/step
+[ecm|evtol|init_error    |s1] NN-Direct                  rmse= 0.0087 ss= 0.0117 max= 0.042 conv=    0.0s div=0       494 ns/step
+[ecm|evtol|init_error    |s1] NN-EKF                     rmse= 0.0089 ss= 0.0028 max= 0.023 conv=  202.8s div=0       977 ns/step
+[ecm|evtol|init_error    |s1] ELM-RLS-EKF                rmse= 0.0019 ss= 0.0002 max= 0.008 conv=    0.0s div=0      2822 ns/step
+[ecm|evtol|init_error    |s1] MHE-RTI                    rmse= 0.0019 ss= 0.0011 max= 0.009 conv=    0.0s div=0     11580 ns/step
+[ecm|evtol|init_error    |s1] MHE                        rmse= 0.0017 ss= 0.0008 max= 0.010 conv=    0.0s div=0     21534 ns/step
+[ecm|evtol|init_error    |s1] ERTS                       rmse= 0.0013 ss= 0.0004 max= 0.003 conv=    0.0s div=0       603 ns/step
+[ecm|evtol|init_error    |s1] URTS                       rmse= 0.0010 ss= 0.0001 max= 0.002 conv=    0.0s div=0      1593 ns/step
+[ecm|evtol|init_error    |s1] Batch-NLS                  rmse= 0.0014 ss= 0.0004 max= 0.003 conv=    0.0s div=0      2868 ns/step
+[ecm|evtol|init_error    |s1] FixedLag-EKF               rmse= 0.0012 ss= 0.0004 max= 0.006 conv=    0.0s div=0      3412 ns/step
+[ecm|evtol|current_bias  |s1] CoulombCounting            rmse= 0.0244 ss= 0.0320 max= 0.041 conv=    0.0s div=0        61 ns/step
+[ecm|evtol|current_bias  |s1] OCVLookup                  rmse= 0.0249 ss= 0.0214 max= 0.076 conv=    0.0s div=0      1232 ns/step
+[ecm|evtol|current_bias  |s1] CoulombOCVHybrid           rmse= 0.0144 ss= 0.0194 max= 0.029 conv=    0.0s div=0       186 ns/step
+[ecm|evtol|current_bias  |s1] EKF                        rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0       359 ns/step
+[ecm|evtol|current_bias  |s1] UKF                        rmse= 0.0053 ss= 0.0043 max= 0.038 conv=    0.4s div=0      1059 ns/step
+[ecm|evtol|current_bias  |s1] LKF                        rmse= 0.0375 ss= 0.0136 max= 0.072 conv=    0.0s div=0       294 ns/step
+[ecm|evtol|current_bias  |s1] IEKF                       rmse= 0.0060 ss= 0.0061 max= 0.014 conv=    0.0s div=0       440 ns/step
+[ecm|evtol|current_bias  |s1] CKF                        rmse= 0.0047 ss= 0.0055 max= 0.012 conv=    0.0s div=0       956 ns/step
+[ecm|evtol|current_bias  |s1] SCKF                       rmse= 0.0046 ss= 0.0055 max= 0.012 conv=    0.0s div=0      1322 ns/step
+[ecm|evtol|current_bias  |s1] CKF5                       rmse= 0.0046 ss= 0.0055 max= 0.013 conv=    0.0s div=0      2820 ns/step
+[ecm|evtol|current_bias  |s1] CDKF                       rmse= 0.0046 ss= 0.0055 max= 0.013 conv=    0.0s div=0      1104 ns/step
+[ecm|evtol|current_bias  |s1] GHKF                       rmse= 0.0044 ss= 0.0050 max= 0.013 conv=    0.0s div=0      9323 ns/step
+[ecm|evtol|current_bias  |s1] IPLF                       rmse= 0.0070 ss= 0.0035 max= 0.033 conv=    0.3s div=0      1861 ns/step
+[ecm|evtol|current_bias  |s1] EIF                        rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0       886 ns/step
+[ecm|evtol|current_bias  |s1] SR-EKF                     rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0       695 ns/step
+[ecm|evtol|current_bias  |s1] SR-UKF                     rmse= 0.0052 ss= 0.0036 max= 0.038 conv=    0.4s div=0      1292 ns/step
+[ecm|evtol|current_bias  |s1] UD-EKF                     rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|current_bias  |s1] SO-EKF                     rmse= 0.0063 ss= 0.0058 max= 0.037 conv=    0.4s div=0      2860 ns/step
+[ecm|evtol|current_bias  |s1] SageHusa-AKF               rmse= 0.0052 ss= 0.0063 max= 0.017 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|current_bias  |s1] IAE-AKF                    rmse= 0.0053 ss= 0.0062 max= 0.017 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|current_bias  |s1] VB-AKF                     rmse= 0.0052 ss= 0.0063 max= 0.017 conv=    0.0s div=0       641 ns/step
+[ecm|evtol|current_bias  |s1] STF                        rmse= 0.0108 ss= 0.0079 max= 0.066 conv=    0.0s div=0       403 ns/step
+[ecm|evtol|current_bias  |s1] Fading-EKF                 rmse= 0.0070 ss= 0.0066 max= 0.017 conv=    0.0s div=0       356 ns/step
+[ecm|evtol|current_bias  |s1] Fuzzy-AKF                  rmse= 0.0052 ss= 0.0062 max= 0.017 conv=    0.0s div=0       579 ns/step
+[ecm|evtol|current_bias  |s1] IMM                        rmse= 0.0057 ss= 0.0069 max= 0.016 conv=    0.0s div=0      1279 ns/step
+[ecm|evtol|current_bias  |s1] MMAE                       rmse= 0.0060 ss= 0.0072 max= 0.017 conv=    0.0s div=0      1166 ns/step
+[ecm|evtol|current_bias  |s1] Schmidt-KF                 rmse= 0.0033 ss= 0.0033 max= 0.017 conv=    0.0s div=0      1045 ns/step
+[ecm|evtol|current_bias  |s1] Hinf-EKF                   rmse= 0.0047 ss= 0.0042 max= 0.017 conv=    0.0s div=0       592 ns/step
+[ecm|evtol|current_bias  |s1] Huber-EKF                  rmse= 0.0051 ss= 0.0063 max= 0.017 conv=    0.0s div=0       485 ns/step
+[ecm|evtol|current_bias  |s1] MC-EKF                     rmse= 0.0051 ss= 0.0063 max= 0.017 conv=    0.0s div=0       732 ns/step
+[ecm|evtol|current_bias  |s1] StudentT-KF                rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0       527 ns/step
+[ecm|evtol|current_bias  |s1] Constrained-EKF            rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0       421 ns/step
+[ecm|evtol|current_bias  |s1] ReducedOrder-EKF           rmse= 0.0108 ss= 0.0086 max= 0.032 conv=    0.0s div=0       318 ns/step
+[ecm|evtol|current_bias  |s1] SVSF                       rmse= 0.0057 ss= 0.0055 max= 0.015 conv=    0.0s div=0       485 ns/step
+[ecm|evtol|current_bias  |s1] Luenberger                 rmse= 0.0085 ss= 0.0085 max= 0.016 conv=    0.0s div=0       369 ns/step
+[ecm|evtol|current_bias  |s1] SSKF                       rmse= 0.0085 ss= 0.0085 max= 0.016 conv=    0.0s div=0       321 ns/step
+[ecm|evtol|current_bias  |s1] PI-Observer                rmse= 0.0128 ss= 0.0100 max= 0.053 conv=    0.0s div=0      1207 ns/step
+[ecm|evtol|current_bias  |s1] SMO                        rmse= 0.0090 ss= 0.0087 max= 0.018 conv=    0.0s div=0       418 ns/step
+[ecm|evtol|current_bias  |s1] SMO-Adaptive               rmse= 0.0089 ss= 0.0086 max= 0.018 conv=    0.0s div=0       403 ns/step
+[ecm|evtol|current_bias  |s1] SuperTwisting-SMO          rmse= 0.0127 ss= 0.0099 max= 0.053 conv=    0.0s div=0       119 ns/step
+[ecm|evtol|current_bias  |s1] HGO                        rmse= 0.0085 ss= 0.0085 max= 0.016 conv=    0.0s div=0       372 ns/step
+[ecm|evtol|current_bias  |s1] ESO                        rmse= 0.0128 ss= 0.0099 max= 0.053 conv=    0.0s div=0      1403 ns/step
+[ecm|evtol|current_bias  |s1] UIO                        rmse= 0.0059 ss= 0.0071 max= 0.010 conv=    0.0s div=0       431 ns/step
+[ecm|evtol|current_bias  |s1] DOB                        rmse= 0.0040 ss= 0.0018 max= 0.014 conv=    0.0s div=0       549 ns/step
+[ecm|evtol|current_bias  |s1] AdaptiveObserver           rmse= 0.0077 ss= 0.0075 max= 0.014 conv=    0.0s div=0       678 ns/step
+[ecm|evtol|current_bias  |s1] IntervalObserver           rmse= 0.0085 ss= 0.0085 max= 0.016 conv=    0.0s div=0       603 ns/step
+[ecm|evtol|current_bias  |s1] JointEKF                   rmse= 0.0052 ss= 0.0052 max= 0.017 conv=    0.0s div=0       999 ns/step
+[ecm|evtol|current_bias  |s1] JointUKF                   rmse= 0.0059 ss= 0.0063 max= 0.038 conv=    0.4s div=0      2635 ns/step
+[ecm|evtol|current_bias  |s1] DualEKF                    rmse= 0.0067 ss= 0.0080 max= 0.017 conv=    0.0s div=0       871 ns/step
+[ecm|evtol|current_bias  |s1] DualUKF                    rmse= 0.0067 ss= 0.0071 max= 0.038 conv=    0.4s div=0      1706 ns/step
+[ecm|evtol|current_bias  |s1] RLS-EKF                    rmse= 0.0066 ss= 0.0030 max= 0.017 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|current_bias  |s1] AWTLS                      rmse= 0.0033 ss= 0.0023 max= 0.017 conv=    0.0s div=0       349 ns/step
+[ecm|evtol|current_bias  |s1] PF-Bootstrap               rmse= 0.0079 ss= 0.0089 max= 0.016 conv=    0.0s div=0     67759 ns/step
+[ecm|evtol|current_bias  |s1] PF-Fast                    rmse= 0.0094 ss= 0.0092 max= 0.030 conv=    0.0s div=0     13791 ns/step
+[ecm|evtol|current_bias  |s1] PF-Regularized             rmse= 0.0097 ss= 0.0103 max= 0.023 conv=    0.0s div=0     75019 ns/step
+[ecm|evtol|current_bias  |s1] PF-Auxiliary               rmse= 0.0091 ss= 0.0090 max= 0.023 conv=    0.0s div=0     88648 ns/step
+[ecm|evtol|current_bias  |s1] RBPF                       rmse= 0.0043 ss= 0.0016 max= 0.012 conv=    0.0s div=0     31686 ns/step
+[ecm|evtol|current_bias  |s1] UPF                        rmse= 0.0099 ss= 0.0103 max= 0.034 conv=    0.0s div=0     16749 ns/step
+[ecm|evtol|current_bias  |s1] EnKF                       rmse= 0.0074 ss= 0.0079 max= 0.023 conv=    0.1s div=0      7890 ns/step
+[ecm|evtol|current_bias  |s1] ETKF                       rmse= 0.0120 ss= 0.0164 max= 0.025 conv=    0.1s div=0      8392 ns/step
+[ecm|evtol|current_bias  |s1] GSF                        rmse= 0.0051 ss= 0.0059 max= 0.010 conv=    0.0s div=0      1239 ns/step
+[ecm|evtol|current_bias  |s1] NN-Direct                  rmse= 0.0095 ss= 0.0127 max= 0.042 conv=    0.0s div=0       499 ns/step
+[ecm|evtol|current_bias  |s1] NN-EKF                     rmse= 0.0105 ss= 0.0083 max= 0.040 conv=  196.5s div=0       973 ns/step
+[ecm|evtol|current_bias  |s1] ELM-RLS-EKF                rmse= 0.0053 ss= 0.0063 max= 0.017 conv=    0.0s div=0      2815 ns/step
+[ecm|evtol|current_bias  |s1] MHE-RTI                    rmse= 0.0046 ss= 0.0012 max= 0.017 conv=    0.0s div=0     11521 ns/step
+[ecm|evtol|current_bias  |s1] MHE                        rmse= 0.0054 ss= 0.0012 max= 0.021 conv=    0.0s div=0     20958 ns/step
+[ecm|evtol|current_bias  |s1] ERTS                       rmse= 0.0103 ss= 0.0041 max= 0.022 conv=  158.7s div=0       596 ns/step
+[ecm|evtol|current_bias  |s1] URTS                       rmse= 0.0114 ss= 0.0041 max= 0.024 conv=  208.6s div=0      1627 ns/step
+[ecm|evtol|current_bias  |s1] Batch-NLS                  rmse= 0.0098 ss= 0.0047 max= 0.021 conv=   96.5s div=0      3025 ns/step
+[ecm|evtol|current_bias  |s1] FixedLag-EKF               rmse= 0.0052 ss= 0.0059 max= 0.017 conv=    0.0s div=0      3493 ns/step
+[ecm|evtol|noise_step    |s1] CoulombCounting            rmse= 0.0028 ss= 0.0036 max= 0.004 conv=    0.0s div=0        59 ns/step
+[ecm|evtol|noise_step    |s1] OCVLookup                  rmse= 0.0154 ss= 0.0134 max= 0.043 conv=    0.0s div=0      1216 ns/step
+[ecm|evtol|noise_step    |s1] CoulombOCVHybrid           rmse= 0.0028 ss= 0.0017 max= 0.005 conv=    0.0s div=0       187 ns/step
+[ecm|evtol|noise_step    |s1] EKF                        rmse= 0.0013 ss= 0.0008 max= 0.013 conv=    0.0s div=0       362 ns/step
+[ecm|evtol|noise_step    |s1] UKF                        rmse= 0.0024 ss= 0.0012 max= 0.040 conv=    0.4s div=0      1055 ns/step
+[ecm|evtol|noise_step    |s1] LKF                        rmse= 0.0324 ss= 0.0119 max= 0.063 conv=    0.0s div=0       302 ns/step
+[ecm|evtol|noise_step    |s1] IEKF                       rmse= 0.0038 ss= 0.0031 max= 0.014 conv=    0.0s div=0       438 ns/step
+[ecm|evtol|noise_step    |s1] CKF                        rmse= 0.0013 ss= 0.0014 max= 0.010 conv=    0.0s div=0       965 ns/step
+[ecm|evtol|noise_step    |s1] SCKF                       rmse= 0.0013 ss= 0.0014 max= 0.010 conv=    0.0s div=0      1324 ns/step
+[ecm|evtol|noise_step    |s1] CKF5                       rmse= 0.0012 ss= 0.0012 max= 0.015 conv=    0.0s div=0      2812 ns/step
+[ecm|evtol|noise_step    |s1] CDKF                       rmse= 0.0012 ss= 0.0012 max= 0.015 conv=    0.0s div=0      1103 ns/step
+[ecm|evtol|noise_step    |s1] GHKF                       rmse= 0.0010 ss= 0.0009 max= 0.015 conv=    0.0s div=0      9320 ns/step
+[ecm|evtol|noise_step    |s1] IPLF                       rmse= 0.0049 ss= 0.0019 max= 0.035 conv=    0.3s div=0      2234 ns/step
+[ecm|evtol|noise_step    |s1] EIF                        rmse= 0.0026 ss= 0.0010 max= 0.013 conv=    0.0s div=0       887 ns/step
+[ecm|evtol|noise_step    |s1] SR-EKF                     rmse= 0.0014 ss= 0.0010 max= 0.013 conv=    0.0s div=0       693 ns/step
+[ecm|evtol|noise_step    |s1] SR-UKF                     rmse= 0.0024 ss= 0.0012 max= 0.040 conv=    0.4s div=0      1306 ns/step
+[ecm|evtol|noise_step    |s1] UD-EKF                     rmse= 0.0013 ss= 0.0008 max= 0.013 conv=    0.0s div=0       382 ns/step
+[ecm|evtol|noise_step    |s1] SO-EKF                     rmse= 0.0038 ss= 0.0009 max= 0.039 conv=    0.4s div=0      2889 ns/step
+[ecm|evtol|noise_step    |s1] SageHusa-AKF               rmse= 0.0012 ss= 0.0005 max= 0.013 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|noise_step    |s1] IAE-AKF                    rmse= 0.0012 ss= 0.0005 max= 0.013 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|noise_step    |s1] VB-AKF                     rmse= 0.0016 ss= 0.0003 max= 0.013 conv=    0.0s div=0       652 ns/step
+[ecm|evtol|noise_step    |s1] STF                        rmse= 0.0194 ss= 0.0235 max= 0.099 conv=    0.0s div=0       442 ns/step
+[ecm|evtol|noise_step    |s1] Fading-EKF                 rmse= 0.0023 ss= 0.0015 max= 0.013 conv=    0.0s div=0       354 ns/step
+[ecm|evtol|noise_step    |s1] Fuzzy-AKF                  rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0       579 ns/step
+[ecm|evtol|noise_step    |s1] IMM                        rmse= 0.0012 ss= 0.0005 max= 0.013 conv=    0.0s div=0      1278 ns/step
+[ecm|evtol|noise_step    |s1] MMAE                       rmse= 0.0041 ss= 0.0031 max= 0.013 conv=    0.0s div=0      1157 ns/step
+[ecm|evtol|noise_step    |s1] Schmidt-KF                 rmse= 0.0092 ss= 0.0126 max= 0.032 conv=    0.0s div=0      1029 ns/step
+[ecm|evtol|noise_step    |s1] Hinf-EKF                   rmse= 0.0029 ss= 0.0013 max= 0.013 conv=    0.0s div=0       572 ns/step
+[ecm|evtol|noise_step    |s1] Huber-EKF                  rmse= 0.0011 ss= 0.0004 max= 0.013 conv=    0.0s div=0       480 ns/step
+[ecm|evtol|noise_step    |s1] MC-EKF                     rmse= 0.0015 ss= 0.0005 max= 0.013 conv=    0.0s div=0       816 ns/step
+[ecm|evtol|noise_step    |s1] StudentT-KF                rmse= 0.0016 ss= 0.0003 max= 0.013 conv=    0.0s div=0       546 ns/step
+[ecm|evtol|noise_step    |s1] Constrained-EKF            rmse= 0.0014 ss= 0.0010 max= 0.013 conv=    0.0s div=0       422 ns/step
+[ecm|evtol|noise_step    |s1] ReducedOrder-EKF           rmse= 0.0023 ss= 0.0012 max= 0.013 conv=    0.0s div=0       313 ns/step
+[ecm|evtol|noise_step    |s1] SVSF                       rmse= 0.0141 ss= 0.0181 max= 0.045 conv=    0.0s div=0       468 ns/step
+[ecm|evtol|noise_step    |s1] Luenberger                 rmse= 0.0032 ss= 0.0032 max= 0.011 conv=    0.0s div=0      1628 ns/step
+[ecm|evtol|noise_step    |s1] SSKF                       rmse= 0.0032 ss= 0.0032 max= 0.011 conv=    0.0s div=0      1324 ns/step
+[ecm|evtol|noise_step    |s1] PI-Observer                rmse= 0.0051 ss= 0.0059 max= 0.019 conv=    0.0s div=0      6667 ns/step
+[ecm|evtol|noise_step    |s1] SMO                        rmse= 0.0032 ss= 0.0033 max= 0.012 conv=    0.0s div=0      1723 ns/step
+[ecm|evtol|noise_step    |s1] SMO-Adaptive               rmse= 0.0038 ss= 0.0041 max= 0.014 conv=    0.0s div=0      2183 ns/step
+[ecm|evtol|noise_step    |s1] SuperTwisting-SMO          rmse= 0.0030 ss= 0.0020 max= 0.014 conv=    0.0s div=0       114 ns/step
+[ecm|evtol|noise_step    |s1] HGO                        rmse= 0.0032 ss= 0.0032 max= 0.011 conv=    0.0s div=0      1656 ns/step
+[ecm|evtol|noise_step    |s1] ESO                        rmse= 0.0043 ss= 0.0044 max= 0.019 conv=    0.0s div=0      8066 ns/step
+[ecm|evtol|noise_step    |s1] UIO                        rmse= 0.0029 ss= 0.0030 max= 0.010 conv=    0.0s div=0      1350 ns/step
+[ecm|evtol|noise_step    |s1] DOB                        rmse= 0.0021 ss= 0.0023 max= 0.010 conv=    0.0s div=0      2405 ns/step
+[ecm|evtol|noise_step    |s1] AdaptiveObserver           rmse= 0.0032 ss= 0.0032 max= 0.011 conv=    0.0s div=0      1938 ns/step
+[ecm|evtol|noise_step    |s1] IntervalObserver           rmse= 0.0032 ss= 0.0032 max= 0.011 conv=    0.0s div=0      1572 ns/step
+[ecm|evtol|noise_step    |s1] JointEKF                   rmse= 0.0040 ss= 0.0048 max= 0.013 conv=    0.0s div=0       977 ns/step
+[ecm|evtol|noise_step    |s1] JointUKF                   rmse= 0.0043 ss= 0.0052 max= 0.040 conv=    0.4s div=0      2714 ns/step
+[ecm|evtol|noise_step    |s1] DualEKF                    rmse= 0.0018 ss= 0.0014 max= 0.013 conv=    0.0s div=0       898 ns/step
+[ecm|evtol|noise_step    |s1] DualUKF                    rmse= 0.0027 ss= 0.0024 max= 0.040 conv=    0.4s div=0      1712 ns/step
+[ecm|evtol|noise_step    |s1] RLS-EKF                    rmse= 0.0065 ss= 0.0045 max= 0.013 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|noise_step    |s1] AWTLS                      rmse= 0.0014 ss= 0.0012 max= 0.013 conv=    0.0s div=0       358 ns/step
+[ecm|evtol|noise_step    |s1] PF-Bootstrap               rmse= 0.0044 ss= 0.0057 max= 0.022 conv=    0.0s div=0     79275 ns/step
+[ecm|evtol|noise_step    |s1] PF-Fast                    rmse= 0.0057 ss= 0.0070 max= 0.029 conv=    0.0s div=0     16349 ns/step
+[ecm|evtol|noise_step    |s1] PF-Regularized             rmse= 0.0048 ss= 0.0058 max= 0.022 conv=    0.0s div=0     88835 ns/step
+[ecm|evtol|noise_step    |s1] PF-Auxiliary               rmse= 0.0026 ss= 0.0029 max= 0.009 conv=    0.0s div=0     91226 ns/step
+[ecm|evtol|noise_step    |s1] RBPF                       rmse= 0.0113 ss= 0.0128 max= 0.038 conv=    0.0s div=0     35337 ns/step
+[ecm|evtol|noise_step    |s1] UPF                        rmse= 0.0088 ss= 0.0085 max= 0.041 conv=    0.0s div=0     16413 ns/step
+[ecm|evtol|noise_step    |s1] EnKF                       rmse= 0.0155 ss= 0.0178 max= 0.062 conv=    0.1s div=0      7758 ns/step
+[ecm|evtol|noise_step    |s1] ETKF                       rmse= 0.0056 ss= 0.0076 max= 0.029 conv=    0.1s div=0      8172 ns/step
+[ecm|evtol|noise_step    |s1] GSF                        rmse= 0.0016 ss= 0.0010 max= 0.006 conv=    0.0s div=0      1236 ns/step
+[ecm|evtol|noise_step    |s1] NN-Direct                  rmse= 0.0098 ss= 0.0131 max= 0.052 conv=    0.0s div=0       493 ns/step
+[ecm|evtol|noise_step    |s1] NN-EKF                     rmse= 0.0083 ss= 0.0027 max= 0.036 conv=  196.5s div=0       975 ns/step
+[ecm|evtol|noise_step    |s1] ELM-RLS-EKF                rmse= 0.0016 ss= 0.0012 max= 0.013 conv=    0.0s div=0      1954 ns/step
+[ecm|evtol|noise_step    |s1] MHE-RTI                    rmse= 0.0153 ss= 0.0204 max= 0.035 conv=    0.0s div=0     11533 ns/step
+[ecm|evtol|noise_step    |s1] MHE                        rmse= 0.0126 ss= 0.0174 max= 0.029 conv=    0.0s div=0     24177 ns/step
+[ecm|evtol|noise_step    |s1] ERTS                       rmse= 0.0021 ss= 0.0014 max= 0.004 conv=    0.0s div=0       608 ns/step
+[ecm|evtol|noise_step    |s1] URTS                       rmse= 0.0013 ss= 0.0011 max= 0.003 conv=    0.0s div=0      1667 ns/step
+[ecm|evtol|noise_step    |s1] Batch-NLS                  rmse= 0.0012 ss= 0.0004 max= 0.003 conv=    0.0s div=0      3456 ns/step
+[ecm|evtol|noise_step    |s1] FixedLag-EKF               rmse= 0.0016 ss= 0.0012 max= 0.013 conv=    0.0s div=0      3456 ns/step
+[ecm|evtol|outliers      |s1] CoulombCounting            rmse= 0.0028 ss= 0.0035 max= 0.004 conv=    0.0s div=0        63 ns/step
+[ecm|evtol|outliers      |s1] OCVLookup                  rmse= 0.0153 ss= 0.0131 max= 0.042 conv=    0.0s div=0      1243 ns/step
+[ecm|evtol|outliers      |s1] CoulombOCVHybrid           rmse= 0.0013 ss= 0.0006 max= 0.003 conv=    0.0s div=0       188 ns/step
+[ecm|evtol|outliers      |s1] EKF                        rmse= 0.0059 ss= 0.0035 max= 0.018 conv=    0.0s div=0       360 ns/step
+[ecm|evtol|outliers      |s1] UKF                        rmse= 0.0013 ss= 0.0006 max= 0.048 conv=    0.3s div=0      1067 ns/step
+[ecm|evtol|outliers      |s1] LKF                        rmse= 0.0325 ss= 0.0119 max= 0.064 conv=    0.5s div=0       299 ns/step
+[ecm|evtol|outliers      |s1] IEKF                       rmse= 0.0086 ss= 0.0039 max= 0.049 conv=   79.7s div=0       442 ns/step
+[ecm|evtol|outliers      |s1] CKF                        rmse= 0.0046 ss= 0.0010 max= 0.054 conv=    0.3s div=0       974 ns/step
+[ecm|evtol|outliers      |s1] SCKF                       rmse= 0.0045 ss= 0.0010 max= 0.054 conv=    0.3s div=0      1336 ns/step
+[ecm|evtol|outliers      |s1] CKF5                       rmse= 0.0027 ss= 0.0006 max= 0.059 conv=    0.3s div=0      2850 ns/step
+[ecm|evtol|outliers      |s1] CDKF                       rmse= 0.0028 ss= 0.0006 max= 0.059 conv=    0.3s div=0      1113 ns/step
+[ecm|evtol|outliers      |s1] GHKF                       rmse= 0.0029 ss= 0.0010 max= 0.059 conv=    0.3s div=0      9355 ns/step
+[ecm|evtol|outliers      |s1] IPLF                       rmse= 0.0054 ss= 0.0014 max= 0.043 conv=    2.7s div=0      1966 ns/step
+[ecm|evtol|outliers      |s1] EIF                        rmse= 0.0028 ss= 0.0016 max= 0.018 conv=    0.0s div=0       901 ns/step
+[ecm|evtol|outliers      |s1] SR-EKF                     rmse= 0.0059 ss= 0.0034 max= 0.018 conv=    0.0s div=0       710 ns/step
+[ecm|evtol|outliers      |s1] SR-UKF                     rmse= 0.0043 ss= 0.0012 max= 0.049 conv=    0.3s div=0      1309 ns/step
+[ecm|evtol|outliers      |s1] UD-EKF                     rmse= 0.0059 ss= 0.0035 max= 0.018 conv=    0.0s div=0       387 ns/step
+[ecm|evtol|outliers      |s1] SO-EKF                     rmse= 0.0056 ss= 0.0020 max= 0.038 conv=    0.3s div=0      2928 ns/step
+[ecm|evtol|outliers      |s1] SageHusa-AKF               rmse= 0.0023 ss= 0.0008 max= 0.013 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|outliers      |s1] IAE-AKF                    rmse= 0.0019 ss= 0.0011 max= 0.018 conv=    0.0s div=0       377 ns/step
+[ecm|evtol|outliers      |s1] VB-AKF                     rmse= 0.0006 ss= 0.0005 max= 0.013 conv=    0.0s div=0       660 ns/step
+[ecm|evtol|outliers      |s1] STF                        rmse= 0.0145 ss= 0.0136 max= 0.141 conv=   -1.0s div=0       435 ns/step
+[ecm|evtol|outliers      |s1] Fading-EKF                 rmse= 0.0027 ss= 0.0009 max= 0.030 conv=    0.3s div=0       356 ns/step
+[ecm|evtol|outliers      |s1] Fuzzy-AKF                  rmse= 0.0019 ss= 0.0009 max= 0.018 conv=    0.0s div=0       578 ns/step
+[ecm|evtol|outliers      |s1] IMM                        rmse= 0.0039 ss= 0.0013 max= 0.025 conv=    0.3s div=0      1287 ns/step
+[ecm|evtol|outliers      |s1] MMAE                       rmse= 0.0073 ss= 0.0050 max= 0.018 conv=    0.0s div=0      1166 ns/step
+[ecm|evtol|outliers      |s1] Schmidt-KF                 rmse= 0.0059 ss= 0.0059 max= 0.021 conv=    4.0s div=0      1047 ns/step
+[ecm|evtol|outliers      |s1] Hinf-EKF                   rmse= 0.0022 ss= 0.0003 max= 0.018 conv=    0.0s div=0       586 ns/step
+[ecm|evtol|outliers      |s1] Huber-EKF                  rmse= 0.0011 ss= 0.0006 max= 0.013 conv=    0.0s div=0       493 ns/step
+[ecm|evtol|outliers      |s1] MC-EKF                     rmse= 0.0010 ss= 0.0008 max= 0.013 conv=    0.0s div=0       731 ns/step
+[ecm|evtol|outliers      |s1] StudentT-KF                rmse= 0.0022 ss= 0.0003 max= 0.013 conv=    0.0s div=0       530 ns/step
+[ecm|evtol|outliers      |s1] Constrained-EKF            rmse= 0.0059 ss= 0.0035 max= 0.018 conv=    0.0s div=0       422 ns/step
+[ecm|evtol|outliers      |s1] ReducedOrder-EKF           rmse= 0.0021 ss= 0.0007 max= 0.026 conv=    0.3s div=0       318 ns/step
+[ecm|evtol|outliers      |s1] SVSF                       rmse= 0.0597 ss= 0.0441 max= 0.117 conv=    4.1s div=0       489 ns/step
+[ecm|evtol|outliers      |s1] Luenberger                 rmse= 0.0017 ss= 0.0018 max= 0.008 conv=    0.0s div=0       763 ns/step
+[ecm|evtol|outliers      |s1] SSKF                       rmse= 0.0017 ss= 0.0018 max= 0.008 conv=    0.0s div=0       631 ns/step
+[ecm|evtol|outliers      |s1] PI-Observer                rmse= 0.0054 ss= 0.0069 max= 0.018 conv=    0.0s div=0      2914 ns/step
+[ecm|evtol|outliers      |s1] SMO                        rmse= 0.0019 ss= 0.0019 max= 0.009 conv=    0.0s div=0       825 ns/step
+[ecm|evtol|outliers      |s1] SMO-Adaptive               rmse= 0.0020 ss= 0.0020 max= 0.010 conv=    0.0s div=0       833 ns/step
+[ecm|evtol|outliers      |s1] SuperTwisting-SMO          rmse= 0.0026 ss= 0.0010 max= 0.014 conv=    0.0s div=0       119 ns/step
+[ecm|evtol|outliers      |s1] HGO                        rmse= 0.0017 ss= 0.0018 max= 0.008 conv=    0.0s div=0       769 ns/step
+[ecm|evtol|outliers      |s1] ESO                        rmse= 0.0028 ss= 0.0025 max= 0.017 conv=    0.0s div=0      3248 ns/step
+[ecm|evtol|outliers      |s1] UIO                        rmse= 0.0015 ss= 0.0013 max= 0.008 conv=    0.0s div=0       707 ns/step
+[ecm|evtol|outliers      |s1] DOB                        rmse= 0.0016 ss= 0.0012 max= 0.007 conv=    0.0s div=0      1164 ns/step
+[ecm|evtol|outliers      |s1] AdaptiveObserver           rmse= 0.0017 ss= 0.0017 max= 0.008 conv=    0.0s div=0      1067 ns/step
+[ecm|evtol|outliers      |s1] IntervalObserver           rmse= 0.0017 ss= 0.0018 max= 0.008 conv=    0.0s div=0       906 ns/step
+[ecm|evtol|outliers      |s1] JointEKF                   rmse= 0.0062 ss= 0.0020 max= 0.030 conv=    0.0s div=0      1002 ns/step
+[ecm|evtol|outliers      |s1] JointUKF                   rmse= 0.0107 ss= 0.0017 max= 0.050 conv=  282.3s div=0      2706 ns/step
+[ecm|evtol|outliers      |s1] DualEKF                    rmse= 0.0016 ss= 0.0004 max= 0.018 conv=    0.0s div=0       902 ns/step
+[ecm|evtol|outliers      |s1] DualUKF                    rmse= 0.0054 ss= 0.0016 max= 0.048 conv=    0.3s div=0      1713 ns/step
+[ecm|evtol|outliers      |s1] RLS-EKF                    rmse= 0.0062 ss= 0.0040 max= 0.019 conv=    0.0s div=0       374 ns/step
+[ecm|evtol|outliers      |s1] AWTLS                      rmse= 0.0061 ss= 0.0048 max= 0.018 conv=    0.0s div=0       358 ns/step
+[ecm|evtol|outliers      |s1] PF-Bootstrap               rmse= 0.0034 ss= 0.0032 max= 0.017 conv=    0.0s div=0     70838 ns/step
+[ecm|evtol|outliers      |s1] PF-Fast                    rmse= 0.0048 ss= 0.0032 max= 0.028 conv=    0.0s div=0     14362 ns/step
+[ecm|evtol|outliers      |s1] PF-Regularized             rmse= 0.0041 ss= 0.0026 max= 0.021 conv=    0.6s div=0     77875 ns/step
+[ecm|evtol|outliers      |s1] PF-Auxiliary               rmse= 0.0033 ss= 0.0022 max= 0.012 conv=    0.0s div=0     89792 ns/step
+[ecm|evtol|outliers      |s1] RBPF                       rmse= 0.0126 ss= 0.0149 max= 0.036 conv=  206.9s div=0     32237 ns/step
+[ecm|evtol|outliers      |s1] UPF                        rmse= 0.0085 ss= 0.0056 max= 0.047 conv=  297.2s div=0     16407 ns/step
+[ecm|evtol|outliers      |s1] EnKF                       rmse= 0.0082 ss= 0.0093 max= 0.074 conv=    0.3s div=0      7743 ns/step
+[ecm|evtol|outliers      |s1] ETKF                       rmse= 0.0111 ss= 0.0077 max= 0.077 conv=    0.3s div=0      8155 ns/step
+[ecm|evtol|outliers      |s1] GSF                        rmse= 0.0102 ss= 0.0018 max= 0.127 conv=   33.9s div=0      1240 ns/step
+[ecm|evtol|outliers      |s1] NN-Direct                  rmse= 0.0090 ss= 0.0120 max= 0.050 conv=    0.0s div=0       493 ns/step
+[ecm|evtol|outliers      |s1] NN-EKF                     rmse= 0.0081 ss= 0.0028 max= 0.036 conv=  190.9s div=0       972 ns/step
+[ecm|evtol|outliers      |s1] ELM-RLS-EKF                rmse= 0.0059 ss= 0.0035 max= 0.018 conv=    0.0s div=0      2738 ns/step
+[ecm|evtol|outliers      |s1] MHE-RTI                    rmse= 0.0082 ss= 0.0085 max= 0.025 conv=    0.3s div=0     11627 ns/step
+[ecm|evtol|outliers      |s1] MHE                        rmse= 0.0083 ss= 0.0070 max= 0.026 conv=    0.3s div=0     22359 ns/step
+[ecm|evtol|outliers      |s1] ERTS                       rmse= 0.0024 ss= 0.0026 max= 0.003 conv=    0.0s div=0       593 ns/step
+[ecm|evtol|outliers      |s1] URTS                       rmse= 0.0011 ss= 0.0007 max= 0.002 conv=    0.0s div=0      1625 ns/step
+[ecm|evtol|outliers      |s1] Batch-NLS                  rmse= 0.0024 ss= 0.0029 max= 0.004 conv=    0.0s div=0      2954 ns/step
+[ecm|evtol|outliers      |s1] FixedLag-EKF               rmse= 0.0055 ss= 0.0032 max= 0.018 conv=    0.0s div=0      3462 ns/step
+[ecm|evtol|cold          |s1] CoulombCounting            rmse= 0.0034 ss= 0.0043 max= 0.006 conv=    0.0s div=0        62 ns/step
+[ecm|evtol|cold          |s1] OCVLookup                  rmse= 0.0182 ss= 0.0157 max= 0.053 conv=    0.0s div=0      1240 ns/step
+[ecm|evtol|cold          |s1] CoulombOCVHybrid           rmse= 0.0034 ss= 0.0020 max= 0.006 conv=    0.0s div=0       185 ns/step
+[ecm|evtol|cold          |s1] EKF                        rmse= 0.0015 ss= 0.0007 max= 0.013 conv=    0.0s div=0       361 ns/step
+[ecm|evtol|cold          |s1] UKF                        rmse= 0.0030 ss= 0.0003 max= 0.041 conv=    0.4s div=0      1063 ns/step
+[ecm|evtol|cold          |s1] LKF                        rmse= 0.1315 ss= 0.1252 max= 0.190 conv=    0.0s div=0       293 ns/step
+[ecm|evtol|cold          |s1] IEKF                       rmse= 0.0032 ss= 0.0027 max= 0.011 conv=    0.0s div=0       436 ns/step
+[ecm|evtol|cold          |s1] CKF                        rmse= 0.0008 ss= 0.0008 max= 0.011 conv=    0.0s div=0       957 ns/step
+[ecm|evtol|cold          |s1] SCKF                       rmse= 0.0008 ss= 0.0008 max= 0.011 conv=    0.0s div=0      1320 ns/step
+[ecm|evtol|cold          |s1] CKF5                       rmse= 0.0008 ss= 0.0008 max= 0.015 conv=    0.0s div=0      2807 ns/step
+[ecm|evtol|cold          |s1] CDKF                       rmse= 0.0008 ss= 0.0008 max= 0.015 conv=    0.0s div=0      1095 ns/step
+[ecm|evtol|cold          |s1] GHKF                       rmse= 0.0007 ss= 0.0002 max= 0.015 conv=    0.0s div=0      9248 ns/step
+[ecm|evtol|cold          |s1] IPLF                       rmse= 0.0045 ss= 0.0007 max= 0.035 conv=    0.3s div=0      1869 ns/step
+[ecm|evtol|cold          |s1] EIF                        rmse= 0.0013 ss= 0.0012 max= 0.013 conv=    0.0s div=0       903 ns/step
+[ecm|evtol|cold          |s1] SR-EKF                     rmse= 0.0015 ss= 0.0005 max= 0.013 conv=    0.0s div=0       692 ns/step
+[ecm|evtol|cold          |s1] SR-UKF                     rmse= 0.0030 ss= 0.0010 max= 0.041 conv=    0.4s div=0      1306 ns/step
+[ecm|evtol|cold          |s1] UD-EKF                     rmse= 0.0015 ss= 0.0007 max= 0.013 conv=    0.0s div=0       380 ns/step
+[ecm|evtol|cold          |s1] SO-EKF                     rmse= 0.0028 ss= 0.0007 max= 0.040 conv=    0.4s div=0      2883 ns/step
+[ecm|evtol|cold          |s1] SageHusa-AKF               rmse= 0.0020 ss= 0.0023 max= 0.013 conv=    0.0s div=0       379 ns/step
+[ecm|evtol|cold          |s1] IAE-AKF                    rmse= 0.0013 ss= 0.0012 max= 0.013 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|cold          |s1] VB-AKF                     rmse= 0.0020 ss= 0.0023 max= 0.013 conv=    0.0s div=0       654 ns/step
+[ecm|evtol|cold          |s1] STF                        rmse= 0.0048 ss= 0.0051 max= 0.039 conv=    0.0s div=0       413 ns/step
+[ecm|evtol|cold          |s1] Fading-EKF                 rmse= 0.0032 ss= 0.0025 max= 0.013 conv=    0.0s div=0       353 ns/step
+[ecm|evtol|cold          |s1] Fuzzy-AKF                  rmse= 0.0014 ss= 0.0012 max= 0.013 conv=    0.0s div=0       584 ns/step
+[ecm|evtol|cold          |s1] IMM                        rmse= 0.0012 ss= 0.0012 max= 0.012 conv=    0.0s div=0      1244 ns/step
+[ecm|evtol|cold          |s1] MMAE                       rmse= 0.0105 ss= 0.0118 max= 0.013 conv=    0.0s div=0      1159 ns/step
+[ecm|evtol|cold          |s1] Schmidt-KF                 rmse= 0.0157 ss= 0.0170 max= 0.021 conv=    0.0s div=0      1040 ns/step
+[ecm|evtol|cold          |s1] Hinf-EKF                   rmse= 0.0079 ss= 0.0104 max= 0.085 conv=    0.0s div=0       590 ns/step
+[ecm|evtol|cold          |s1] Huber-EKF                  rmse= 0.0026 ss= 0.0007 max= 0.013 conv=    0.0s div=0       481 ns/step
+[ecm|evtol|cold          |s1] MC-EKF                     rmse= 0.0013 ss= 0.0012 max= 0.013 conv=    0.0s div=0       737 ns/step
+[ecm|evtol|cold          |s1] StudentT-KF                rmse= 0.0014 ss= 0.0013 max= 0.013 conv=    0.0s div=0       529 ns/step
+[ecm|evtol|cold          |s1] Constrained-EKF            rmse= 0.0014 ss= 0.0005 max= 0.013 conv=    0.0s div=0       430 ns/step
+[ecm|evtol|cold          |s1] ReducedOrder-EKF           rmse= 0.0041 ss= 0.0033 max= 0.013 conv=    0.0s div=0       319 ns/step
+[ecm|evtol|cold          |s1] SVSF                       rmse= 0.0025 ss= 0.0006 max= 0.011 conv=    0.0s div=0       484 ns/step
+[ecm|evtol|cold          |s1] Luenberger                 rmse= 0.0157 ss= 0.0041 max= 0.061 conv=    0.0s div=0       277 ns/step
+[ecm|evtol|cold          |s1] SSKF                       rmse= 0.0041 ss= 0.0031 max= 0.012 conv=    0.0s div=0       338 ns/step
+[ecm|evtol|cold          |s1] PI-Observer                rmse= 0.0105 ss= 0.0107 max= 0.030 conv=    0.0s div=0       656 ns/step
+[ecm|evtol|cold          |s1] SMO                        rmse= 0.0181 ss= 0.0049 max= 0.071 conv=    0.0s div=0       307 ns/step
+[ecm|evtol|cold          |s1] SMO-Adaptive               rmse= 0.0164 ss= 0.0045 max= 0.067 conv=    0.0s div=0       311 ns/step
+[ecm|evtol|cold          |s1] SuperTwisting-SMO          rmse= 0.0056 ss= 0.0038 max= 0.028 conv=    0.0s div=0       121 ns/step
+[ecm|evtol|cold          |s1] HGO                        rmse= 0.0157 ss= 0.0041 max= 0.061 conv=    0.0s div=0       274 ns/step
+[ecm|evtol|cold          |s1] ESO                        rmse= 0.0116 ss= 0.0145 max= 0.037 conv=    0.0s div=0       683 ns/step
+[ecm|evtol|cold          |s1] UIO                        rmse= 0.0022 ss= 0.0017 max= 0.007 conv=    0.0s div=0       410 ns/step
+[ecm|evtol|cold          |s1] DOB                        rmse= 0.0003 ss= 0.0002 max= 0.001 conv=    0.0s div=0       386 ns/step
+[ecm|evtol|cold          |s1] AdaptiveObserver           rmse= 0.0092 ss= 0.0025 max= 0.069 conv=    0.0s div=0      1286 ns/step
+[ecm|evtol|cold          |s1] IntervalObserver           rmse= 0.0041 ss= 0.0031 max= 0.012 conv=    0.0s div=0       622 ns/step
+[ecm|evtol|cold          |s1] JointEKF                   rmse= 0.0055 ss= 0.0037 max= 0.016 conv=    0.0s div=0      1017 ns/step
+[ecm|evtol|cold          |s1] JointUKF                   rmse= 0.0019 ss= 0.0013 max= 0.040 conv=    0.7s div=0      2705 ns/step
+[ecm|evtol|cold          |s1] DualEKF                    rmse= 0.0015 ss= 0.0005 max= 0.013 conv=    0.0s div=0       906 ns/step
+[ecm|evtol|cold          |s1] DualUKF                    rmse= 0.0127 ss= 0.0152 max= 0.041 conv=    0.4s div=0      1712 ns/step
+[ecm|evtol|cold          |s1] RLS-EKF                    rmse= 0.0080 ss= 0.0085 max= 0.027 conv=    0.0s div=0       372 ns/step
+[ecm|evtol|cold          |s1] AWTLS                      rmse= 0.0015 ss= 0.0009 max= 0.013 conv=    0.0s div=0       363 ns/step
+[ecm|evtol|cold          |s1] PF-Bootstrap               rmse= 0.0058 ss= 0.0062 max= 0.018 conv=    0.0s div=0     68095 ns/step
+[ecm|evtol|cold          |s1] PF-Fast                    rmse= 0.0053 ss= 0.0038 max= 0.027 conv=    0.0s div=0     13763 ns/step
+[ecm|evtol|cold          |s1] PF-Regularized             rmse= 0.0041 ss= 0.0050 max= 0.012 conv=    0.0s div=0     74091 ns/step
+[ecm|evtol|cold          |s1] PF-Auxiliary               rmse= 0.0028 ss= 0.0028 max= 0.008 conv=    0.0s div=0     89878 ns/step
+[ecm|evtol|cold          |s1] RBPF                       rmse= 0.0020 ss= 0.0016 max= 0.013 conv=    0.0s div=0     31700 ns/step
+[ecm|evtol|cold          |s1] UPF                        rmse= 0.0085 ss= 0.0047 max= 0.049 conv=    0.0s div=0     16627 ns/step
+[ecm|evtol|cold          |s1] EnKF                       rmse= 0.0071 ss= 0.0083 max= 0.026 conv=    0.1s div=0      7655 ns/step
+[ecm|evtol|cold          |s1] ETKF                       rmse= 0.0030 ss= 0.0031 max= 0.029 conv=    0.1s div=0      8211 ns/step
+[ecm|evtol|cold          |s1] GSF                        rmse= 0.0013 ss= 0.0012 max= 0.005 conv=    0.0s div=0      1244 ns/step
+[ecm|evtol|cold          |s1] NN-Direct                  rmse= 0.0055 ss= 0.0072 max= 0.027 conv=    0.0s div=0       521 ns/step
+[ecm|evtol|cold          |s1] NN-EKF                     rmse= 0.0072 ss= 0.0017 max= 0.034 conv=    0.1s div=0      1061 ns/step
+[ecm|evtol|cold          |s1] ELM-RLS-EKF                rmse= 0.0010 ss= 0.0006 max= 0.013 conv=    0.0s div=0      2828 ns/step
+[ecm|evtol|cold          |s1] MHE-RTI                    rmse= 0.0083 ss= 0.0090 max= 0.018 conv=    0.0s div=0     11585 ns/step
+[ecm|evtol|cold          |s1] MHE                        rmse= 0.0099 ss= 0.0109 max= 0.015 conv=    0.0s div=0     21614 ns/step
+[ecm|evtol|cold          |s1] ERTS                       rmse= 0.0018 ss= 0.0006 max= 0.004 conv=    0.0s div=0       603 ns/step
+[ecm|evtol|cold          |s1] URTS                       rmse= 0.0022 ss= 0.0012 max= 0.005 conv=    0.0s div=0      1638 ns/step
+[ecm|evtol|cold          |s1] Batch-NLS                  rmse= 0.0014 ss= 0.0010 max= 0.003 conv=    0.0s div=0      2961 ns/step
+[ecm|evtol|cold          |s1] FixedLag-EKF               rmse= 0.0013 ss= 0.0009 max= 0.013 conv=    0.0s div=0      3407 ns/step
+[ecm|evtol|hot           |s1] CoulombCounting            rmse= 0.0019 ss= 0.0024 max= 0.003 conv=    0.0s div=0        59 ns/step
+[ecm|evtol|hot           |s1] OCVLookup                  rmse= 0.0145 ss= 0.0124 max= 0.039 conv=    0.0s div=0      1214 ns/step
+[ecm|evtol|hot           |s1] CoulombOCVHybrid           rmse= 0.0031 ss= 0.0024 max= 0.005 conv=    0.0s div=0       186 ns/step
+[ecm|evtol|hot           |s1] EKF                        rmse= 0.0016 ss= 0.0003 max= 0.012 conv=    0.0s div=0       355 ns/step
+[ecm|evtol|hot           |s1] UKF                        rmse= 0.0027 ss= 0.0003 max= 0.040 conv=    0.4s div=0      1042 ns/step
+[ecm|evtol|hot           |s1] LKF                        rmse= 0.0215 ss= 0.0162 max= 0.039 conv=    0.0s div=0       290 ns/step
+[ecm|evtol|hot           |s1] IEKF                       rmse= 0.0011 ss= 0.0004 max= 0.010 conv=    0.0s div=0       426 ns/step
+[ecm|evtol|hot           |s1] CKF                        rmse= 0.0008 ss= 0.0003 max= 0.011 conv=    0.0s div=0       953 ns/step
+[ecm|evtol|hot           |s1] SCKF                       rmse= 0.0008 ss= 0.0003 max= 0.011 conv=    0.0s div=0      1308 ns/step
+[ecm|evtol|hot           |s1] CKF5                       rmse= 0.0007 ss= 0.0003 max= 0.015 conv=    0.0s div=0      2775 ns/step
+[ecm|evtol|hot           |s1] CDKF                       rmse= 0.0007 ss= 0.0003 max= 0.015 conv=    0.0s div=0      1105 ns/step
+[ecm|evtol|hot           |s1] GHKF                       rmse= 0.0007 ss= 0.0001 max= 0.015 conv=    0.0s div=0      9244 ns/step
+[ecm|evtol|hot           |s1] IPLF                       rmse= 0.0048 ss= 0.0005 max= 0.035 conv=    0.3s div=0      1830 ns/step
+[ecm|evtol|hot           |s1] EIF                        rmse= 0.0012 ss= 0.0003 max= 0.012 conv=    0.0s div=0       870 ns/step
+[ecm|evtol|hot           |s1] SR-EKF                     rmse= 0.0016 ss= 0.0003 max= 0.012 conv=    0.0s div=0       704 ns/step
+[ecm|evtol|hot           |s1] SR-UKF                     rmse= 0.0025 ss= 0.0004 max= 0.040 conv=    0.4s div=0      1319 ns/step
+[ecm|evtol|hot           |s1] UD-EKF                     rmse= 0.0016 ss= 0.0003 max= 0.012 conv=    0.0s div=0       383 ns/step
+[ecm|evtol|hot           |s1] SO-EKF                     rmse= 0.0030 ss= 0.0002 max= 0.040 conv=    0.4s div=0      2892 ns/step
+[ecm|evtol|hot           |s1] SageHusa-AKF               rmse= 0.0018 ss= 0.0003 max= 0.012 conv=    0.0s div=0       377 ns/step
+[ecm|evtol|hot           |s1] IAE-AKF                    rmse= 0.0014 ss= 0.0003 max= 0.012 conv=    0.0s div=0       375 ns/step
+[ecm|evtol|hot           |s1] VB-AKF                     rmse= 0.0018 ss= 0.0003 max= 0.012 conv=    0.0s div=0       652 ns/step
+[ecm|evtol|hot           |s1] STF                        rmse= 0.0020 ss= 0.0007 max= 0.024 conv=    0.0s div=0       410 ns/step
+[ecm|evtol|hot           |s1] Fading-EKF                 rmse= 0.0018 ss= 0.0002 max= 0.012 conv=    0.0s div=0       354 ns/step
+[ecm|evtol|hot           |s1] Fuzzy-AKF                  rmse= 0.0017 ss= 0.0003 max= 0.012 conv=    0.0s div=0       578 ns/step
+[ecm|evtol|hot           |s1] IMM                        rmse= 0.0020 ss= 0.0002 max= 0.012 conv=    0.0s div=0      1258 ns/step
+[ecm|evtol|hot           |s1] MMAE                       rmse= 0.0027 ss= 0.0014 max= 0.012 conv=    0.0s div=0      1157 ns/step
+[ecm|evtol|hot           |s1] Schmidt-KF                 rmse= 0.0024 ss= 0.0024 max= 0.012 conv=    0.0s div=0      1018 ns/step
+[ecm|evtol|hot           |s1] Hinf-EKF                   rmse= 0.0015 ss= 0.0003 max= 0.012 conv=    0.0s div=0       568 ns/step
+[ecm|evtol|hot           |s1] Huber-EKF                  rmse= 0.0019 ss= 0.0002 max= 0.012 conv=    0.0s div=0       469 ns/step
+[ecm|evtol|hot           |s1] MC-EKF                     rmse= 0.0016 ss= 0.0003 max= 0.012 conv=    0.0s div=0       729 ns/step
+[ecm|evtol|hot           |s1] StudentT-KF                rmse= 0.0013 ss= 0.0003 max= 0.012 conv=    0.0s div=0       527 ns/step
+[ecm|evtol|hot           |s1] Constrained-EKF            rmse= 0.0016 ss= 0.0003 max= 0.012 conv=    0.0s div=0       423 ns/step
+[ecm|evtol|hot           |s1] ReducedOrder-EKF           rmse= 0.0017 ss= 0.0002 max= 0.012 conv=    0.0s div=0       314 ns/step
+[ecm|evtol|hot           |s1] SVSF                       rmse= 0.0020 ss= 0.0003 max= 0.007 conv=    0.0s div=0       480 ns/step
+[ecm|evtol|hot           |s1] Luenberger                 rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       390 ns/step
+[ecm|evtol|hot           |s1] SSKF                       rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       348 ns/step
+[ecm|evtol|hot           |s1] PI-Observer                rmse= 0.0020 ss= 0.0005 max= 0.008 conv=    0.0s div=0      1287 ns/step
+[ecm|evtol|hot           |s1] SMO                        rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       403 ns/step
+[ecm|evtol|hot           |s1] SMO-Adaptive               rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       406 ns/step
+[ecm|evtol|hot           |s1] SuperTwisting-SMO          rmse= 0.0020 ss= 0.0004 max= 0.009 conv=    0.0s div=0       120 ns/step
+[ecm|evtol|hot           |s1] HGO                        rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       394 ns/step
+[ecm|evtol|hot           |s1] ESO                        rmse= 0.0020 ss= 0.0005 max= 0.008 conv=    0.0s div=0      1279 ns/step
+[ecm|evtol|hot           |s1] UIO                        rmse= 0.0016 ss= 0.0005 max= 0.008 conv=    0.0s div=0       461 ns/step
+[ecm|evtol|hot           |s1] DOB                        rmse= 0.0009 ss= 0.0003 max= 0.003 conv=    0.0s div=0       645 ns/step
+[ecm|evtol|hot           |s1] AdaptiveObserver           rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       692 ns/step
+[ecm|evtol|hot           |s1] IntervalObserver           rmse= 0.0017 ss= 0.0004 max= 0.006 conv=    0.0s div=0       630 ns/step
+[ecm|evtol|hot           |s1] JointEKF                   rmse= 0.0009 ss= 0.0005 max= 0.012 conv=    0.0s div=0       999 ns/step
+[ecm|evtol|hot           |s1] JointUKF                   rmse= 0.0018 ss= 0.0007 max= 0.041 conv=    0.4s div=0      2716 ns/step
+[ecm|evtol|hot           |s1] DualEKF                    rmse= 0.0013 ss= 0.0005 max= 0.012 conv=    0.0s div=0       898 ns/step
+[ecm|evtol|hot           |s1] DualUKF                    rmse= 0.0015 ss= 0.0004 max= 0.040 conv=    0.4s div=0      1717 ns/step
+[ecm|evtol|hot           |s1] RLS-EKF                    rmse= 0.0058 ss= 0.0040 max= 0.012 conv=    0.0s div=0       373 ns/step
+[ecm|evtol|hot           |s1] AWTLS                      rmse= 0.0016 ss= 0.0006 max= 0.012 conv=    0.0s div=0       359 ns/step
+[ecm|evtol|hot           |s1] PF-Bootstrap               rmse= 0.0013 ss= 0.0007 max= 0.007 conv=    0.0s div=0     67537 ns/step
+[ecm|evtol|hot           |s1] PF-Fast                    rmse= 0.0016 ss= 0.0015 max= 0.007 conv=    0.0s div=0     14198 ns/step
+[ecm|evtol|hot           |s1] PF-Regularized             rmse= 0.0012 ss= 0.0006 max= 0.008 conv=    0.0s div=0     77218 ns/step
+[ecm|evtol|hot           |s1] PF-Auxiliary               rmse= 0.0021 ss= 0.0007 max= 0.009 conv=    0.0s div=0     90721 ns/step
+[ecm|evtol|hot           |s1] RBPF                       rmse= 0.0016 ss= 0.0007 max= 0.008 conv=    0.0s div=0     32219 ns/step
+[ecm|evtol|hot           |s1] UPF                        rmse= 0.0029 ss= 0.0031 max= 0.012 conv=    0.0s div=0     16823 ns/step
+[ecm|evtol|hot           |s1] EnKF                       rmse= 0.0020 ss= 0.0012 max= 0.027 conv=    0.1s div=0      7877 ns/step
+[ecm|evtol|hot           |s1] ETKF                       rmse= 0.0013 ss= 0.0014 max= 0.029 conv=    0.1s div=0      8296 ns/step
+[ecm|evtol|hot           |s1] GSF                        rmse= 0.0016 ss= 0.0003 max= 0.006 conv=    0.0s div=0      1246 ns/step
+[ecm|evtol|hot           |s1] NN-Direct                  rmse= 0.0028 ss= 0.0030 max= 0.016 conv=    0.0s div=0       512 ns/step
+[ecm|evtol|hot           |s1] NN-EKF                     rmse= 0.0091 ss= 0.0043 max= 0.035 conv=  225.2s div=0      1006 ns/step
+[ecm|evtol|hot           |s1] ELM-RLS-EKF                rmse= 0.0016 ss= 0.0003 max= 0.012 conv=    0.0s div=0      2833 ns/step
+[ecm|evtol|hot           |s1] MHE-RTI                    rmse= 0.0022 ss= 0.0004 max= 0.012 conv=    0.0s div=0     11735 ns/step
+[ecm|evtol|hot           |s1] MHE                        rmse= 0.0019 ss= 0.0004 max= 0.010 conv=    0.0s div=0     21286 ns/step
+[ecm|evtol|hot           |s1] ERTS                       rmse= 0.0008 ss= 0.0002 max= 0.002 conv=    0.0s div=0       603 ns/step
+[ecm|evtol|hot           |s1] URTS                       rmse= 0.0010 ss= 0.0002 max= 0.003 conv=    0.0s div=0      1658 ns/step
+[ecm|evtol|hot           |s1] Batch-NLS                  rmse= 0.0008 ss= 0.0003 max= 0.002 conv=    0.0s div=0      2612 ns/step
+[ecm|evtol|hot           |s1] FixedLag-EKF               rmse= 0.0018 ss= 0.0003 max= 0.012 conv=    0.0s div=0      3532 ns/step
+[ecm|evtol|aged_cell     |s1] CoulombCounting            rmse= 0.0781 ss= 0.1006 max= 0.129 conv=    0.0s div=0        62 ns/step
+[ecm|evtol|aged_cell     |s1] OCVLookup                  rmse= 0.0185 ss= 0.0137 max= 0.069 conv=    0.0s div=0      1240 ns/step
+[ecm|evtol|aged_cell     |s1] CoulombOCVHybrid           rmse= 0.0739 ss= 0.0944 max= 0.127 conv=    0.0s div=0       187 ns/step
+[ecm|evtol|aged_cell     |s1] EKF                        rmse= 0.0112 ss= 0.0148 max= 0.028 conv=    0.0s div=0       363 ns/step
+[ecm|evtol|aged_cell     |s1] UKF                        rmse= 0.0085 ss= 0.0092 max= 0.043 conv=    0.4s div=0      1059 ns/step
+[ecm|evtol|aged_cell     |s1] LKF                        rmse= 0.0167 ss= 0.0115 max= 0.056 conv=    0.0s div=0       297 ns/step
+[ecm|evtol|aged_cell     |s1] IEKF                       rmse= 0.0139 ss= 0.0179 max= 0.025 conv=    0.0s div=0       442 ns/step
+[ecm|evtol|aged_cell     |s1] CKF                        rmse= 0.0644 ss= 0.0253 max= 0.190 conv=    0.0s div=0       968 ns/step
+[ecm|evtol|aged_cell     |s1] SCKF                       rmse= 0.0642 ss= 0.0248 max= 0.190 conv=    0.0s div=0      1330 ns/step
+[ecm|evtol|aged_cell     |s1] CKF5                       rmse= 0.0619 ss= 0.0239 max= 0.183 conv=    0.0s div=0      2824 ns/step
+[ecm|evtol|aged_cell     |s1] CDKF                       rmse= 0.0598 ss= 0.0224 max= 0.178 conv=    0.0s div=0      1110 ns/step
+[ecm|evtol|aged_cell     |s1] GHKF                       rmse= 0.0556 ss= 0.0196 max= 0.168 conv=    0.0s div=0      9331 ns/step
+[ecm|evtol|aged_cell     |s1] IPLF                       rmse= 0.0130 ss= 0.0161 max= 0.038 conv=    0.2s div=0      1939 ns/step
+[ecm|evtol|aged_cell     |s1] EIF                        rmse= 0.0110 ss= 0.0140 max= 0.032 conv=    0.0s div=0       889 ns/step
+[ecm|evtol|aged_cell     |s1] SR-EKF                     rmse= 0.0112 ss= 0.0147 max= 0.028 conv=    0.0s div=0       699 ns/step
+[ecm|evtol|aged_cell     |s1] SR-UKF                     rmse= 0.0084 ss= 0.0096 max= 0.043 conv=    0.4s div=0      1295 ns/step
+[ecm|evtol|aged_cell     |s1] UD-EKF                     rmse= 0.0112 ss= 0.0148 max= 0.028 conv=    0.0s div=0       386 ns/step
+[ecm|evtol|aged_cell     |s1] SO-EKF                     rmse= 0.0112 ss= 0.0145 max= 0.043 conv=    0.4s div=0      2890 ns/step
+[ecm|evtol|aged_cell     |s1] SageHusa-AKF               rmse= 0.0100 ss= 0.0112 max= 0.023 conv=    0.0s div=0       379 ns/step
+[ecm|evtol|aged_cell     |s1] IAE-AKF                    rmse= 0.0109 ss= 0.0115 max= 0.026 conv=    0.0s div=0       376 ns/step
+[ecm|evtol|aged_cell     |s1] VB-AKF                     rmse= 0.0098 ss= 0.0119 max= 0.023 conv=    0.0s div=0       656 ns/step
+[ecm|evtol|aged_cell     |s1] STF                        rmse= 0.0364 ss= 0.0275 max= 0.214 conv=    0.0s div=0       414 ns/step
+[ecm|evtol|aged_cell     |s1] Fading-EKF                 rmse= 0.0170 ss= 0.0178 max= 0.047 conv=    0.0s div=0       354 ns/step
+[ecm|evtol|aged_cell     |s1] Fuzzy-AKF                  rmse= 0.0101 ss= 0.0128 max= 0.027 conv=    0.0s div=0       578 ns/step
+[ecm|evtol|aged_cell     |s1] IMM                        rmse= 0.0063 ss= 0.0083 max= 0.020 conv=    0.0s div=0      1274 ns/step
+[ecm|evtol|aged_cell     |s1] MMAE                       rmse= 0.0215 ss= 0.0229 max= 0.056 conv=    0.0s div=0      1155 ns/step
+[ecm|evtol|aged_cell     |s1] Schmidt-KF                 rmse= 0.0070 ss= 0.0056 max= 0.017 conv=    0.0s div=0      1034 ns/step
+[ecm|evtol|aged_cell     |s1] Hinf-EKF                   rmse= 0.0085 ss= 0.0088 max= 0.036 conv=    0.0s div=0       592 ns/step
+[ecm|evtol|aged_cell     |s1] Huber-EKF                  rmse= 0.0132 ss= 0.0171 max= 0.023 conv=    0.0s div=0       484 ns/step
+[ecm|evtol|aged_cell     |s1] MC-EKF                     rmse= 0.0117 ss= 0.0120 max= 0.039 conv=    0.0s div=0       762 ns/step
+[ecm|evtol|aged_cell     |s1] StudentT-KF                rmse= 0.0123 ss= 0.0159 max= 0.023 conv=    0.0s div=0       547 ns/step
+[ecm|evtol|aged_cell     |s1] Constrained-EKF            rmse= 0.0110 ss= 0.0144 max= 0.029 conv=    0.0s div=0       445 ns/step
+[ecm|evtol|aged_cell     |s1] ReducedOrder-EKF           rmse= 0.0322 ss= 0.0211 max= 0.129 conv=    0.0s div=0       320 ns/step
+[ecm|evtol|aged_cell     |s1] SVSF                       rmse= 0.0106 ss= 0.0103 max= 0.043 conv=    0.0s div=0       488 ns/step
+[ecm|evtol|aged_cell     |s1] Luenberger                 rmse= 0.0218 ss= 0.0217 max= 0.060 conv=    0.0s div=0       492 ns/step
+[ecm|evtol|aged_cell     |s1] SSKF                       rmse= 0.0218 ss= 0.0217 max= 0.060 conv=    0.0s div=0       418 ns/step
+[ecm|evtol|aged_cell     |s1] PI-Observer                rmse= 0.0337 ss= 0.0279 max= 0.137 conv=    0.0s div=0      1421 ns/step
+[ecm|evtol|aged_cell     |s1] SMO                        rmse= 0.0225 ss= 0.0221 max= 0.061 conv=    0.0s div=0       505 ns/step
+[ecm|evtol|aged_cell     |s1] SMO-Adaptive               rmse= 0.0223 ss= 0.0219 max= 0.061 conv=    0.0s div=0       491 ns/step
+[ecm|evtol|aged_cell     |s1] SuperTwisting-SMO          rmse= 0.0323 ss= 0.0248 max= 0.108 conv=    0.0s div=0       114 ns/step
+[ecm|evtol|aged_cell     |s1] HGO                        rmse= 0.0219 ss= 0.0218 max= 0.060 conv=    0.0s div=0       498 ns/step
+[ecm|evtol|aged_cell     |s1] ESO                        rmse= 0.0331 ss= 0.0264 max= 0.137 conv=    0.0s div=0      1510 ns/step
+[ecm|evtol|aged_cell     |s1] UIO                        rmse= 0.0208 ss= 0.0191 max= 0.053 conv=    0.0s div=0       468 ns/step
+[ecm|evtol|aged_cell     |s1] DOB                        rmse= 0.0280 ss= 0.0197 max= 0.104 conv=    0.0s div=0       674 ns/step
+[ecm|evtol|aged_cell     |s1] AdaptiveObserver           rmse= 0.0118 ss= 0.0110 max= 0.033 conv=    0.0s div=0       728 ns/step
+[ecm|evtol|aged_cell     |s1] IntervalObserver           rmse= 0.0218 ss= 0.0217 max= 0.060 conv=    0.0s div=0       701 ns/step
+[ecm|evtol|aged_cell     |s1] JointEKF                   rmse= 0.0009 ss= 0.0002 max= 0.007 conv=    0.0s div=0      1000 ns/step
+[ecm|evtol|aged_cell     |s1] JointUKF                   rmse= 0.0013 ss= 0.0008 max= 0.044 conv=    0.4s div=0      2698 ns/step
+[ecm|evtol|aged_cell     |s1] DualEKF                    rmse= 0.0065 ss= 0.0060 max= 0.014 conv=    0.0s div=0       898 ns/step
+[ecm|evtol|aged_cell     |s1] DualUKF                    rmse= 0.0024 ss= 0.0009 max= 0.043 conv=    0.4s div=0      1714 ns/step
+[ecm|evtol|aged_cell     |s1] RLS-EKF                    rmse= 0.0381 ss= 0.0429 max= 0.054 conv=    0.0s div=0       376 ns/step
+[ecm|evtol|aged_cell     |s1] AWTLS                      rmse= 0.0050 ss= 0.0055 max= 0.028 conv=    0.0s div=0       359 ns/step
+[ecm|evtol|aged_cell     |s1] PF-Bootstrap               rmse= 0.0328 ss= 0.0250 max= 0.143 conv=    0.0s div=0     70363 ns/step
+[ecm|evtol|aged_cell     |s1] PF-Fast                    rmse= 0.0351 ss= 0.0260 max= 0.160 conv=    0.0s div=0     14535 ns/step
+[ecm|evtol|aged_cell     |s1] PF-Regularized             rmse= 0.0314 ss= 0.0250 max= 0.135 conv=    0.0s div=0     78611 ns/step
+[ecm|evtol|aged_cell     |s1] PF-Auxiliary               rmse= 0.0265 ss= 0.0246 max= 0.073 conv=    0.0s div=0     89463 ns/step
+[ecm|evtol|aged_cell     |s1] RBPF                       rmse= 0.0237 ss= 0.0212 max= 0.092 conv=    0.0s div=0     32171 ns/step
+[ecm|evtol|aged_cell     |s1] UPF                        rmse= 0.0348 ss= 0.0266 max= 0.159 conv=    0.0s div=0     16727 ns/step
+[ecm|evtol|aged_cell     |s1] EnKF                       rmse= 0.0224 ss= 0.0196 max= 0.049 conv=    0.1s div=0      7750 ns/step
+[ecm|evtol|aged_cell     |s1] ETKF                       rmse= 0.0257 ss= 0.0352 max= 0.064 conv=    0.1s div=0      8151 ns/step
+[ecm|evtol|aged_cell     |s1] GSF                        rmse= 0.0465 ss= 0.0303 max= 0.205 conv=    0.0s div=0      1246 ns/step
+[ecm|evtol|aged_cell     |s1] NN-Direct                  rmse= 0.0131 ss= 0.0179 max= 0.053 conv=    0.0s div=0       496 ns/step
+[ecm|evtol|aged_cell     |s1] NN-EKF                     rmse= 0.0147 ss= 0.0143 max= 0.036 conv=    0.1s div=0       977 ns/step
+[ecm|evtol|aged_cell     |s1] ELM-RLS-EKF                rmse= 0.0134 ss= 0.0174 max= 0.026 conv=    0.0s div=0      2784 ns/step
+[ecm|evtol|aged_cell     |s1] MHE-RTI                    rmse= 0.0095 ss= 0.0079 max= 0.048 conv=    0.0s div=0     11644 ns/step
+[ecm|evtol|aged_cell     |s1] MHE                        rmse= 0.0136 ss= 0.0081 max= 0.059 conv=    0.0s div=0     21781 ns/step
+[ecm|evtol|aged_cell     |s1] ERTS                       rmse= 0.0354 ss= 0.0155 max= 0.074 conv= 1191.6s div=0       600 ns/step
+[ecm|evtol|aged_cell     |s1] URTS                       rmse= 0.0383 ss= 0.0194 max= 0.074 conv= 1405.9s div=0      1642 ns/step
+[ecm|evtol|aged_cell     |s1] Batch-NLS                  rmse= 0.0430 ss= 0.0163 max= 0.091 conv= 1234.2s div=0      3380 ns/step
+[ecm|evtol|aged_cell     |s1] FixedLag-EKF               rmse= 0.0114 ss= 0.0151 max= 0.027 conv=    0.0s div=0      3559 ns/step
+[ecm|evtol|param_mismatch|s1] CoulombCounting            rmse= 0.0028 ss= 0.0036 max= 0.004 conv=    0.0s div=0        62 ns/step
+[ecm|evtol|param_mismatch|s1] OCVLookup                  rmse= 0.0089 ss= 0.0041 max= 0.042 conv=    0.0s div=0      1242 ns/step
+[ecm|evtol|param_mismatch|s1] CoulombOCVHybrid           rmse= 0.0013 ss= 0.0016 max= 0.005 conv=    0.0s div=0       187 ns/step
+[ecm|evtol|param_mismatch|s1] EKF                        rmse= 0.0143 ss= 0.0153 max= 0.028 conv=    0.0s div=0       360 ns/step
+[ecm|evtol|param_mismatch|s1] UKF                        rmse= 0.0155 ss= 0.0152 max= 0.042 conv=    0.4s div=0      1058 ns/step
+[ecm|evtol|param_mismatch|s1] LKF                        rmse= 0.0181 ss= 0.0119 max= 0.037 conv=    0.0s div=0       293 ns/step
+[ecm|evtol|param_mismatch|s1] IEKF                       rmse= 0.0076 ss= 0.0093 max= 0.017 conv=    0.0s div=0       437 ns/step
+[ecm|evtol|param_mismatch|s1] CKF                        rmse= 0.0147 ss= 0.0153 max= 0.036 conv=    0.0s div=0       969 ns/step
+[ecm|evtol|param_mismatch|s1] SCKF                       rmse= 0.0149 ss= 0.0154 max= 0.035 conv=    0.0s div=0      1322 ns/step
+[ecm|evtol|param_mismatch|s1] CKF5                       rmse= 0.0187 ss= 0.0181 max= 0.049 conv=    0.0s div=0      2816 ns/step
+[ecm|evtol|param_mismatch|s1] CDKF                       rmse= 0.0186 ss= 0.0181 max= 0.049 conv=    0.0s div=0      1113 ns/step
+[ecm|evtol|param_mismatch|s1] GHKF                       rmse= 0.0185 ss= 0.0177 max= 0.050 conv=    0.0s div=0      9339 ns/step
+[ecm|evtol|param_mismatch|s1] IPLF                       rmse= 0.0069 ss= 0.0071 max= 0.037 conv=    0.2s div=0      1932 ns/step
+[ecm|evtol|param_mismatch|s1] EIF                        rmse= 0.0144 ss= 0.0153 max= 0.028 conv=    0.0s div=0       898 ns/step
+[ecm|evtol|param_mismatch|s1] SR-EKF                     rmse= 0.0143 ss= 0.0153 max= 0.028 conv=    0.0s div=0       695 ns/step
+[ecm|evtol|param_mismatch|s1] SR-UKF                     rmse= 0.0091 ss= 0.0102 max= 0.042 conv=    0.4s div=0      1309 ns/step
+[ecm|evtol|param_mismatch|s1] UD-EKF                     rmse= 0.0143 ss= 0.0152 max= 0.028 conv=    0.0s div=0       379 ns/step
+[ecm|evtol|param_mismatch|s1] SO-EKF                     rmse= 0.0079 ss= 0.0093 max= 0.042 conv=    0.4s div=0      2895 ns/step
+[ecm|evtol|param_mismatch|s1] SageHusa-AKF               rmse= 0.0058 ss= 0.0074 max= 0.015 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|param_mismatch|s1] IAE-AKF                    rmse= 0.0086 ss= 0.0099 max= 0.017 conv=    0.0s div=0       374 ns/step
+[ecm|evtol|param_mismatch|s1] VB-AKF                     rmse= 0.0078 ss= 0.0095 max= 0.017 conv=    0.0s div=0       655 ns/step
+[ecm|evtol|param_mismatch|s1] STF                        rmse= 0.0237 ss= 0.0185 max= 0.146 conv=    0.0s div=0       419 ns/step
+[ecm|evtol|param_mismatch|s1] Fading-EKF                 rmse= 0.0125 ss= 0.0131 max= 0.035 conv=    0.0s div=0       356 ns/step
+[ecm|evtol|param_mismatch|s1] Fuzzy-AKF                  rmse= 0.0052 ss= 0.0068 max= 0.014 conv=    0.0s div=0       579 ns/step
+[ecm|evtol|param_mismatch|s1] IMM                        rmse= 0.0085 ss= 0.0097 max= 0.011 conv=    0.0s div=0      1274 ns/step
+[ecm|evtol|param_mismatch|s1] MMAE                       rmse= 0.0188 ss= 0.0183 max= 0.034 conv=    0.0s div=0      1174 ns/step
+[ecm|evtol|param_mismatch|s1] Schmidt-KF                 rmse= 0.0044 ss= 0.0037 max= 0.011 conv=    0.0s div=0      1053 ns/step
+[ecm|evtol|param_mismatch|s1] Hinf-EKF                   rmse= 0.0153 ss= 0.0155 max= 0.034 conv=    0.0s div=0       592 ns/step
+[ecm|evtol|param_mismatch|s1] Huber-EKF                  rmse= 0.0072 ss= 0.0090 max= 0.016 conv=    0.0s div=0       481 ns/step
+[ecm|evtol|param_mismatch|s1] MC-EKF                     rmse= 0.0089 ss= 0.0105 max= 0.019 conv=    0.0s div=0       759 ns/step
+[ecm|evtol|param_mismatch|s1] StudentT-KF                rmse= 0.0078 ss= 0.0095 max= 0.017 conv=    0.0s div=0       541 ns/step
+[ecm|evtol|param_mismatch|s1] Constrained-EKF            rmse= 0.0143 ss= 0.0152 max= 0.028 conv=    0.0s div=0       423 ns/step
+[ecm|evtol|param_mismatch|s1] ReducedOrder-EKF           rmse= 0.0226 ss= 0.0153 max= 0.094 conv=    0.0s div=0       318 ns/step
+[ecm|evtol|param_mismatch|s1] SVSF                       rmse= 0.0199 ss= 0.0187 max= 0.046 conv=    0.0s div=0       486 ns/step
+[ecm|evtol|param_mismatch|s1] Luenberger                 rmse= 0.0130 ss= 0.0147 max= 0.051 conv=    0.0s div=0       485 ns/step
+[ecm|evtol|param_mismatch|s1] SSKF                       rmse= 0.0130 ss= 0.0147 max= 0.051 conv=    0.0s div=0       412 ns/step
+[ecm|evtol|param_mismatch|s1] PI-Observer                rmse= 0.0210 ss= 0.0185 max= 0.093 conv=    0.0s div=0      1417 ns/step
+[ecm|evtol|param_mismatch|s1] SMO                        rmse= 0.0148 ss= 0.0146 max= 0.052 conv=    0.0s div=0       500 ns/step
+[ecm|evtol|param_mismatch|s1] SMO-Adaptive               rmse= 0.0148 ss= 0.0146 max= 0.052 conv=    0.0s div=0       477 ns/step
+[ecm|evtol|param_mismatch|s1] SuperTwisting-SMO          rmse= 0.0218 ss= 0.0173 max= 0.085 conv=    0.0s div=0       115 ns/step
+[ecm|evtol|param_mismatch|s1] HGO                        rmse= 0.0128 ss= 0.0147 max= 0.051 conv=    0.0s div=0       455 ns/step
+[ecm|evtol|param_mismatch|s1] ESO                        rmse= 0.0199 ss= 0.0169 max= 0.089 conv=    0.0s div=0      1676 ns/step
+[ecm|evtol|param_mismatch|s1] UIO                        rmse= 0.0145 ss= 0.0135 max= 0.040 conv=    0.0s div=0       432 ns/step
+[ecm|evtol|param_mismatch|s1] DOB                        rmse= 0.0202 ss= 0.0161 max= 0.068 conv=    0.0s div=0       688 ns/step
+[ecm|evtol|param_mismatch|s1] AdaptiveObserver           rmse= 0.0080 ss= 0.0082 max= 0.030 conv=    0.0s div=0       848 ns/step
+[ecm|evtol|param_mismatch|s1] IntervalObserver           rmse= 0.0130 ss= 0.0147 max= 0.051 conv=    0.0s div=0       705 ns/step
+[ecm|evtol|param_mismatch|s1] JointEKF                   rmse= 0.0097 ss= 0.0080 max= 0.045 conv=    0.0s div=0      1008 ns/step
+[ecm|evtol|param_mismatch|s1] JointUKF                   rmse= 0.0182 ss= 0.0041 max= 0.076 conv=    0.4s div=0      2718 ns/step
+[ecm|evtol|param_mismatch|s1] DualEKF                    rmse= 0.0175 ss= 0.0222 max= 0.027 conv=    0.0s div=0       910 ns/step
+[ecm|evtol|param_mismatch|s1] DualUKF                    rmse= 0.0213 ss= 0.0277 max= 0.042 conv=    0.4s div=0      1718 ns/step
+[ecm|evtol|param_mismatch|s1] RLS-EKF                    rmse= 0.0058 ss= 0.0060 max= 0.023 conv=    0.0s div=0       374 ns/step
+[ecm|evtol|param_mismatch|s1] AWTLS                      rmse= 0.0120 ss= 0.0109 max= 0.028 conv=    0.0s div=0       358 ns/step
+[ecm|evtol|param_mismatch|s1] PF-Bootstrap               rmse= 0.0226 ss= 0.0208 max= 0.094 conv=    0.0s div=0     69429 ns/step
+[ecm|evtol|param_mismatch|s1] PF-Fast                    rmse= 0.0217 ss= 0.0180 max= 0.105 conv=    0.0s div=0     14193 ns/step
+[ecm|evtol|param_mismatch|s1] PF-Regularized             rmse= 0.0198 ss= 0.0160 max= 0.091 conv=    0.0s div=0     77218 ns/step
+[ecm|evtol|param_mismatch|s1] PF-Auxiliary               rmse= 0.0134 ss= 0.0127 max= 0.048 conv=    0.0s div=0     89820 ns/step
+[ecm|evtol|param_mismatch|s1] RBPF                       rmse= 0.0143 ss= 0.0132 max= 0.061 conv=    0.0s div=0     31764 ns/step
+[ecm|evtol|param_mismatch|s1] UPF                        rmse= 0.0263 ss= 0.0178 max= 0.148 conv=  482.2s div=0     16562 ns/step
+[ecm|evtol|param_mismatch|s1] EnKF                       rmse= 0.0226 ss= 0.0224 max= 0.095 conv=    0.1s div=0      7742 ns/step
+[ecm|evtol|param_mismatch|s1] ETKF                       rmse= 0.0127 ss= 0.0120 max= 0.032 conv=    0.1s div=0      8138 ns/step
+[ecm|evtol|param_mismatch|s1] GSF                        rmse= 0.0287 ss= 0.0222 max= 0.178 conv=    0.0s div=0      1238 ns/step
+[ecm|evtol|param_mismatch|s1] NN-Direct                  rmse= 0.0087 ss= 0.0117 max= 0.042 conv=    0.0s div=0       492 ns/step
+[ecm|evtol|param_mismatch|s1] NN-EKF                     rmse= 0.0089 ss= 0.0079 max= 0.031 conv=    0.1s div=0       974 ns/step
+[ecm|evtol|param_mismatch|s1] ELM-RLS-EKF                rmse= 0.0122 ss= 0.0129 max= 0.025 conv=    0.0s div=0      2793 ns/step
+[ecm|evtol|param_mismatch|s1] MHE-RTI                    rmse= 0.0207 ss= 0.0192 max= 0.058 conv=    0.0s div=0     11637 ns/step
+[ecm|evtol|param_mismatch|s1] MHE                        rmse= 0.0135 ss= 0.0146 max= 0.032 conv=    0.0s div=0     21318 ns/step
+[ecm|evtol|param_mismatch|s1] ERTS                       rmse= 0.0140 ss= 0.0148 max= 0.016 conv=    0.0s div=0       606 ns/step
+[ecm|evtol|param_mismatch|s1] URTS                       rmse= 0.0140 ss= 0.0144 max= 0.015 conv=    0.0s div=0      1642 ns/step
+[ecm|evtol|param_mismatch|s1] Batch-NLS                  rmse= 0.0114 ss= 0.0131 max= 0.014 conv=    0.0s div=0      2636 ns/step
+[ecm|evtol|param_mismatch|s1] FixedLag-EKF               rmse= 0.0140 ss= 0.0149 max= 0.027 conv=    0.0s div=0      3465 ns/step
+[ecm|evtol|sensor_dropout|s1] CoulombCounting            rmse= 0.0028 ss= 0.0036 max= 0.004 conv=    0.0s div=0        62 ns/step
+[ecm|evtol|sensor_dropout|s1] OCVLookup                  rmse= 0.0160 ss= 0.0131 max= 0.050 conv=    0.0s div=0      1243 ns/step
+[ecm|evtol|sensor_dropout|s1] CoulombOCVHybrid           rmse= 0.0028 ss= 0.0017 max= 0.005 conv=    0.0s div=0       185 ns/step
+[ecm|evtol|sensor_dropout|s1] EKF                        rmse= 0.0112 ss= 0.0069 max= 0.035 conv=    0.0s div=0       361 ns/step
+[ecm|evtol|sensor_dropout|s1] UKF                        rmse= 0.0137 ss= 0.0068 max= 0.048 conv=    0.4s div=0      1061 ns/step
+[ecm|evtol|sensor_dropout|s1] LKF                        rmse= 0.0330 ss= 0.0121 max= 0.064 conv=    0.0s div=0       292 ns/step
+[ecm|evtol|sensor_dropout|s1] IEKF                       rmse= 0.0071 ss= 0.0042 max= 0.021 conv=    0.0s div=0       437 ns/step
+[ecm|evtol|sensor_dropout|s1] CKF                        rmse= 0.0298 ss= 0.0200 max= 0.076 conv=    0.0s div=0       964 ns/step
+[ecm|evtol|sensor_dropout|s1] SCKF                       rmse= 0.0297 ss= 0.0195 max= 0.076 conv=    0.0s div=0      1314 ns/step
+[ecm|evtol|sensor_dropout|s1] CKF5                       rmse= 0.0295 ss= 0.0198 max= 0.075 conv=    0.0s div=0      2810 ns/step
+[ecm|evtol|sensor_dropout|s1] CDKF                       rmse= 0.0295 ss= 0.0197 max= 0.075 conv=    0.0s div=0      1084 ns/step
+[ecm|evtol|sensor_dropout|s1] GHKF                       rmse= 0.0292 ss= 0.0192 max= 0.075 conv=    0.0s div=0      9330 ns/step
+[ecm|evtol|sensor_dropout|s1] IPLF                       rmse= 0.0151 ss= 0.0073 max= 0.047 conv=    0.3s div=0      1866 ns/step
+[ecm|evtol|sensor_dropout|s1] EIF                        rmse= 0.0084 ss= 0.0052 max= 0.026 conv=    0.0s div=0       885 ns/step
+[ecm|evtol|sensor_dropout|s1] SR-EKF                     rmse= 0.0112 ss= 0.0069 max= 0.035 conv=    0.0s div=0       697 ns/step
+[ecm|evtol|sensor_dropout|s1] SR-UKF                     rmse= 0.0137 ss= 0.0068 max= 0.048 conv=    0.4s div=0      1307 ns/step
+[ecm|evtol|sensor_dropout|s1] UD-EKF                     rmse= 0.0112 ss= 0.0069 max= 0.035 conv=    0.0s div=0       381 ns/step
+[ecm|evtol|sensor_dropout|s1] SO-EKF                     rmse= 0.0058 ss= 0.0033 max= 0.039 conv=    0.4s div=0      2900 ns/step
+[ecm|evtol|sensor_dropout|s1] SageHusa-AKF               rmse= 0.0018 ss= 0.0011 max= 0.013 conv=    0.0s div=0       376 ns/step
+[ecm|evtol|sensor_dropout|s1] IAE-AKF                    rmse= 0.0012 ss= 0.0008 max= 0.013 conv=    0.0s div=0       377 ns/step
+[ecm|evtol|sensor_dropout|s1] VB-AKF                     rmse= 0.0018 ss= 0.0011 max= 0.013 conv=    0.0s div=0       656 ns/step
+[ecm|evtol|sensor_dropout|s1] STF                        rmse= 0.0051 ss= 0.0009 max= 0.089 conv=    0.0s div=0       411 ns/step
+[ecm|evtol|sensor_dropout|s1] Fading-EKF                 rmse= 0.0021 ss= 0.0006 max= 0.017 conv=    0.0s div=0       359 ns/step
+[ecm|evtol|sensor_dropout|s1] Fuzzy-AKF                  rmse= 0.0013 ss= 0.0009 max= 0.013 conv=    0.0s div=0       581 ns/step
+[ecm|evtol|sensor_dropout|s1] IMM                        rmse= 0.0012 ss= 0.0006 max= 0.013 conv=    0.0s div=0      1278 ns/step
+[ecm|evtol|sensor_dropout|s1] MMAE                       rmse= 0.0136 ss= 0.0079 max= 0.049 conv=    0.0s div=0      1160 ns/step
+[ecm|evtol|sensor_dropout|s1] Schmidt-KF                 rmse= 0.0039 ss= 0.0051 max= 0.013 conv=    0.0s div=0      1038 ns/step
+[ecm|evtol|sensor_dropout|s1] Hinf-EKF                   rmse= 0.0170 ss= 0.0100 max= 0.052 conv=    0.0s div=0       587 ns/step
+[ecm|evtol|sensor_dropout|s1] Huber-EKF                  rmse= 0.0024 ss= 0.0016 max= 0.013 conv=    0.0s div=0       479 ns/step
+[ecm|evtol|sensor_dropout|s1] MC-EKF                     rmse= 0.0023 ss= 0.0016 max= 0.013 conv=    0.0s div=0       734 ns/step
+[ecm|evtol|sensor_dropout|s1] StudentT-KF                rmse= 0.0025 ss= 0.0015 max= 0.013 conv=    0.0s div=0       525 ns/step
+[ecm|evtol|sensor_dropout|s1] Constrained-EKF            rmse= 0.0115 ss= 0.0071 max= 0.036 conv=    0.0s div=0       421 ns/step
+[ecm|evtol|sensor_dropout|s1] ReducedOrder-EKF           rmse= 0.0070 ss= 0.0008 max= 0.058 conv=    0.0s div=0       319 ns/step
+[ecm|evtol|sensor_dropout|s1] SVSF                       rmse= 0.0063 ss= 0.0034 max= 0.026 conv=    0.0s div=0       483 ns/step
+[ecm|evtol|sensor_dropout|s1] Luenberger                 rmse= 0.0023 ss= 0.0008 max= 0.022 conv=    0.0s div=0       380 ns/step
+[ecm|evtol|sensor_dropout|s1] SSKF                       rmse= 0.0023 ss= 0.0008 max= 0.022 conv=    0.0s div=0       328 ns/step
+[ecm|evtol|sensor_dropout|s1] PI-Observer                rmse= 0.0055 ss= 0.0010 max= 0.065 conv=    0.0s div=0      1277 ns/step
+[ecm|evtol|sensor_dropout|s1] SMO                        rmse= 0.0023 ss= 0.0008 max= 0.019 conv=    0.0s div=0       394 ns/step
+[ecm|evtol|sensor_dropout|s1] SMO-Adaptive               rmse= 0.0023 ss= 0.0008 max= 0.018 conv=    0.0s div=0       396 ns/step
+[ecm|evtol|sensor_dropout|s1] SuperTwisting-SMO          rmse= 0.0040 ss= 0.0009 max= 0.038 conv=    0.0s div=0       121 ns/step
+[ecm|evtol|sensor_dropout|s1] HGO                        rmse= 0.0023 ss= 0.0008 max= 0.022 conv=    0.0s div=0       377 ns/step
+[ecm|evtol|sensor_dropout|s1] ESO                        rmse= 0.0055 ss= 0.0010 max= 0.065 conv=    0.0s div=0      1336 ns/step
+[ecm|evtol|sensor_dropout|s1] UIO                        rmse= 0.0019 ss= 0.0007 max= 0.009 conv=    0.0s div=0       461 ns/step
+[ecm|evtol|sensor_dropout|s1] DOB                        rmse= 0.0046 ss= 0.0015 max= 0.040 conv=    0.0s div=0       540 ns/step
+[ecm|evtol|sensor_dropout|s1] AdaptiveObserver           rmse= 0.0020 ss= 0.0006 max= 0.019 conv=    0.0s div=0       707 ns/step
+[ecm|evtol|sensor_dropout|s1] IntervalObserver           rmse= 0.0023 ss= 0.0008 max= 0.022 conv=    0.0s div=0       616 ns/step
+[ecm|evtol|sensor_dropout|s1] JointEKF                   rmse= 0.0056 ss= 0.0034 max= 0.037 conv=    0.0s div=0      1014 ns/step
+[ecm|evtol|sensor_dropout|s1] JointUKF                   rmse= 0.0202 ss= 0.0200 max= 0.082 conv=    0.4s div=0      2709 ns/step
+[ecm|evtol|sensor_dropout|s1] DualEKF                    rmse= 0.0047 ss= 0.0031 max= 0.019 conv=    0.0s div=0       901 ns/step
+[ecm|evtol|sensor_dropout|s1] DualUKF                    rmse= 0.0379 ss= 0.0408 max= 0.090 conv=    0.4s div=0      1733 ns/step
+[ecm|evtol|sensor_dropout|s1] RLS-EKF                    rmse= 0.0034 ss= 0.0018 max= 0.016 conv=    0.0s div=0       376 ns/step
+[ecm|evtol|sensor_dropout|s1] AWTLS                      rmse= 0.0113 ss= 0.0087 max= 0.035 conv=    0.0s div=0       359 ns/step
+[ecm|evtol|sensor_dropout|s1] PF-Bootstrap               rmse= 0.0046 ss= 0.0012 max= 0.057 conv=    0.0s div=0     68598 ns/step
+[ecm|evtol|sensor_dropout|s1] PF-Fast                    rmse= 0.0047 ss= 0.0022 max= 0.079 conv=    0.0s div=0     13783 ns/step
+[ecm|evtol|sensor_dropout|s1] PF-Regularized             rmse= 0.0044 ss= 0.0011 max= 0.056 conv=    0.0s div=0     75890 ns/step
+[ecm|evtol|sensor_dropout|s1] PF-Auxiliary               rmse= 0.0020 ss= 0.0018 max= 0.008 conv=    0.0s div=0     89865 ns/step
+[ecm|evtol|sensor_dropout|s1] RBPF                       rmse= 0.0036 ss= 0.0012 max= 0.062 conv=    0.0s div=0     31942 ns/step
+[ecm|evtol|sensor_dropout|s1] UPF                        rmse= 0.0066 ss= 0.0040 max= 0.079 conv=    0.0s div=0     16789 ns/step
+[ecm|evtol|sensor_dropout|s1] EnKF                       rmse= 0.0185 ss= 0.0031 max= 0.072 conv=    0.1s div=0      7765 ns/step
+[ecm|evtol|sensor_dropout|s1] ETKF                       rmse= 0.0289 ss= 0.0267 max= 0.054 conv=    0.1s div=0      8174 ns/step
+[ecm|evtol|sensor_dropout|s1] GSF                        rmse= 0.0060 ss= 0.0003 max= 0.090 conv=    0.0s div=0      1237 ns/step
+[ecm|evtol|sensor_dropout|s1] NN-Direct                  rmse= 0.0087 ss= 0.0117 max= 0.042 conv=    0.0s div=0       492 ns/step
+[ecm|evtol|sensor_dropout|s1] NN-EKF                     rmse= 0.0076 ss= 0.0053 max= 0.036 conv=  196.5s div=0       973 ns/step
+[ecm|evtol|sensor_dropout|s1] ELM-RLS-EKF                rmse= 0.0143 ss= 0.0094 max= 0.042 conv=    0.0s div=0      2803 ns/step
+[ecm|evtol|sensor_dropout|s1] MHE-RTI                    rmse= 0.0196 ss= 0.0064 max= 0.085 conv=    0.0s div=0     11588 ns/step
+[ecm|evtol|sensor_dropout|s1] MHE                        rmse= 0.0147 ss= 0.0045 max= 0.073 conv=    0.0s div=0     21217 ns/step
+[ecm|evtol|sensor_dropout|s1] ERTS                       rmse= 0.0058 ss= 0.0048 max= 0.008 conv=    0.0s div=0       594 ns/step
+[ecm|evtol|sensor_dropout|s1] URTS                       rmse= 0.0079 ss= 0.0045 max= 0.015 conv=    0.0s div=0      1635 ns/step
+[ecm|evtol|sensor_dropout|s1] Batch-NLS                  rmse= 0.0034 ss= 0.0038 max= 0.004 conv=    0.0s div=0      2927 ns/step
+[ecm|evtol|sensor_dropout|s1] FixedLag-EKF               rmse= 0.0108 ss= 0.0066 max= 0.034 conv=    0.0s div=0      3399 ns/step
+[ecm|evtol|preisach      |s1] CoulombCounting            rmse= 0.0028 ss= 0.0035 max= 0.004 conv=    0.0s div=0        61 ns/step
+[ecm|evtol|preisach      |s1] OCVLookup                  rmse= 0.0183 ss= 0.0216 max= 0.049 conv=    0.0s div=0      1219 ns/step
+[ecm|evtol|preisach      |s1] CoulombOCVHybrid           rmse= 0.0222 ss= 0.0230 max= 0.025 conv=    0.0s div=0       180 ns/step
+[ecm|evtol|preisach      |s1] EKF                        rmse= 0.0060 ss= 0.0020 max= 0.019 conv=    0.0s div=0       353 ns/step
+[ecm|evtol|preisach      |s1] UKF                        rmse= 0.0130 ss= 0.0029 max= 0.054 conv=  214.4s div=0      1056 ns/step
+[ecm|evtol|preisach      |s1] LKF                        rmse= 0.0277 ss= 0.0107 max= 0.054 conv=    0.0s div=0       293 ns/step
+[ecm|evtol|preisach      |s1] IEKF                       rmse= 0.0088 ss= 0.0020 max= 0.029 conv=  225.6s div=0       437 ns/step
+[ecm|evtol|preisach      |s1] CKF                        rmse= 0.0126 ss= 0.0024 max= 0.045 conv=  218.1s div=0       964 ns/step
+[ecm|evtol|preisach      |s1] SCKF                       rmse= 0.0126 ss= 0.0023 max= 0.045 conv=  218.1s div=0      1320 ns/step
+[ecm|evtol|preisach      |s1] CKF5                       rmse= 0.0131 ss= 0.0024 max= 0.045 conv=  218.1s div=0      2775 ns/step
+[ecm|evtol|preisach      |s1] CDKF                       rmse= 0.0131 ss= 0.0024 max= 0.045 conv=  218.1s div=0      1113 ns/step
+[ecm|evtol|preisach      |s1] GHKF                       rmse= 0.0131 ss= 0.0028 max= 0.045 conv=  218.1s div=0      9331 ns/step
+[ecm|evtol|preisach      |s1] IPLF                       rmse= 0.0056 ss= 0.0035 max= 0.035 conv=    0.4s div=0      1860 ns/step
+[ecm|evtol|preisach      |s1] EIF                        rmse= 0.0061 ss= 0.0020 max= 0.017 conv=    0.0s div=0       888 ns/step
+[ecm|evtol|preisach      |s1] SR-EKF                     rmse= 0.0060 ss= 0.0020 max= 0.019 conv=    0.0s div=0       691 ns/step
+[ecm|evtol|preisach      |s1] SR-UKF                     rmse= 0.0129 ss= 0.0025 max= 0.054 conv=  214.4s div=0      1312 ns/step
+[ecm|evtol|preisach      |s1] UD-EKF                     rmse= 0.0060 ss= 0.0020 max= 0.019 conv=    0.0s div=0       381 ns/step
+[ecm|evtol|preisach      |s1] SO-EKF                     rmse= 0.0144 ss= 0.0020 max= 0.054 conv=  225.8s div=0      2891 ns/step
+[ecm|evtol|preisach      |s1] SageHusa-AKF               rmse= 0.0048 ss= 0.0020 max= 0.014 conv=    0.0s div=0       380 ns/step
+[ecm|evtol|preisach      |s1] IAE-AKF                    rmse= 0.0048 ss= 0.0020 max= 0.014 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|preisach      |s1] VB-AKF                     rmse= 0.0047 ss= 0.0020 max= 0.014 conv=    0.0s div=0       651 ns/step
+[ecm|evtol|preisach      |s1] STF                        rmse= 0.0117 ss= 0.0100 max= 0.048 conv=  236.4s div=0       409 ns/step
+[ecm|evtol|preisach      |s1] Fading-EKF                 rmse= 0.0112 ss= 0.0087 max= 0.030 conv=  225.6s div=0       354 ns/step
+[ecm|evtol|preisach      |s1] Fuzzy-AKF                  rmse= 0.0047 ss= 0.0020 max= 0.014 conv=    0.0s div=0       564 ns/step
+[ecm|evtol|preisach      |s1] IMM                        rmse= 0.0070 ss= 0.0020 max= 0.021 conv=    0.0s div=0      1251 ns/step
+[ecm|evtol|preisach      |s1] MMAE                       rmse= 0.0078 ss= 0.0027 max= 0.022 conv=    0.0s div=0      1147 ns/step
+[ecm|evtol|preisach      |s1] Schmidt-KF                 rmse= 0.0093 ss= 0.0052 max= 0.019 conv=    0.0s div=0      1028 ns/step
+[ecm|evtol|preisach      |s1] Hinf-EKF                   rmse= 0.0064 ss= 0.0033 max= 0.027 conv=    0.0s div=0       570 ns/step
+[ecm|evtol|preisach      |s1] Huber-EKF                  rmse= 0.0045 ss= 0.0020 max= 0.013 conv=    0.0s div=0       536 ns/step
+[ecm|evtol|preisach      |s1] MC-EKF                     rmse= 0.0060 ss= 0.0020 max= 0.018 conv=    0.0s div=0       733 ns/step
+[ecm|evtol|preisach      |s1] StudentT-KF                rmse= 0.0058 ss= 0.0020 max= 0.016 conv=    0.0s div=0       526 ns/step
+[ecm|evtol|preisach      |s1] Constrained-EKF            rmse= 0.0060 ss= 0.0020 max= 0.019 conv=    0.0s div=0       423 ns/step
+[ecm|evtol|preisach      |s1] ReducedOrder-EKF           rmse= 0.0100 ss= 0.0100 max= 0.029 conv=    0.0s div=0       321 ns/step
+[ecm|evtol|preisach      |s1] SVSF                       rmse= 0.0077 ss= 0.0022 max= 0.025 conv=  205.4s div=0       487 ns/step
+[ecm|evtol|preisach      |s1] Luenberger                 rmse= 0.0082 ss= 0.0100 max= 0.016 conv=    0.0s div=0       349 ns/step
+[ecm|evtol|preisach      |s1] SSKF                       rmse= 0.0082 ss= 0.0100 max= 0.016 conv=    0.0s div=0       303 ns/step
+[ecm|evtol|preisach      |s1] PI-Observer                rmse= 0.0120 ss= 0.0108 max= 0.036 conv=  222.8s div=0      1254 ns/step
+[ecm|evtol|preisach      |s1] SMO                        rmse= 0.0084 ss= 0.0101 max= 0.016 conv=    0.0s div=0       389 ns/step
+[ecm|evtol|preisach      |s1] SMO-Adaptive               rmse= 0.0083 ss= 0.0101 max= 0.016 conv=    0.0s div=0       378 ns/step
+[ecm|evtol|preisach      |s1] SuperTwisting-SMO          rmse= 0.0116 ss= 0.0110 max= 0.033 conv=  226.3s div=0       119 ns/step
+[ecm|evtol|preisach      |s1] HGO                        rmse= 0.0082 ss= 0.0100 max= 0.016 conv=    0.0s div=0       350 ns/step
+[ecm|evtol|preisach      |s1] ESO                        rmse= 0.0121 ss= 0.0110 max= 0.036 conv=  222.8s div=0      1307 ns/step
+[ecm|evtol|preisach      |s1] UIO                        rmse= 0.0078 ss= 0.0088 max= 0.018 conv=    0.0s div=0       456 ns/step
+[ecm|evtol|preisach      |s1] DOB                        rmse= 0.0049 ss= 0.0054 max= 0.010 conv=    0.0s div=0       558 ns/step
+[ecm|evtol|preisach      |s1] AdaptiveObserver           rmse= 0.0081 ss= 0.0098 max= 0.016 conv=    0.0s div=0       674 ns/step
+[ecm|evtol|preisach      |s1] IntervalObserver           rmse= 0.0082 ss= 0.0100 max= 0.016 conv=    0.0s div=0       587 ns/step
+[ecm|evtol|preisach      |s1] JointEKF                   rmse= 0.0082 ss= 0.0093 max= 0.017 conv=    0.0s div=0       995 ns/step
+[ecm|evtol|preisach      |s1] JointUKF                   rmse= 0.0179 ss= 0.0101 max= 0.072 conv=  227.0s div=0      2709 ns/step
+[ecm|evtol|preisach      |s1] DualEKF                    rmse= 0.0087 ss= 0.0094 max= 0.019 conv=    0.0s div=0       898 ns/step
+[ecm|evtol|preisach      |s1] DualUKF                    rmse= 0.0182 ss= 0.0120 max= 0.060 conv=  226.0s div=0      1722 ns/step
+[ecm|evtol|preisach      |s1] RLS-EKF                    rmse= 0.0084 ss= 0.0071 max= 0.019 conv=    0.0s div=0       372 ns/step
+[ecm|evtol|preisach      |s1] AWTLS                      rmse= 0.0074 ss= 0.0067 max= 0.019 conv=    0.0s div=0       358 ns/step
+[ecm|evtol|preisach      |s1] PF-Bootstrap               rmse= 0.0156 ss= 0.0103 max= 0.047 conv=  222.7s div=0     67100 ns/step
+[ecm|evtol|preisach      |s1] PF-Fast                    rmse= 0.0157 ss= 0.0111 max= 0.051 conv=  222.7s div=0     13655 ns/step
+[ecm|evtol|preisach      |s1] PF-Regularized             rmse= 0.0160 ss= 0.0103 max= 0.048 conv=  226.0s div=0     75912 ns/step
+[ecm|evtol|preisach      |s1] PF-Auxiliary               rmse= 0.0148 ss= 0.0102 max= 0.047 conv=  203.0s div=0     90572 ns/step
+[ecm|evtol|preisach      |s1] RBPF                       rmse= 0.0105 ss= 0.0047 max= 0.034 conv=  210.5s div=0     31672 ns/step
+[ecm|evtol|preisach      |s1] UPF                        rmse= 0.0154 ss= 0.0127 max= 0.054 conv=  201.7s div=0     16602 ns/step
+[ecm|evtol|preisach      |s1] EnKF                       rmse= 0.0144 ss= 0.0102 max= 0.055 conv=  222.9s div=0      7615 ns/step
+[ecm|evtol|preisach      |s1] ETKF                       rmse= 0.0120 ss= 0.0042 max= 0.049 conv=  218.8s div=0      8149 ns/step
+[ecm|evtol|preisach      |s1] GSF                        rmse= 0.0139 ss= 0.0020 max= 0.064 conv=  191.2s div=0      1220 ns/step
+[ecm|evtol|preisach      |s1] NN-Direct                  rmse= 0.0062 ss= 0.0083 max= 0.031 conv=    0.0s div=0       506 ns/step
+[ecm|evtol|preisach      |s1] NN-EKF                     rmse= 0.0022 ss= 0.0010 max= 0.011 conv=    0.0s div=0       964 ns/step
+[ecm|evtol|preisach      |s1] ELM-RLS-EKF                rmse= 0.0061 ss= 0.0020 max= 0.017 conv=    0.0s div=0      2822 ns/step
+[ecm|evtol|preisach      |s1] MHE-RTI                    rmse= 0.0077 ss= 0.0049 max= 0.029 conv=  209.6s div=0     11652 ns/step
+[ecm|evtol|preisach      |s1] MHE                        rmse= 0.0063 ss= 0.0049 max= 0.026 conv=   10.8s div=0     21349 ns/step
+[ecm|evtol|preisach      |s1] ERTS                       rmse= 0.0034 ss= 0.0041 max= 0.005 conv=    0.0s div=0       594 ns/step
+[ecm|evtol|preisach      |s1] URTS                       rmse= 0.0048 ss= 0.0056 max= 0.006 conv=    0.0s div=0      1633 ns/step
+[ecm|evtol|preisach      |s1] Batch-NLS                  rmse= 0.0021 ss= 0.0027 max= 0.003 conv=    0.0s div=0      2999 ns/step
+[ecm|evtol|preisach      |s1] FixedLag-EKF               rmse= 0.0058 ss= 0.0021 max= 0.019 conv=    0.0s div=0      3455 ns/step
+[ecm|evtol|combined      |s1] CoulombCounting            rmse= 0.2218 ss= 0.2093 max= 0.250 conv=   -1.0s div=0        60 ns/step
+[ecm|evtol|combined      |s1] OCVLookup                  rmse= 0.0263 ss= 0.0114 max= 0.249 conv=   66.1s div=0      1228 ns/step
+[ecm|evtol|combined      |s1] CoulombOCVHybrid           rmse= 0.0323 ss= 0.0133 max= 0.250 conv=  253.2s div=0       186 ns/step
+[ecm|evtol|combined      |s1] EKF                        rmse= 0.1581 ss= 0.1221 max= 0.304 conv=   -1.0s div=0       359 ns/step
+[ecm|evtol|combined      |s1] UKF                        rmse= 0.0081 ss= 0.0107 max= 0.076 conv=    0.1s div=0      1061 ns/step
+[ecm|evtol|combined      |s1] LKF                        rmse= 0.0640 ss= 0.0704 max= 0.120 conv=   -1.0s div=0       292 ns/step
+[ecm|evtol|combined      |s1] IEKF                       rmse= 0.0152 ss= 0.0183 max= 0.039 conv=    0.0s div=0       432 ns/step
+[ecm|evtol|combined      |s1] CKF                        rmse= 0.1488 ss= 0.1297 max= 0.233 conv=   -1.0s div=0       958 ns/step
+[ecm|evtol|combined      |s1] SCKF                       rmse= 0.1479 ss= 0.1284 max= 0.233 conv=   -1.0s div=0      1300 ns/step
+[ecm|evtol|combined      |s1] CKF5                       rmse= 0.1733 ss= 0.1459 max= 0.273 conv=   -1.0s div=0      2816 ns/step
+[ecm|evtol|combined      |s1] CDKF                       rmse= 0.1732 ss= 0.1459 max= 0.273 conv=   -1.0s div=0      1095 ns/step
+[ecm|evtol|combined      |s1] GHKF                       rmse= 0.1731 ss= 0.1456 max= 0.273 conv=   -1.0s div=0      9218 ns/step
+[ecm|evtol|combined      |s1] IPLF                       rmse= 0.0157 ss= 0.0186 max= 0.039 conv=    0.0s div=0      1972 ns/step
+[ecm|evtol|combined      |s1] EIF                        rmse= 0.1617 ss= 0.1266 max= 0.307 conv=   -1.0s div=0       899 ns/step
+[ecm|evtol|combined      |s1] SR-EKF                     rmse= 0.1582 ss= 0.1221 max= 0.304 conv=   -1.0s div=0       697 ns/step
+[ecm|evtol|combined      |s1] SR-UKF                     rmse= 0.0061 ss= 0.0023 max= 0.076 conv=    0.1s div=0      1305 ns/step
+[ecm|evtol|combined      |s1] UD-EKF                     rmse= 0.1581 ss= 0.1218 max= 0.304 conv=   -1.0s div=0       375 ns/step
+[ecm|evtol|combined      |s1] SO-EKF                     rmse= 0.0107 ss= 0.0136 max= 0.073 conv=    0.1s div=0      2911 ns/step
+[ecm|evtol|combined      |s1] SageHusa-AKF               rmse= 0.0487 ss= 0.0195 max= 0.112 conv= 1440.6s div=0       377 ns/step
+[ecm|evtol|combined      |s1] IAE-AKF                    rmse= 0.0480 ss= 0.0202 max= 0.109 conv= 1449.3s div=0       375 ns/step
+[ecm|evtol|combined      |s1] VB-AKF                     rmse= 0.0476 ss= 0.0195 max= 0.105 conv= 1440.7s div=0       655 ns/step
+[ecm|evtol|combined      |s1] STF                        rmse= 0.0348 ss= 0.0272 max= 0.214 conv=    0.1s div=0       414 ns/step
+[ecm|evtol|combined      |s1] Fading-EKF                 rmse= 0.0093 ss= 0.0117 max= 0.072 conv=    0.3s div=0       358 ns/step
+[ecm|evtol|combined      |s1] Fuzzy-AKF                  rmse= 0.0514 ss= 0.0229 max= 0.122 conv= 1627.9s div=0       575 ns/step
+[ecm|evtol|combined      |s1] IMM                        rmse= 0.0126 ss= 0.0057 max= 0.079 conv=   53.9s div=0      1280 ns/step
+[ecm|evtol|combined      |s1] MMAE                       rmse= 0.1589 ss= 0.1230 max= 0.303 conv=   -1.0s div=0      1142 ns/step
+[ecm|evtol|combined      |s1] Schmidt-KF                 rmse= 0.0506 ss= 0.0116 max= 0.107 conv= 1052.8s div=0      1034 ns/step
+[ecm|evtol|combined      |s1] Hinf-EKF                   rmse= 0.1227 ss= 0.0726 max= 0.308 conv= 1659.9s div=0       589 ns/step
+[ecm|evtol|combined      |s1] Huber-EKF                  rmse= 0.0717 ss= 0.0418 max= 0.199 conv= 1850.2s div=0       481 ns/step
+[ecm|evtol|combined      |s1] MC-EKF                     rmse= 0.0631 ss= 0.0365 max= 0.148 conv= 1850.2s div=0       762 ns/step
+[ecm|evtol|combined      |s1] StudentT-KF                rmse= 0.0644 ss= 0.0353 max= 0.181 conv= 1848.8s div=0       545 ns/step
+[ecm|evtol|combined      |s1] Constrained-EKF            rmse= 0.1652 ss= 0.1285 max= 0.311 conv=   -1.0s div=0       421 ns/step
+[ecm|evtol|combined      |s1] ReducedOrder-EKF           rmse= 0.0405 ss= 0.0168 max= 0.193 conv=  574.3s div=0       319 ns/step
+[ecm|evtol|combined      |s1] SVSF                       rmse= 0.0459 ss= 0.0198 max= 0.128 conv= 1440.8s div=0       484 ns/step
+[ecm|evtol|combined      |s1] Luenberger                 rmse= 0.0539 ss= 0.0215 max= 0.243 conv=  803.8s div=0       383 ns/step
+[ecm|evtol|combined      |s1] SSKF                       rmse= 0.0542 ss= 0.0203 max= 0.243 conv= 1382.7s div=0       490 ns/step
+[ecm|evtol|combined      |s1] PI-Observer                rmse= 0.0288 ss= 0.0216 max= 0.240 conv=   22.0s div=0       683 ns/step
+[ecm|evtol|combined      |s1] SMO                        rmse= 0.0522 ss= 0.0207 max= 0.243 conv=  767.0s div=0       379 ns/step
+[ecm|evtol|combined      |s1] SMO-Adaptive               rmse= 0.0520 ss= 0.0195 max= 0.243 conv=  770.8s div=0       414 ns/step
+[ecm|evtol|combined      |s1] SuperTwisting-SMO          rmse= 0.0436 ss= 0.0244 max= 0.250 conv=   90.8s div=0       111 ns/step
+[ecm|evtol|combined      |s1] HGO                        rmse= 0.0518 ss= 0.0201 max= 0.243 conv=  843.1s div=0       374 ns/step
+[ecm|evtol|combined      |s1] ESO                        rmse= 0.0294 ss= 0.0223 max= 0.240 conv=   22.0s div=0       836 ns/step
+[ecm|evtol|combined      |s1] UIO                        rmse= 0.0776 ss= 0.0185 max= 0.250 conv= 1396.5s div=0       480 ns/step
+[ecm|evtol|combined      |s1] DOB                        rmse= 0.0589 ss= 0.0230 max= 0.245 conv= 1381.6s div=0       525 ns/step
+[ecm|evtol|combined      |s1] AdaptiveObserver           rmse= 0.0438 ss= 0.0081 max= 0.243 conv=  425.6s div=0       631 ns/step
+[ecm|evtol|combined      |s1] IntervalObserver           rmse= 0.0542 ss= 0.0203 max= 0.243 conv= 1382.7s div=0       774 ns/step
+[ecm|evtol|combined      |s1] JointEKF                   rmse= 0.0385 ss= 0.0255 max= 0.110 conv=  283.1s div=0      1003 ns/step
+[ecm|evtol|combined      |s1] JointUKF                   rmse= 0.0267 ss= 0.0213 max= 0.080 conv=  245.4s div=0      2721 ns/step
+[ecm|evtol|combined      |s1] DualEKF                    rmse= 0.0348 ss= 0.0186 max= 0.099 conv=  393.1s div=0       924 ns/step
+[ecm|evtol|combined      |s1] DualUKF                    rmse= 0.0184 ss= 0.0196 max= 0.076 conv=    0.7s div=0      1722 ns/step
+[ecm|evtol|combined      |s1] RLS-EKF                    rmse= 0.0644 ss= 0.0328 max= 0.200 conv=   -1.0s div=0       372 ns/step
+[ecm|evtol|combined      |s1] AWTLS                      rmse= 0.1477 ss= 0.0925 max= 0.304 conv= 1874.9s div=0       355 ns/step
+[ecm|evtol|combined      |s1] PF-Bootstrap               rmse= 0.0293 ss= 0.0252 max= 0.142 conv=    0.0s div=0     70642 ns/step
+[ecm|evtol|combined      |s1] PF-Fast                    rmse= 0.0346 ss= 0.0301 max= 0.169 conv=    0.0s div=0     14497 ns/step
+[ecm|evtol|combined      |s1] PF-Regularized             rmse= 0.0286 ss= 0.0273 max= 0.139 conv=    0.0s div=0     78656 ns/step
+[ecm|evtol|combined      |s1] PF-Auxiliary               rmse= 0.0201 ss= 0.0219 max= 0.078 conv=    0.0s div=0     90407 ns/step
+[ecm|evtol|combined      |s1] RBPF                       rmse= 0.0260 ss= 0.0167 max= 0.139 conv=  540.2s div=0     32255 ns/step
+[ecm|evtol|combined      |s1] UPF                        rmse= 0.0382 ss= 0.0277 max= 0.204 conv=    9.3s div=0     16620 ns/step
+[ecm|evtol|combined      |s1] EnKF                       rmse= 0.1096 ss= 0.0697 max= 0.317 conv=  963.9s div=0      7758 ns/step
+[ecm|evtol|combined      |s1] ETKF                       rmse= 0.0257 ss= 0.0253 max= 0.066 conv=  255.1s div=0      8134 ns/step
+[ecm|evtol|combined      |s1] GSF                        rmse= 0.0522 ss= 0.0315 max= 0.296 conv=    0.9s div=0      1246 ns/step
+[ecm|evtol|combined      |s1] NN-Direct                  rmse= 0.0327 ss= 0.0410 max= 0.052 conv=   79.6s div=0       513 ns/step
+[ecm|evtol|combined      |s1] NN-EKF                     rmse= 0.1550 ss= 0.1199 max= 0.305 conv=   -1.0s div=0       961 ns/step
+[ecm|evtol|combined      |s1] ELM-RLS-EKF                rmse= 0.1621 ss= 0.1254 max= 0.310 conv=   -1.0s div=0      2728 ns/step
+[ecm|evtol|combined      |s1] MHE-RTI                    rmse= 0.0058 ss= 0.0050 max= 0.072 conv=    0.2s div=0     11617 ns/step
+[ecm|evtol|combined      |s1] MHE                        rmse= 0.0079 ss= 0.0059 max= 0.046 conv=    0.0s div=0     21833 ns/step
+[ecm|evtol|combined      |s1] ERTS                       rmse= 0.1410 ss= 0.1204 max= 0.183 conv=   -1.0s div=0       595 ns/step
+[ecm|evtol|combined      |s1] URTS                       rmse= 0.0127 ss= 0.0050 max= 0.029 conv=  282.9s div=0      1647 ns/step
+[ecm|evtol|combined      |s1] Batch-NLS                  rmse= 0.0705 ss= 0.0452 max= 0.109 conv= 1864.6s div=0      2998 ns/step
+[ecm|evtol|combined      |s1] FixedLag-EKF               rmse= 0.1579 ss= 0.1222 max= 0.302 conv=   -1.0s div=0      3528 ns/step

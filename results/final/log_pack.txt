@@ -1,0 +1,126 @@
+[pack|evtol|nominal        |s1] Decentralized-EKF      rmse_cells=0.0112 rmse_min=0.0086 ss=0.0134 max=0.038 div=0     5636 ns/step 52032 B
+[pack|evtol|nominal        |s1] BarDelta               rmse_cells=0.0050 rmse_min=0.0039 ss=0.0055 max=0.030 div=0      808 ns/step 5616 B
+[pack|evtol|nominal        |s1] Federated              rmse_cells=0.0044 rmse_min=0.0034 ss=0.0042 max=0.030 div=0     8346 ns/step 53472 B
+[pack|evtol|nominal        |s1] Consensus              rmse_cells=0.0070 rmse_min=0.0074 ss=0.0072 max=0.026 div=0     9291 ns/step 9224 B
+[pack|evtol|nominal        |s1] InfoFusion             rmse_cells=0.0045 rmse_min=0.0034 ss=0.0042 max=0.030 div=0     1894 ns/step 5544 B
+[pack|evtol|nominal        |s1] Decentralized-UKF      rmse_cells=0.0124 rmse_min=0.0071 ss=0.0138 max=0.048 div=0    16793 ns/step 57312 B
+[pack|evtol|nominal        |s1] Decentralized-ReducedEKF rmse_cells=0.0150 rmse_min=0.0156 ss=0.0112 max=0.106 div=0     4292 ns/step 51264 B
+[pack|evtol|nominal        |s2] Decentralized-EKF      rmse_cells=0.0118 rmse_min=0.0103 ss=0.0124 max=0.045 div=0     5710 ns/step 52032 B
+[pack|evtol|nominal        |s2] BarDelta               rmse_cells=0.0062 rmse_min=0.0053 ss=0.0065 max=0.032 div=0      820 ns/step 5616 B
+[pack|evtol|nominal        |s2] Federated              rmse_cells=0.0058 rmse_min=0.0039 ss=0.0060 max=0.032 div=0     8311 ns/step 53472 B
+[pack|evtol|nominal        |s2] Consensus              rmse_cells=0.0069 rmse_min=0.0043 ss=0.0073 max=0.032 div=0     9173 ns/step 9224 B
+[pack|evtol|nominal        |s2] InfoFusion             rmse_cells=0.0058 rmse_min=0.0038 ss=0.0060 max=0.032 div=0     1899 ns/step 5544 B
+[pack|evtol|nominal        |s2] Decentralized-UKF      rmse_cells=0.0158 rmse_min=0.0214 ss=0.0145 max=0.071 div=0    16786 ns/step 57312 B
+[pack|evtol|nominal        |s2] Decentralized-ReducedEKF rmse_cells=0.0175 rmse_min=0.0151 ss=0.0134 max=0.103 div=0     4190 ns/step 51264 B
+[pack|evtol|nominal        |s3] Decentralized-EKF      rmse_cells=0.0139 rmse_min=0.0055 ss=0.0144 max=0.054 div=0     5656 ns/step 52032 B
+[pack|evtol|nominal        |s3] BarDelta               rmse_cells=0.0066 rmse_min=0.0077 ss=0.0075 max=0.032 div=0      805 ns/step 5616 B
+[pack|evtol|nominal        |s3] Federated              rmse_cells=0.0062 rmse_min=0.0072 ss=0.0066 max=0.030 div=0     8388 ns/step 53472 B
+[pack|evtol|nominal        |s3] Consensus              rmse_cells=0.0059 rmse_min=0.0052 ss=0.0055 max=0.026 div=0     9388 ns/step 9224 B
+[pack|evtol|nominal        |s3] InfoFusion             rmse_cells=0.0061 rmse_min=0.0071 ss=0.0066 max=0.030 div=0     1897 ns/step 5544 B
+[pack|evtol|nominal        |s3] Decentralized-UKF      rmse_cells=0.0142 rmse_min=0.0091 ss=0.0147 max=0.050 div=0    16715 ns/step 57312 B
+[pack|evtol|nominal        |s3] Decentralized-ReducedEKF rmse_cells=0.0218 rmse_min=0.0252 ss=0.0176 max=0.139 div=0     4047 ns/step 51264 B
+[pack|evtol|init_error     |s1] Decentralized-EKF      rmse_cells=0.0113 rmse_min=0.0070 ss=0.0132 max=0.035 div=0     5623 ns/step 52032 B
+[pack|evtol|init_error     |s1] BarDelta               rmse_cells=0.0060 rmse_min=0.0057 ss=0.0058 max=0.031 div=0      810 ns/step 5616 B
+[pack|evtol|init_error     |s1] Federated              rmse_cells=0.0043 rmse_min=0.0031 ss=0.0041 max=0.025 div=0     8320 ns/step 53472 B
+[pack|evtol|init_error     |s1] Consensus              rmse_cells=0.0067 rmse_min=0.0066 ss=0.0067 max=0.031 div=0     9234 ns/step 9224 B
+[pack|evtol|init_error     |s1] InfoFusion             rmse_cells=0.0043 rmse_min=0.0030 ss=0.0041 max=0.025 div=0     1891 ns/step 5544 B
+[pack|evtol|init_error     |s1] Decentralized-UKF      rmse_cells=0.0143 rmse_min=0.0099 ss=0.0152 max=0.038 div=0    16662 ns/step 57312 B
+[pack|evtol|init_error     |s1] Decentralized-ReducedEKF rmse_cells=0.0149 rmse_min=0.0153 ss=0.0112 max=0.106 div=0     4072 ns/step 51264 B
+[pack|evtol|init_error     |s2] Decentralized-EKF      rmse_cells=0.0120 rmse_min=0.0087 ss=0.0124 max=0.046 div=0     5639 ns/step 52032 B
+[pack|evtol|init_error     |s2] BarDelta               rmse_cells=0.0061 rmse_min=0.0048 ss=0.0065 max=0.030 div=0      805 ns/step 5616 B
+[pack|evtol|init_error     |s2] Federated              rmse_cells=0.0059 rmse_min=0.0034 ss=0.0062 max=0.028 div=0     8304 ns/step 53472 B
+[pack|evtol|init_error     |s2] Consensus              rmse_cells=0.0068 rmse_min=0.0040 ss=0.0071 max=0.028 div=0     9252 ns/step 9224 B
+[pack|evtol|init_error     |s2] InfoFusion             rmse_cells=0.0058 rmse_min=0.0033 ss=0.0062 max=0.028 div=0     1891 ns/step 5544 B
+[pack|evtol|init_error     |s2] Decentralized-UKF      rmse_cells=0.0177 rmse_min=0.0269 ss=0.0158 max=0.080 div=0    16666 ns/step 57312 B
+[pack|evtol|init_error     |s2] Decentralized-ReducedEKF rmse_cells=0.0175 rmse_min=0.0152 ss=0.0134 max=0.103 div=0     6218 ns/step 51264 B
+[pack|evtol|init_error     |s3] Decentralized-EKF      rmse_cells=0.0122 rmse_min=0.0088 ss=0.0132 max=0.046 div=0     5585 ns/step 52032 B
+[pack|evtol|init_error     |s3] BarDelta               rmse_cells=0.0070 rmse_min=0.0076 ss=0.0082 max=0.024 div=0      811 ns/step 5616 B
+[pack|evtol|init_error     |s3] Federated              rmse_cells=0.0060 rmse_min=0.0068 ss=0.0066 max=0.026 div=0     8324 ns/step 53472 B
+[pack|evtol|init_error     |s3] Consensus              rmse_cells=0.0055 rmse_min=0.0044 ss=0.0049 max=0.029 div=0     9277 ns/step 9224 B
+[pack|evtol|init_error     |s3] InfoFusion             rmse_cells=0.0060 rmse_min=0.0068 ss=0.0066 max=0.026 div=0     1906 ns/step 5544 B
+[pack|evtol|init_error     |s3] Decentralized-UKF      rmse_cells=0.0182 rmse_min=0.0211 ss=0.0168 max=0.076 div=0    16649 ns/step 57312 B
+[pack|evtol|init_error     |s3] Decentralized-ReducedEKF rmse_cells=0.0218 rmse_min=0.0252 ss=0.0176 max=0.139 div=0     4094 ns/step 51264 B
+[pack|evtol|current_bias   |s1] Decentralized-EKF      rmse_cells=0.0123 rmse_min=0.0076 ss=0.0129 max=0.047 div=0     5732 ns/step 52032 B
+[pack|evtol|current_bias   |s1] BarDelta               rmse_cells=0.0055 rmse_min=0.0065 ss=0.0034 max=0.034 div=0      811 ns/step 5616 B
+[pack|evtol|current_bias   |s1] Federated              rmse_cells=0.0057 rmse_min=0.0068 ss=0.0046 max=0.034 div=0     8449 ns/step 53472 B
+[pack|evtol|current_bias   |s1] Consensus              rmse_cells=0.0090 rmse_min=0.0077 ss=0.0065 max=0.037 div=0     9464 ns/step 9224 B
+[pack|evtol|current_bias   |s1] InfoFusion             rmse_cells=0.0057 rmse_min=0.0068 ss=0.0046 max=0.034 div=0     1886 ns/step 5544 B
+[pack|evtol|current_bias   |s1] Decentralized-UKF      rmse_cells=0.0146 rmse_min=0.0064 ss=0.0139 max=0.050 div=0    16989 ns/step 57312 B
+[pack|evtol|current_bias   |s1] Decentralized-ReducedEKF rmse_cells=0.0187 rmse_min=0.0152 ss=0.0148 max=0.078 div=0     4152 ns/step 51264 B
+[pack|evtol|current_bias   |s2] Decentralized-EKF      rmse_cells=0.0136 rmse_min=0.0096 ss=0.0147 max=0.059 div=0     5598 ns/step 52032 B
+[pack|evtol|current_bias   |s2] BarDelta               rmse_cells=0.0093 rmse_min=0.0091 ss=0.0108 max=0.036 div=0      797 ns/step 5616 B
+[pack|evtol|current_bias   |s2] Federated              rmse_cells=0.0094 rmse_min=0.0086 ss=0.0111 max=0.036 div=0     8346 ns/step 53472 B
+[pack|evtol|current_bias   |s2] Consensus              rmse_cells=0.0071 rmse_min=0.0097 ss=0.0038 max=0.036 div=0     9293 ns/step 9224 B
+[pack|evtol|current_bias   |s2] InfoFusion             rmse_cells=0.0094 rmse_min=0.0086 ss=0.0110 max=0.036 div=0     1882 ns/step 5544 B
+[pack|evtol|current_bias   |s2] Decentralized-UKF      rmse_cells=0.0144 rmse_min=0.0059 ss=0.0150 max=0.064 div=0    16760 ns/step 57312 B
+[pack|evtol|current_bias   |s2] Decentralized-ReducedEKF rmse_cells=0.0174 rmse_min=0.0148 ss=0.0132 max=0.094 div=0     4106 ns/step 51264 B
+[pack|evtol|current_bias   |s3] Decentralized-EKF      rmse_cells=0.0152 rmse_min=0.0091 ss=0.0166 max=0.062 div=0     5720 ns/step 52032 B
+[pack|evtol|current_bias   |s3] BarDelta               rmse_cells=0.0102 rmse_min=0.0121 ss=0.0124 max=0.034 div=0      812 ns/step 5616 B
+[pack|evtol|current_bias   |s3] Federated              rmse_cells=0.0100 rmse_min=0.0118 ss=0.0120 max=0.033 div=0     8448 ns/step 53472 B
+[pack|evtol|current_bias   |s3] Consensus              rmse_cells=0.0077 rmse_min=0.0083 ss=0.0052 max=0.035 div=0     9333 ns/step 9224 B
+[pack|evtol|current_bias   |s3] InfoFusion             rmse_cells=0.0100 rmse_min=0.0118 ss=0.0118 max=0.033 div=0     1928 ns/step 5544 B
+[pack|evtol|current_bias   |s3] Decentralized-UKF      rmse_cells=0.0161 rmse_min=0.0094 ss=0.0168 max=0.066 div=0    17111 ns/step 57312 B
+[pack|evtol|current_bias   |s3] Decentralized-ReducedEKF rmse_cells=0.0207 rmse_min=0.0204 ss=0.0164 max=0.117 div=0     4238 ns/step 51264 B
+[pack|evtol|weak_cell      |s1] Decentralized-EKF      rmse_cells=0.0109 rmse_min=0.0066 ss=0.0127 max=0.041 div=0     5737 ns/step 52032 B
+[pack|evtol|weak_cell      |s1] BarDelta               rmse_cells=0.0050 rmse_min=0.0064 ss=0.0048 max=0.029 div=0      812 ns/step 5616 B
+[pack|evtol|weak_cell      |s1] Federated              rmse_cells=0.0054 rmse_min=0.0071 ss=0.0051 max=0.029 div=0     8581 ns/step 53472 B
+[pack|evtol|weak_cell      |s1] Consensus              rmse_cells=0.0069 rmse_min=0.0055 ss=0.0065 max=0.030 div=0     9334 ns/step 9224 B
+[pack|evtol|weak_cell      |s1] InfoFusion             rmse_cells=0.0055 rmse_min=0.0072 ss=0.0052 max=0.029 div=0     1881 ns/step 5544 B
+[pack|evtol|weak_cell      |s1] Decentralized-UKF      rmse_cells=0.0124 rmse_min=0.0123 ss=0.0131 max=0.065 div=0    16697 ns/step 57312 B
+[pack|evtol|weak_cell      |s1] Decentralized-ReducedEKF rmse_cells=0.0222 rmse_min=0.0561 ss=0.0160 max=0.214 div=0     4077 ns/step 51264 B
+[pack|evtol|weak_cell      |s2] Decentralized-EKF      rmse_cells=0.0128 rmse_min=0.0129 ss=0.0130 max=0.050 div=0     5654 ns/step 52032 B
+[pack|evtol|weak_cell      |s2] BarDelta               rmse_cells=0.0070 rmse_min=0.0051 ss=0.0076 max=0.031 div=0      814 ns/step 5616 B
+[pack|evtol|weak_cell      |s2] Federated              rmse_cells=0.0056 rmse_min=0.0036 ss=0.0052 max=0.031 div=0     8365 ns/step 53472 B
+[pack|evtol|weak_cell      |s2] Consensus              rmse_cells=0.0064 rmse_min=0.0050 ss=0.0061 max=0.029 div=0     9302 ns/step 9224 B
+[pack|evtol|weak_cell      |s2] InfoFusion             rmse_cells=0.0056 rmse_min=0.0036 ss=0.0052 max=0.031 div=0     1891 ns/step 5544 B
+[pack|evtol|weak_cell      |s2] Decentralized-UKF      rmse_cells=0.0171 rmse_min=0.0255 ss=0.0154 max=0.071 div=0    16832 ns/step 57312 B
+[pack|evtol|weak_cell      |s2] Decentralized-ReducedEKF rmse_cells=0.0238 rmse_min=0.0503 ss=0.0182 max=0.199 div=0     4134 ns/step 51264 B
+[pack|evtol|weak_cell      |s3] Decentralized-EKF      rmse_cells=0.0150 rmse_min=0.0191 ss=0.0153 max=0.054 div=0     5650 ns/step 52032 B
+[pack|evtol|weak_cell      |s3] BarDelta               rmse_cells=0.0079 rmse_min=0.0053 ss=0.0087 max=0.030 div=0      808 ns/step 5616 B
+[pack|evtol|weak_cell      |s3] Federated              rmse_cells=0.0060 rmse_min=0.0045 ss=0.0056 max=0.029 div=0     8368 ns/step 53472 B
+[pack|evtol|weak_cell      |s3] Consensus              rmse_cells=0.0060 rmse_min=0.0058 ss=0.0051 max=0.026 div=0     9456 ns/step 9224 B
+[pack|evtol|weak_cell      |s3] InfoFusion             rmse_cells=0.0059 rmse_min=0.0045 ss=0.0056 max=0.029 div=0     1989 ns/step 5544 B
+[pack|evtol|weak_cell      |s3] Decentralized-UKF      rmse_cells=0.0408 rmse_min=0.1316 ss=0.0312 max=0.254 div=0    17182 ns/step 57312 B
+[pack|evtol|weak_cell      |s3] Decentralized-ReducedEKF rmse_cells=0.0278 rmse_min=0.0595 ss=0.0216 max=0.218 div=0     4192 ns/step 51264 B
+[pack|evtol|noise_step     |s1] Decentralized-EKF      rmse_cells=0.0113 rmse_min=0.0093 ss=0.0134 max=0.036 div=0     5860 ns/step 52032 B
+[pack|evtol|noise_step     |s1] BarDelta               rmse_cells=0.0050 rmse_min=0.0041 ss=0.0055 max=0.030 div=0      808 ns/step 5616 B
+[pack|evtol|noise_step     |s1] Federated              rmse_cells=0.0046 rmse_min=0.0037 ss=0.0045 max=0.030 div=0     8369 ns/step 53472 B
+[pack|evtol|noise_step     |s1] Consensus              rmse_cells=0.0072 rmse_min=0.0073 ss=0.0074 max=0.026 div=0     9247 ns/step 9224 B
+[pack|evtol|noise_step     |s1] InfoFusion             rmse_cells=0.0046 rmse_min=0.0037 ss=0.0045 max=0.030 div=0     1887 ns/step 5544 B
+[pack|evtol|noise_step     |s1] Decentralized-UKF      rmse_cells=0.0126 rmse_min=0.0081 ss=0.0142 max=0.048 div=0    16734 ns/step 57312 B
+[pack|evtol|noise_step     |s1] Decentralized-ReducedEKF rmse_cells=0.0149 rmse_min=0.0156 ss=0.0112 max=0.106 div=0     4035 ns/step 51264 B
+[pack|evtol|noise_step     |s2] Decentralized-EKF      rmse_cells=0.0117 rmse_min=0.0108 ss=0.0121 max=0.045 div=0     5639 ns/step 52032 B
+[pack|evtol|noise_step     |s2] BarDelta               rmse_cells=0.0064 rmse_min=0.0052 ss=0.0067 max=0.032 div=0      807 ns/step 5616 B
+[pack|evtol|noise_step     |s2] Federated              rmse_cells=0.0059 rmse_min=0.0036 ss=0.0061 max=0.032 div=0     8196 ns/step 53472 B
+[pack|evtol|noise_step     |s2] Consensus              rmse_cells=0.0074 rmse_min=0.0046 ss=0.0081 max=0.032 div=0     9229 ns/step 9224 B
+[pack|evtol|noise_step     |s2] InfoFusion             rmse_cells=0.0059 rmse_min=0.0036 ss=0.0061 max=0.032 div=0     1869 ns/step 5544 B
+[pack|evtol|noise_step     |s2] Decentralized-UKF      rmse_cells=0.0161 rmse_min=0.0215 ss=0.0148 max=0.071 div=0    16550 ns/step 57312 B
+[pack|evtol|noise_step     |s2] Decentralized-ReducedEKF rmse_cells=0.0175 rmse_min=0.0151 ss=0.0135 max=0.103 div=0     4136 ns/step 51264 B
+[pack|evtol|noise_step     |s3] Decentralized-EKF      rmse_cells=0.0136 rmse_min=0.0050 ss=0.0138 max=0.054 div=0     5691 ns/step 52032 B
+[pack|evtol|noise_step     |s3] BarDelta               rmse_cells=0.0068 rmse_min=0.0085 ss=0.0078 max=0.032 div=0      830 ns/step 5616 B
+[pack|evtol|noise_step     |s3] Federated              rmse_cells=0.0063 rmse_min=0.0080 ss=0.0069 max=0.030 div=0     8275 ns/step 53472 B
+[pack|evtol|noise_step     |s3] Consensus              rmse_cells=0.0061 rmse_min=0.0052 ss=0.0058 max=0.026 div=0     9209 ns/step 9224 B
+[pack|evtol|noise_step     |s3] InfoFusion             rmse_cells=0.0063 rmse_min=0.0080 ss=0.0069 max=0.030 div=0     1882 ns/step 5544 B
+[pack|evtol|noise_step     |s3] Decentralized-UKF      rmse_cells=0.0141 rmse_min=0.0083 ss=0.0144 max=0.050 div=0    16501 ns/step 57312 B
+[pack|evtol|noise_step     |s3] Decentralized-ReducedEKF rmse_cells=0.0218 rmse_min=0.0251 ss=0.0177 max=0.139 div=0     4174 ns/step 51264 B
+[pack|evtol|large_imbalance|s1] Decentralized-EKF      rmse_cells=0.0199 rmse_min=0.0238 ss=0.0233 max=0.049 div=0     5609 ns/step 52032 B
+[pack|evtol|large_imbalance|s1] BarDelta               rmse_cells=0.0150 rmse_min=0.0218 ss=0.0144 max=0.090 div=0      845 ns/step 5616 B
+[pack|evtol|large_imbalance|s1] Federated              rmse_cells=0.0120 rmse_min=0.0159 ss=0.0124 max=0.089 div=0     8379 ns/step 53472 B
+[pack|evtol|large_imbalance|s1] Consensus              rmse_cells=0.0156 rmse_min=0.0227 ss=0.0141 max=0.081 div=0     9206 ns/step 9224 B
+[pack|evtol|large_imbalance|s1] InfoFusion             rmse_cells=0.0120 rmse_min=0.0159 ss=0.0125 max=0.089 div=0     1896 ns/step 5544 B
+[pack|evtol|large_imbalance|s1] Decentralized-UKF      rmse_cells=0.0230 rmse_min=0.0175 ss=0.0256 max=0.070 div=0    16686 ns/step 57312 B
+[pack|evtol|large_imbalance|s1] Decentralized-ReducedEKF rmse_cells=0.0155 rmse_min=0.0127 ss=0.0117 max=0.107 div=0     4082 ns/step 51264 B
+[pack|evtol|large_imbalance|s2] Decentralized-EKF      rmse_cells=0.0165 rmse_min=0.0324 ss=0.0163 max=0.062 div=0     5676 ns/step 52032 B
+[pack|evtol|large_imbalance|s2] BarDelta               rmse_cells=0.0101 rmse_min=0.0212 ss=0.0067 max=0.098 div=0      839 ns/step 5616 B
+[pack|evtol|large_imbalance|s2] Federated              rmse_cells=0.0080 rmse_min=0.0168 ss=0.0047 max=0.098 div=0     8604 ns/step 53472 B
+[pack|evtol|large_imbalance|s2] Consensus              rmse_cells=0.0135 rmse_min=0.0181 ss=0.0132 max=0.104 div=0     9651 ns/step 9224 B
+[pack|evtol|large_imbalance|s2] InfoFusion             rmse_cells=0.0080 rmse_min=0.0168 ss=0.0046 max=0.098 div=0     1972 ns/step 5544 B
+[pack|evtol|large_imbalance|s2] Decentralized-UKF      rmse_cells=0.0162 rmse_min=0.0231 ss=0.0164 max=0.059 div=0    16975 ns/step 57312 B
+[pack|evtol|large_imbalance|s2] Decentralized-ReducedEKF rmse_cells=0.0174 rmse_min=0.0142 ss=0.0128 max=0.099 div=0     4190 ns/step 51264 B
+[pack|evtol|large_imbalance|s3] Decentralized-EKF      rmse_cells=0.0157 rmse_min=0.0172 ss=0.0140 max=0.072 div=0     5636 ns/step 52032 B
+[pack|evtol|large_imbalance|s3] BarDelta               rmse_cells=0.0115 rmse_min=0.0223 ss=0.0070 max=0.095 div=0      816 ns/step 5616 B
+[pack|evtol|large_imbalance|s3] Federated              rmse_cells=0.0083 rmse_min=0.0169 ss=0.0043 max=0.094 div=0     8270 ns/step 53472 B
+[pack|evtol|large_imbalance|s3] Consensus              rmse_cells=0.0127 rmse_min=0.0202 ss=0.0110 max=0.086 div=0     9176 ns/step 9224 B
+[pack|evtol|large_imbalance|s3] InfoFusion             rmse_cells=0.0083 rmse_min=0.0169 ss=0.0043 max=0.094 div=0     1887 ns/step 5544 B
+[pack|evtol|large_imbalance|s3] Decentralized-UKF      rmse_cells=0.0177 rmse_min=0.0134 ss=0.0164 max=0.083 div=0    16712 ns/step 57312 B
+[pack|evtol|large_imbalance|s3] Decentralized-ReducedEKF rmse_cells=0.0220 rmse_min=0.0131 ss=0.0175 max=0.141 div=0     4101 ns/step 51264 B

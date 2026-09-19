@@ -1,0 +1,82 @@
+# Copyright 2026 Sreeram Anil
+# SPDX-License-Identifier: Apache-2.0
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: "Linux GCC-13 (double)",  os: ubuntu-latest,  cc: gcc-13,   cxx: g++-13,     float: "OFF", werror: "ON"}
+          - {name: "Linux GCC-13 (float32)", os: ubuntu-latest,  cc: gcc-13,   cxx: g++-13,     float: "ON",  werror: "ON"}
+          - {name: "Linux Clang-18 (double)",os: ubuntu-latest,  cc: clang-18, cxx: clang++-18, float: "OFF", werror: "ON"}
+          - {name: "Linux Clang-18 (float32)",os: ubuntu-latest, cc: clang-18, cxx: clang++-18, float: "ON",  werror: "ON"}
+          - {name: "macOS Clang (double)",   os: macos-latest,   cc: clang,    cxx: clang++,    float: "OFF", werror: "ON"}
+          - {name: "macOS Clang (float32)",  os: macos-latest,   cc: clang,    cxx: clang++,    float: "ON",  werror: "ON"}
+          - {name: "Windows MSVC (double)",  os: windows-latest, cc: "",       cxx: "",         float: "OFF", werror: "OFF"}
+          - {name: "Windows MSVC (float32)", os: windows-latest, cc: "",       cxx: "",         float: "ON",  werror: "OFF"}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GCC 13 / Clang 18 (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          if [ "${{ matrix.cc }}" = "gcc-13" ]; then sudo apt-get install -y g++-13; fi
+          if [ "${{ matrix.cc }}" = "clang-18" ]; then sudo apt-get install -y clang-18 || sudo apt-get install -y clang; fi
+      - name: Configure
+        run: >
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          -DESTKIT_FLOAT=${{ matrix.float }} -DESTKIT_WERROR=${{ matrix.werror }}
+          ${{ matrix.cxx != '' && format('-DCMAKE_CXX_COMPILER={0}', matrix.cxx) || '' }}
+      - name: Build
+        run: cmake --build build --config Release -j
+      - name: Unit tests and examples
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Install pandas
+        run: python -m pip install --quiet pandas
+      - name: Benchmark accuracy regression
+        run: python scripts/ci_regression.py --build ${{ runner.os == 'Windows' && 'build/Release' || 'build' }}
+
+  sanitizers:
+    name: "AddressSanitizer + UBSan (Clang)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DESTKIT_SANITIZE=ON -DCMAKE_CXX_COMPILER=clang++
+      - run: cmake --build build -j
+      - run: ctest --test-dir build --output-on-failure
+
+  embedded-cortex-m7:
+    name: "Cortex-M7 cross-compile (arm-none-eabi, float32)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install arm-none-eabi-gcc
+        run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi
+      - name: Compile and link the estimator stack for a Cortex-M7
+        run: |
+          arm-none-eabi-g++ -std=c++17 -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb \
+            -Os -fno-exceptions -fno-rtti -ffunction-sections -fdata-sections \
+            -Wall -Wextra -Wpedantic -Werror -DESTKIT_REAL=float -Iinclude \
+            examples/embedded_cortex_m7.cpp --specs=nano.specs --specs=nosys.specs \
+            -Wl,--gc-sections -o estkit_m7.elf
+      - name: Report static footprint
+        run: arm-none-eabi-size estkit_m7.elf
+
+  license-headers:
+    name: "Licence headers present"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/add_license_headers.py --check

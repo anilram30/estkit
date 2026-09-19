@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\caption{Decentralized-ReducedEKF: pack-level benchmark (12-cell module, eVTOL mission, mean over seeds; all errors in \% SOC). RMSE$_\mathrm{cells}$: per-cell RMSE over all cells; RMSE$_{\min/\mathrm{mean}/\max}$: error of the weakest / mean / strongest-cell SOC; 51264 bytes of state, 0 numbers exchanged per step.}\label{tab:pack_DecentralizedReducedEKF}
+\begin{tabular}{lrrrrrrcr}\toprule scenario & RMSE$_\mathrm{cells}$ & RMSE$_{\min}$ & RMSE$_\mathrm{mean}$ & RMSE$_{\max}$ & max cell err. & RMSE$_\mathrm{ss}$ & div. & ns/step \\ \midrule
+nominal & 1.81 & 1.86 & 0.57 & 1.48 & 11.59 & 1.41 & no & 4190 \\
+init\_error & 1.81 & 1.86 & 0.57 & 1.48 & 11.59 & 1.41 & no & 4094 \\
+current\_bias & 1.89 & 1.68 & 0.79 & 2.01 & 9.62 & 1.48 & no & 4152 \\
+weak\_cell & 2.46 & 5.53 & 0.92 & 1.49 & 21.01 & 1.86 & no & 4134 \\
+noise\_step & 1.81 & 1.86 & 0.57 & 1.49 & 11.59 & 1.41 & no & 4136 \\
+large\_imbalance & 1.83 & 1.33 & 0.61 & 0.96 & 11.55 & 1.40 & no & 4101 \\
+\bottomrule\end{tabular}\end{table}

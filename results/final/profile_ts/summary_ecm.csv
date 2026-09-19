@@ -1,0 +1,4 @@
+plant,estimator,group,profile,scenario,seed,rmse,rmse_ss,mae,max_err,final_err,conv_time,diverged,rmse_v,ns_per_step,bytes,capacity_err_end,bound_violation,bound_width,real_type
+ecm,CoulombCounting,baselines,fixed_wing,nominal,1,0.00350989,0.00450211,0.00314219,0.00558308,-0.00558246,0,0,0.00406941,84.6892,4184,nan,nan,nan,double
+ecm,CoulombCounting,baselines,hover_hold,nominal,1,0.00222544,0.00283537,0.00199388,0.00330441,-0.00330424,0,0,0.00317235,81.7685,4184,nan,nan,nan,double
+ecm,CoulombCounting,baselines,ground_charge,nominal,1,0.000566103,0.000797128,0.000376718,0.00150576,-0.00150576,0,0,0.00135252,85.1929,4184,nan,nan,nan,double

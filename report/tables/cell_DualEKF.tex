@@ -1,0 +1,53 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{DualEKF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_DualEKF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.17 & 0.08 & 1.07 & 0 & 0.79 & no & 0.05 & 1272 \\
+ECM & init\_error & 0.16 & 0.08 & 0.61 & 0 & 2.12 & no & 0.05 & 1272 \\
+ECM & current\_bias & 0.66 & 0.79 & 1.42 & 0 & 0.80 & no & 0.61 & 1272 \\
+ECM & noise\_step & 0.30 & 0.31 & 1.07 & 0 & 2.89 & no & 0.12 & 1277 \\
+ECM & outliers & 0.43 & 0.34 & 3.04 & 3 & 2.06 & no & 0.21 & 1273 \\
+ECM & cold & 0.34 & 0.41 & 1.17 & 0 & 1.90 & no & 0.16 & 1271 \\
+ECM & hot & 0.19 & 0.07 & 1.03 & 0 & 0.55 & no & 0.03 & 1273 \\
+ECM & aged\_cell & 0.69 & 0.66 & 1.37 & 0 & 1.16 & no & 1.52 & 1272 \\
+ECM & param\_mismatch & 1.53 & 1.94 & 2.28 & 0 & 1.05 & no & 1.36 & 1273 \\
+ECM & sensor\_dropout & 0.47 & 0.28 & 1.84 & 0 & 1.84 & no & 0.46 & 1273 \\
+ECM & preisach & 0.91 & 0.94 & 2.04 & 29 & 0.80 & no & 0.20 & 1284 \\
+ECM & combined & 3.67 & 2.01 & 10.26 & 414 & 2.30 & no & 12.44 & 1274 \\
+\midrule
+SPM & nominal & 1.78 & 0.86 & 3.47 & 0 & 0.85 & no & 3.73 & 1158 \\
+SPM & init\_error & 2.00 & 0.86 & 4.01 & 0 & 2.09 & no & 3.81 & 1164 \\
+SPM & current\_bias & 2.42 & 1.45 & 4.21 & 0 & 0.86 & no & 5.69 & 1171 \\
+SPM & noise\_step & 1.95 & 1.52 & 3.71 & 0 & 3.09 & no & 3.30 & 1171 \\
+SPM & outliers & 1.35 & 1.07 & 3.28 & 554 & 2.20 & no & 1.99 & 1171 \\
+SPM & cold & 3.63 & 2.06 & 6.27 & 16 & 2.50 & no & 7.35 & 1172 \\
+SPM & hot & 1.16 & 0.60 & 2.20 & 0 & 0.54 & no & 2.16 & 1166 \\
+SPM & param\_mismatch & 1.99 & 1.18 & 3.59 & 0 & 0.88 & no & 3.13 & 1167 \\
+SPM & sensor\_dropout & 3.07 & 1.69 & 5.47 & 0 & 1.98 & no & 5.31 & 1166 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[H]\centering\small\caption{DualEKF: additional outputs (capacity error at the end of the mission in Ah, averaged over the last 10\,\% of the run; interval-bound violation rate).}\label{tab:cellx_DualEKF}
+\begin{tabular}{llrr}\toprule plant & scenario & $\hat Q - Q$ [Ah] & bound violation [\%] \\ \midrule
+ECM & nominal & +0.049 & -- \\
+ECM & init\_error & +0.044 & -- \\
+ECM & current\_bias & +0.415 & -- \\
+ECM & noise\_step & +0.035 & -- \\
+ECM & outliers & +0.005 & -- \\
+ECM & cold & +0.026 & -- \\
+ECM & hot & +0.057 & -- \\
+ECM & aged\_cell & +0.054 & -- \\
+ECM & param\_mismatch & +0.100 & -- \\
+ECM & sensor\_dropout & +0.043 & -- \\
+ECM & preisach & +0.244 & -- \\
+ECM & combined & +0.104 & -- \\
+SPM & nominal & +0.359 & -- \\
+SPM & init\_error & +0.384 & -- \\
+SPM & current\_bias & +0.835 & -- \\
+SPM & noise\_step & +0.590 & -- \\
+SPM & outliers & +0.144 & -- \\
+SPM & cold & +1.093 & -- \\
+SPM & hot & +0.303 & -- \\
+SPM & param\_mismatch & +0.460 & -- \\
+SPM & sensor\_dropout & +0.669 & -- \\
+\bottomrule\end{tabular}\end{table}

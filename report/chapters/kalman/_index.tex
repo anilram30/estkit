@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Classical & sigma-point Kalman family — chapter order
+%
+%  Reading order:
+%    1. the two baselines (EKF, UKF) that everything else is compared against;
+%    2. the degenerate case (LKF: linearise once) that shows what re-linearisation buys;
+%    3. better linearisation points (IEKF, IPLF) and higher-order moments (SO-EKF);
+%    4. the numerical-integration family (CKF, CKF5, CDKF, GHKF), from the
+%       third-degree cubature rule up to tensor-product quadrature;
+%    5. algebraically equivalent re-implementations (SR-EKF, UD-EKF, EIF, SCKF, SR-UKF)
+%       that change the arithmetic, not the estimator.
+% =============================================================================
+\input{chapters/kalman/EKF.tex}
+\input{chapters/kalman/UKF.tex}
+\input{chapters/kalman/LKF.tex}
+\input{chapters/kalman/IEKF.tex}
+\input{chapters/kalman/SOEKF.tex}
+\input{chapters/kalman/CKF.tex}
+\input{chapters/kalman/CKF5.tex}
+\input{chapters/kalman/CDKF.tex}
+\input{chapters/kalman/GHKF.tex}
+\input{chapters/kalman/IPLF.tex}
+\input{chapters/kalman/SREKF.tex}
+\input{chapters/kalman/SCKF.tex}
+\input{chapters/kalman/SRUKF.tex}
+\input{chapters/kalman/UDEKF.tex}
+\input{chapters/kalman/EIF.tex}

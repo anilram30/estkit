@@ -1,0 +1,24 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Adaptive Kalman family — chapter order
+%
+%  The order is pedagogical: first the three filters that estimate the
+%  measurement-noise covariance R from the innovation sequence (recursive MAP,
+%  windowed covariance matching, variational Bayes), then the fuzzy supervisor
+%  that is a rate-limited version of the same idea, then the two filters that
+%  inflate the state covariance P instead (strong tracking, fading memory), and
+%  finally the two multiple-model estimators that carry the competing
+%  hypotheses explicitly (IMM over noise regimes, MMAE over model parameters).
+%  Later chapters reference equations and assumptions introduced in earlier
+%  ones, so this order should be preserved.
+% =============================================================================
+
+\input{chapters/adaptive_kalman/SageHusaAKF.tex}
+\input{chapters/adaptive_kalman/IAEAKF.tex}
+\input{chapters/adaptive_kalman/VBAKF.tex}
+\input{chapters/adaptive_kalman/FuzzyAKF.tex}
+\input{chapters/adaptive_kalman/STF.tex}
+\input{chapters/adaptive_kalman/FadingEKF.tex}
+\input{chapters/adaptive_kalman/IMM.tex}
+\input{chapters/adaptive_kalman/MMAE.tex}

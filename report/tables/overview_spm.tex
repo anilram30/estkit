@@ -1,0 +1,88 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begingroup\scriptsize\setlength{\tabcolsep}{2.6pt}
+\begin{longtable}{lrrrrrrrrr}
+\caption{Steady-state SOC RMSE [\%] for every estimator and scenario, SPM plant, eVTOL mission (mean over seeds). Bold: best of the family in the column; `div' marks divergence in at least one seed.}\label{tab:overview_spm}\\
+\toprule estimator & \rotatebox{60}{nominal} & \rotatebox{60}{init\_error} & \rotatebox{60}{current\_bias} & \rotatebox{60}{noise\_step} & \rotatebox{60}{outliers} & \rotatebox{60}{cold} & \rotatebox{60}{hot} & \rotatebox{60}{param\_mismatch} & \rotatebox{60}{sensor\_dropout} \\ \midrule\endfirsthead
+\toprule estimator & \rotatebox{60}{nominal} & \rotatebox{60}{init\_error} & \rotatebox{60}{current\_bias} & \rotatebox{60}{noise\_step} & \rotatebox{60}{outliers} & \rotatebox{60}{cold} & \rotatebox{60}{hot} & \rotatebox{60}{param\_mismatch} & \rotatebox{60}{sensor\_dropout} \\ \midrule\endhead
+\multicolumn{10}{l}{\textit{Baselines}} \\
+\quad CoulombCounting & \textbf{0.47} & 35.46$^{\mathrm{div}}$ & 3.31 & \textbf{0.47} & \textbf{0.46} & \textbf{0.47} & 0.47 & \textbf{0.47} & \textbf{0.47} \\
+\quad CoulombOCVHybrid & 0.66 & 5.23 & 2.90 & 0.66 & 0.83 & 3.50 & \textbf{0.46} & 0.99 & 0.66 \\
+\quad OCVLookup & 2.03 & \textbf{2.03} & \textbf{2.49} & 2.03 & 2.03 & 6.11 & 1.98 & 0.60 & 2.03 \\
+\multicolumn{10}{l}{\textit{Classical / sigma-point Kalman}} \\
+\quad CDKF & 4.61 & 4.68 & 6.63 & 3.76 & 2.27 & 8.74 & 2.71 & 4.90 & 8.24 \\
+\quad CKF & 4.62 & 4.69 & 6.65 & 3.77 & 2.21 & 8.72 & 2.73 & 4.81 & 8.24 \\
+\quad CKF5 & 4.61 & 4.68 & 6.63 & 3.76 & 2.27 & 8.74 & 2.71 & 4.90 & 8.24 \\
+\quad EIF & 3.73 & 3.81 & 5.69 & 3.30 & 1.99 & 7.35 & 2.16 & 3.13 & 5.31 \\
+\quad EKF & 3.73 & 3.81 & 5.69 & 3.30 & 1.99 & 7.35 & 2.16 & 3.13 & 5.31 \\
+\quad GHKF & 4.61 & 4.68 & 6.63 & 3.76 & 2.27 & 8.74 & 2.71 & 4.90 & 8.24 \\
+\quad IEKF & 3.66 & 3.13 & 5.67 & 4.05 & 1.73 & 7.49 & 2.12 & 2.87 & 5.18 \\
+\quad IPLF & 3.74 & 4.01 & 6.31 & 5.55 & \textbf{1.02} & 7.54 & 2.33 & 3.68 & 6.30 \\
+\quad LKF & \textbf{1.72} & \textbf{0.55} & \textbf{2.65} & \textbf{1.72} & 1.71 & \textbf{1.47} & \textbf{1.44} & \textbf{2.86} & \textbf{1.70} \\
+\quad SCKF & 4.62 & 4.69 & 6.65 & 3.77 & 2.21 & 8.72 & 2.73 & 4.81 & 8.24 \\
+\quad SO-EKF & 3.52 & 4.13 & 5.58 & 3.19 & 1.27 & 8.16 & 2.13 & 4.14 & 5.13 \\
+\quad SR-EKF & 3.73 & 3.81 & 5.69 & 3.30 & 1.99 & 7.35 & 2.16 & 3.13 & 5.31 \\
+\quad SR-UKF & 3.96 & 4.54 & 6.46 & 3.24 & 1.76 & 8.29 & 2.36 & 4.95 & 7.26 \\
+\quad UD-EKF & 3.73 & 3.81 & 5.69 & 3.30 & 1.99 & 7.35 & 2.16 & 3.13 & 5.31 \\
+\quad UKF & 3.96 & 4.54 & 6.46 & 3.24 & 1.76 & 8.29 & 2.36 & 4.95 & 7.26 \\
+\multicolumn{10}{l}{\textit{Adaptive Kalman}} \\
+\quad Fading-EKF & \textbf{0.36} & \textbf{0.48} & 0.87 & \textbf{0.43} & \textbf{0.45} & 3.45 & \textbf{0.35} & 1.95 & \textbf{0.31} \\
+\quad Fuzzy-AKF & 3.18 & 3.43 & 5.16 & 3.20 & 2.70 & 3.09 & 2.14 & 1.99 & 3.36 \\
+\quad IAE-AKF & 3.02 & 3.56 & 5.45 & 3.02 & 2.58 & 2.54 & 2.19 & 1.20 & 3.19 \\
+\quad IMM & 2.81 & 3.03 & 4.35 & 2.85 & 2.25 & \textbf{2.22} & 2.17 & 2.41 & 1.60 \\
+\quad MMAE & 4.69 & 4.83 & 6.40 & 4.29 & 3.58 & 8.75 & 3.42 & 4.89 & 6.35 \\
+\quad STF & 0.66 & 0.66 & \textbf{0.72} & 2.53 & 1.64 & 5.12 & 0.74 & 1.75 & 0.66 \\
+\quad SageHusa-AKF & 3.33 & 3.87 & 5.57 & 3.34 & 3.19 & 2.65 & 2.07 & 1.13 & 3.57 \\
+\quad VB-AKF & 3.18 & 3.64 & 5.51 & 3.18 & 3.53 & 2.31 & 2.25 & \textbf{0.66} & 3.51 \\
+\multicolumn{10}{l}{\textit{Robust / embedded Kalman}} \\
+\quad Constrained-EKF & 3.73 & 3.81 & 5.69 & 3.30 & 1.99 & 7.35 & 2.16 & 3.13 & 5.31 \\
+\quad Hinf-EKF & 4.08 & 5.18 & 3.30 & 6.42 & 1.52 & 8.76 & 3.38 & 6.28 & 5.06 \\
+\quad Huber-EKF & 3.34 & 3.82 & 5.54 & 3.32 & 3.57 & 5.26 & 2.14 & 1.97 & 4.20 \\
+\quad MC-EKF & 3.25 & 3.95 & 5.52 & 3.22 & 3.54 & 4.98 & 2.18 & 2.12 & 4.09 \\
+\quad ReducedOrder-EKF & 0.70 & 0.70 & 0.85 & \textbf{0.71} & \textbf{0.70} & 3.71 & 0.64 & 1.31 & 0.70 \\
+\quad SVSF & 3.73 & 3.93 & 5.87 & 17.24 & 17.12$^{\mathrm{div}}$ & 6.91 & 2.37 & 4.08 & 6.06 \\
+\quad Schmidt-KF & \textbf{0.51} & \textbf{0.60} & \textbf{0.71} & 1.26 & 0.95 & \textbf{2.44} & \textbf{0.44} & \textbf{0.75} & \textbf{0.50} \\
+\quad StudentT-KF & 3.62 & 3.87 & 5.67 & 3.65 & 3.55 & 4.75 & 2.22 & 1.80 & 4.64 \\
+\multicolumn{10}{l}{\textit{Deterministic observers}} \\
+\quad AdaptiveObserver & \textbf{0.45} & 2.67 & \textbf{0.38} & \textbf{0.53} & \textbf{0.47} & \textbf{1.79} & \textbf{0.55} & 1.02 & \textbf{0.48} \\
+\quad DOB & 0.69 & \textbf{0.74} & 0.97 & 0.95 & 0.87 & 3.33 & 0.70 & 1.34 & 0.69 \\
+\quad ESO & 0.98 & 0.92 & 1.43 & 2.13 & 1.09 & 5.32 & 0.86 & 1.33 & 0.97 \\
+\quad HGO & 0.61 & 1.86 & 0.57 & 0.68 & 0.60 & 3.49 & 0.61 & 1.27 & 0.60 \\
+\quad IntervalObserver & 0.61 & 2.59 & 0.57 & 0.68 & 0.60 & 3.35 & 0.61 & 1.27 & 0.60 \\
+\quad Luenberger & 0.61 & 2.59 & 0.57 & 0.68 & 0.60 & 3.35 & 0.61 & 1.27 & 0.60 \\
+\quad PI-Observer & 0.97 & 0.97 & 1.45 & 1.79 & 1.02 & 5.28 & 0.81 & 1.33 & 0.99 \\
+\quad SMO & 0.63 & 2.23 & 0.62 & 0.70 & 0.62 & 3.54 & 0.63 & 1.24 & 0.62 \\
+\quad SMO-Adaptive & 0.61 & 2.37 & 0.58 & 0.86 & 0.62 & 3.26 & 0.62 & 1.26 & 0.60 \\
+\quad SSKF & 0.61 & 2.59 & 0.57 & 0.68 & 0.60 & 3.35 & 0.61 & 1.27 & 0.60 \\
+\quad SuperTwisting-SMO & 0.96 & 0.96 & 1.41 & 1.00 & 0.96 & 5.12 & 0.82 & 1.29 & 0.96 \\
+\quad UIO & 0.46 & 3.63 & 0.44 & 0.81 & 0.67 & 2.23 & 0.95 & \textbf{0.93} & 0.52 \\
+\multicolumn{10}{l}{\textit{Joint / dual state-parameter (SOH)}} \\
+\quad AWTLS & 2.77 & 2.67 & 4.71 & 2.40 & 1.18 & 6.27 & 1.52 & 2.81 & 4.45 \\
+\quad DualEKF & \textbf{0.86} & 0.86 & \textbf{1.45} & \textbf{1.52} & \textbf{1.07} & \textbf{2.06} & 0.60 & 1.18 & \textbf{1.69} \\
+\quad DualUKF & 3.68 & 1.74 & 5.59 & 2.99 & 4.63 & 6.59 & 0.86 & 2.39 & 6.44 \\
+\quad JointEKF & 2.11 & 1.66 & 3.14 & 2.94 & 4.03 & 3.19 & 0.55 & 2.37 & 2.25 \\
+\quad JointUKF & 1.40 & \textbf{0.82} & 1.51 & 4.28 & 6.29 & 2.49 & \textbf{0.48} & \textbf{0.92} & 2.20 \\
+\quad RLS-EKF & 4.70 & 4.33 & 6.12 & 3.95 & 2.44 & 10.68 & 2.08 & 3.94 & 7.21 \\
+\multicolumn{10}{l}{\textit{Particle / ensemble / Gaussian-sum}} \\
+\quad ETKF & 3.82 & 6.72 & 5.40 & 5.04 & \textbf{0.34} & 9.42 & 2.77 & 3.22 & 3.38 \\
+\quad EnKF & 1.67 & 1.42 & 1.88 & 11.94 & 13.68 & 14.97$^{\mathrm{div}}$ & 1.30 & 8.27 & 1.80 \\
+\quad GSF & 1.39 & 3.99 & 3.86 & 1.21 & 1.25 & 5.14 & 1.70 & 3.50 & 1.85 \\
+\quad PF-Auxiliary & \textbf{0.62} & 0.84 & 0.89 & 1.01 & 1.24 & 4.00 & 0.59 & \textbf{1.01} & \textbf{0.69} \\
+\quad PF-Bootstrap & 0.73 & 0.93 & 1.10 & 1.11 & 0.96 & 4.39 & 0.97 & 1.67 & 0.73 \\
+\quad PF-Fast & 0.91 & 0.89 & 1.01 & \textbf{0.94} & 1.28 & 4.37 & 0.87 & 1.78 & 1.05 \\
+\quad PF-Regularized & 0.64 & \textbf{0.71} & \textbf{0.67} & 1.15 & 0.81 & \textbf{3.91} & \textbf{0.54} & 1.35 & 0.70 \\
+\quad RBPF & 0.76 & 4.71 & 2.37 & 2.76 & 1.40 & 3.92 & 1.88 & 1.92 & 1.11 \\
+\quad UPF & 1.07 & 0.84 & 1.71 & 1.44 & 1.32 & 5.04 & 1.42 & 1.89 & 1.34 \\
+\multicolumn{10}{l}{\textit{Data-driven}} \\
+\quad ELM-RLS-EKF & 2.59 & 3.28 & 4.54 & \textbf{2.34} & \textbf{1.23} & 6.65 & \textbf{1.41} & 3.14 & 4.76 \\
+\quad NN-Direct & 5.12 & 5.12 & \textbf{4.16} & 5.13 & 5.13 & \textbf{1.89} & 1.46 & 5.12 & 5.12 \\
+\quad NN-EKF & \textbf{2.54} & \textbf{2.50} & 4.87 & 2.56 & 2.46 & 7.61 & 1.51 & \textbf{0.76} & \textbf{3.16} \\
+\multicolumn{10}{l}{\textit{Moving-horizon estimation}} \\
+\quad MHE & \textbf{3.45} & \textbf{4.25} & \textbf{5.88} & \textbf{5.95} & \textbf{2.57} & \textbf{5.63} & \textbf{2.99} & 5.73 & \textbf{5.88} \\
+\quad MHE-RTI & 4.55 & 4.28 & 6.45 & 7.82 & 4.31 & 5.75 & 3.10 & \textbf{3.00} & 7.65 \\
+\multicolumn{10}{l}{\textit{Smoothers (offline)}} \\
+\quad Batch-NLS & \textbf{3.01} & \textbf{3.02} & \textbf{4.84} & 4.83 & 2.40 & 7.55 & \textbf{1.83} & 3.39 & \textbf{2.89} \\
+\quad ERTS & 3.46 & 3.45 & 5.26 & 2.04 & 1.53 & 9.14 & 1.93 & 3.20 & 5.02 \\
+\quad FixedLag-EKF & 3.70 & 3.78 & 5.66 & 3.27 & 1.96 & \textbf{7.32} & 2.13 & \textbf{3.10} & 5.27 \\
+\quad URTS & 3.54 & 4.13 & 5.95 & \textbf{1.86} & \textbf{1.43} & 10.24 & 2.09 & 4.65 & 6.75 \\
+\bottomrule\end{longtable}\endgroup

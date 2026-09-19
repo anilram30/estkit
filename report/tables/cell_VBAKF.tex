@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{VB-AKF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_VBAKF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.16 & 0.05 & 1.11 & 0 & 0.79 & no & 0.05 & 872 \\
+ECM & init\_error & 0.15 & 0.06 & 0.63 & 0 & 2.12 & no & 0.05 & 874 \\
+ECM & current\_bias & 0.53 & 0.61 & 1.39 & 0 & 0.87 & no & 0.61 & 874 \\
+ECM & noise\_step & 0.16 & 0.05 & 1.11 & 0 & 1.01 & no & 0.12 & 880 \\
+ECM & outliers & 0.12 & 0.05 & 1.60 & 0 & 1.00 & no & 0.21 & 873 \\
+ECM & cold & 0.23 & 0.18 & 1.17 & 0 & 1.89 & no & 0.16 & 870 \\
+ECM & hot & 0.18 & 0.03 & 1.01 & 0 & 0.54 & no & 0.03 & 874 \\
+ECM & aged\_cell & 0.99 & 1.27 & 2.43 & 0 & 22.49 & no & 1.52 & 874 \\
+ECM & param\_mismatch & 0.67 & 0.79 & 1.69 & 0 & 6.61 & no & 1.36 & 874 \\
+ECM & sensor\_dropout & 0.17 & 0.10 & 1.11 & 0 & 1.15 & no & 0.46 & 874 \\
+ECM & preisach & 0.58 & 0.20 & 1.70 & 0 & 0.81 & no & 0.20 & 873 \\
+ECM & combined & 4.86 & 1.87 & 11.42 & 1417 & 14.62 & no & 12.44 & 874 \\
+\midrule
+SPM & nominal & 3.10 & 3.18 & 3.71 & 0 & 1.18 & no & 3.73 & 840 \\
+SPM & init\_error & 3.64 & 3.64 & 4.54 & 9 & 2.25 & no & 3.81 & 841 \\
+SPM & current\_bias & 4.80 & 5.51 & 6.18 & 0 & 1.34 & no & 5.69 & 840 \\
+SPM & noise\_step & 3.10 & 3.18 & 3.71 & 0 & 2.15 & no & 3.30 & 854 \\
+SPM & outliers & 3.60 & 3.53 & 4.88 & 0 & 2.17 & no & 1.99 & 838 \\
+SPM & cold & 2.53 & 2.31 & 3.42 & 0 & 16.43 & no & 7.35 & 829 \\
+SPM & hot & 2.18 & 2.25 & 2.53 & 0 & 0.71 & no & 2.16 & 840 \\
+SPM & param\_mismatch & 0.72 & 0.66 & 1.81 & 0 & 3.73 & no & 3.13 & 835 \\
+SPM & sensor\_dropout & 3.41 & 3.51 & 4.02 & 0 & 2.16 & no & 5.31 & 838 \\
+\bottomrule\end{tabular}\end{table}

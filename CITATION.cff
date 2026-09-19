@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "estkit: a header-only C++17 library and benchmark of state estimators and observers for battery-management systems in electric aircraft"
+message: "If you use estkit, its benchmark or its report, please cite it as below."
+type: software
+authors:
+  - family-names: "Anil"
+    given-names: "Sreeram"
+version: "1.0.0"
+date-released: "2026-09-19"
+license: "Apache-2.0"
+repository-code: "https://github.com/anilram30/estkit"
+url: "https://anilram30.github.io/estkit"
+keywords:
+  - state estimation
+  - Kalman filter
+  - observers
+  - battery management system
+  - state of charge
+  - state of health
+  - moving horizon estimation
+  - particle filter
+  - attitude estimation
+  - embedded C++
+abstract: >-
+  A dependency-free, header-only C++17 library of 86 state estimators and observers
+  (70 cell-level, 7 pack-level, 9 attitude) written against one model-agnostic
+  interface, without dynamic memory or exceptions, in single or double precision,
+  together with a reproducible benchmark on equivalent-circuit and electrochemical
+  battery plants, a 12-cell pack, a 120-mission ageing study and an instrumented
+  flight, cross-validated against FilterPy, PyBaMM and ahrs, and documented in a
+  958-page report with one chapter per estimator.

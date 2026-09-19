@@ -1,0 +1,353 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% ---------------------------------------------------------------------------
+%  Core references for the estkit report. Keys are stable; do not rename.
+% ---------------------------------------------------------------------------
+
+% ===== Battery modelling ====================================================
+@article{plett2004ekf1,
+  author = {Plett, Gregory L.}, title = {Extended {K}alman filtering for battery management systems of {LiPB}-based {HEV} battery packs---{P}art 1. {B}ackground},
+  journal = {Journal of Power Sources}, volume = {134}, number = {2}, pages = {252--261}, year = {2004}, doi = {10.1016/j.jpowsour.2004.02.031} }
+@article{plett2004ekf2,
+  author = {Plett, Gregory L.}, title = {Extended {K}alman filtering for battery management systems of {LiPB}-based {HEV} battery packs---{P}art 2. {M}odeling and identification},
+  journal = {Journal of Power Sources}, volume = {134}, number = {2}, pages = {262--276}, year = {2004}, doi = {10.1016/j.jpowsour.2004.02.032} }
+@article{plett2004ekf3,
+  author = {Plett, Gregory L.}, title = {Extended {K}alman filtering for battery management systems of {LiPB}-based {HEV} battery packs---{P}art 3. {S}tate and parameter estimation},
+  journal = {Journal of Power Sources}, volume = {134}, number = {2}, pages = {277--292}, year = {2004}, doi = {10.1016/j.jpowsour.2004.02.033} }
+@article{plett2006spkf1,
+  author = {Plett, Gregory L.}, title = {Sigma-point {K}alman filtering for battery management systems of {LiPB}-based {HEV} battery packs---{P}art 1: {I}ntroduction and state estimation},
+  journal = {Journal of Power Sources}, volume = {161}, number = {2}, pages = {1356--1368}, year = {2006}, doi = {10.1016/j.jpowsour.2006.06.003} }
+@article{plett2006spkf2,
+  author = {Plett, Gregory L.}, title = {Sigma-point {K}alman filtering for battery management systems of {LiPB}-based {HEV} battery packs---{P}art 2: {S}imultaneous state and parameter estimation},
+  journal = {Journal of Power Sources}, volume = {161}, number = {2}, pages = {1369--1384}, year = {2006}, doi = {10.1016/j.jpowsour.2006.06.004} }
+@book{plett2015bms1,
+  author = {Plett, Gregory L.}, title = {Battery Management Systems, Volume {I}: Battery Modeling}, publisher = {Artech House}, address = {Norwood, MA}, year = {2015}, isbn = {978-1-63081-023-8} }
+@book{plett2016bms2,
+  author = {Plett, Gregory L.}, title = {Battery Management Systems, Volume {II}: Equivalent-Circuit Methods}, publisher = {Artech House}, address = {Norwood, MA}, year = {2016}, isbn = {978-1-63081-027-6} }
+@inproceedings{plett2009bardelta,
+  author = {Plett, Gregory L.}, title = {Efficient battery pack state estimation using bar-delta filtering},
+  booktitle = {Proc. 24th International Battery, Hybrid and Fuel Cell Electric Vehicle Symposium (EVS24)}, address = {Stavanger, Norway}, year = {2009} }
+@article{plett2011awtls,
+  author = {Plett, Gregory L.}, title = {Recursive approximate weighted total least squares estimation of battery cell total capacity},
+  journal = {Journal of Power Sources}, volume = {196}, number = {4}, pages = {2319--2331}, year = {2011}, doi = {10.1016/j.jpowsour.2010.09.048} }
+@article{chen2020parameterization,
+  author = {Chen, Chang-Hui and Brosa Planella, Ferran and O'Regan, Kieran and Gastol, Dominika and Widanage, W. Dhammika and Kendrick, Emma},
+  title = {Development of experimental techniques for parameterization of multi-scale lithium-ion battery models},
+  journal = {Journal of The Electrochemical Society}, volume = {167}, number = {8}, pages = {080534}, year = {2020}, doi = {10.1149/1945-7111/ab9050} }
+@article{marquis2019spme,
+  author = {Marquis, Scott G. and Sulzer, Valentin and Timms, Robert and Please, Colin P. and Chapman, S. Jon},
+  title = {An asymptotic derivation of a single particle model with electrolyte},
+  journal = {Journal of The Electrochemical Society}, volume = {166}, number = {15}, pages = {A3693--A3706}, year = {2019}, doi = {10.1149/2.0341915jes} }
+@article{doyle1993modeling,
+  author = {Doyle, Marc and Fuller, Thomas F. and Newman, John}, title = {Modeling of galvanostatic charge and discharge of the lithium/polymer/insertion cell},
+  journal = {Journal of The Electrochemical Society}, volume = {140}, number = {6}, pages = {1526--1533}, year = {1993}, doi = {10.1149/1.2221597} }
+@article{sulzer2021pybamm,
+  author = {Sulzer, Valentin and Marquis, Scott G. and Timms, Robert and Robinson, Martin and Chapman, S. Jon and Howey, David A.},
+  title = {Python Battery Mathematical Modelling ({PyBaMM})}, journal = {Journal of Open Research Software}, volume = {9}, number = {1}, pages = {14}, year = {2021}, doi = {10.5334/jors.309} }
+@article{bernardi1985energy,
+  author = {Bernardi, D. and Pawlikowski, E. and Newman, J.}, title = {A general energy balance for battery systems},
+  journal = {Journal of The Electrochemical Society}, volume = {132}, number = {1}, pages = {5--12}, year = {1985}, doi = {10.1149/1.2113792} }
+@article{lin2014thermal,
+  author = {Lin, Xinfan and Perez, Hector E. and Mohan, Shankar and Siegel, Jason B. and Stefanopoulou, Anna G. and Ding, Yi and Castanier, Matthew P.},
+  title = {A lumped-parameter electro-thermal model for cylindrical batteries}, journal = {Journal of Power Sources}, volume = {257}, pages = {1--11}, year = {2014}, doi = {10.1016/j.jpowsour.2014.01.097} }
+@article{forgez2010thermal,
+  author = {Forgez, Christophe and Do, Dinh Vinh and Friedrich, Guy and Morcrette, Mathieu and Delacourt, Charles},
+  title = {Thermal modeling of a cylindrical {LiFePO$_4$}/graphite lithium-ion battery}, journal = {Journal of Power Sources}, volume = {195}, number = {9}, pages = {2961--2968}, year = {2010}, doi = {10.1016/j.jpowsour.2009.10.105} }
+@article{wang2011cyclelife,
+  author = {Wang, John and Liu, Ping and Hicks-Garner, Jocelyn and Sherman, Elena and Soukiazian, Souren and Verbrugge, Mark and Tataria, Harshad and Musser, James and Finamore, Peter},
+  title = {Cycle-life model for graphite-{LiFePO$_4$} cells}, journal = {Journal of Power Sources}, volume = {196}, number = {8}, pages = {3942--3948}, year = {2011}, doi = {10.1016/j.jpowsour.2010.11.134} }
+@article{schmalstieg2014aging,
+  author = {Schmalstieg, Johannes and K{\"a}bitz, Stefan and Ecker, Madeleine and Sauer, Dirk Uwe},
+  title = {A holistic aging model for {Li(NiMnCo)O$_2$} based 18650 lithium-ion batteries}, journal = {Journal of Power Sources}, volume = {257}, pages = {325--334}, year = {2014}, doi = {10.1016/j.jpowsour.2014.02.012} }
+@book{mayergoyz1991hysteresis,
+  author = {Mayergoyz, Isaak D.}, title = {Mathematical Models of Hysteresis}, publisher = {Springer}, address = {New York}, year = {1991}, doi = {10.1007/978-1-4612-3028-1} }
+@article{preisach1935,
+  author = {Preisach, F.}, title = {{\"U}ber die magnetische {N}achwirkung}, journal = {Zeitschrift f{\"u}r Physik}, volume = {94}, pages = {277--302}, year = {1935}, doi = {10.1007/BF01349418} }
+@article{baronti2014hysteresis,
+  author = {Baronti, Federico and Femia, Nicola and Saletti, Roberto and Visone, Ciro and Zamboni, Walter},
+  title = {Hysteresis modeling in {L}i-ion batteries}, journal = {IEEE Transactions on Magnetics}, volume = {50}, number = {11}, pages = {7300704}, year = {2014}, doi = {10.1109/TMAG.2014.2323426} }
+@article{hu2012comparative,
+  author = {Hu, Xiaosong and Li, Shengbo and Peng, Huei}, title = {A comparative study of equivalent circuit models for {L}i-ion batteries},
+  journal = {Journal of Power Sources}, volume = {198}, pages = {359--367}, year = {2012}, doi = {10.1016/j.jpowsour.2011.10.013} }
+@article{ng2009coulomb,
+  author = {Ng, Kong Soon and Moo, Chin-Sien and Chen, Yi-Ping and Hsieh, Yao-Ching}, title = {Enhanced coulomb counting method for estimating state-of-charge and state-of-health of lithium-ion batteries},
+  journal = {Applied Energy}, volume = {86}, number = {9}, pages = {1506--1511}, year = {2009}, doi = {10.1016/j.apenergy.2008.11.021} }
+@article{zhao2017observability,
+  author = {Zhao, Shi and Duncan, Stephen R. and Howey, David A.}, title = {Observability analysis and state estimation of lithium-ion batteries in the presence of sensor biases},
+  journal = {IEEE Transactions on Control Systems Technology}, volume = {25}, number = {1}, pages = {326--333}, year = {2017}, doi = {10.1109/TCST.2016.2542115} }
+@article{lin2018sensorbias,
+  author = {Lin, Xinfan}, title = {Theoretical analysis of battery {SOC} estimation errors under sensor bias and variance},
+  journal = {IEEE Transactions on Industrial Electronics}, volume = {65}, number = {9}, pages = {7220--7230}, year = {2018}, doi = {10.1109/TIE.2018.2795521} }
+@article{xiong2018review,
+  author = {Xiong, Rui and Cao, Jiayi and Yu, Quanqing and He, Hongwen and Sun, Fengchun}, title = {Critical review on the battery state of charge estimation methods for electric vehicles},
+  journal = {IEEE Access}, volume = {6}, pages = {1832--1843}, year = {2018}, doi = {10.1109/ACCESS.2017.2780258} }
+
+% ===== Aviation context =====================================================
+@article{yang2021evtol,
+  author = {Yang, Xiao-Guang and Liu, Teng and Ge, Shanhai and Rountree, Eric and Wang, Chao-Yang}, title = {Challenges and key requirements of batteries for electric vertical takeoff and landing aircraft},
+  journal = {Joule}, volume = {5}, number = {7}, pages = {1644--1659}, year = {2021}, doi = {10.1016/j.joule.2021.05.001} }
+@article{fredericks2018vtol,
+  author = {Fredericks, William L. and Sripad, Shashank and Bower, Geoffrey C. and Viswanathan, Venkatasubramanian}, title = {Performance metrics required of next-generation batteries to electrify vertical takeoff and landing ({VTOL}) aircraft},
+  journal = {ACS Energy Letters}, volume = {3}, number = {12}, pages = {2989--2994}, year = {2018}, doi = {10.1021/acsenergylett.8b02195} }
+@techreport{rtca2017do311a,
+  author = {{RTCA}}, title = {{DO-311A}: Minimum Operational Performance Standards for Rechargeable Lithium Batteries and Battery Systems}, institution = {RTCA, Inc.}, address = {Washington, DC}, year = {2017} }
+
+% ===== Estimation theory: books ==============================================
+@book{jazwinski1970,
+  author = {Jazwinski, Andrew H.}, title = {Stochastic Processes and Filtering Theory}, publisher = {Academic Press}, address = {New York}, year = {1970}, series = {Mathematics in Science and Engineering}, volume = {64} }
+@book{andersonmoore1979,
+  author = {Anderson, Brian D. O. and Moore, John B.}, title = {Optimal Filtering}, publisher = {Prentice-Hall}, address = {Englewood Cliffs, NJ}, year = {1979} }
+@book{gelb1974,
+  editor = {Gelb, Arthur}, title = {Applied Optimal Estimation}, publisher = {MIT Press}, address = {Cambridge, MA}, year = {1974} }
+@book{maybeck1979,
+  author = {Maybeck, Peter S.}, title = {Stochastic Models, Estimation, and Control, Volume 1}, publisher = {Academic Press}, address = {New York}, year = {1979} }
+@book{barshalom2001,
+  author = {Bar-Shalom, Yaakov and Li, X. Rong and Kirubarajan, Thiagalingam}, title = {Estimation with Applications to Tracking and Navigation: Theory, Algorithms and Software}, publisher = {Wiley}, address = {New York}, year = {2001}, doi = {10.1002/0471221279} }
+@book{simon2006,
+  author = {Simon, Dan}, title = {Optimal State Estimation: {K}alman, {$H_\infty$}, and Nonlinear Approaches}, publisher = {Wiley}, address = {Hoboken, NJ}, year = {2006}, doi = {10.1002/0470045345} }
+@book{kailath2000,
+  author = {Kailath, Thomas and Sayed, Ali H. and Hassibi, Babak}, title = {Linear Estimation}, publisher = {Prentice Hall}, address = {Upper Saddle River, NJ}, year = {2000} }
+@book{bierman1977,
+  author = {Bierman, Gerald J.}, title = {Factorization Methods for Discrete Sequential Estimation}, publisher = {Academic Press}, address = {New York}, year = {1977}, series = {Mathematics in Science and Engineering}, volume = {128} }
+@book{grewal2014,
+  author = {Grewal, Mohinder S. and Andrews, Angus P.}, title = {Kalman Filtering: Theory and Practice Using {MATLAB}}, edition = {4th}, publisher = {Wiley}, address = {Hoboken, NJ}, year = {2014} }
+@book{sarkka2013,
+  author = {S{\"a}rkk{\"a}, Simo}, title = {Bayesian Filtering and Smoothing}, publisher = {Cambridge University Press}, address = {Cambridge}, year = {2013}, doi = {10.1017/CBO9781139344203} }
+@book{khalil2002,
+  author = {Khalil, Hassan K.}, title = {Nonlinear Systems}, edition = {3rd}, publisher = {Prentice Hall}, address = {Upper Saddle River, NJ}, year = {2002} }
+@book{utkin1992,
+  author = {Utkin, Vadim I.}, title = {Sliding Modes in Control and Optimization}, publisher = {Springer}, address = {Berlin}, year = {1992}, doi = {10.1007/978-3-642-84379-2} }
+@book{chenpatton1999,
+  author = {Chen, Jie and Patton, Ron J.}, title = {Robust Model-Based Fault Diagnosis for Dynamic Systems}, publisher = {Kluwer Academic Publishers}, address = {Boston}, year = {1999}, doi = {10.1007/978-1-4615-5149-2} }
+@book{ljung1999,
+  author = {Ljung, Lennart}, title = {System Identification: Theory for the User}, edition = {2nd}, publisher = {Prentice Hall}, address = {Upper Saddle River, NJ}, year = {1999} }
+@book{rawlings2017mpc,
+  author = {Rawlings, James B. and Mayne, David Q. and Diehl, Moritz M.}, title = {Model Predictive Control: Theory, Computation, and Design}, edition = {2nd}, publisher = {Nob Hill Publishing}, address = {Madison, WI}, year = {2017} }
+@book{golubvanloan2013,
+  author = {Golub, Gene H. and Van Loan, Charles F.}, title = {Matrix Computations}, edition = {4th}, publisher = {Johns Hopkins University Press}, address = {Baltimore}, year = {2013} }
+@book{ogata2010,
+  author = {Ogata, Katsuhiko}, title = {Modern Control Engineering}, edition = {5th}, publisher = {Prentice Hall}, address = {Upper Saddle River, NJ}, year = {2010} }
+@book{doucet2001smc,
+  editor = {Doucet, Arnaud and de Freitas, Nando and Gordon, Neil}, title = {Sequential {M}onte {C}arlo Methods in Practice}, publisher = {Springer}, address = {New York}, year = {2001}, doi = {10.1007/978-1-4757-3437-9} }
+@book{mutambara1998,
+  author = {Mutambara, Arthur G. O.}, title = {Decentralized Estimation and Control for Multisensor Systems}, publisher = {CRC Press}, address = {Boca Raton, FL}, year = {1998} }
+@article{barrau2018review,
+  author = {Barrau, Axel and Bonnabel, Silv{\`e}re}, title = {Invariant {K}alman filtering}, journal = {Annual Review of Control, Robotics, and Autonomous Systems}, volume = {1}, pages = {237--257}, year = {2018}, doi = {10.1146/annurev-control-060117-105010} }
+
+% ===== Kalman-type filters: papers ===========================================
+@article{kalman1960,
+  author = {Kalman, Rudolf E.}, title = {A new approach to linear filtering and prediction problems}, journal = {Journal of Basic Engineering}, volume = {82}, number = {1}, pages = {35--45}, year = {1960}, doi = {10.1115/1.3662552} }
+@article{kalmanbucy1961,
+  author = {Kalman, Rudolf E. and Bucy, Richard S.}, title = {New results in linear filtering and prediction theory}, journal = {Journal of Basic Engineering}, volume = {83}, number = {1}, pages = {95--108}, year = {1961}, doi = {10.1115/1.3658902} }
+@book{bucyjoseph1968,
+  author = {Bucy, Richard S. and Joseph, Peter D.}, title = {Filtering for Stochastic Processes with Applications to Guidance}, publisher = {Interscience Publishers}, address = {New York}, year = {1968} }
+@article{bellcathey1993,
+  author = {Bell, Bradley M. and Cathey, Frederick W.}, title = {The iterated {K}alman filter update as a {G}auss-{N}ewton method}, journal = {IEEE Transactions on Automatic Control}, volume = {38}, number = {2}, pages = {294--297}, year = {1993}, doi = {10.1109/9.250476} }
+@article{julier2000newmethod,
+  author = {Julier, Simon J. and Uhlmann, Jeffrey K. and Durrant-Whyte, Hugh F.}, title = {A new method for the nonlinear transformation of means and covariances in filters and estimators},
+  journal = {IEEE Transactions on Automatic Control}, volume = {45}, number = {3}, pages = {477--482}, year = {2000}, doi = {10.1109/9.847726} }
+@inproceedings{wan2000ukf,
+  author = {Wan, Eric A. and van der Merwe, Rudolph}, title = {The unscented {K}alman filter for nonlinear estimation},
+  booktitle = {Proc. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium (AS-SPCC)}, pages = {153--158}, year = {2000}, doi = {10.1109/ASSPCC.2000.882463} }
+@article{julier2004unscented,
+  author = {Julier, Simon J. and Uhlmann, Jeffrey K.}, title = {Unscented filtering and nonlinear estimation}, journal = {Proceedings of the IEEE}, volume = {92}, number = {3}, pages = {401--422}, year = {2004}, doi = {10.1109/JPROC.2003.823141} }
+@inproceedings{vandermerwe2001srukf,
+  author = {van der Merwe, Rudolph and Wan, Eric A.}, title = {The square-root unscented {K}alman filter for state and parameter-estimation},
+  booktitle = {Proc. IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)}, volume = {6}, pages = {3461--3464}, year = {2001}, doi = {10.1109/ICASSP.2001.940586} }
+@article{arasaratnam2009ckf,
+  author = {Arasaratnam, Ienkaran and Haykin, Simon}, title = {Cubature {K}alman filters}, journal = {IEEE Transactions on Automatic Control}, volume = {54}, number = {6}, pages = {1254--1269}, year = {2009}, doi = {10.1109/TAC.2009.2019800} }
+@article{jia2013highdegree,
+  author = {Jia, Bin and Xin, Ming and Cheng, Yang}, title = {High-degree cubature {K}alman filter}, journal = {Automatica}, volume = {49}, number = {2}, pages = {510--518}, year = {2013}, doi = {10.1016/j.automatica.2012.11.014} }
+@article{ito2000gaussian,
+  author = {Ito, Kazufumi and Xiong, Kaiqi}, title = {Gaussian filters for nonlinear filtering problems}, journal = {IEEE Transactions on Automatic Control}, volume = {45}, number = {5}, pages = {910--927}, year = {2000}, doi = {10.1109/9.855552} }
+@article{norgaard2000,
+  author = {N{\o}rgaard, Magnus and Poulsen, Niels K. and Ravn, Ole}, title = {New developments in state estimation for nonlinear systems}, journal = {Automatica}, volume = {36}, number = {11}, pages = {1627--1638}, year = {2000}, doi = {10.1016/S0005-1098(00)00089-3} }
+@article{garciafernandez2015iplf,
+  author = {Garc{\'i}a-Fern{\'a}ndez, {\'A}ngel F. and Svensson, Lennart and Morelande, Mark R. and S{\"a}rkk{\"a}, Simo}, title = {Posterior linearization filter: Principles and implementation using sigma points},
+  journal = {IEEE Transactions on Signal Processing}, volume = {63}, number = {20}, pages = {5561--5573}, year = {2015}, doi = {10.1109/TSP.2015.2454485} }
+@article{kaminski1971,
+  author = {Kaminski, Paul G. and Bryson, Arthur E. and Schmidt, Stanley F.}, title = {Discrete square root filtering: A survey of current techniques}, journal = {IEEE Transactions on Automatic Control}, volume = {16}, number = {6}, pages = {727--736}, year = {1971}, doi = {10.1109/TAC.1971.1099816} }
+@inproceedings{potter1963,
+  author = {Potter, James E. and Stern, Robert G.}, title = {Statistical filtering of space navigation measurements}, booktitle = {Proc. AIAA Guidance and Control Conference}, address = {Cambridge, MA}, year = {1963}, doi = {10.2514/6.1963-333} }
+@article{thornton1976ud,
+  author = {Thornton, Catherine L. and Bierman, Gerald J.}, title = {Gram-{S}chmidt algorithms for covariance propagation}, journal = {International Journal of Control}, volume = {25}, number = {2}, pages = {243--260}, year = {1977}, doi = {10.1080/00207177708922227} }
+@article{verhaegen1986,
+  author = {Verhaegen, Michel and Van Dooren, Paul}, title = {Numerical aspects of different {K}alman filter implementations}, journal = {IEEE Transactions on Automatic Control}, volume = {31}, number = {10}, pages = {907--917}, year = {1986}, doi = {10.1109/TAC.1986.1104128} }
+@incollection{schmidt1966,
+  author = {Schmidt, Stanley F.}, title = {Application of state-space methods to navigation problems}, booktitle = {Advances in Control Systems}, editor = {Leondes, C. T.}, volume = {3}, pages = {293--340}, publisher = {Academic Press}, year = {1966}, doi = {10.1016/B978-1-4831-6716-9.50011-4} }
+@book{tapley2004,
+  author = {Tapley, Byron D. and Schutz, Bob E. and Born, George H.}, title = {Statistical Orbit Determination}, publisher = {Elsevier Academic Press}, address = {Burlington, MA}, year = {2004} }
+@inproceedings{sagehusa1969,
+  author = {Sage, Andrew P. and Husa, Gary W.}, title = {Adaptive filtering with unknown prior statistics}, booktitle = {Proc. Joint Automatic Control Conference}, pages = {760--769}, year = {1969}, doi = {10.1109/JACC.1969.4169352} }
+@article{mehra1970,
+  author = {Mehra, Raman K.}, title = {On the identification of variances and adaptive {K}alman filtering}, journal = {IEEE Transactions on Automatic Control}, volume = {15}, number = {2}, pages = {175--184}, year = {1970}, doi = {10.1109/TAC.1970.1099422} }
+@article{mohamed1999adaptive,
+  author = {Mohamed, A. H. and Schwarz, K. P.}, title = {Adaptive {K}alman filtering for {INS/GPS}}, journal = {Journal of Geodesy}, volume = {73}, number = {4}, pages = {193--203}, year = {1999}, doi = {10.1007/s001900050236} }
+@article{sarkka2009vb,
+  author = {S{\"a}rkk{\"a}, Simo and Nummenmaa, Aapo}, title = {Recursive noise adaptive {K}alman filtering by variational {B}ayesian approximations}, journal = {IEEE Transactions on Automatic Control}, volume = {54}, number = {3}, pages = {596--600}, year = {2009}, doi = {10.1109/TAC.2008.2008348} }
+@article{zhoufrank1996stf,
+  author = {Zhou, D. H. and Frank, P. M.}, title = {Strong tracking filtering of nonlinear time-varying stochastic systems with coloured noise: application to parameter estimation and empirical robustness analysis},
+  journal = {International Journal of Control}, volume = {65}, number = {2}, pages = {295--307}, year = {1996}, doi = {10.1080/00207179608921698} }
+@article{sorenson1971fading,
+  author = {Sorenson, Harold W. and Sacks, Jerome E.}, title = {Recursive fading memory filtering}, journal = {Information Sciences}, volume = {3}, number = {2}, pages = {101--119}, year = {1971}, doi = {10.1016/S0020-0255(71)80001-4} }
+@article{huber1964,
+  author = {Huber, Peter J.}, title = {Robust estimation of a location parameter}, journal = {The Annals of Mathematical Statistics}, volume = {35}, number = {1}, pages = {73--101}, year = {1964}, doi = {10.1214/aoms/1177703732} }
+@article{karlgaard2007huber,
+  author = {Karlgaard, Christopher D. and Schaub, Hanspeter}, title = {Huber-based divided difference filtering}, journal = {Journal of Guidance, Control, and Dynamics}, volume = {30}, number = {3}, pages = {885--891}, year = {2007}, doi = {10.2514/1.27968} }
+@article{chen2017mckf,
+  author = {Chen, Badong and Liu, Xi and Zhao, Haiquan and Pr{\'i}ncipe, Jos{\'e} C.}, title = {Maximum correntropy {K}alman filter}, journal = {Automatica}, volume = {76}, pages = {70--77}, year = {2017}, doi = {10.1016/j.automatica.2016.10.004} }
+@inproceedings{roth2013studentt,
+  author = {Roth, Michael and {\"O}zkan, Emre and Gustafsson, Fredrik}, title = {A {S}tudent's t filter for heavy tailed process and measurement noise},
+  booktitle = {Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, pages = {5770--5774}, year = {2013}, doi = {10.1109/ICASSP.2013.6638770} }
+@article{simon2010constraints,
+  author = {Simon, Dan}, title = {Kalman filtering with state constraints: a survey of linear and nonlinear algorithms}, journal = {IET Control Theory \& Applications}, volume = {4}, number = {8}, pages = {1303--1318}, year = {2010}, doi = {10.1049/iet-cta.2009.0032} }
+@article{blom1988imm,
+  author = {Blom, Henk A. P. and Bar-Shalom, Yaakov}, title = {The interacting multiple model algorithm for systems with {M}arkovian switching coefficients}, journal = {IEEE Transactions on Automatic Control}, volume = {33}, number = {8}, pages = {780--783}, year = {1988}, doi = {10.1109/9.1299} }
+@article{magill1965mmae,
+  author = {Magill, D. T.}, title = {Optimal adaptive estimation of sampled stochastic processes}, journal = {IEEE Transactions on Automatic Control}, volume = {10}, number = {4}, pages = {434--439}, year = {1965}, doi = {10.1109/TAC.1965.1098191} }
+@article{habibi2007svsf,
+  author = {Habibi, Saeid}, title = {The smooth variable structure filter}, journal = {Proceedings of the IEEE}, volume = {95}, number = {5}, pages = {1026--1059}, year = {2007}, doi = {10.1109/JPROC.2007.893255} }
+@article{loebis2004fuzzy,
+  author = {Loebis, D. and Sutton, R. and Chudley, J. and Naeem, W.}, title = {Adaptive tuning of a {K}alman filter via fuzzy logic for an intelligent {AUV} navigation system},
+  journal = {Control Engineering Practice}, volume = {12}, number = {12}, pages = {1531--1539}, year = {2004}, doi = {10.1016/j.conengprac.2003.11.008} }
+@article{shen1997hinf,
+  author = {Shen, Xuemin and Deng, Li}, title = {Game theory approach to discrete {$H_\infty$} filter design}, journal = {IEEE Transactions on Signal Processing}, volume = {45}, number = {4}, pages = {1092--1095}, year = {1997}, doi = {10.1109/78.564201} }
+@article{hassibi1996hinf,
+  author = {Hassibi, Babak and Sayed, Ali H. and Kailath, Thomas}, title = {Linear estimation in {K}rein spaces---{P}art {II}: Applications}, journal = {IEEE Transactions on Automatic Control}, volume = {41}, number = {1}, pages = {34--49}, year = {1996}, doi = {10.1109/9.481606} }
+
+% ===== Deterministic observers ===============================================
+@article{luenberger1964,
+  author = {Luenberger, David G.}, title = {Observing the state of a linear system}, journal = {IEEE Transactions on Military Electronics}, volume = {8}, number = {2}, pages = {74--80}, year = {1964}, doi = {10.1109/TME.1964.4323124} }
+@article{luenberger1971,
+  author = {Luenberger, David G.}, title = {An introduction to observers}, journal = {IEEE Transactions on Automatic Control}, volume = {16}, number = {6}, pages = {596--602}, year = {1971}, doi = {10.1109/TAC.1971.1099826} }
+@article{ackermann1972,
+  author = {Ackermann, J{\"u}rgen}, title = {Der {E}ntwurf linearer {R}egelungssysteme im {Z}ustandsraum}, journal = {Regelungstechnik und Prozess-Datenverarbeitung}, volume = {20}, number = {7}, pages = {297--300}, year = {1972} }
+@article{beale1989pi,
+  author = {Beale, Stuart and Shafai, Bahram}, title = {Robust control system design with a proportional integral observer}, journal = {International Journal of Control}, volume = {50}, number = {1}, pages = {97--111}, year = {1989}, doi = {10.1080/00207178908953350} }
+@article{kim2008smo,
+  author = {Kim, Il-Song}, title = {Nonlinear state of charge estimator for hybrid electric vehicle battery}, journal = {IEEE Transactions on Power Electronics}, volume = {23}, number = {4}, pages = {2027--2034}, year = {2008}, doi = {10.1109/TPEL.2008.924629} }
+@article{kim2006smo,
+  author = {Kim, Il-Song}, title = {The novel state of charge estimation method for lithium battery using sliding mode observer}, journal = {Journal of Power Sources}, volume = {163}, number = {1}, pages = {584--590}, year = {2006}, doi = {10.1016/j.jpowsour.2006.09.006} }
+@article{chen2014adaptivesmo,
+  author = {Chen, Xiaopeng and Shen, Weixiang and Cao, Zhenwei and Kapoor, Ajay}, title = {A novel approach for state of charge estimation based on adaptive switching gain sliding mode observer in electric vehicles},
+  journal = {Journal of Power Sources}, volume = {246}, pages = {667--678}, year = {2014}, doi = {10.1016/j.jpowsour.2013.08.039} }
+@article{levant1993,
+  author = {Levant, Arie}, title = {Sliding order and sliding accuracy in sliding mode control}, journal = {International Journal of Control}, volume = {58}, number = {6}, pages = {1247--1263}, year = {1993}, doi = {10.1080/00207179308923053} }
+@article{davila2005,
+  author = {Davila, Jorge and Fridman, Leonid and Levant, Arie}, title = {Second-order sliding-mode observer for mechanical systems}, journal = {IEEE Transactions on Automatic Control}, volume = {50}, number = {11}, pages = {1785--1789}, year = {2005}, doi = {10.1109/TAC.2005.858636} }
+@inproceedings{moreno2008,
+  author = {Moreno, Jaime A. and Osorio, Marisol}, title = {A {L}yapunov approach to second-order sliding mode controllers and observers}, booktitle = {Proc. 47th IEEE Conference on Decision and Control}, pages = {2856--2861}, year = {2008}, doi = {10.1109/CDC.2008.4739356} }
+@article{khalilpraly2014hgo,
+  author = {Khalil, Hassan K. and Praly, Laurent}, title = {High-gain observers in nonlinear feedback control}, journal = {International Journal of Robust and Nonlinear Control}, volume = {24}, number = {6}, pages = {993--1015}, year = {2014}, doi = {10.1002/rnc.3051} }
+@article{han2009adrc,
+  author = {Han, Jingqing}, title = {From {PID} to active disturbance rejection control}, journal = {IEEE Transactions on Industrial Electronics}, volume = {56}, number = {3}, pages = {900--906}, year = {2009}, doi = {10.1109/TIE.2008.2011621} }
+@inproceedings{gao2003bandwidth,
+  author = {Gao, Zhiqiang}, title = {Scaling and bandwidth-parameterization based controller tuning}, booktitle = {Proc. American Control Conference}, volume = {6}, pages = {4989--4996}, year = {2003}, doi = {10.1109/ACC.2003.1242516} }
+@article{chen1996uio,
+  author = {Chen, Jie and Patton, Ron J. and Zhang, Hong-Yue}, title = {Design of unknown input observers and robust fault detection filters}, journal = {International Journal of Control}, volume = {63}, number = {1}, pages = {85--105}, year = {1996}, doi = {10.1080/00207179608921833} }
+@article{ohnishi1996dob,
+  author = {Ohnishi, Kouhei and Shibata, Masaaki and Murakami, Toshiyuki}, title = {Motion control for advanced mechatronics}, journal = {IEEE/ASME Transactions on Mechatronics}, volume = {1}, number = {1}, pages = {56--67}, year = {1996}, doi = {10.1109/3516.491410} }
+@article{chen2016dobsurvey,
+  author = {Chen, Wen-Hua and Yang, Jun and Guo, Lei and Li, Shihua}, title = {Disturbance-observer-based control and related methods---{A}n overview}, journal = {IEEE Transactions on Industrial Electronics}, volume = {63}, number = {2}, pages = {1083--1095}, year = {2016}, doi = {10.1109/TIE.2015.2478397} }
+@article{kreisselmeier1977,
+  author = {Kreisselmeier, Gerhard}, title = {Adaptive observers with exponential rate of convergence}, journal = {IEEE Transactions on Automatic Control}, volume = {22}, number = {1}, pages = {2--8}, year = {1977}, doi = {10.1109/TAC.1977.1101401} }
+@article{zhang2002adaptiveobserver,
+  author = {Zhang, Qinghua}, title = {Adaptive observer for multiple-input-multiple-output ({MIMO}) linear time-varying systems}, journal = {IEEE Transactions on Automatic Control}, volume = {47}, number = {3}, pages = {525--529}, year = {2002}, doi = {10.1109/9.989154} }
+@article{gouze2000interval,
+  author = {Gouz{\'e}, Jean-Luc and Rapaport, Alain and Hadj-Sadok, Mohamed Zakaria}, title = {Interval observers for uncertain biological systems}, journal = {Ecological Modelling}, volume = {133}, number = {1--2}, pages = {45--56}, year = {2000}, doi = {10.1016/S0304-3800(00)00279-9} }
+@article{raissi2012interval,
+  author = {Ra{\"i}ssi, Tarek and Efimov, Denis and Zolghadri, Ali}, title = {Interval state estimation for a class of nonlinear systems}, journal = {IEEE Transactions on Automatic Control}, volume = {57}, number = {1}, pages = {260--265}, year = {2012}, doi = {10.1109/TAC.2011.2164820} }
+@article{rajamani1998lipschitz,
+  author = {Rajamani, Rajesh}, title = {Observers for {L}ipschitz nonlinear systems}, journal = {IEEE Transactions on Automatic Control}, volume = {43}, number = {3}, pages = {397--401}, year = {1998}, doi = {10.1109/9.661604} }
+
+% ===== Particle / ensemble / Gaussian-sum ====================================
+@article{gordon1993,
+  author = {Gordon, Neil J. and Salmond, David J. and Smith, Adrian F. M.}, title = {Novel approach to nonlinear/non-{G}aussian {B}ayesian state estimation}, journal = {IEE Proceedings F (Radar and Signal Processing)}, volume = {140}, number = {2}, pages = {107--113}, year = {1993}, doi = {10.1049/ip-f-2.1993.0015} }
+@article{arulampalam2002,
+  author = {Arulampalam, M. Sanjeev and Maskell, Simon and Gordon, Neil and Clapp, Tim}, title = {A tutorial on particle filters for online nonlinear/non-{G}aussian {B}ayesian tracking}, journal = {IEEE Transactions on Signal Processing}, volume = {50}, number = {2}, pages = {174--188}, year = {2002}, doi = {10.1109/78.978374} }
+@article{kitagawa1996,
+  author = {Kitagawa, Genshiro}, title = {Monte {C}arlo filter and smoother for non-{G}aussian nonlinear state space models}, journal = {Journal of Computational and Graphical Statistics}, volume = {5}, number = {1}, pages = {1--25}, year = {1996}, doi = {10.1080/10618600.1996.10474692} }
+@article{doucet2000smc,
+  author = {Doucet, Arnaud and Godsill, Simon and Andrieu, Christophe}, title = {On sequential {M}onte {C}arlo sampling methods for {B}ayesian filtering}, journal = {Statistics and Computing}, volume = {10}, number = {3}, pages = {197--208}, year = {2000}, doi = {10.1023/A:1008935410038} }
+@incollection{musso2001regularized,
+  author = {Musso, Christian and Oudjane, Nadia and Le Gland, Fran{\c c}ois}, title = {Improving regularised particle filters}, booktitle = {Sequential {M}onte {C}arlo Methods in Practice}, editor = {Doucet, Arnaud and de Freitas, Nando and Gordon, Neil}, pages = {247--271}, publisher = {Springer}, address = {New York}, year = {2001}, doi = {10.1007/978-1-4757-3437-9_12} }
+@article{pitt1999auxiliary,
+  author = {Pitt, Michael K. and Shephard, Neil}, title = {Filtering via simulation: Auxiliary particle filters}, journal = {Journal of the American Statistical Association}, volume = {94}, number = {446}, pages = {590--599}, year = {1999}, doi = {10.1080/01621459.1999.10474153} }
+@article{schon2005marginalized,
+  author = {Sch{\"o}n, Thomas and Gustafsson, Fredrik and Nordlund, Per-Johan}, title = {Marginalized particle filters for mixed linear/nonlinear state-space models}, journal = {IEEE Transactions on Signal Processing}, volume = {53}, number = {7}, pages = {2279--2289}, year = {2005}, doi = {10.1109/TSP.2005.849151} }
+@inproceedings{doucet2000rbpf,
+  author = {Doucet, Arnaud and de Freitas, Nando and Murphy, Kevin and Russell, Stuart}, title = {Rao-{B}lackwellised particle filtering for dynamic {B}ayesian networks}, booktitle = {Proc. 16th Conference on Uncertainty in Artificial Intelligence (UAI)}, pages = {176--183}, year = {2000} }
+@techreport{vandermerwe2000upf,
+  author = {van der Merwe, Rudolph and Doucet, Arnaud and de Freitas, Nando and Wan, Eric}, title = {The unscented particle filter}, institution = {Cambridge University Engineering Department}, number = {CUED/F-INFENG/TR 380}, year = {2000} }
+@article{gustafsson2010pf,
+  author = {Gustafsson, Fredrik}, title = {Particle filter theory and practice with positioning applications}, journal = {IEEE Aerospace and Electronic Systems Magazine}, volume = {25}, number = {7}, pages = {53--82}, year = {2010}, doi = {10.1109/MAES.2010.5546308} }
+@article{evensen1994,
+  author = {Evensen, Geir}, title = {Sequential data assimilation with a nonlinear quasi-geostrophic model using {M}onte {C}arlo methods to forecast error statistics}, journal = {Journal of Geophysical Research: Oceans}, volume = {99}, number = {C5}, pages = {10143--10162}, year = {1994}, doi = {10.1029/94JC00572} }
+@article{evensen2003,
+  author = {Evensen, Geir}, title = {The ensemble {K}alman filter: theoretical formulation and practical implementation}, journal = {Ocean Dynamics}, volume = {53}, number = {4}, pages = {343--367}, year = {2003}, doi = {10.1007/s10236-003-0036-9} }
+@article{burgers1998,
+  author = {Burgers, Gerrit and van Leeuwen, Peter Jan and Evensen, Geir}, title = {Analysis scheme in the ensemble {K}alman filter}, journal = {Monthly Weather Review}, volume = {126}, number = {6}, pages = {1719--1724}, year = {1998}, doi = {10.1175/1520-0493(1998)126<1719:ASITEK>2.0.CO;2} }
+@article{bishop2001etkf,
+  author = {Bishop, Craig H. and Etherton, Brian J. and Majumdar, Sharanya J.}, title = {Adaptive sampling with the ensemble transform {K}alman filter. {P}art {I}: Theoretical aspects}, journal = {Monthly Weather Review}, volume = {129}, number = {3}, pages = {420--436}, year = {2001}, doi = {10.1175/1520-0493(2001)129<0420:ASWTET>2.0.CO;2} }
+@article{alspach1972gsf,
+  author = {Alspach, Daniel L. and Sorenson, Harold W.}, title = {Nonlinear {B}ayesian estimation using {G}aussian sum approximations}, journal = {IEEE Transactions on Automatic Control}, volume = {17}, number = {4}, pages = {439--448}, year = {1972}, doi = {10.1109/TAC.1972.1100034} }
+
+% ===== Pack-level / distributed ==============================================
+@article{carlson1990federated,
+  author = {Carlson, Neal A.}, title = {Federated square root filter for decentralized parallel processes}, journal = {IEEE Transactions on Aerospace and Electronic Systems}, volume = {26}, number = {3}, pages = {517--525}, year = {1990}, doi = {10.1109/7.106130} }
+@inproceedings{olfatisaber2007dkf,
+  author = {Olfati-Saber, Reza}, title = {Distributed {K}alman filtering for sensor networks}, booktitle = {Proc. 46th IEEE Conference on Decision and Control}, pages = {5492--5498}, year = {2007}, doi = {10.1109/CDC.2007.4434303} }
+@article{olfatisaber2007consensus,
+  author = {Olfati-Saber, Reza and Fax, J. Alex and Murray, Richard M.}, title = {Consensus and cooperation in networked multi-agent systems}, journal = {Proceedings of the IEEE}, volume = {95}, number = {1}, pages = {215--233}, year = {2007}, doi = {10.1109/JPROC.2006.887293} }
+
+% ===== Smoothing / optimisation-based ========================================
+@article{rauch1965rts,
+  author = {Rauch, H. E. and Tung, F. and Striebel, C. T.}, title = {Maximum likelihood estimates of linear dynamic systems}, journal = {AIAA Journal}, volume = {3}, number = {8}, pages = {1445--1450}, year = {1965}, doi = {10.2514/3.3166} }
+@article{sarkka2008urts,
+  author = {S{\"a}rkk{\"a}, Simo}, title = {Unscented {R}auch--{T}ung--{S}triebel smoother}, journal = {IEEE Transactions on Automatic Control}, volume = {53}, number = {3}, pages = {845--849}, year = {2008}, doi = {10.1109/TAC.2008.919531} }
+@article{moore1973fixedlag,
+  author = {Moore, John B.}, title = {Discrete-time fixed-lag smoothing algorithms}, journal = {Automatica}, volume = {9}, number = {2}, pages = {163--173}, year = {1973}, doi = {10.1016/0005-1098(73)90071-X} }
+@article{rao2003mhe,
+  author = {Rao, Christopher V. and Rawlings, James B. and Mayne, David Q.}, title = {Constrained state estimation for nonlinear discrete-time systems: Stability and moving horizon approximations}, journal = {IEEE Transactions on Automatic Control}, volume = {48}, number = {2}, pages = {246--258}, year = {2003}, doi = {10.1109/TAC.2002.808470} }
+@article{kuhl2011rtimhe,
+  author = {K{\"u}hl, Peter and Diehl, Moritz and Kraus, Tom and Schl{\"o}der, Johannes P. and Bock, Hans Georg}, title = {A real-time algorithm for moving horizon state and parameter estimation}, journal = {Computers \& Chemical Engineering}, volume = {35}, number = {1}, pages = {71--83}, year = {2011}, doi = {10.1016/j.compchemeng.2010.07.012} }
+@book{nocedal2006,
+  author = {Nocedal, Jorge and Wright, Stephen J.}, title = {Numerical Optimization}, edition = {2nd}, publisher = {Springer}, address = {New York}, year = {2006}, doi = {10.1007/978-0-387-40065-5} }
+
+% ===== Learning-based ========================================================
+@article{charkhgard2010nnekf,
+  author = {Charkhgard, Mohammad and Farrokhi, Mohammad}, title = {State-of-charge estimation for lithium-ion batteries using neural networks and {EKF}}, journal = {IEEE Transactions on Industrial Electronics}, volume = {57}, number = {12}, pages = {4178--4187}, year = {2010}, doi = {10.1109/TIE.2010.2043035} }
+@article{chemali2018dnn,
+  author = {Chemali, Ephrem and Kollmeyer, Phillip J. and Preindl, Matthias and Emadi, Ali}, title = {State-of-charge estimation of {L}i-ion batteries using deep neural networks: A machine learning approach}, journal = {Journal of Power Sources}, volume = {400}, pages = {242--250}, year = {2018}, doi = {10.1016/j.jpowsour.2018.06.104} }
+@article{hornik1989,
+  author = {Hornik, Kurt and Stinchcombe, Maxwell and White, Halbert}, title = {Multilayer feedforward networks are universal approximators}, journal = {Neural Networks}, volume = {2}, number = {5}, pages = {359--366}, year = {1989}, doi = {10.1016/0893-6080(89)90020-8} }
+@inproceedings{kingma2015adam,
+  author = {Kingma, Diederik P. and Ba, Jimmy}, title = {Adam: A method for stochastic optimization}, booktitle = {Proc. 3rd International Conference on Learning Representations (ICLR)}, year = {2015} }
+@article{huang2006elm,
+  author = {Huang, Guang-Bin and Zhu, Qin-Yu and Siew, Chee-Kheong}, title = {Extreme learning machine: Theory and applications}, journal = {Neurocomputing}, volume = {70}, number = {1--3}, pages = {489--501}, year = {2006}, doi = {10.1016/j.neucom.2005.12.126} }
+@article{raissi2019pinn,
+  author = {Raissi, Maziar and Perdikaris, Paris and Karniadakis, George E.}, title = {Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations}, journal = {Journal of Computational Physics}, volume = {378}, pages = {686--707}, year = {2019}, doi = {10.1016/j.jcp.2018.10.045} }
+
+% ===== Attitude estimation (IMU) ============================================
+@inproceedings{madgwick2011,
+  author = {Madgwick, Sebastian O. H. and Harrison, Andrew J. L. and Vaidyanathan, Ravi}, title = {Estimation of {IMU} and {MARG} orientation using a gradient descent algorithm}, booktitle = {Proc. IEEE International Conference on Rehabilitation Robotics (ICORR)}, pages = {1--7}, year = {2011}, doi = {10.1109/ICORR.2011.5975346} }
+@article{mahony2008,
+  author = {Mahony, Robert and Hamel, Tarek and Pflimlin, Jean-Michel}, title = {Nonlinear complementary filters on the special orthogonal group}, journal = {IEEE Transactions on Automatic Control}, volume = {53}, number = {5}, pages = {1203--1218}, year = {2008}, doi = {10.1109/TAC.2008.923738} }
+@article{higgins1975complementary,
+  author = {Higgins, Walter T.}, title = {A comparison of complementary and {K}alman filtering}, journal = {IEEE Transactions on Aerospace and Electronic Systems}, volume = {AES-11}, number = {3}, pages = {321--325}, year = {1975}, doi = {10.1109/TAES.1975.308081} }
+@article{markley2003mekf,
+  author = {Markley, F. Landis}, title = {Attitude error representations for {K}alman filtering}, journal = {Journal of Guidance, Control, and Dynamics}, volume = {26}, number = {2}, pages = {311--317}, year = {2003}, doi = {10.2514/2.5048} }
+@article{barrau2017iekf,
+  author = {Barrau, Axel and Bonnabel, Silv{\`e}re}, title = {The invariant extended {K}alman filter as a stable observer}, journal = {IEEE Transactions on Automatic Control}, volume = {62}, number = {4}, pages = {1797--1812}, year = {2017}, doi = {10.1109/TAC.2016.2594085} }
+@article{crassidis2007survey,
+  author = {Crassidis, John L. and Markley, F. Landis and Cheng, Yang}, title = {Survey of nonlinear attitude estimation methods}, journal = {Journal of Guidance, Control, and Dynamics}, volume = {30}, number = {1}, pages = {12--28}, year = {2007}, doi = {10.2514/1.22452} }
+
+% ===== Software used for validation =========================================
+@misc{labbe2014filterpy,
+  author = {Labbe, Roger R.}, title = {{FilterPy}: {K}alman filtering and optimal estimation library for {P}ython}, howpublished = {\url{https://github.com/rlabbe/filterpy}}, year = {2014--2024} }
+@misc{labbe2020book,
+  author = {Labbe, Roger R.}, title = {Kalman and {B}ayesian Filters in {P}ython}, howpublished = {\url{https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python}}, year = {2020} }
+@misc{ahrs2019,
+  author = {Garcia, Mario}, title = {{AHRS}: Attitude and Heading Reference Systems in {P}ython}, howpublished = {\url{https://github.com/Mayitzin/ahrs}}, year = {2019--2024} }
+@article{blackman2021xoshiro,
+  author = {Blackman, David and Vigna, Sebastiano}, title = {Scrambled linear pseudorandom number generators}, journal = {ACM Transactions on Mathematical Software}, volume = {47}, number = {4}, pages = {36:1--36:32}, year = {2021}, doi = {10.1145/3460772} }

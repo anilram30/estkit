@@ -1,0 +1,37 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Attitude / IMU (AHRS) family — chapter order
+%
+%  Reading order:
+%    1. the fixed-gain complementary filter, which introduces the frame
+%       conventions, the two vector observations, the b*tau steady-state law and
+%       the specific-force (centripetal) problem that dominates this mission;
+%    2. the two nonlinear observers that refine it — Madgwick's normalised
+%       gradient step and Mahony's explicit complementary filter on SO(3), the
+%       latter adding the gyro-bias integrator the fixed-gain filter lacks;
+%    3. the two covariance-carrying filters — the multiplicative EKF, which is
+%       the reference solution and carries the full measurement-covariance
+%       discussion, and the right-invariant EKF, which is the same filter with
+%       the attitude error moved to the navigation frame;
+%    4. the two memory-less single-frame solutions of Wahba's problem, TRIAD and
+%       QUEST, which bound what instantaneous sensor data alone can deliver and
+%       quantify the cost of accelerated flight.
+%
+%  Cross-references: Complementary defines the conventions and the disturbance
+%  weight; MEKF defines the measurement-covariance model reused by InvariantEKF;
+%  TRIAD introduces Wahba's problem, which QUEST then solves optimally.
+%
+%  Nine registered estimators in seven chapters: the practical gated variants
+%  Madgwick-Gated and Mahony-Gated are documented in the chapters of the
+%  published algorithms they extend (Madgwick.tex Sec. "The gated variant",
+%  Mahony.tex Sec. "The gated variant"), because the gate is an engineering
+%  addition of ours and not part of either published method.
+% =============================================================================
+\input{chapters/attitude/Complementary.tex}
+\input{chapters/attitude/Madgwick.tex}
+\input{chapters/attitude/Mahony.tex}
+\input{chapters/attitude/MEKF.tex}
+\input{chapters/attitude/InvariantEKF.tex}
+\input{chapters/attitude/TRIAD.tex}
+\input{chapters/attitude/QUEST.tex}

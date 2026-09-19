@@ -1,0 +1,136 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\chapter{Cost, memory and single-precision behaviour}
+\label{ch:res-numerics}
+
+\section{Execution time}
+
+\Cref{tab:runtime} lists the measured cost per sample of every cell-level estimator on the
+benchmark machine (one x86-64 core, GCC~13, \code{-O2}, SSE2 baseline, double precision;
+minimum over repetitions as defined in \cref{sec:me-timing}), the ratio to the EKF, the size of
+the estimator object, and the order-of-magnitude projection to a Cortex-M7 class flight
+processor with the central factor $\kappa = 30$ of \cref{eq:me-scaling}.
+
+\input{tables/runtime}
+
+The table spans three orders of magnitude and falls into four bands. Below
+\SI{1}{\micro\second} per step are Coulomb counting (\SI{79}{\nano\second}), the
+super-twisting observer (\SI{141}{\nano\second}), the reduced-order EKF, the linear KF, the
+Luenberger-type observers, the EKF (\SI{477}{\nano\second}) and its adaptive and robust
+variants, the dual EKF-class SOH estimators, the direct neural regressor and the U-D filter.
+Between \SI{1}{} and \SI{5}{\micro\second} are the sigma-point and cubature filters
+(\SIrange{1.25}{1.6}{\micro\second}, three times the EKF, for the $2n_x+1 = 9$ or $2n_x = 8$
+model evaluations per step), the information and square-root forms, the IMM, MMAE, the
+Schmidt filter, the joint filters, the Gaussian-sum filter, ELM-RLS-EKF and the second-order
+and fifth-degree filters. Between \SI{10}{} and \SI{40}{\micro\second} are the Gauss--Hermite
+filter ($3^4 = 81$ points, \SI{12}{\micro\second}), the ensemble filters, PF-Fast, the UPF, the
+two MHE variants (\SI{17}{} and \SI{32}{\micro\second}) and the RBPF. Above
+\SI{75}{\micro\second} are the three 500-particle bootstrap-type filters, of which the
+auxiliary PF at \SI{104}{\micro\second} is the most expensive estimator in the library, 219
+times the EKF.
+
+On a \SI{10}{\hertz} BMS schedule the projection to a flight processor puts every estimator of
+the first two bands below \SI{0.2}{\percent} of one core per cell (the EKF at
+\SI{0.014}{\percent}), the twelve-cell decentralised EKF of \cref{ch:res-pack} at about
+\SI{0.2}{\percent}, MHE at \SI{1}{\percent}; the 500-particle filters reach
+\SIrange{2}{3}{\percent} per cell and are the only family for which the arithmetic budget of a
+module-level controller is a real constraint. The batch smoothers (\SIrange{0.9}{4.7}{\micro\second}
+per sample when amortised over the record, but \SIrange{12}{17}{\mega\byte} of storage) and the
+fixed-lag smoother (\SI{9.9}{\micro\second}, \SI{20}{\kilo\byte}) are post-flight tools by
+construction.
+
+\Cref{fig:res-runtime} in \cref{ch:res-cell_ecm} already made the point that matters: below
+\SI{2}{\micro\second} per step the cost axis does not discriminate the estimators, because the
+best twelve of the composite ranking all lie in that range. Cost becomes an argument only
+between families --- a particle filter against a sigma-point filter, MHE against an adaptive
+EKF --- and in those comparisons the cheaper estimator is, on this problem, at least as
+accurate.
+
+\section{Memory}
+
+The \code{bytes} column of \cref{tab:runtime} is \code{sizeof} of the complete estimator
+object. For every filter over the equivalent-circuit model it is dominated by the model copy
+that each templated filter carries, and in the model by the 241-point OCV table with its slopes
+(\SI{3.9}{\kilo\byte} of the \SI{4.3}{\kilo\byte} of an EKF, \cref{tab:me-mem}); the filter
+state proper is \SI{200}{\byte} for the EKF, \SI{700}{\byte} for the UKF, \SI{5}{\kilo\byte} for
+the Schmidt filter with its consider-state cross-covariance, \SI{22}{\kilo\byte} for MHE (a
+window of 21 states with their Jacobians) and \SIrange{42}{50}{\kilo\byte} for the 500-particle
+filters. A production build shares one OCV table across all cells of a module, which reduces
+the per-cell footprint of the Kalman-type estimators to under a kilobyte and makes the
+twelve-cell decentralised EKF a \SI{6}{\kilo\byte} object rather than the \SI{52}{\kilo\byte}
+reported. No estimator in the library allocates memory after construction; the numbers in the
+table are the static budget.
+
+\section{Single precision}
+
+\Cref{tab:float} repeats the equivalent-circuit benchmark (seed~1, eVTOL mission, all twelve
+scenarios) with the library compiled for \code{float}, and lists four scenarios next to their
+double-precision counterparts; \cref{fig:res-float} plots the ratio of the two for every
+estimator. The question the experiment answers is whether any estimator \emph{needs} double
+precision on this problem.
+
+\input{tables/float_vs_double}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/overview_float_vs_double.png}
+\caption{Ratio of the steady-state RMSE of the single-precision build to the double-precision
+build, ECM plant, seed~1. A ratio of one is identical behaviour; ratios below one are as
+common as ratios above it.}
+\label{fig:res-float}
+\end{figure}
+
+The answer is that none does. Over the 840 float32 runs no estimator diverges that did not
+also diverge in double precision (Coulomb counting on \code{init\_error}, which has nothing to
+do with arithmetic). In 406 of the 840 runs the steady-state RMSE agrees with the double build
+to within \num{0.005} percentage points, the median absolute difference over all runs is
+\num{0.006} points, and the differences above \num{0.25} points are confined to the scenarios in
+which the seed-to-seed spread of the double build is itself large --- \code{combined},
+\code{aged\_cell}, \code{param\_mismatch}, \code{cold} and \code{outliers} --- and are of both
+signs: the SR-UKF improves from \num{1.79} to \num{0.23} on \code{combined} in float, the
+$H_\infty$ filter degrades from \num{4.81} to \num{7.26}, the joint EKF improves from \num{2.09}
+to \num{0.80} on \code{param\_mismatch}, the ERTS degrades from \num{10.72} to \num{12.04} on
+\code{combined}. These are not precision losses in the Verhaegen--Van~Dooren sense
+(\cref{sec:me-float}); they are the sensitivity of a run that is already on the edge of
+failure to any perturbation, of which rounding is one. The single-precision build also
+regenerates the data set in single precision, so its noise realisation is not bit-identical to
+the double build's, and on \code{outliers} in particular a different outlier draw moves the
+EKF-type filters by \num{0.3} points --- within the range that the three double-precision seeds
+span.
+
+The Verhaegen--Van~Dooren argument predicted that the conventional covariance form would lose
+accuracy before the factorised forms at the $\kappa(\mP) \sim 10^6$ condition numbers the cell
+model produces. The benchmark does not confirm it for this model: the EKF, its square-root form
+and its U-D form are within \num{0.03} points of each other in float in every column of
+\cref{tab:float}, and the UKF and SR-UKF within \num{0.1} points except on \code{combined},
+where the SR-UKF is better by luck rather than by arithmetic. The reason is that the covariance of the cell filter
+is small in absolute terms ($\mP_{\soc\soc} \sim 10^{-6}$ after convergence) and the library's
+EKF uses the Joseph-form update by default and every filter re-symmetrises its covariance
+after each step, which keeps the conventional recursion positive definite in binary32 at these
+condition numbers. The factorised forms remain
+the right choice where the state dimension or the dynamic range of the covariance grows --- the
+pack-level joint filters, an attitude filter with a bias state --- and their cost premium
+(\SI{72}{\percent} for the SR-EKF, \SI{8}{\percent} for the SR-UKF, \SI{2}{\percent} for the U-D
+filter) is the price of not having to find out.
+
+The one systematic effect of single precision is speed. On the benchmark machine the float
+build runs the median estimator in \SI{77}{\percent} of the double build's time (the EKF in
+\SI{75}{\percent}, the UKF in \SI{73}{\percent}, MHE in \SI{66}{\percent}, the fixed-lag smoother
+in \SI{35}{\percent}); on a Cortex-M4F or a single-precision-only M7 the ratio is an order of
+magnitude, because \code{double} is emulated in software. The practical conclusion for a
+flight implementation is the one \cref{sec:me-float} anticipated: build the library for
+\code{float}, keep the Joseph-form update and the symmetrisation, and reserve the square-root
+forms for estimators whose covariance dynamic range justifies them.
+
+\section{Determinism and unit tests}
+
+The library has no data-dependent branches that allocate, no recursion and no exceptions. The
+unit-test executable (\code{tests/unit\_tests.cpp}) exercises the linear algebra (Cholesky
+factorisation and rank-one updates, the Ackermann and conditioned pole-placement routines,
+both DARE solvers against the Riccati residual), the analytic model Jacobians against central
+differences (double build only, since the finite-difference truncation error exceeds the
+tolerance in binary32), the plants (OCV monotonicity and end points, the thermal balance, the
+single-particle model against the OCV at rest, the orientation of the Preisach loop) and the
+convergence of the EKF and UKF on the \code{init\_error} mission; it passes in both
+precisions (\cref{app:build}). Every benchmark run is reproducible bit for bit from its seed,
+which is what allowed the per-estimator chapters to quote single-seed traces and the tables to
+be regenerated from the recorded summaries.

@@ -1,0 +1,99 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\documentclass[11pt,a4paper,twoside,openany]{book}
+\input{preamble}
+\input{chapters/_macros_extra}
+
+\title{\textbf{estkit}\\[2mm]\Large A Header-Only C++17 Library and Benchmark of State Estimators and Observers\\[1mm]\large for Battery-Management Systems in Electric Aircraft\\[6mm]\normalsize Equivalent-circuit and electrochemical battery plants \textbullet\ 70 cell-level estimators \textbullet\ pack-level and multi-flight state-of-health benchmarks \textbullet\ aerospace attitude estimation heritage}
+\author{Sreeram Anil}
+\date{September 2026 \\[3mm] \small Version 1.0 — generated from the benchmark run recorded in \texttt{results/final}}
+
+\begin{document}
+\frontmatter
+\maketitle
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushleft}\small
+\textbf{estkit --- A Header-Only C++17 Library and Benchmark of State Estimators and Observers for
+Battery-Management Systems in Electric Aircraft}\\[2mm]
+Copyright \textcopyright\ 2026 Sreeram Anil. All rights reserved under the licences below.\\[2mm]
+This report, its figures and the benchmark data it describes are licensed under the Creative
+Commons Attribution 4.0 International licence (CC~BY~4.0): you may share and adapt them for any
+purpose provided that you give appropriate credit to the author, link to the licence and indicate
+whether changes were made. The software described in this report --- the \estkit\ library, the
+benchmark harness, the tools and the scripts --- is licensed separately under the Apache License,
+Version~2.0. The full texts of both licences accompany the repository.\\[2mm]
+Every algorithm is an original implementation from the publication cited in its chapter; the
+external libraries named in Chapter~\ref{ch:metrics} are used only as independent validation
+references and are not part of \estkit. Version~1.0, September 2026.
+\end{flushleft}
+\clearpage
+\input{chapters/front/abstract}
+\tableofcontents
+\mainmatter
+
+\part{Foundations}
+\input{chapters/front/introduction}
+\input{chapters/front/preliminaries}
+\input{chapters/front/ecm_model}
+\input{chapters/front/spm_plant}
+\input{chapters/front/datasets}
+\input{chapters/front/methodology}
+\input{chapters/front/library}
+
+\part{Baseline methods}
+\input{chapters/baselines/_index}
+
+\part{Classical and sigma-point Kalman filters}
+\input{chapters/kalman/_index}
+
+\part{Adaptive Kalman filters}
+\input{chapters/adaptive_kalman/_index}
+
+\part{Robust and embedded Kalman filters}
+\input{chapters/robust_kalman/_index}
+
+\part{Deterministic observers}
+\input{chapters/observers/_index}
+
+\part{Joint and dual state--parameter estimation (state of health)}
+\input{chapters/soh/_index}
+
+\part{Particle, ensemble and Gaussian-sum filters}
+\input{chapters/particle/_index}
+
+\part{Data-driven and hybrid estimators}
+\input{chapters/learning/_index}
+
+\part{Optimisation-based estimation}
+\input{chapters/optimization/_index}
+
+\part{Smoothers and post-flight analysis}
+\input{chapters/smoothers/_index}
+
+\part{Pack-level and distributed estimation}
+\input{chapters/pack/_index}
+
+\part{Attitude estimation (aerospace heritage)}
+\input{chapters/attitude/_index}
+
+\part{Results, synthesis and recommendations}
+\input{chapters/results/cell_ecm}
+\input{chapters/results/cell_spm}
+\input{chapters/results/numerics}
+\input{chapters/results/pack}
+\input{chapters/results/attitude}
+\input{chapters/results/soh}
+\input{chapters/results/recommendations}
+\input{chapters/results/conclusions}
+
+\appendix
+\part{Appendices}
+\input{chapters/appendix/parameters}
+\input{chapters/appendix/build_and_run}
+\input{chapters/appendix/validation}
+
+\backmatter
+\bibliographystyle{plainnat}
+\bibliography{refs,refs_additions_kalman,refs_additions_adaptive_kalman,refs_additions_robust_kalman,refs_additions_observers,refs_additions_soh,refs_additions_smoothers,refs_additions_particle,refs_additions_learning,refs_additions_optimization,refs_additions_pack,refs_additions_attitude,refs_additions_front}
+\end{document}

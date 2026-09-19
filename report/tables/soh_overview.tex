@@ -1,0 +1,12 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3.5pt}\caption{Multi-flight state-of-health benchmark: 120 consecutive missions with accelerated ageing ($\times$3); capacity RMSE/MAE over flights 11--120, final capacity error, mean per-flight SOC RMSE and cost.}\label{tab:soh_overview}
+\begin{tabular}{llrrrrr}\toprule estimator & family & RMSE $\hat Q$ [mAh] & MAE $\hat Q$ [mAh] & final [mAh] & SOC RMSE [\%] & ns/step \\ \midrule
+DualEKF & soh & 26 & 25 & +29 & 0.42 & 1758 \\
+JointEKF & soh & 26 & 25 & +21 & 0.11 & 1748 \\
+JointUKF & soh & 29 & 28 & +22 & 0.10 & 3628 \\
+DualUKF & soh & 33 & 32 & +22 & 0.14 & 2876 \\
+AWTLS & soh & 49 & 41 & -35 & 0.84 & 986 \\
+MMAE & adaptive\_kalman & 486 & 419 & +818 & 1.37 & 2277 \\
+AdaptiveObserver & observers & 633 & 617 & +785 & 0.20 & 1390 \\
+\bottomrule\end{tabular}\end{table}

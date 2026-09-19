@@ -1,0 +1,193 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\chapter{Cell-level results on the electrochemical plant}
+\label{ch:res-cell_spm}
+
+\section{A different kind of test}
+
+The equivalent-circuit results of \cref{ch:res-cell_ecm} measure how well each estimator handles
+sensor faults, wrong parameters and wrong initial conditions when the \emph{structure} of its
+model is right. The electrochemical benchmark removes that assumption. The truth is now the
+single-particle model of \cref{ch:spm} --- solid-phase diffusion in two electrodes,
+Butler--Volmer kinetics, an ohmic term --- and the estimator still runs the 2-RC equivalent
+circuit, with parameters identified on that plant by the procedure of \cref{ch:spm}. The
+identified circuit reproduces the plant's terminal voltage to \SI{4}{\milli\volt} RMS on the
+identification record, which is as good as an equivalent circuit gets and is what a
+practitioner would obtain from a pulse-characterisation test on a real cell. The residual that
+remains is not white: it is a slowly varying signal produced by the diffusion overpotential
+(time constant \SI{556}{\second} in the identified fit) and by the nonlinearity of the
+kinetics, and it is largest during the high-current hover segments. Three of the twelve
+scenarios (\code{aged\_cell}, \code{preisach}, \code{combined}) are defined on the
+equivalent-circuit plant only, so this chapter compares nine columns.
+
+\input{tables/overview_spm}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.98\textwidth]{figures/overview_heatmap_spm.png}
+\caption{Steady-state SOC RMSE on the electrochemical plant as a heat map. Compared with
+\cref{fig:res-heat-ecm} the picture is inverted: the rows that were uniformly light on the
+equivalent-circuit plant --- the converged Kalman filters --- are now uniformly dark, and the
+lightest rows belong to the fixed-gain observers, the fading-memory filter, the Schmidt filter
+and the particle filters.}
+\label{fig:res-heat-spm}
+\end{figure}
+
+\section{The inversion}
+
+The headline result is the one that \cref{fig:res-ecm-vs-spm} shows: the nominal accuracy on the
+two plants is uncorrelated across the library. The estimators that sit on the sensor-noise
+floor of the equivalent-circuit plant --- the EKF and its algebraic equivalents, the
+sigma-point and cubature filters, the $\mR$-adapting and M-estimator filters, the smoothers,
+MHE --- form a cluster at \num{2.6}--\num{4.7}\,\% on the electrochemical plant, with a median
+of \num{3.7}. The estimators that were mediocre on the equivalent circuit because they trust
+the voltage less --- the Schmidt filter (\num{0.51}), the reduced-order EKF (\num{0.70}), the
+strong-tracking filter (\num{0.66}), every fixed-gain observer (\num{0.45}--\num{0.98}) --- are
+now the best of the field, and the fading-memory EKF, 12th on the equivalent circuit, is first
+at \num{0.36}. The composite ranking over the nine scenarios reads, from the top, Fading-EKF
+(geometric mean \num{0.65}), adaptive observer (\num{0.72}), Schmidt--Kalman (\num{0.78}),
+UIO and HGO (\num{0.91}), reduced-order EKF (\num{0.92}), then Coulomb counting, the
+regularised particle filter and the Luenberger group at \num{0.94}; the EKF is at \num{3.7},
+the third-degree cubature family at \num{4.7}, MHE-RTI at \num{4.9} and the SVSF, which
+diverges in one seed of \code{outliers}, at \num{6.0}.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.9\textwidth]{figures/res_ecm_vs_spm.png}
+\caption{Nominal steady-state RMSE on the equivalent-circuit plant against the same quantity on
+the electrochemical plant, one point per estimator. The dashed line is equality. There is no
+correlation: the cluster of converged Kalman-type filters is twenty times worse on the
+electrochemical plant than on the equivalent circuit, while the fixed-gain observers and the
+fading-memory filter lose a factor of five to eight and end up an order of magnitude ahead.}
+\label{fig:res-ecm-vs-spm}
+\end{figure}
+
+\section{What happens, sample by sample}
+
+\Cref{fig:res-spm-traces} plots the SOC error of eight estimators on the nominal mission. Up to
+the take-off hover at \SI{3}{\minute} all of them agree to within half a percent and their
+voltage residuals are the same \SIrange{1}{4}{\milli\volt}. At the hover the current rises to
+\SIrange{21}{32}{\ampere} and the fitted circuit stops being a model of the cell: its fast branch
+charges in \SI{15}{\second}, faster than the surface concentration of the particles depletes, and
+its slow branch, with $\tau_2 = \SI{556}{\second}$, relaxes on the wrong time scale afterwards.
+The open-loop residual of the circuit evaluated at the true state --- the quantity that Coulomb
+counting reports as its voltage prediction error --- swings from \SI{-28}{\milli\volt} twenty
+seconds into the hover to \SI{+30}{\milli\volt} a minute after it, and stays above
+\SI{20}{\milli\volt} for the following two minutes. The estimators split on how they absorb
+that swing. The EKF meets it with a covariance shaped by ninety seconds of confident updates:
+an SOC standard deviation of \num{0.35}\,\% and cross-covariances with the RC states that
+encode the circuit's own statement of which state combinations the voltage cannot
+distinguish. The first three seconds of the hover move its SOC down by \num{3.6}\,\%, the standard
+deviation falls to \num{0.21}\,\%, the innovation returns to within a few millivolts, and the
+filter is from then on in a self-consistent state: the wrong SOC, compensated by the other
+states of the circuit, fits the voltage to within the declared measurement noise, and with a
+gain sized for a \num{0.2}\,\% prior nothing in the cruise data moves it back. The error is
+still \num{-4.0}\,\% at \SI{20}{\minute} and \num{-3.6}\,\% at landing. The UKF and MHE follow
+the same path to \num{-3.6} and \num{-3.7}\,\%.
+
+The fading-memory filter makes the same excursion, to \num{-1.3}\,\%, but its covariance is
+bounded below by construction, so the cruise residual, small as it is, pulls the estimate back
+to half a percent within five minutes; the Luenberger observer, whose gain never changed,
+overshoots to \num{-2.4}\,\% and recovers in the same way; the Schmidt filter is held near
+\num{-1}\,\% by the inflated innovation covariance of its consider parameters and drifts to
+\num{+0.7}\,\% by the end; the dual EKF re-identifies its parameters and crosses zero after
+\SI{25}{\minute}. Coulomb counting, which does not look at the voltage, drifts from \num{0}
+to \num{-0.6}\,\% under the current-sensor bias and is, at \num{0.47}\,\% steady state, the
+fourth-best estimator on this plant --- a fact that says more about the plant than about
+Coulomb counting.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/res_spm_traces.png}
+\caption{SOC error of eight estimators on the electrochemical plant, nominal eVTOL mission,
+seed~1. The take-off hover at \SI{3}{\minute} creates the error; what distinguishes the
+estimators is whether their gain is still large enough afterwards to remove it.}
+\label{fig:res-spm-traces}
+\end{figure}
+
+Two consequences deserve to be stated as rules. First, on a plant with structured model
+error the voltage residual is not an indicator of SOC accuracy: the EKF's residual is
+\SI{1.0}{\milli\volt} RMS with a \num{3.7}\,\% SOC error, Coulomb counting's is
+\SI{10}{\milli\volt} with \num{0.47}\,\%, and the Schmidt filter's is \SI{7.5}{\milli\volt}
+with \num{0.51}\,\%. A BMS that monitors its own health through the innovation sequence will
+report the EKF as healthy in this situation. Second, the optimal filter for a wrong model is
+confidently wrong. The EKF is not failing here because of linearisation error --- the UKF and
+the cubature filters, which linearise statistically, are worse, not better --- but because it
+computes the exact posterior of a model whose measurement equation does not describe the
+cell during a \SI{6}{C} pulse, and the posterior of a wrong model has no reason to be centred
+on the truth.
+
+\section{Column by column}
+
+\paragraph{\code{init\_error}.} The observers, which take \SIrange{320}{350}{\second} to remove
+a \num{0.35} initial error on the equivalent-circuit plant, take about as long here and are
+therefore worse than their nominal figures (\num{1.9}--\num{3.6}\,\%); the Kalman filters
+remove the initial error in one sample as before and their column is their nominal bias. The
+fading-memory EKF (\num{0.48}), the Schmidt filter (\num{0.60}), the regularised particle
+filter (\num{0.71}), the disturbance observer (\num{0.74}) and the joint UKF (\num{0.82}) are
+the estimators that do both --- converge quickly and not park on the hover bias.
+
+\paragraph{\code{current\_bias}.} The state-only Kalman filters add the unobservable bias
+error to their hover bias and read \num{5.5}--\num{6.7}\,\%; the estimators that stay close to
+the voltage are at \num{0.4}--\num{0.9}\,\% (adaptive observer \num{0.38}, UIO \num{0.44},
+HGO and Luenberger \num{0.57}, Schmidt \num{0.71}, STF \num{0.72}, Fading-EKF \num{0.87}),
+because on this plant the voltage is the reliable signal and a high gain on it is exactly
+what a current-sensor bias calls for. MHE, the best estimator in this column on the
+equivalent circuit, is at \num{5.9}\,\% here: its window re-fits a model that is wrong in
+the same way at every node.
+
+\paragraph{\code{noise\_step} and \code{outliers}.} The robust and adaptive filters that won
+these columns on the equivalent circuit are now in the cluster (\num{3.2}--\num{3.7} and
+\num{2.5}--\num{3.6}\,\%), because raising $\mR$ in response to the residual lowers the gain,
+and a lower gain is the wrong direction on this plant; their sensor-fault handling is intact
+but is masked by the model error. The estimators that handle the fault without lowering their
+gain on SOC --- the fixed-gain observers (\num{0.53}--\num{1.0}), the fading-memory filter
+(\num{0.43}/\num{0.45}), the reduced-order EKF (\num{0.71}/\num{0.70}), the particle filters
+(\num{0.8}--\num{1.3}) --- keep their nominal accuracy. The IPLF (\num{1.02} on
+\code{outliers}) and the ETKF (\num{0.34}) are the exceptions within their families; the SVSF
+diverges in one seed of \code{outliers} and the EnKF in two seeds of \code{cold}.
+
+\paragraph{\code{cold}.} At \SI{-10}{\celsius} the diffusion time constant of the plant grows by
+an order of magnitude and the hover residual with it; this is the hardest column of the table,
+with a median of \num{5.2}\,\% and no estimator below \num{1.5}\,\% except the linear Kalman
+filter (\num{1.47}), whose frozen gain happens to be right for a cell this slow, and the
+adaptive observer (\num{1.79}). The IMM (\num{2.22}), VB-AKF (\num{2.31}), UIO (\num{2.23}),
+Schmidt (\num{2.44}) and the $\mR$-adapting filters (\num{2.5}--\num{2.7}) follow; the EKF
+reads \num{7.35}, the cubature filters \num{8.7}, the EnKF diverges. On a cold
+electrochemical cell the 2-RC circuit is simply not a model of the voltage under load, and
+the estimator choice moves the error by a factor of three, not by an order of magnitude.
+
+\paragraph{\code{hot}.} The mirror image: at \SI{45}{\celsius} diffusion is fast, the hover
+residual shrinks and every estimator improves, the cluster to \num{2.1}--\num{2.4}\,\% and the
+observers, the Fading-EKF, the Schmidt filter and the particle filters to \num{0.35}--\num{0.65}.
+
+\paragraph{\code{param\_mismatch} and \code{sensor\_dropout}.} A parameter error on top of a
+structural error is mostly absorbed by the estimators that already discount the model
+(VB-AKF \num{0.66}, Schmidt \num{0.75}, NN-EKF \num{0.76}, joint UKF \num{0.92}, UIO
+\num{0.93}), and the plain Kalman filters read \num{3.1}--\num{4.9}. The stuck voltage channel
+is handled as on the equivalent circuit, with the same family ordering, on top of the hover
+bias: Fading-EKF \num{0.31}, adaptive observer \num{0.48}, Schmidt \num{0.50}, the observer
+group \num{0.6}--\num{1.0}, the EKF \num{5.31}, the cubature filters \num{8.24}.
+
+\section{What the electrochemical results say}
+
+The benchmark makes three points that are easy to state and easy to forget.
+
+The estimator that is best for the model is not the estimator that is best for the cell. On
+a plant whose physics the estimator's model cannot reproduce, the Bayesian-optimal filters
+are the worst group in the table and the estimators that were designed with model error in
+mind --- fading memory, consider parameters, fixed gains, particle clouds with roughening ---
+are the best. A practitioner who selects an estimator on an equivalent-circuit simulation, or
+on a real cell under gentle excitation, will select the wrong one for a cell that sees
+\SI{6}{C} pulses.
+
+The remedy is not a better filter but a better model, or a filter that knows its model is
+wrong. Every estimator in the table runs the same identified circuit; the \num{0.36}\,\% of
+the fading-memory filter is what that circuit can deliver when the estimator refuses to let
+one transient decide the rest of the flight. A reduced electrochemical model in the estimator
+--- a single-particle model with a few diffusion states, which the library's model concept
+admits without change --- would remove the structured residual at its source, and is the
+first item of future work in \cref{ch:res-conclusions}.
+
+Health monitoring must not rely on the innovation alone. Under structured model error a
+converged filter reports a clean innovation and a wrong state. A second, independent
+estimate --- Coulomb counting, an OCV reading at rest, a high-gain observer running in
+parallel --- is the only way to detect the discrepancy, and \cref{ch:res-recommendations}
+makes that a design rule.

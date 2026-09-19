@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3.5pt}\caption{QUEST: attitude benchmark (mean over seeds; all angles in degrees; $t_\mathrm{conv}$: first time the attitude error stays below 2$^\circ$ for 30\,s; bias RMSE in deg/s; 120 bytes of state).}\label{tab:imu_QUEST}
+\begin{tabular}{lrrrrrrrrcr}\toprule scenario & RMS & roll & pitch & yaw & max & RMS$_\mathrm{ss}$ & $t_\mathrm{conv}$ [s] & bias RMSE & lost & ns/step \\ \midrule
+nominal & 19.22 & 8.68 & 1.44 & 17.18 & 87.7 & 21.18 & -- & 1.03 & yes & 214 \\
+init\_error & 19.22 & 8.68 & 1.44 & 17.18 & 87.7 & 21.18 & -- & 1.03 & yes & 213 \\
+gyro\_bias & 19.22 & 8.68 & 1.44 & 17.18 & 87.7 & 21.18 & -- & 3.80 & yes & 215 \\
+mag\_disturbance & 20.63 & 8.69 & 1.44 & 18.73 & 87.7 & 21.18 & -- & 1.03 & yes & 215 \\
+vibration & 25.89 & 9.10 & 4.93 & 24.28 & 179.7 & 27.94 & -- & 1.03 & yes & 225 \\
+high\_dynamics & 20.63 & 9.12 & 1.54 & 18.57 & 138.8 & 22.60 & -- & 1.03 & yes & 216 \\
+\bottomrule\end{tabular}\end{table}

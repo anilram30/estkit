@@ -1,0 +1,126 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\chapter{Conclusions and future work}
+\label{ch:res-conclusions}
+
+\section{What was done}
+
+This report set out to answer, empirically, which state estimator an electric-aircraft battery
+management system should use, and to leave behind the means of asking the question again. The
+answer required building the estimators: \estkit\ implements 70 cell-level estimators in ten
+families, seven pack-level architectures and nine attitude estimators, each from its primary
+reference, against one model-agnostic C++17 interface, without dynamic memory or exceptions,
+in single or double precision, and cross-checked against FilterPy, PyBaMM and the \code{ahrs}
+library where a reference exists. It required building the benchmark: two truth plants ---
+an enhanced equivalent-circuit cell with thermal, hysteresis and ageing physics, and an
+electrochemical single-particle model from published electrode data --- four missions, twelve
+fault scenarios, a twelve-cell module, a 120-mission ageing study and a synthetic instrumented
+flight, with metrics chosen for what a certification argument needs rather than for what is
+convenient to compute. And it required writing it down: a chapter per estimator with the
+derivation, the algorithm, the implementation and the measured behaviour, so that the reader
+can see why each result is what it is.
+
+\section{What was found}
+
+Six findings carry the weight of the report.
+
+On a cell whose model structure the estimator knows, the nominal problem is solved by any
+correctly tuned closed-loop estimator, and the field is separated only by faults. Sensor faults
+are handled by covariance adaptation or bounded influence functions at the cost of an EKF;
+model faults are handled by estimators that keep their covariance honest --- fading memory,
+consider parameters, statistically linearised or iterated updates, fixed gains --- and the
+plain EKF fails the combined fault scenario not because it is a poor filter but because it is
+an exact one for a model that is wrong.
+
+On a cell whose model structure the estimator does not know, the ranking inverts. Every
+converged Kalman-type filter parks on a \num{4}\,\% SOC bias created in the first high-current
+transient, with a clean innovation sequence that gives no warning; the fading-memory EKF, the
+Schmidt filter, the reduced-order filter and the fixed-gain observers hold \num{0.4}--\num{0.7}\,\%.
+The voltage residual is not a health indicator under structured model error, and a BMS needs
+a second estimate that does not share the model.
+
+Capacity is identifiable only by an estimator with a capacity state, and then to the accuracy
+of the current sensor's scale factor, across consecutive missions, provided the parameter
+loop is gated on excitation. A current-sensor offset or gain error is not removable by any
+estimator from voltage and current alone, at cell or at module level; it is a calibration
+problem.
+
+At module level the architecture matters more than the filter: averaging the voltage channels
+inside the filter --- bar--delta or information fusion --- halves the per-cell error of
+independent filters at a fraction of their cost, and finds the weak cell.
+
+Cost does not discriminate among the estimators that matter. The best twelve of the composite
+ranking run within five times the cost of the EKF, below \SI{2}{\micro\second} per step on a
+desktop core and below a tenth of a percent of a flight processor per cell; the expensive
+families --- Gauss--Hermite, particle, ensemble, moving-horizon --- buy no accuracy on this
+problem that a cheaper estimator does not also deliver, with the exception of MHE's rejection
+of a current-sensor bias. No estimator needs double precision.
+
+On the aerospace heritage problem, the accelerometer is not a gravity reference for a third of a
+flight that turns, and an estimator that knows this --- through a covariance model or a scalar
+gate --- is an order of magnitude better than the published complementary filters that do not;
+the gated Mahony filter matches the multiplicative EKF at a fifteenth of the cost, and the
+residual two degrees of heading are set by the compass, not by the filter.
+
+\section{What the library is for}
+
+The estimators, the linear algebra and the model concept are independent of the battery. A
+navigation model, a target-tracking model, an attitude model or an electrochemical model plugs
+into every filter, observer, particle method and smoother in the library without modification
+of the estimator code, as the attitude Part and the drone example of \cref{ch:library} show.
+The battery-specific parts --- plants, datasets, scenarios, the cell-estimator adapter, the
+registries --- are separate and are the template for the equivalent parts of another problem.
+The intended use of the library after this report is as a common code base for state
+estimation on embedded aerospace targets --- battery management, guidance and navigation of
+uncrewed aircraft, attitude determination --- where the same requirements of determinism,
+static memory, single precision and traceability to a published reference apply.
+
+\section{Future work}
+
+The benchmark suggests its own continuation.
+
+\paragraph{An electrochemical estimator.} The single largest gap in the results is between the
+equivalent-circuit and electrochemical plants, and the single most informative experiment not
+yet run is the one that closes it: a reduced-order single-particle model --- a few diffusion
+states per electrode, Butler--Volmer kinetics, an ohmic term --- as the \emph{estimator's}
+model, run through the same filters on the same missions. The library's model concept admits it
+without change; the identification tooling of \cref{ch:spm} produces its parameters; and the
+result would say whether the \num{4}\,\% hover bias is removed at its source, as the physics
+suggests, and at what cost in state dimension.
+
+\paragraph{Measured data.} Every number in this report is simulated. The plants are built from
+published electrode data and literature model structures, and the impedance, thermal, ageing
+and sensor parameters are representative rather than measured. A characterisation of one
+power cell --- OCV, pulse impedance over temperature, a few hundred cycles of ageing --- and
+its replay through the same benchmark would turn the relative findings into absolute ones and
+is the precondition for freezing any of the recommendations of \cref{ch:res-recommendations}.
+
+\paragraph{Timing on the target.} The projections to a Cortex-M7 are estimates with stated
+assumptions. Compiling the \code{float} build for an M7 and an M4F and measuring the
+per-step cost of the reference stack, with the OCV table in flash, would replace a factor-of-two
+uncertainty with a number.
+
+\paragraph{Combined and gated estimators.} The reference architecture combines mechanisms
+that were benchmarked separately: $\mR$ adaptation with bounded memory in one filter, an
+excitation gate on the joint filter's parameter update, a disagreement flag between the filter
+and the independent monitor. Each combination should be registered as an estimator and run
+through the benchmark, with the same discipline that produced the results here.
+
+\paragraph{Estimators not yet in the library.} The library is complete with respect to the
+families of the literature but not with respect to their members. Candidates for the next
+release include the cubature information filter and its square-root form, the ensemble
+Kalman smoother, the Gaussian-process and Koopman-based data-driven filters, the
+sum-of-norms and $\ell_1$-regularised moving-horizon formulations for fault-tolerant
+estimation, an electrochemical PDE observer (backstepping on the diffusion equation), and the
+distributed particle and consensus-ADMM methods for larger packs.
+
+\section{Closing}
+
+The most useful thing the benchmark says is also the simplest: the choice of estimator
+matters much less than whether it is told the truth about its model and its sensors. A
+\SI{0.5}{\micro\second} EKF that adapts its measurement noise and bounds its memory, with a
+gated capacity state and an independent Coulomb counter beside it, on a calibrated current
+sensor, has no failure scenario in this benchmark on either plant --- the two halves of that
+recipe are the second-ranked estimator on the equivalent-circuit plant and the first on the
+electrochemical one --- and it is the recommendation of this report. Everything else in the
+library exists to show, on the same data, why.

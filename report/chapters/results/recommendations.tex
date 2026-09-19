@@ -1,0 +1,181 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\chapter{Recommendations for an electric-aircraft BMS}
+\label{ch:res-recommendations}
+
+\section{The question the benchmark can answer}
+
+The benchmark cannot say which estimator a particular aircraft should fly; that depends on the
+cell, the mission, the sensors, the processor and the certification basis, and on measurements
+that this report does not have. It can say, from controlled experiments on one representative
+problem, which estimators are hurt by which faults and by how much, what each costs, and where
+the accuracy of the whole system is set by something other than the estimator. This chapter
+turns those findings into recommendations, stated as design rules with the evidence that
+supports each, and closes with a reference architecture.
+
+\section{Design rules}
+
+\paragraph{Rule 1: calibrate the current sensor; no estimator will do it for you.}
+A current-sensor offset and gain error are unobservable from one voltage channel
+(\cref{ch:res-cell_ecm}, \code{current\_bias}), they are common-mode across a module
+(\cref{ch:res-pack}), and a scale-factor error becomes a permanent capacity error of the same
+size (\cref{ch:res-soh}). The estimators that partially compensate an offset --- MHE, the
+disturbance observer, RBPF, AWTLS --- do so at a cost and only partially, and none compensates
+a gain error. The nominal \SI{20}{\milli\ampere} and \SI{0.5}{\percent} of the benchmark are
+already the floor of every estimator on the nominal mission; a flight BMS should budget its
+current-sensor calibration against the SOC and SOH accuracy it needs, and re-anchor on an
+OCV reading at rest whenever the mission allows.
+
+\paragraph{Rule 2: keep the covariance honest.} The single most common failure in the
+benchmark --- the EKF's \SI{12}{\percent} on \code{combined}, the sigma-point filters'
+\code{sensor\_dropout}, the whole Kalman cluster on the electrochemical plant --- is a
+covariance that collapses on the strength of a model that does not deserve the confidence. The
+remedies are cheap and additive: a fading-memory factor sized from a memory length in samples
+(\cref{ch:fadingekf}), a lower bound on the SOC variance, innovation-based adaptation of $\mR$
+(\cref{ch:iaeakf,ch:sagehusaakf}) with a floor and a ceiling, and the Joseph-form update. An EKF
+with the $\mR$ adaptation is the IAE-AKF, second of the ranking on the equivalent-circuit plant;
+an EKF with the bounded memory is the Fading-EKF, first on the electrochemical plant; each
+costs \SI{0.5}{\micro\second}. The two mechanisms address different failures --- the first a
+sensor that is noisier than declared, the second a model that is worse than declared --- and
+the per-cell estimator of the reference architecture below combines them; the combination was
+not benchmarked as a separate estimator, and its tuning (the memory length in particular)
+should be settled on the target cell.
+
+\paragraph{Rule 3: use a capacity state, gate it on excitation, and let it run across flights.}
+Only the joint and dual filters remove a capacity error (\code{aged\_cell}: \num{0.05} against
+\num{1.5}--\num{4}\,\%), and only they track the fade over consecutive missions to the accuracy
+of the current sensor (\cref{ch:res-soh}). The same filters are the worst of the field on the
+ground-charge profile (\num{3.6}--\num{6.1}\,\%), because a constant-current charge does not
+excite the capacity and the parameter loop drifts. The parameter update must be gated on
+excitation --- a minimum SOC swing since the last anchor, or a minimum innovation-to-noise
+ratio --- and the capacity carried from one flight to the next without reset. The joint EKF is
+the recommendation; the dual EKF costs the same and is four times worse in SOC.
+
+\paragraph{Rule 4: handle sensor faults with covariance adaptation or a bounded influence
+function, not with a switching gain.} The $\mR$-adapting filters and the M-estimator filters
+(Huber, maximum-correntropy, Student's~$t$) recover nominal accuracy under a noise step,
+\SI{5}{\percent} outliers and a stuck channel, at EKF cost. The strong-tracking filter and
+the SVSF, whose gains are driven by the innovation magnitude, are the two estimators most hurt
+by sensor noise, and the SVSF is, with the ensemble EnKF, the only filter of the Kalman
+families that diverges anywhere in the benchmark. Hard gating (rejecting an innovation beyond $k\sigma$) belongs in the fault
+manager, not in the estimator.
+
+\paragraph{Rule 5: expect a structurally wrong model at high C-rate, and design for it.}
+Every converged Kalman-type filter is confidently wrong on the electrochemical plant
+(\cref{ch:res-cell_spm}), and the voltage innovation does not reveal it. Two responses are
+available and should be combined. In the estimator, bound the memory: the fading-memory EKF
+holds \num{0.36}\,\% where the EKF holds \num{3.7}, and every fixed-gain observer holds
+\num{0.6}. In the system, run a second estimate that does not share the model --- Coulomb
+counting from the calibrated sensor with OCV re-anchoring at rest costs
+\SI{0.2}{\micro\second} and \num{0.17}\,\% on the nominal mission --- and raise a flag when the
+two disagree by more than their combined uncertainty. Better still, use a model that describes
+the cell under load: a reduced-order electrochemical model in the estimator is the natural
+next step for a cell that sees \SI{6}{C} pulses (\cref{ch:res-conclusions}).
+
+\paragraph{Rule 6: at module level, average inside the filter.} The bar--delta and
+information-fusion architectures halve the per-cell error of twelve independent EKFs at a
+seventh and a third of the cost (\cref{ch:res-pack}), and find the weak cell. The decentralised
+architecture is for parallel groups and for fault isolation, and there the per-cell filter
+should be the plain (adapted) EKF. Balancing, not estimation, fixes an unbalanced module.
+
+\paragraph{Rule 7: report the worst column, not the mean.} A certification argument is made on
+the peak error during the landing hover and on the final error at the go-around decision
+(\cref{ch:metrics}), not on the RMSE of a nominal flight, on which 51 of 70 estimators are
+indistinguishable. The composite ranking of \cref{tab:ranking} was built from the geometric
+mean precisely so that a single catastrophic scenario is visible in it, and the ``worst''
+column is the one to read first. An interval observer (\cref{ch:intervalobserver}) or the
+covariance of a well-tuned filter provides the bound that such an argument needs. The interval
+observer's guaranteed bounds are never violated in any run of either plant, at a cost of
+\SI{0.8}{\micro\second}; they are also \SIrange{25}{37}{\percent} of capacity wide, because
+they are built for the full disturbance set of the benchmark, so they serve as a sanity
+envelope and a divergence detector rather than as the reserve figure itself, which comes from
+the filter's covariance.
+
+\paragraph{Rule 8: build for \code{float}, keep it deterministic, and do not buy arithmetic
+you cannot use.} No estimator in the library needs double precision on this problem
+(\cref{ch:res-numerics}); the square-root forms are insurance for larger state vectors. Below
+\SI{2}{\micro\second} per step the cost is irrelevant on any flight processor, and above it
+--- the Gauss--Hermite filter, the particle and ensemble filters, MHE --- the benchmark finds no
+accuracy that a cheaper estimator does not also deliver, with the single exception of MHE's
+bias rejection. The particle filters are the correct tool for a multimodal posterior, which
+the SOC problem does not have.
+
+\section{A reference architecture}
+
+\Cref{tab:res-arch} assembles the rules into one estimator stack for a series-module,
+per-cell-voltage-sensing BMS of an electric aircraft. Every element of it is in the library and was
+run in the benchmark; for a twelve-cell module the stack costs between \SI{15}{} and
+\SI{30}{\micro\second} per \SI{10}{\hertz} step on the benchmark machine, depending on
+whether capacity is identified per cell or on the module-average cell --- of the order of a
+millisecond on a Cortex-M7, or one percent of one core.
+
+\begin{table}[H]\centering\small\setlength{\tabcolsep}{4pt}
+\caption{Reference estimator stack for an electric-aircraft BMS, assembled from the benchmark.
+Costs are measured per step on the benchmark machine; the last column names the chapters that
+document the element and the scenarios that motivate it.}
+\label{tab:res-arch}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.36\textwidth}>{\raggedright\arraybackslash}p{0.12\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}@{}}\toprule
+element & implementation & cost & evidence \\ \midrule
+per-cell SOC & EKF with innovation-based $\mR$ adaptation, fading memory bounded at a
+  \SIrange{20}{60}{\second} memory length, SOC-variance floor, Joseph form, \code{float} build &
+  \SI{0.5}{\micro\second} & \cref{ch:iaeakf,ch:fadingekf}; \code{noise\_step}, \code{outliers},
+  \code{combined}, SPM plant \\
+module fusion & bar--delta (one full filter on the average cell, twelve small deviation
+  filters) or information fusion of twelve local filters & \SIrange{0.8}{1.9}{\micro\second} per
+  module & \cref{ch:bardelta,ch:infofusion}; \code{weak\_cell}, cost \\
+capacity (SOH) & joint EKF with $[Q, R_0]$ as parameters, excitation-gated parameter update,
+  carried across flights & \SI{1.7}{\micro\second} & \cref{ch:jointekf}; \code{aged\_cell},
+  multi-flight study, ground-charge profile \\
+independent monitor & Coulomb counting on the calibrated current with OCV re-anchoring
+  under light load; disagreement flag against the filter & \SI{0.2}{\micro\second} &
+  \cref{ch:coulombocvhybrid}; SPM plant, \code{param\_mismatch} \\
+bound for the safety case & interval observer or the adapted filter's $3\sigma$; peak and
+  final error logged per flight & \SI{0.8}{\micro\second} & \cref{ch:intervalobserver};
+  \cref{ch:metrics} \\
+sensor management & calibrated current sensor (offset and gain), innovation gating and stuck-channel
+  detection in the fault manager, not in the filter & --- & \code{current\_bias},
+  \code{sensor\_dropout}, pack \code{current\_bias} \\
+post-flight & unscented RTS smoother over the flight log for maintenance and for re-tuning &
+  \SI{2.5}{\micro\second} per sample, offline & \cref{ch:urts}; \code{combined} \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Where a different choice is right}
+
+The reference stack is not the only defensible one, and the benchmark identifies the cases in
+which another element wins.
+
+If the current sensor cannot be calibrated to better than a few percent of \SI{1}{C}, MHE in its
+real-time-iteration form is the only estimator that holds the SOC to \num{0.1}\,\% under a
+\SI{5}{\percent} offset, at \SI{17}{\micro\second} per step and \SI{27}{\kilo\byte}; the
+disturbance observer is the cheap alternative at \num{0.18}\,\% and \SI{0.6}{\micro\second}.
+
+If the cell sees high C-rate pulses and the estimator must run an equivalent circuit, the
+fixed-gain observers --- the adaptive observer, the UIO, the high-gain observer, the certified
+Luenberger observer --- are as good as the fading-memory EKF on the electrochemical plant and
+have a stability proof; their price is a \SI{5}{\minute} convergence from a wrong initial SOC
+and no covariance.
+
+If the processor is a Cortex-M4 class cell-monitor slave with a few kilobytes of RAM per cell,
+the reduced-order EKF (\SI{0.33}{\micro\second}, \SI{4.3}{\kilo\byte} including the OCV table,
+\SI{0.26}{} geometric mean, no failure column) and the super-twisting observer
+(\SI{0.14}{\micro\second}) are the Pareto-optimal choices.
+
+If the posterior is genuinely multimodal --- an unknown initial SOC on a cell with an OCV
+plateau, or a cell whose chemistry has a two-phase region --- the regularised or auxiliary
+particle filter is the correct tool and the Gaussian-sum filter the cheaper approximation; on
+the unimodal problem of this benchmark they buy nothing.
+
+If a learned correction is wanted, the NN-EKF structure (a residual network inside an EKF) is
+the one that preserves the physics and the covariance; its benchmark result shows both its
+value (\num{0.10}\,\% on \code{preisach}, the best of the field) and its danger (a confident
+bias on a cell that differs from the training population).
+
+\section{What the benchmark does not settle}
+
+Three questions remain open. The absolute numbers depend on the representative parameters of
+the benchmark cell; the ranking of the estimators by their reaction to each fault is the
+transferable content, and it should be repeated on a characterised cell before any of the
+above is frozen. The electrochemical plant was run with an equivalent-circuit estimator only;
+the obvious experiment --- the same filters on a reduced electrochemical model --- is the
+first item of future work. And the timings are projected, not measured, on a flight processor.

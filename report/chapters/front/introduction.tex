@@ -1,0 +1,111 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\chapter{Introduction}
+\label{ch:intro}
+
+\section{Why a battery estimator benchmark for electric aircraft}
+
+An electric aircraft cannot be flown on the quantities its sensors measure. The pilot and
+the flight-control software need the state of charge (the fraction of the usable charge
+that remains), the state of health (the fraction of the original capacity that the cell can
+still deliver), the remaining energy and the power that can be drawn for the next
+manoeuvre. None of these is observable directly; all of them are inferred from terminal
+voltage, current and temperature through a model of the electrochemical cell, and the
+quality of that inference decides how much of the battery must be held back as reserve.
+For a vertical take-off vehicle whose landing hover draws four to five times the cruise
+current \citep{yang2021evtol,fredericks2018vtol}, a two-percent error in the estimated state
+of charge at the end of a mission is not an accounting detail: it is the difference between
+a reserve that exists and one that does not. Certification standards for rechargeable
+lithium batteries in aircraft \citep{rtca2017do311a} consequently expect the state estimate
+to be accurate, bounded, and predictable under sensor faults and cell ageing.
+
+The estimation problem itself is a classic of control engineering. The cell is a nonlinear
+dynamic system with a slowly varying parameter set, the measurement is scalar and only
+weakly informative on the flat parts of the open-circuit-voltage curve, the sensors carry
+biases that integrate into unbounded errors, and the whole system operates over a
+temperature range in which every impedance parameter changes by an order of magnitude.
+Practically every estimator ever proposed in the control literature --- Kalman filters in
+all their variants, deterministic observers, particle methods, moving-horizon estimation,
+learning-based hybrids --- has been applied to it, and a battery-management engineer is
+expected to know which of them to use, why, and at what computational cost on a
+microcontroller that must also run the rest of the BMS.
+
+This report and the accompanying software answer that question empirically. Rather than
+describing the estimators, it implements all of them, in one code base and against one
+interface, and runs them on the same missions, faults and cells, so that every comparison
+in the closing chapters is a controlled experiment rather than a literature summary.
+
+\section{What was built}
+
+The software is \estkit, a header-only C++17 library organised around a small model
+concept (\cref{ch:library}). A model is any class that provides a state transition
+$\vx_{k+1}=\bm f(\vx_k,\vu_k)$, a measurement $\vy_k=\bm h(\vx_k,\vu_k)$ and the two noise
+covariances; Jacobians, constraints and tunable parameters are optional and are supplied
+numerically when absent. Every filter and observer in the library is a template over such a
+model, so the same \code{Ekf<M>}, \code{Ukf<M>} or \code{Mhe<M,N>} that estimates the state
+of charge of a cell estimates the position of a drone or the attitude of an airframe when
+handed the corresponding model. The battery model, the plants that generate the benchmark
+data, the fault scenarios and the harness are separate from the estimators and are the
+only battery-specific parts of the code.
+
+The library contains, as of this report, 70 cell-level estimators in ten families, seven
+pack-level estimators, nine attitude estimators and the tools around them; every one of
+them is implemented from its primary reference, cited in the header of its source file and
+in its chapter. The design constraints are those of flight software: no dynamic memory, no
+exceptions, no recursion of unbounded depth, fixed-size linear algebra with compile-time
+dimensions, deterministic execution, a single \code{Real} type that is \code{double} on the
+benchmark machine and \code{float} on a microcontroller, and warning-free compilation with
+\code{-Wall -Wextra -Wpedantic -Werror} on GCC and Clang.
+
+The benchmark generates its data from two truth plants that are deliberately richer than
+the estimators' model (\cref{ch:ecm,ch:spm}): an enhanced equivalent-circuit cell with a
+lumped thermal state, Arrhenius impedance scaling, one-state and Preisach hysteresis and
+cycle/calendar ageing, and an electrochemical single-particle model built from the
+published electrode data of the LG~M50 cell \citep{chen2020parameterization} and validated
+against PyBaMM \citep{sulzer2021pybamm}. Four mission profiles, twelve fault and operating
+scenarios and three noise realisations produce the cell-level data set (\cref{ch:datasets});
+a twelve-cell series module, a 120-mission ageing study and a synthetic flight with a
+nine-axis inertial unit produce the pack, state-of-health and attitude data sets.
+
+\section{How to read this report}
+
+\Cref{ch:prelim} fixes the notation and collects the estimation theory that the estimator
+chapters build on. \Cref{ch:ecm,ch:spm} derive the two cell models, \cref{ch:datasets} the
+missions and scenarios, \cref{ch:metrics} the metrics and the validation against external
+reference libraries, and \cref{ch:library} the software architecture and the embedded
+considerations.
+
+Parts~II to~XIII contain one chapter per estimator. Each chapter follows the same template:
+the motivation and the aerospace or BMS context; the problem statement with its assumptions;
+the derivation with every symbol defined where it first appears; an algorithm box; the
+instantiation on the battery model; implementation notes covering numerical safeguards,
+memory, cost and single-precision behaviour; and the benchmark results with the
+auto-generated table and figures for that estimator and a discussion of where and why it
+succeeds or fails. The chapters are self-contained and can be read in any order, but within
+a family the later chapters assume the earlier ones.
+
+Part~XIV synthesises the results: the cell-level ranking on the equivalent-circuit plant,
+the behaviour under the structured model error of the electrochemical plant, the numerical
+robustness in single precision, the pack, attitude and multi-flight results, and finally
+recommendations for an electric-aircraft BMS and a discussion of what the benchmark does not
+cover.
+
+\section{Scope and honesty}
+
+Three limitations are stated here and repeated where they matter. First, the data are
+simulated. The plants are built from published electrode data and literature model
+structures, and the impedance, thermal, ageing and sensor parameters are representative of
+a high-power NMC cell rather than measured on one; the parameter tables in \cref{app:params}
+label the provenance of every value. The absolute numbers in the results tables therefore
+describe this benchmark, not a particular product; the relative behaviour of the estimators
+--- which of them is hurt by which fault, and by how much --- is the transferable content.
+Second, each estimator was implemented and tuned by an engineer with the primary reference
+in hand and with literature-standard settings; no estimator was tuned on the test data
+beyond what a practitioner would do, but neither was any of them tuned by its inventor.
+Third, the execution times were measured on a single x86-64 core; the projection to a
+Cortex-M class processor in \cref{ch:metrics} is an estimate with stated assumptions, not a
+measurement.
+
+Everything in this report is reproducible: \cref{app:build} lists the commands that rebuild
+the library, re-run every benchmark, regenerate every figure and table from the results, and
+re-run the cross-checks against FilterPy, PyBaMM and \texttt{ahrs}.

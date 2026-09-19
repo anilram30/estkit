@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{StudentT-KF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_StudentTKF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.15 & 0.04 & 1.04 & 0 & 0.77 & no & 0.05 & 696 \\
+ECM & init\_error & 0.15 & 0.04 & 0.61 & 0 & 2.11 & no & 0.05 & 696 \\
+ECM & current\_bias & 0.56 & 0.62 & 1.51 & 0 & 0.90 & no & 0.61 & 698 \\
+ECM & noise\_step & 0.15 & 0.06 & 1.04 & 0 & 1.45 & no & 0.12 & 764 \\
+ECM & outliers & 0.15 & 0.05 & 0.98 & 0 & 0.79 & no & 0.21 & 702 \\
+ECM & cold & 0.21 & 0.18 & 1.17 & 0 & 1.88 & no & 0.16 & 700 \\
+ECM & hot & 0.16 & 0.03 & 1.00 & 0 & 0.51 & no & 0.03 & 696 \\
+ECM & aged\_cell & 1.33 & 1.69 & 2.46 & 0 & 7.86 & no & 1.52 & 722 \\
+ECM & param\_mismatch & 0.63 & 0.77 & 1.58 & 0 & 4.51 & no & 1.36 & 711 \\
+ECM & sensor\_dropout & 0.20 & 0.12 & 1.04 & 0 & 1.17 & no & 0.46 & 697 \\
+ECM & preisach & 0.52 & 0.20 & 1.49 & 0 & 0.81 & no & 0.20 & 697 \\
+ECM & combined & 7.50 & 4.46 & 20.56 & 1855 & 8.85 & no & 12.44 & 721 \\
+\midrule
+SPM & nominal & 3.56 & 3.62 & 4.32 & 0 & 1.22 & no & 3.73 & 668 \\
+SPM & init\_error & 3.84 & 3.87 & 4.75 & 0 & 2.27 & no & 3.81 & 671 \\
+SPM & current\_bias & 4.95 & 5.67 & 6.36 & 0 & 1.39 & no & 5.69 & 675 \\
+SPM & noise\_step & 3.58 & 3.65 & 4.32 & 0 & 2.09 & no & 3.30 & 721 \\
+SPM & outliers & 3.49 & 3.55 & 4.15 & 0 & 1.23 & no & 1.99 & 682 \\
+SPM & cold & 4.82 & 4.75 & 6.07 & 0 & 9.19 & no & 7.35 & 672 \\
+SPM & hot & 2.17 & 2.22 & 2.59 & 0 & 0.75 & no & 2.16 & 673 \\
+SPM & param\_mismatch & 1.59 & 1.80 & 2.26 & 0 & 3.15 & no & 3.13 & 681 \\
+SPM & sensor\_dropout & 4.55 & 4.64 & 5.43 & 0 & 1.84 & no & 5.31 & 673 \\
+\bottomrule\end{tabular}\end{table}

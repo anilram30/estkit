@@ -1,0 +1,77 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{longtable}{lrrrr}
+\caption{Steady-state SOC RMSE [\%] on the four mission profiles (nominal scenario, ECM plant).}\label{tab:profiles}\\
+\toprule estimator & evtol & fixed\_wing & hover\_hold & ground\_charge \\ \midrule\endfirsthead
+\toprule estimator & evtol & fixed\_wing & hover\_hold & ground\_charge \\ \midrule\endhead
+CoulombCounting & 0.36 & 0.45 & 0.28 & 0.08 \\
+CoulombOCVHybrid & 0.17 & 0.09 & 0.11 & 0.05 \\
+OCVLookup & 1.30 & 0.78 & 1.95 & 0.55 \\
+CDKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+CKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+CKF5 & 0.05 & 0.06 & 0.02 & 0.02 \\
+EIF & 0.05 & 0.06 & 0.02 & 0.02 \\
+EKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+GHKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+IEKF & 0.08 & 0.06 & 0.12 & 0.02 \\
+IPLF & 0.08 & 0.04 & 0.09 & 0.04 \\
+LKF & 1.19 & 1.73 & 6.25 & 4.05 \\
+SCKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+SO-EKF & 0.04 & 0.03 & 0.05 & 0.04 \\
+SR-EKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+SR-UKF & 0.04 & 0.06 & 0.03 & 0.02 \\
+UD-EKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+UKF & 0.04 & 0.06 & 0.03 & 0.02 \\
+Fading-EKF & 0.05 & 0.05 & 0.04 & 0.05 \\
+Fuzzy-AKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+IAE-AKF & 0.04 & 0.06 & 0.02 & 0.02 \\
+IMM & 0.04 & 0.06 & 0.02 & 0.02 \\
+MMAE & 0.33 & 0.23 & 0.22 & 0.21 \\
+STF & 0.10 & 0.15 & 0.09 & 0.18 \\
+SageHusa-AKF & 0.04 & 0.06 & 0.02 & 0.02 \\
+VB-AKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+Constrained-EKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+Hinf-EKF & 0.04 & 0.04 & 0.01 & 0.03 \\
+Huber-EKF & 0.05 & 0.06 & 0.02 & 0.02 \\
+MC-EKF & 0.05 & 0.08 & 0.02 & 0.03 \\
+ReducedOrder-EKF & 0.07 & 0.07 & 0.05 & 0.04 \\
+SVSF & 0.04 & 0.06 & 0.02 & 0.02 \\
+Schmidt-KF & 0.46 & 0.67 & 0.48 & 3.35 \\
+StudentT-KF & 0.04 & 0.06 & 0.02 & 0.02 \\
+AdaptiveObserver & 0.05 & 0.05 & 0.04 & 0.07 \\
+DOB & 0.02 & 0.02 & 0.02 & 0.02 \\
+ESO & 0.10 & 0.09 & 0.07 & 0.10 \\
+HGO & 0.08 & 0.07 & 0.06 & 0.04 \\
+IntervalObserver & 0.08 & 0.07 & 0.06 & 0.04 \\
+Luenberger & 0.08 & 0.07 & 0.06 & 0.04 \\
+PI-Observer & 0.11 & 0.08 & 0.07 & 0.08 \\
+SMO & 0.08 & 0.07 & 0.06 & 0.05 \\
+SMO-Adaptive & 0.08 & 0.07 & 0.06 & 0.04 \\
+SSKF & 0.08 & 0.07 & 0.06 & 0.04 \\
+SuperTwisting-SMO & 0.09 & 0.08 & 0.06 & 0.06 \\
+UIO & 0.07 & 0.06 & 0.06 & 4.73 \\
+AWTLS & 0.02 & 0.18 & 0.02 & 0.02 \\
+DualEKF & 0.08 & 0.05 & 0.09 & 6.08 \\
+DualUKF & 0.09 & 0.04 & 0.35 & 3.62 \\
+JointEKF & 0.05 & 0.03 & 0.03 & 3.85 \\
+JointUKF & 0.11 & 0.12 & 0.11 & 3.60 \\
+RLS-EKF & 0.50 & 0.22 & 2.87 & 3.14 \\
+ETKF & 0.43 & 0.48 & 0.27 & 0.05 \\
+EnKF & 0.27 & 0.22 & 0.19 & 0.42 \\
+GSF & 0.05 & 0.06 & 0.03 & 0.02 \\
+PF-Auxiliary & 0.15 & 0.16 & 0.13 & 0.23 \\
+PF-Bootstrap & 0.16 & 0.18 & 0.07 & 0.35 \\
+PF-Fast & 0.18 & 0.21 & 0.14 & 0.70 \\
+PF-Regularized & 0.12 & 0.13 & 0.14 & 0.14 \\
+RBPF & 0.06 & 0.12 & 0.03 & 0.05 \\
+UPF & 0.38 & 0.43 & 0.35 & 0.76 \\
+ELM-RLS-EKF & 0.03 & 0.06 & 0.08 & 0.03 \\
+NN-Direct & 1.17 & 0.49 & 0.61 & 8.86 \\
+NN-EKF & 0.28 & 0.55 & 0.38 & 0.95 \\
+MHE & 0.11 & 0.11 & 0.16 & 0.13 \\
+MHE-RTI & 0.08 & 0.10 & 0.15 & 0.11 \\
+Batch-NLS & 0.04 & 0.05 & 0.03 & 0.03 \\
+ERTS & 0.04 & 0.04 & 0.05 & 0.03 \\
+FixedLag-EKF & 0.04 & 0.04 & 0.08 & 0.04 \\
+URTS & 0.04 & 0.04 & 0.05 & 0.03 \\
+\bottomrule\end{longtable}

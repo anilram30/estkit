@@ -1,0 +1,40 @@
+# Copyright 2026 Sreeram Anil
+# SPDX-License-Identifier: Apache-2.0
+name: cross-validation
+on:
+  push:
+    branches: [main]
+    paths: ["include/**", "benchmarks/**", "tools/**", "scripts/validate_*.py"]
+  schedule:
+    - cron: "0 6 * * 1"     # weekly: the heavy PyBaMM check
+  workflow_dispatch:
+
+jobs:
+  filterpy-ahrs:
+    name: "FilterPy and ahrs reference agreement"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: python -m pip install --quiet numpy scipy pandas filterpy ahrs
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j
+      - name: Export the C++ trajectories
+        run: ./build/export_validation results/ci_validation
+      - name: Compare against FilterPy
+        run: python scripts/validate_filterpy.py results/ci_validation
+      - name: Compare against ahrs
+        run: python scripts/validate_ahrs.py results/ci_validation
+
+  pybamm:
+    name: "PyBaMM single-particle plant agreement"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: python -m pip install --quiet numpy pandas pybamm
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j
+      - run: ./build/export_validation results/ci_validation
+      - run: python scripts/validate_pybamm.py results/ci_validation

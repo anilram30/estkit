@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Schmidt-KF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_SchmidtKF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.38 & 0.46 & 1.04 & 0 & 3.84 & no & 0.05 & 1293 \\
+ECM & init\_error & 0.43 & 0.46 & 0.85 & 0 & 4.56 & no & 0.05 & 1324 \\
+ECM & current\_bias & 0.33 & 0.33 & 1.40 & 0 & 9.10 & no & 0.61 & 1301 \\
+ECM & noise\_step & 0.87 & 1.14 & 3.47 & 0 & 7.24 & no & 0.12 & 1307 \\
+ECM & outliers & 0.77 & 0.83 & 3.16 & 8 & 6.56 & no & 0.21 & 1297 \\
+ECM & cold & 1.42 & 1.54 & 1.94 & 0 & 15.88 & no & 0.16 & 1300 \\
+ECM & hot & 0.23 & 0.21 & 1.00 & 0 & 1.97 & no & 0.03 & 1302 \\
+ECM & aged\_cell & 0.71 & 0.59 & 1.54 & 0 & 36.55 & no & 1.52 & 1296 \\
+ECM & param\_mismatch & 0.51 & 0.45 & 1.19 & 0 & 18.18 & no & 1.36 & 1307 \\
+ECM & sensor\_dropout & 0.38 & 0.46 & 1.04 & 0 & 3.83 & no & 0.46 & 1304 \\
+ECM & preisach & 1.02 & 0.55 & 2.09 & 21 & 7.29 & no & 0.20 & 1306 \\
+ECM & combined & 5.20 & 1.09 & 10.95 & 1038 & 28.17 & no & 12.44 & 1323 \\
+\midrule
+SPM & nominal & 0.69 & 0.51 & 1.59 & 0 & 7.49 & no & 3.73 & 1230 \\
+SPM & init\_error & 1.31 & 0.60 & 2.64 & 360 & 8.25 & no & 3.81 & 1233 \\
+SPM & current\_bias & 1.02 & 0.71 & 2.23 & 0 & 10.83 & no & 5.69 & 1232 \\
+SPM & noise\_step & 1.08 & 1.26 & 5.20 & 0 & 9.36 & no & 3.30 & 1232 \\
+SPM & outliers & 1.19 & 0.95 & 3.46 & 200 & 8.91 & no & 1.99 & 1230 \\
+SPM & cold & 2.49 & 2.44 & 5.67 & 939 & 34.96 & no & 7.35 & 1198 \\
+SPM & hot & 0.43 & 0.44 & 1.42 & 0 & 5.76 & no & 2.16 & 1232 \\
+SPM & param\_mismatch & 1.10 & 0.75 & 2.66 & 0 & 14.21 & no & 3.13 & 1227 \\
+SPM & sensor\_dropout & 0.69 & 0.50 & 1.58 & 0 & 7.48 & no & 5.31 & 1230 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{RLS-EKF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_RLSEKF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.72 & 0.50 & 1.39 & 0 & 1.35 & no & 0.05 & 496 \\
+ECM & init\_error & 0.69 & 0.49 & 1.38 & 0 & 2.38 & no & 0.05 & 500 \\
+ECM & current\_bias & 0.64 & 0.30 & 1.46 & 0 & 1.37 & no & 0.61 & 497 \\
+ECM & noise\_step & 0.69 & 0.48 & 1.39 & 0 & 3.09 & no & 0.12 & 498 \\
+ECM & outliers & 0.91 & 0.60 & 2.96 & 16 & 2.39 & no & 0.21 & 495 \\
+ECM & cold & 0.97 & 1.03 & 2.54 & 0 & 5.66 & no & 0.16 & 498 \\
+ECM & hot & 0.58 & 0.37 & 1.25 & 0 & 0.85 & no & 0.03 & 497 \\
+ECM & aged\_cell & 3.76 & 4.23 & 5.40 & 0 & 2.14 & no & 1.52 & 501 \\
+ECM & param\_mismatch & 0.61 & 0.62 & 2.02 & 0 & 1.57 & no & 1.36 & 496 \\
+ECM & sensor\_dropout & 0.37 & 0.16 & 1.87 & 0 & 1.91 & no & 0.46 & 496 \\
+ECM & preisach & 0.82 & 0.66 & 1.87 & 67 & 1.35 & no & 0.20 & 502 \\
+ECM & combined & 5.24 & 2.00 & 17.44 & 1127 & 4.78 & no & 12.44 & 495 \\
+\midrule
+SPM & nominal & 4.59 & 4.70 & 5.35 & 0 & 1.07 & no & 3.73 & 462 \\
+SPM & init\_error & 4.23 & 4.33 & 4.98 & 0 & 2.23 & no & 3.81 & 465 \\
+SPM & current\_bias & 5.36 & 6.12 & 6.68 & 0 & 1.07 & no & 5.69 & 465 \\
+SPM & noise\_step & 4.18 & 3.95 & 5.35 & 0 & 3.15 & no & 3.30 & 465 \\
+SPM & outliers & 2.43 & 2.44 & 3.30 & 3 & 2.52 & no & 1.99 & 462 \\
+SPM & cold & 10.46 & 10.68 & 11.77 & 0 & 5.79 & no & 7.35 & 472 \\
+SPM & hot & 1.98 & 2.08 & 2.30 & 0 & 0.62 & no & 2.16 & 463 \\
+SPM & param\_mismatch & 3.74 & 3.94 & 4.17 & 0 & 1.07 & no & 3.13 & 466 \\
+SPM & sensor\_dropout & 7.02 & 7.21 & 8.05 & 0 & 1.99 & no & 5.31 & 467 \\
+\bottomrule\end{tabular}\end{table}

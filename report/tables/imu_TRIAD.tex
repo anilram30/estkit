@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3.5pt}\caption{TRIAD: attitude benchmark (mean over seeds; all angles in degrees; $t_\mathrm{conv}$: first time the attitude error stays below 2$^\circ$ for 30\,s; bias RMSE in deg/s; 120 bytes of state).}\label{tab:imu_TRIAD}
+\begin{tabular}{lrrrrrrrrcr}\toprule scenario & RMS & roll & pitch & yaw & max & RMS$_\mathrm{ss}$ & $t_\mathrm{conv}$ [s] & bias RMSE & lost & ns/step \\ \midrule
+nominal & 19.59 & 9.37 & 1.45 & 17.17 & 88.2 & 21.60 & -- & 1.03 & yes & 129 \\
+init\_error & 19.59 & 9.37 & 1.45 & 17.17 & 88.2 & 21.60 & -- & 1.03 & yes & 129 \\
+gyro\_bias & 19.59 & 9.37 & 1.45 & 17.17 & 88.2 & 21.60 & -- & 3.80 & yes & 129 \\
+mag\_disturbance & 20.97 & 9.37 & 1.45 & 18.73 & 88.2 & 21.60 & -- & 1.03 & yes & 129 \\
+vibration & 27.26 & 11.20 & 6.23 & 24.25 & 179.7 & 29.35 & -- & 1.03 & yes & 129 \\
+high\_dynamics & 20.98 & 9.80 & 1.59 & 18.57 & 139.0 & 23.00 & -- & 1.03 & yes & 128 \\
+\bottomrule\end{tabular}\end{table}

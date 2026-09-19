@@ -1,0 +1,696 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Benchmark methodology, metrics and validation
+% =============================================================================
+\chapter{Benchmark methodology, metrics and validation}
+\label{ch:metrics}
+
+Chapter~\ref{ch:datasets} defined the data. This chapter defines what is measured on them, how it
+is measured, and --- the part that is usually left out --- how we established that the measuring
+instrument itself is correct. Every number quoted anywhere in this report comes from one of four
+executables (\code{bench\_cell}, \code{bench\_pack}, \code{bench\_imu}, \code{bench\_soh}) driven by
+\code{scripts/run\_all.sh}, whose command lines are reproduced in Appendix~\ref{app:build}. The
+outputs are CSV files under \code{results/final}; the tables and figures in this report are
+generated from them by \code{scripts/make\_tables.py} and \code{scripts/make\_figures.py} and are
+never edited by hand.
+
+\section{The harness}
+
+\subsection{Registry and the estimator interface}
+
+Estimators are not enumerated in the benchmark. Each family registers itself in its own translation
+unit through a function \code{register\_<family>(EstimatorList\&)}, and
+\code{make\_all\_estimators()} calls all of them in a fixed order, so the benchmark has no
+compile-time knowledge of any particular method; adding one is a matter of one
+\code{add\_cell\_estimator<MyFilter<EcmModel>>} line (\S\ref{sec:lib-newest}).
+
+The interface an estimator must satisfy is the abstract class \code{estkit::Estimator}
+(\code{battery/ecm\_model.hpp}): \code{reset(const EstimatorConfig\&)},
+\code{step(Real i, Real v, Real T)}, \code{soc()}, and optionally \code{soc\_std()},
+\code{voltage\_pred()}, \code{capacity\_Ah()}, \code{soc\_lower()}/\code{soc\_upper()}, plus
+\code{state\_bytes()} and \code{name()}/\code{group()}. Offline methods derive instead from
+\code{BatchEstimator} and implement \code{run(i, v, T, n, soc\_out, v\_pred\_out)} over the whole
+record. Optional outputs default to \code{NaN} or $-1$, and the metric code skips them, so a method
+that has no covariance is simply not scored on covariance.
+
+\subsection{The timing convention}
+\label{sec:me-timing-convention}
+
+The single most important convention in the harness is what happens inside one call to
+\code{step}. Following Plett~\cite{plett2004ekf3}, with $\vu_k = [\,i^{\text{m}}_k,\ T^{\text{m}}_k\,]^\T$
+and $y_k = v^{\text{m}}_k$:
+
+\begin{algorithm}[H]
+\caption{\code{CellEstimator::step($i^{\text{m}}_k, v^{\text{m}}_k, T^{\text{m}}_k$)} --- one sampling period}
+\begin{algorithmic}[1]
+\Require filter state $(\xplus_{k-1},\Pplus_{k-1})$, stored $\vu_{k-1}$, new measurements at $k$
+\State $\vu_k \gets [\,i^{\text{m}}_k,\ T^{\text{m}}_k\,]^\T$
+\If{$k>0$} \State \textbf{time update:} \code{predict}$(\vu_{k-1})$ \Comment{uses the \emph{previous} input}
+\EndIf
+\State $\yhat_k \gets$ \code{predict\_measurement}$(\vu_k)$ \Comment{$h(\xminus_k,\vu_k)$, recorded for the residual metric}
+\State \textbf{measurement update:} \code{update}$(y_k, \vu_k)$
+\State store $\vu_{k-1}\gets\vu_k$
+\Ensure $(\xplus_k, \Pplus_k)$; \code{soc()} returns $\xplus_k[\soc]$
+\end{algorithmic}
+\end{algorithm}
+
+Two details matter. First, the time update uses $\vu_{k-1}$, not $\vu_k$: the plant is integrated
+with a zero-order hold on the current over $[t_{k-1},t_k)$, so the input that drove the transition
+into sample $k$ is the one measured at $k-1$. Using $\vu_k$ instead would introduce a systematic
+half-sample lead and an artificial correlation between the process noise and the innovation.
+Second, \code{predict\_measurement} is called \emph{before} \code{update}, so the recorded
+$\yhat_k$ is the \emph{prior} prediction $h(\xminus_k,\vu_k)$ and the voltage residual metric of
+\S\ref{sec:me-residual} is a genuine one-step-ahead prediction error and not a fitted residual.
+At $k=0$ there is no time update; the filter is initialised by \code{init}$(\vx_0,\mP_0)$ inside
+\code{reset} and the first measurement is used immediately.
+
+\subsection{Seeds, repetitions and outputs}
+
+The cell-level and pack benchmarks are run with three seeds ($s=1,2,3$). Because the seed drives
+the load generator as well as the sensor noise (\S\ref{sec:ds-gust}), three seeds means three
+different flights; the tables report the mean over seeds and the harness also records the standard
+deviation. The single-seed profiles (\code{fixed\_wing}, \code{hover\_hold},
+\code{ground\_charge}) and the float32 build use $s=1$ only.
+
+Each (estimator, profile, scenario, seed) combination is run $R=2$ times and the \emph{minimum}
+wall-clock time is kept (\S\ref{sec:me-timing}). Only the first repetition records the optional
+outputs (covariance standard deviation, interval bounds, capacity), so the second repetition is a
+slightly leaner loop; taking the minimum therefore reports the warm-cache, no-instrumentation cost,
+which is the number an implementer cares about. The estimate trajectories themselves are identical
+across repetitions --- every estimator is re-\code{reset} with the same configuration and the same
+seed --- which is itself a determinism check.
+
+Time series are written for seed~1 only and decimated by a factor of ten
+(\code{--ts-decimate}, default 10): \SI{1}{\hertz} records for the cell and pack benchmarks,
+\SI{10}{\hertz} for the attitude benchmark. Decimation is applied by \emph{sub-sampling}, not
+averaging, so the plotted traces are exact samples of the full-rate trajectory; all metrics are
+computed at full rate before decimation.
+
+\section{Cell-level metrics}
+
+Let $\soc_k$ be the true state of charge, $\hat\soc_k$ the estimate, $n$ the number of samples and
+\begin{equation}
+e_k \;=\; \hat\soc_k - \soc_k, \qquad k = 0,\dots,n-1
+\label{eq:me-err}
+\end{equation}
+the signed SOC error. SOC is dimensionless; all SOC metrics are reported in \emph{percentage
+points} in the tables (a value of \num{0.36} means \SI{0.36}{\percent} of full capacity, i.e.\
+\SI{18}{\milli\ampere\hour} on a \SI{5}{\ampere\hour} cell). If any $e_k$ is not finite the run is
+marked divergent and that sample is replaced by $e_k = 1$ so that the remaining statistics stay
+computable.
+
+\subsection{Accuracy}
+
+\begin{align}
+\text{RMSE} &= \sqrt{\frac{1}{n}\sum_{k=0}^{n-1} e_k^2}, \label{eq:me-rmse}\\
+\text{RMSE}_{\text{ss}} &= \sqrt{\frac{1}{n-\lfloor n/2\rfloor}\sum_{k=\lfloor n/2\rfloor}^{n-1} e_k^2},
+ \label{eq:me-rmsess}\\
+\text{MAE} &= \frac{1}{n}\sum_{k=0}^{n-1} \abs{e_k}, \qquad
+e_{\max} = \max_k \abs{e_k}, \qquad
+e_{\text{final}} = e_{n-1}. \label{eq:me-mae}
+\end{align}
+
+RMSE and $\text{RMSE}_{\text{ss}}$ answer different questions and the report uses both. RMSE over
+the whole run is dominated by the transient whenever there is one: in \code{init\_error} a filter
+that converges perfectly in \SI{10}{\second} still carries the \num{0.35} error for those seconds.
+$\text{RMSE}_{\text{ss}}$, over the second half of the run --- which for the eVTOL mission begins at
+$t=\SI{1005}{\second}$, mid-cruise, and includes the landing hover --- is the metric for
+\emph{tracking} quality once the transient is over. It is the primary ranking metric of this report,
+because a BMS spends almost all of its life in steady state and because the number that matters
+operationally, the reserve at the end of the flight, is set by the error late in the mission.
+$e_{\max}$ and $e_{\text{final}}$ are reported alongside because the mean-square metrics hide
+exactly the behaviour a certification argument cares about: a filter with an excellent RMSE and a
+\SI{5}{\percent} excursion during the landing hover is not acceptable, and $e_{\text{final}}$ is the
+error at the moment the pilot decides whether to go around.
+
+\subsection{Convergence}
+
+\begin{definition}[Convergence time]\label{def:me-conv}
+$t_{\text{conv}}$ is the earliest time $t=k\dt$ such that $\abs{e_j} < 0.02$ for all
+$j$ in the window $[k,\ k + \lceil 60/\dt\rceil - 1]$, i.e.\ the start of the first
+\SI{60}{\second} interval throughout which the SOC error stays inside \SI{2}{\percent}. If no such
+window exists, $t_{\text{conv}} = -1$ and the tables print ``--''.
+\end{definition}
+
+Both the threshold and the dwell are deliberate: a threshold-crossing definition without a dwell
+would reward a filter that oscillates through the band, and \SI{60}{\second} at \SI{10}{\hertz} is
+600 consecutive samples --- long enough to exclude a chance crossing, short enough to resolve
+differences between fast filters on a \SI{33.5}{\minute} mission. $t_{\text{conv}} = 0$ is the
+common case in the nominal scenario, not a defect.
+
+\subsection{Divergence}
+
+\begin{definition}[Divergence]\label{def:me-div}
+A run is \emph{divergent} if any $\hat\soc_k$ or $\hat v_k$ is non-finite, or if
+$\abs{e_k} > 0.30$ for any $k \ge \lfloor n/2\rfloor$.
+\end{definition}
+
+Restricting the \SI{30}{\percent} test to the second half is what makes the criterion usable in
+the \code{init\_error} scenario, where the error \emph{starts} at \num{0.35} by construction: a
+filter that removes it is not divergent, one that still carries it half-way through the mission is.
+The criterion is intentionally coarse. It answers ``did this run produce a number a supervisory
+function could act on?'', not ``is this filter stable?''; stability claims are made in the
+individual chapters from the structure of the algorithm, not from the benchmark.
+
+\subsection{The voltage residual}
+\label{sec:me-residual}
+
+\begin{equation}
+\text{RMSE}_v \;=\; \sqrt{\frac{1}{\abs{\mathcal{K}}}\sum_{k\in\mathcal{K}} \bigl(\hat v_k - v_k\bigr)^2},
+\qquad \mathcal{K} = \{k : \hat v_k \text{ finite}\},
+\label{eq:me-rmsev}
+\end{equation}
+where $\hat v_k = h(\xminus_k,\vu_k)$ is the prior voltage prediction recorded in
+\S\ref{sec:me-timing-convention} and $v_k$ is the \emph{true} terminal voltage --- not the measured
+one. This is a deliberate departure from the usual practice of reporting the innovation
+$y_k - \hat v_k$. Comparing against the truth removes the sensor noise from the metric, so
+$\text{RMSE}_v$ measures how well the estimator's internal model reproduces the cell, and a value
+near zero means the model \emph{and} the state are right. Comparing against the measurement would
+floor the metric at $\sigma_v$ and would reward a filter that has learned to reproduce the noise.
+The figures, in contrast, plot the innovation $y_k - \hat v_k$, because that is the signal the
+filter actually sees.
+
+$\text{RMSE}_v$ is the single most useful diagnostic in the report, because it separates the two
+ways an SOC estimate can be wrong. A filter with a large SOC error and a \emph{small} voltage
+residual has found a state that explains the data --- the error is an observability or bias
+problem, and no amount of better filtering will fix it. A filter with a large voltage residual has
+a model that cannot explain the data at all. Compare, on the nominal eVTOL mission, Coulomb
+counting ($\text{RMSE}_v = \SI{3.41}{\milli\volt}$, model fine, state drifting) with the same
+method on \code{aged\_cell} ($\SI{112}{\milli\volt}$, model wrong).
+
+\subsection{Capacity and interval metrics}
+
+Estimators that report a capacity are scored on
+\begin{equation}
+\Delta Q \;=\; \frac{1}{\abs{\mathcal{L}}}\sum_{k\in\mathcal{L}}\bigl(\hat Q_k - Q_k\bigr),
+\qquad \mathcal{L} = \{\,k \ge n - \lfloor n/10 \rfloor\,\},
+\label{eq:me-cap}
+\end{equation}
+the mean \emph{signed} capacity error over the last \SI{10}{\percent} of the run, in
+\si{\ampere\hour}. The signed mean, rather than an RMS, is used because a capacity estimate that
+has converged to the wrong value is a bias, and its sign tells the reader whether the estimator is
+optimistic (reports more capacity than exists --- the dangerous direction) or conservative.
+
+Interval and set-membership observers, which report $[\hat\soc^-_k, \hat\soc^+_k]$ rather than a
+distribution, are scored on
+\begin{equation}
+\text{viol} = \frac{1}{n}\,\bigl|\{k : \soc_k \notin [\hat\soc^-_k,\hat\soc^+_k]\}\bigr|,
+\qquad
+\bar w = \frac{1}{n}\sum_k \bigl(\hat\soc^+_k - \hat\soc^-_k\bigr).
+\label{eq:me-bounds}
+\end{equation}
+These two must always be read together: a bound violation fraction of zero is trivial to achieve
+with $\bar w = 2$, and the value of a guaranteed bound lies entirely in how tight it is.
+
+\section{Pack-level metrics}
+
+With $N_c = 12$ cells, per-cell errors $e_{c,k} = \hat\soc_{c,k} - \soc_{c,k}$:
+\begin{align}
+\text{RMSE}_{\text{cells}} &= \sqrt{\frac{1}{n N_c}\sum_{k}\sum_{c} e_{c,k}^2},
+\qquad e_{\max} = \max_{c,k}\abs{e_{c,k}}, \label{eq:me-pack-cells}\\
+\text{RMSE}_{\min} &= \sqrt{\frac{1}{n}\sum_k\Bigl(\min_c\hat\soc_{c,k} - \min_c\soc_{c,k}\Bigr)^2},
+ \label{eq:me-pack-min}\\
+\text{RMSE}_{\text{mean}} &= \sqrt{\frac{1}{n}\sum_k\Bigl(\tfrac{1}{N_c}\textstyle\sum_c\hat\soc_{c,k}
+ - \tfrac{1}{N_c}\sum_c\soc_{c,k}\Bigr)^2}, \label{eq:me-pack-mean}\\
+\text{RMSE}_{\max} &= \sqrt{\frac{1}{n}\sum_k\Bigl(\max_c\hat\soc_{c,k} - \max_c\soc_{c,k}\Bigr)^2}.
+ \label{eq:me-pack-max}
+\end{align}
+The three aggregate metrics score the three operational definitions
+\eqref{eq:ds-socmin}--\eqref{eq:ds-socmean}, and they are not redundant: the
+$\min$ and $\max$ are order statistics, so an estimator that is unbiased per cell can still be
+biased in $\text{RMSE}_{\min}$ (the minimum of $N_c$ noisy estimates is biased low by roughly
+$1.6\,\sigma$ for $N_c=12$ Gaussian errors of standard deviation $\sigma$). This bias is a
+\emph{property of the reporting definition}, not of the estimator, and one of the results of
+Part~XI is how much each pack architecture manages to suppress it.
+
+Pack runs additionally record \code{messages\_per\_step} --- the number of scalars a distributed
+implementation would have to exchange between nodes per sample --- which is the currency in which
+consensus and federated architectures pay for their accuracy, and \code{bytes} for the whole
+$12$-cell estimator.
+
+\section{Attitude metrics}
+
+Attitude error is not an angle difference; it is a rotation. With $\hat q_k$ the estimate and $q_k$
+the truth (both unit quaternions, body to navigation), the natural metric on $SO(3)$ is the
+geodesic distance
+\begin{equation}
+\alpha_k \;=\; \bigl\|\log\!\bigl(q_k^{-1}\otimes\hat q_k\bigr)\bigr\|
+ \;=\; 2\,\bigl|\!\arctan\!\bigl(\|\bm{\epsilon}\|,\ \epsilon_0\bigr)\bigr|,
+\qquad q_k^{-1}\otimes\hat q_k = [\epsilon_0,\ \bm{\epsilon}^\T]^\T,
+\label{eq:ds-imu-angdist}
+\end{equation}
+reported in degrees, with the sign of the error quaternion normalised so that $\epsilon_0 \ge 0$
+(the double cover of $SO(3)$ by the unit quaternions means $q$ and $-q$ are the same rotation).
+The benchmark reports $\text{RMS}(\alpha)$, its steady-state value over the second half,
+$\max_k\alpha_k$, and a convergence time defined exactly as in Definition~\ref{def:me-conv} but
+with a threshold of \SI{2}{\degree} and a dwell of \SI{30}{\second}. A run is divergent if
+$\alpha_k > \SI{45}{\degree}$ in the second half.
+
+Per-axis errors are reported as well, from the wrapped Euler differences
+$\Delta\phi,\Delta\theta,\Delta\psi \in (-180^\circ,180^\circ]$, because they say \emph{which}
+degree of freedom failed: a filter that loses yaw during a magnetic disturbance and one that loses
+roll during a turn have the same $\alpha$ but entirely different causes. Euler differences are
+only meaningful away from the pitch singularity; the dataset never exceeds \SI{12}{\degree} of
+pitch, so this is safe here and would not be in an aerobatic dataset.
+
+Gyro-bias accuracy is
+\begin{equation}
+\text{RMSE}_b = \sqrt{\frac{1}{n}\sum_k \bigl\|\hat{\bm b}^g_k - {\bm b}^g_k\bigr\|^2}
+\label{eq:me-bias}
+\end{equation}
+in \si{\degree\per\second}. Estimators that do not model a bias report $\hat{\bm b}^g = \bm 0$, so
+their $\text{RMSE}_b$ is the norm of the true bias --- a meaningful baseline rather than a missing
+entry.
+
+\section{Multi-flight state-of-health metrics}
+
+For flight $f = 1,\dots,F$ with $F=120$, let $\hat Q_f$ be the capacity estimate averaged over the
+last \SI{10}{\percent} of the flight phase and $Q_f$ the true capacity:
+\begin{equation}
+\text{RMSE}_Q = \sqrt{\frac{1}{F-10}\sum_{f=11}^{F}\bigl(\hat Q_f - Q_f\bigr)^2},
+\qquad
+\text{MAE}_Q = \frac{1}{F-10}\sum_{f=11}^{F}\bigl|\hat Q_f - Q_f\bigr|,
+\label{eq:me-soh}
+\end{equation}
+both in \si{\ampere\hour}, with the first ten flights excluded so that the initial convergence of
+the parameter estimate does not swamp a metric that is meant to describe tracking. The final
+capacity error $\hat Q_F - Q_F$ and the mean per-flight SOC RMSE are reported alongside, the latter
+to expose the common failure in which a joint estimator buys capacity accuracy with SOC accuracy.
+
+\section{Execution time}
+\label{sec:me-timing}
+
+\subsection{What is measured}
+
+The timed region (\code{benchmarks/bench\_cell.cpp}) brackets \code{reset()} and the complete sample loop:
+for each $k$, \code{step(i,v,T)} followed by the accessor calls \code{soc()} and
+\code{voltage\_pred()}. It is measured with \code{std::chrono::steady\_clock}, divided by the number
+of samples, and minimised over $R$ repetitions:
+\begin{equation}
+t_{\text{step}} \;=\; \min_{r=1..R}\ \frac{T_r}{n}, \qquad R = 2 .
+\label{eq:me-nsstep}
+\end{equation}
+The minimum, rather than the mean, is the right statistic for a deterministic computation on a
+shared machine: every source of variation (scheduling, interrupts, frequency scaling, cache
+eviction by another process) can only \emph{add} time, so the minimum is the best available
+estimator of the true cost. The measurement therefore excludes nothing that the estimator does and
+includes: the \code{reset()} call amortised over $n$ samples (negligible at $n=\num{20100}$ except
+for estimators that solve a Riccati equation at reset, where it is the point), the virtual dispatch
+through \code{Estimator*}, and the two accessor calls. It excludes dataset generation, metric
+computation and all file output.
+
+\subsection{Machine and build}
+
+All timings in this report were taken on a single core of an x86-64 machine (an Intel Xeon-class
+server core with a nominal base clock of \SI{2.1}{\giga\hertz}), with GCC at
+\code{-O2}, C++17, \code{-march=native} \emph{disabled} (the default \code{ESTKIT\_NATIVE=OFF}), and
+\code{Real = double}. Disabling \code{-march=native} is deliberate: it keeps the generated code to
+the SSE2 baseline, which is far closer to what a scalar embedded target will do than an
+AVX-512-vectorised build would be, and it makes the numbers reproducible across machines of the
+same family. No multi-threading is used anywhere in the library.
+
+\subsection{Scaling to a Cortex-M7 --- and why you should not trust the result}
+
+The natural question for an airborne implementer is what these numbers become on the target. A
+defensible order-of-magnitude translation rests on three explicit assumptions, and it is worth
+being blunt that each of them can be wrong by a factor of two.
+
+\begin{assumption}[Clock ratio]\label{as:me-clock}
+The reference machine runs at $f_{\text{host}} \approx \SI{2.1}{\giga\hertz}$ base (higher under
+turbo); a Cortex-M7 in a flight-grade BMS runs at
+$f_{\text{M7}} = \SIrange{200}{480}{\mega\hertz}$. The clock ratio alone is thus
+\numrange{4}{12}.
+\end{assumption}
+
+\begin{assumption}[Microarchitecture ratio]\label{as:me-ipc}
+The host is a wide out-of-order core with several floating-point pipelines, out-of-order load/store
+and large caches; the Cortex-M7 is a six-stage, dual-issue, in-order core with an FPv5 unit that
+performs one double-precision multiply--accumulate over several cycles and runs from
+tightly-coupled memory or flash with a cache~\cite{arm2021cortexm7}. For the scalar,
+dependency-chained, small-matrix code in this library --- which has almost no instruction-level
+parallelism to extract --- a further factor of \numrange{3}{6} is a reasonable expectation.
+\end{assumption}
+
+\begin{assumption}[No memory-system surprise]\label{as:me-mem}
+The estimator's working set (a few kilobytes, Table~\ref{tab:me-mem}) fits in TCM or cache, so no
+flash-wait penalty applies. This holds for the filters in this report and fails immediately for the
+particle filters, whose state runs to tens of kilobytes.
+\end{assumption}
+
+Under Assumptions~\ref{as:me-clock}--\ref{as:me-mem} the translation factor is
+\begin{equation}
+t_{\text{M7}} \;\approx\; \kappa\, t_{\text{step}}, \qquad \kappa \in [\,20,\ 90\,],
+\quad\text{central estimate } \kappa \approx 30 .
+\label{eq:me-scaling}
+\end{equation}
+So the EKF's \SIrange{340}{630}{\nano\second} becomes roughly \SIrange{10}{20}{\micro\second} on a
+\SI{200}{\mega\hertz} M7, i.e.\ \SIrange{0.01}{0.02}{\percent} duty at \SI{10}{\hertz} per cell, or
+\SIrange{0.12}{0.24}{\percent} for a twelve-cell module --- comfortable. A bootstrap particle
+filter at \SI{40}{\micro\second} per step becomes \SI{1.2}{\milli\second}, which is \SI{1.2}{\percent}
+duty for one cell and \SI{14}{\percent} for a module: still feasible, but no longer free. Those
+conclusions --- ``comfortable'' and ``no longer free'' --- are robust to a factor of two in
+$\kappa$, and that is all \eqref{eq:me-scaling} is used for in this report. \textbf{No timing claim
+in this document is a substitute for measurement on the target}, and a Cortex-M4, whose FPU is
+single-precision only, will execute the \code{double} build in software emulation and be
+\emph{ten to twenty times} slower again --- which is the practical argument for the float32 build of
+\S\ref{sec:me-float}, not a numerical one.
+
+\section{Memory footprint}
+
+Memory is reported as \code{sizeof(Filter)} through \code{Estimator::state\_bytes()}: the complete
+estimator object, including the \emph{model copy} each templated filter carries. That is what a
+static allocation costs, but it needs one caveat, because for the battery problem it is dominated by
+something that is not the filter.
+
+\begin{table}[H]\centering\small
+\caption{Where the bytes go for the ECM cell model (double precision, x86-64).}
+\label{tab:me-mem}
+\begin{tabular}{@{}lrl@{}}\toprule
+object & \code{sizeof} [B] & note \\ \midrule
+\code{OcvTable<241>} & 3872 & $2\times241$ doubles: the OCV table and its segment slopes \\
+\code{CellParams} & 176 & 22 scalar parameters \\
+\code{EcmModel} & 4104 & the table, the parameters, $\dt$, noise scalars, $q$-floors \\
+\code{Ekf<EcmModel>} & 4336 & the model copy plus $\vx,\mP,\veps,\mS,\mK$: $232$\,B of filter state \\
+\code{CoulombCounting} & 4184 & the model copy plus four scalars \\
+\bottomrule\end{tabular}
+\end{table}
+
+For $n_x = 4$, $n_y = 1$ the filter's own state is $n_x + n_x^2 + n_y^2 + n_x n_y = 25$ reals
+$= \SI{200}{\byte}$; every other byte is the model. A production BMS would hold one copy of the OCV
+table in flash and share it across all twelve cells, turning a 12-cell decentralised EKF from
+\SI{52}{\kilo\byte} into about \SI{6}{\kilo\byte}, so the reader should mentally subtract
+\SI{3.9}{\kilo\byte} per instance when sizing a real target. Where the \emph{filter} state genuinely
+dominates --- the particle, ensemble and Gaussian-sum methods, the moving-horizon estimators, the
+fixed-lag smoothers --- the number needs no correction.
+
+\section{The single-precision build}
+\label{sec:me-float}
+
+The library compiles unchanged with \code{-DESTKIT\_FLOAT=ON}, which sets
+\code{ESTKIT\_REAL=float} and makes \code{estkit::Real} a 32-bit IEEE~754 binary32
+value~\cite{ieee754_2019}. The whole benchmark is run a second time in that configuration
+(\code{results/final/float}) and the results chapter reports the ratio
+$\text{RMSE}_{\text{ss}}(\text{float32})/\text{RMSE}_{\text{ss}}(\text{float64})$ per estimator.
+
+This is not a curiosity. A Cortex-M4 and the smaller M7 variants have a single-precision FPU only;
+running \code{double} there means software emulation at a cost of an order of magnitude, so a
+32-bit build is often the only viable one. The question the float32 build answers is which
+estimators \emph{survive} it. The classical analysis is due to Verhaegen and Van
+Dooren~\cite{verhaegen1986}, who showed that the conventional covariance recursion has an error
+growth governed by the condition number $\kappa(\mP)$, and that the square-root and
+$U$--$D$ factorised forms effectively halve the number of digits lost, because they propagate a
+factor whose condition number is $\sqrt{\kappa(\mP)}$. The practical rule that follows is
+\begin{equation}
+\kappa(\mP) \;\lesssim\; \frac{1}{\varepsilon_{\text{mach}}}
+\quad\text{for the conventional form}, \qquad
+\kappa(\mP) \;\lesssim\; \frac{1}{\varepsilon_{\text{mach}}^2}
+\quad\text{for the factored forms},
+\label{eq:me-vvd}
+\end{equation}
+with $\varepsilon_{\text{mach}} = 2^{-24} \approx \num{6e-8}$ in binary32 (so
+$1/\varepsilon_{\text{mach}} \approx \num{1.7e7}$) and $2^{-53}\approx\num{1.1e-16}$ in binary64.
+The peak condition number of $\mP$ along the eVTOL mission is of order $10^6$ for the cell model,
+uncomfortably close to the binary32 limit and utterly safe in binary64; this is precisely the regime
+in which the square-root EKF (Chapter~\ref{ch:srekf}), the $U$--$D$ filter
+(Chapter~\ref{ch:udekf}) and the square-root UKF (Chapter~\ref{ch:srukf}) earn their extra
+arithmetic, and the float32 table is where that claim is tested rather than asserted.
+
+Two implementation details change with \code{Real}. The finite-difference step used by the
+numeric Jacobian fallback (\code{core/model.hpp}) switches from $10^{-6}$ to
+$2\times10^{-3}$, following the $\varepsilon^{1/3}$ rule for central
+differences~\cite{golubvanloan2013}; and the unit-test tolerances are relaxed to
+$\max(\text{tol}, 2\times10^{-4})$. Nothing else in the library is conditioned on the precision.
+
+\section{Reproducibility}
+
+The benchmark is deterministic in the strong sense: a given \code{results/final} directory can be
+reproduced bit-for-bit from the source tree and \code{scripts/run\_all.sh}. Three properties are
+enforced by construction. \emph{Deterministic pseudo-randomness}: all randomness --- load gusts,
+sensor noise, cell-parameter spreads, particle-filter resampling, ensemble initialisation --- comes
+from \code{estkit::Rng}, an implementation of xoshiro256$^{**}$ with \code{splitmix64}
+seeding~\cite{blackman2021xoshiro} that uses only 64-bit integer operations with defined wraparound,
+so the bit stream is identical on every platform and compiler; Gaussian variates come from the
+Marsaglia polar method~\cite{marsaglia1964polar}. No use is made of \code{std::random\_device}, of
+the standard library's distribution objects (whose algorithms are implementation-defined), or of the
+system clock. \emph{Stream separation}: the load, the sensors and the cell spreads draw from
+separate \code{Rng} instances with different seed derivations (\S\ref{sec:ds-gust}), and stochastic
+estimators construct their own generator from \code{EstimatorConfig::seed}, so a particle filter's
+resampling draws never disturb the dataset. \emph{No hidden state}: \code{reset()} reconstructs the
+model and the filter from scratch, which is what makes the repetition loop of \S\ref{sec:me-timing}
+a determinism check as well as a timing measurement.
+
+The one thing that is \emph{not} bit-reproducible across machines is the timing column; the
+\code{real\_type} column in every summary CSV records whether the run was a \code{double} or
+\code{float} build so the two can never be accidentally mixed.
+
+\section{Unit tests}
+
+\code{tests/unit\_tests.cpp} is a dependency-free test binary that is built in both the double and
+the float configurations and run by \code{run\_all.sh} before any benchmark. It is small and
+deliberately checks \emph{invariants} rather than reproducing expected numbers:
+
+\begin{itemize}[leftmargin=*,topsep=2pt,itemsep=2pt]
+\item \textbf{Linear algebra.} $\mA\mA^{-1}=\mI$ for a symmetric positive-definite $3\times3$
+matrix; $\mL\mL^\T = \mA$ for the Cholesky factor; $\mR^\T\mR = \mB^\T\mB$ for the Householder QR of
+a $5\times3$ matrix (the property the array square-root filters rely on); a rank-one Cholesky update
+followed by the matching downdate returns the original factor; \code{solve} and \code{solve\_spd}
+agree.
+\item \textbf{Pole placement and Riccati.} Ackermann's formula places the poles of $(\mA-\mL\mC)$
+where asked, verified through Cayley--Hamilton, for both a well-conditioned $3\times3$ pair and a
+$4\times4$ battery-like pair with all poles near $z=1$ (the case the conditioned variant of
+\S\ref{sec:lib-linalg} exists for); the doubling solution satisfies the discrete algebraic Riccati
+equation to $10^{-8}$ and agrees with the fixed-point iteration on both pairs.
+\item \textbf{Model Jacobians and OCV.} The analytic $\mF$, $\mH$, $\mB$ agree with central
+differences to $10^{-6}$--$10^{-5}$ (double build only); the closed-form OCV is strictly monotone,
+physically ranged at both ends, agrees with the 241-point table to \SI{3}{\milli\volt} and with its
+analytic slope; the SPM stoichiometry map is consistent with the nominal capacity through the
+lithium balance.
+\item \textbf{Plants.} A 1\,C discharge for \SI{30}{\minute} removes exactly \num{0.5} of SOC in
+both plants; after a rest the terminal voltage returns to the equilibrium OCV; the SPM voltage stays
+within \SIrange{3.0}{4.25}{\volt}; the Preisach operator saturates symmetrically at $\pm M_p$, with
+its descending branch above its ascending branch in the raw relay output --- which the plant negates,
+so that the \emph{charging} branch of the hysteresis voltage lies above the \emph{discharging}
+branch, as in a real cell.
+\item \textbf{End-to-end sanity.} The EKF and UKF on the \code{init\_error} dataset must not
+diverge, must reach $\text{RMSE}_{\text{ss}} < 0.02$ and must converge within \SI{900}{\second}.
+\end{itemize}
+
+The tests guard against regression; they are not a proof of correctness, and only the last touches
+an estimator. Correctness of the estimators themselves is addressed by the cross-validation that
+follows.
+
+\section{Cross-validation against independent implementations}
+\label{sec:me-crossval}
+
+A library that implements seventy estimators against its own model, measured by its own metrics,
+can be internally consistent and uniformly wrong. The only remedy is to reproduce a subset of the
+results with software written by other people. Three independent reference implementations are
+used, covering the three distinct things that could be wrong: the \emph{filters}, the
+\emph{plant}, and the \emph{attitude conventions}. The procedures are given in full in
+Appendix~\ref{app:validation}; this section reports what was found. All three comparisons are
+driven by \code{tools/export\_validation}, which writes the datasets and the C++ trajectories in
+full \code{\%.17g} precision so that the comparison is not limited by the file format.
+
+\subsection{FilterPy: the EKF, the UKF and the RTS smoother}
+
+FilterPy~\cite{labbe2014filterpy,labbe2020book} is the reference open-source Kalman library of the
+Python ecosystem. The 2-RC battery model of Chapter~\ref{ch:ecm} was re-implemented from scratch in
+NumPy~\cite{harris2020numpy} --- same parameters, same 241-point OCV table read from the same
+exported CSV, same Arrhenius scaling, same $\mQ$ and $\mR$ --- and FilterPy's
+\code{ExtendedKalmanFilter}, \code{UnscentedKalmanFilter} and \code{rts\_smoother} were run on the
+nominal eVTOL dataset (\num{20100} samples).
+
+% The auto-generated FilterPy table contains the literal identifier rts_smoother
+% with an unescaped underscore. Rather than hand-edit a generated file, it is read
+% with `_' made active so that it typesets as an underscore in text mode and still
+% acts as a subscript in math mode. The file name is built first, while `_' still
+% has an ordinary catcode, so that \input can scan it.
+\begingroup\catcode`\_=12\relax
+\gdef\estkitvalfilterpy{tables/validation_filterpy.tex}%
+\endgroup
+\begingroup\lccode`\~=`\_\relax
+\lowercase{\endgroup\protected\gdef~{\ifmmode\sb\else\textunderscore\fi}}%
+\begingroup
+\catcode`\_=\active
+\expandafter\input\expandafter{\estkitvalfilterpy}%
+\endgroup
+
+The EKF agrees to $10^{-15}$ in the SOC estimate and $10^{-19}$ in its variance --- round-off, over
+\num{20100} steps, for two implementations that share no code. Reaching that level required
+reproducing four ordinarily invisible conventions: the \emph{evaluation point of $\mQ$}
+(\code{Ekf::predict} propagates the mean first and forms $\mQ(\xminus_k,\vu_{k-1})$ at the
+\emph{predicted} state, whereas FilterPy adds a pre-set \code{self.Q} inside \code{predict()}, so
+the driver evaluates the predicted mean itself and sets \code{ekf.Q} from it); \emph{symmetrisation}
+of $\mP$ after both updates; the \emph{state constraint} $\soc\in[-0.05,1.05]$, $h\in[-1,1]$ applied
+after the measurement update; and the \emph{input timing} convention of
+\S\ref{sec:me-timing-convention}. Appendix~\ref{app:validation} gives each in full.
+
+\paragraph{Two unscented variants, and why the difference matters.} The UKF agrees to
+$2.5\times10^{-12}$ --- three orders of magnitude worse than the EKF, which is exactly what one
+expects from a method whose update involves a Cholesky factorisation and a weighted sum over nine
+sigma points, and which is still round-off. But the agreement is only obtainable because the
+\code{estkit} UKF is configured for the comparison with
+\code{opts.redraw\_sigma\_points = false}. The library supports two genuinely different unscented
+updates:
+\begin{itemize}[leftmargin=*,topsep=2pt,itemsep=2pt]
+\item \textbf{Redraw} (the default, and what the benchmark uses): before the measurement update the
+sigma points are regenerated from $(\xminus_k,\Pminus_k)$. The additive process noise $\mQ$, which
+was added to $\mP$ after the propagation, is then reflected in the spread of the points and
+therefore in $\mP_{yy}$. This is the form in Särkkä~\cite[Alg.~5.14]{sarkka2013} and in
+Plett~\cite{plett2006spkf1}.
+\item \textbf{Reuse} (\code{redraw\_sigma\_points = false}): the propagated points
+$\mathcal{X}^f$ are reused for the measurement. This is Wan and van der
+Merwe's original formulation~\cite[Alg.~3.1]{wan2000ukf} and is what FilterPy implements.
+\end{itemize}
+The two are not algebraically equivalent: reuse under-represents $\mQ$ in $\mP_{yy}$ and is
+therefore slightly over-confident, while redrawing costs one extra Cholesky factorisation per step.
+Reporting a single ``UKF'' number without saying which one is being used is a common and avoidable
+source of irreproducibility in the literature; Chapter~\ref{ch:ukf} quantifies the difference on
+this benchmark. A second, subtler point had to be handled at $k=0$: FilterPy's \code{update()}
+reads \code{self.sigmas\_f}, which is still zero before the first \code{predict()}, so the driver
+explicitly seeds it from $(\vx_0,\mP_0)$ --- which is what \code{estkit} does internally when
+nothing has been propagated yet.
+
+\paragraph{The RTS smoother and an affine change of variables.} FilterPy's \code{rts\_smoother}
+implements the strictly \emph{linear} Rauch--Tung--Striebel recursion~\cite{rauch1965rts}: it
+assumes $\vx_{k+1} = \mF_k\vx_k + \vw_k$ with no input term, and reconstructs the predicted mean
+internally as $\mF_k\xplus_k$. The battery model has an input, but it is \emph{affine} in the
+state:
+\begin{equation}
+\vx_{k+1} \;=\; \mF_k \vx_k + \bm{b}_k + \vw_k, \qquad
+\mF_k = \diag\bigl(1,\,a_1(T_k),\,a_2(T_k),\,a_h(i_k)\bigr),\quad
+\bm{b}_k = f(\bm 0,\vu_k),
+\label{eq:me-affine}
+\end{equation}
+with $\mF_k$ independent of $\vx$. Define the deterministic particular solution
+\begin{equation}
+\bm{c}_0 = \bm 0, \qquad \bm{c}_{k+1} = \mF_k\bm{c}_k + \bm{b}_k,
+\label{eq:me-particular}
+\end{equation}
+and the shifted state $\tilde{\vx}_k = \vx_k - \bm{c}_k$. Then
+$\tilde{\vx}_{k+1} = \mF_k\tilde{\vx}_k + \vw_k$ is purely linear with the \emph{same} $\mF_k$ and
+$\mQ_k$, and the covariances are unchanged because the shift is deterministic. Running the linear
+smoother on $\{\xplus_k - \bm{c}_k\}$ and adding $\bm{c}_k$ back recovers the affine smoother exactly.
+The residual disagreement, $7.3\times10^{-9}$, is three orders larger than the UKF's, for two
+reasons that are worth naming: the backward pass forms differences of nearly equal $O(1)$
+quantities after $\bm{c}_k$ has grown to $O(1)$, so there is genuine cancellation; and the forward
+pass applied the state clamp, which is a non-linearity that the change of variables does not
+commute with. Both effects are far below the \num{1e-4} scale at which any SOC result is quoted.
+
+\subsection{PyBaMM: the electrochemical plant}
+
+The filters can be right and the plant wrong. PyBaMM~\cite{sulzer2021pybamm} is the reference
+open-source battery-modelling framework; its \code{lithium\_ion.SPM} with the built-in
+\code{Chen2020} parameter set~\cite{chen2020parameterization} is the same single-particle model
+that \code{plant\_spm.hpp} implements (Chapter~\ref{ch:spm}). For the comparison the
+\code{estkit} SPM is configured with its published-parameter settings
+($r_{\text{scale}} = k_{\text{scale}} = 1$, zero lumped ohmic resistance, isothermal) and both are
+discharged at constant current from \SI{100}{\percent} SOC at \SI{25}{\celsius}; the
+comparison table is \cref{tab:val_pybamm} in Chapter~\ref{ch:spm}.
+
+The two implementations agree to \SIrange{0.6}{3.2}{\milli\volt} RMSE over the full discharge and
+reach the \SI{2.5}{\volt} cut-off at the \emph{same second} at all three C-rates, which is the
+stronger statement: the capacity, the stoichiometry mapping and the lithium balance are identical.
+The maximum differences (\SIrange{13}{46}{\milli\volt}) all occur in the last seconds before
+cut-off, where $|\mathrm{d}v/\mathrm{d}t|$ exceeds \SI{50}{\milli\volt\per\second} and a
+sub-second timing difference becomes a large voltage difference; away from the knee the difference
+is under \SI{5}{\milli\volt} everywhere. The residual is discretisation, not physics: \code{estkit}
+uses 20 finite-volume shells per particle with backward Euler at $\dt=\SI{0.1}{\second}$ and a
+linear surface-concentration reconstruction from the flux boundary condition, while PyBaMM uses its
+default mesh and an adaptive DAE solver~\cite{andersson2019casadi}. The error grows with C-rate
+exactly as a fixed-mesh solid-diffusion discretisation should, because the concentration gradient
+in the particle steepens.
+
+\subsection{The \texttt{ahrs} library: Madgwick, Mahony and the frame conventions}
+
+The third comparison targets the part of the library where a mistake is most likely to be silent:
+attitude conventions. The \code{ahrs} Python library~\cite{ahrs2019} implements the published
+Madgwick~\cite{madgwick2011} and Mahony~\cite{mahony2008} algorithms. Both were run on the exported
+nominal flight dataset with the same gains as the \code{estkit} implementations ($\beta=0.1$;
+$k_P=1$, $k_I=0.1$), with accelerometer gating disabled on the \code{estkit} side so that the two
+implement the same algorithm.
+
+\input{tables/validation_ahrs.tex}
+
+The two implementations agree to \SI{0.0014}{\degree} peak and \SI{0.0004}{\degree} mean over
+\num{90000} samples, and --- more tellingly --- produce attitude RMS errors against the truth that
+are identical to three decimal places (\SI{17.604}{\degree} for Madgwick, \SI{22.639}{\degree} for
+Mahony). Those large errors are \emph{not} implementation defects. They are the coordinated turns
+of \S\ref{sec:ds-imu}: an ungated gravity-referenced filter reads a \SI{0.47}{}g sustained lateral
+specific force as tilt and rolls its estimate into it. Reproducing the same large error with
+independent code is a much stronger validation than reproducing a small one, because it confirms
+that the dataset, the conventions and the algorithm all match; the gated variants registered in the
+benchmark (Chapter~\ref{ch:att-madgwick}, Chapter~\ref{ch:att-mahony}) do far better, and the
+difference is attributable entirely to the gate.
+
+Two convention mismatches had to be resolved, and both are traps worth recording.
+
+\emph{Specific force versus gravity.} \code{estkit} stores the accelerometer channel as specific
+force, $f = R^\T(a - g_{\text{nav}})$, which reads $[0,0,-g]^\T$ in the FRD body frame at rest.
+The \code{ahrs} filters expect an accelerometer that reads $+g$ along body $z$ at rest. The driver
+therefore negates the channel before passing it to \code{ahrs}. A sign error here does not crash;
+it produces a filter that converges smoothly to an upside-down attitude.
+
+\emph{\code{ahrs}'s Mahony is hard-coded ENU.} While \code{ahrs.filters.Madgwick} builds its
+magnetic reference from the measurement, \code{ahrs.filters.Mahony} constructs it as
+$b = [\,0,\ \sqrt{h_x^2+h_y^2},\ h_z\,]$ --- north along $+y$, i.e.\ an East--North--Up navigation
+frame --- which is incompatible with the NED/FRD dataset. The two frame pairs are related by the
+proper rotation
+\begin{equation}
+\mP_{\text{ENU}\leftarrow\text{NED}} =
+\begin{bmatrix} 0&1&0\\ 1&0&0\\ 0&0&-1\end{bmatrix},
+\qquad \det \mP = +1,
+\label{eq:me-enu}
+\end{equation}
+a \SI{180}{\degree} rotation about the axis $(1,1,0)/\sqrt2$, whose quaternion is
+$q_P = [\,0,\ \tfrac{1}{\sqrt2},\ \tfrac{1}{\sqrt2},\ 0\,]$. The same matrix maps FRD to FLU, so all
+three sensor vectors transform as $v_{\text{ENU}} = \mP v_{\text{NED}}$ and the attitude as
+$q_{\text{ENU}} = q_P \otimes q_{\text{NED}} \otimes q_P^{-1}$. The driver rotates the inputs and
+the initial quaternion into ENU/FLU, runs \code{ahrs}, and rotates the output back. In the ENU/FLU
+pair the specific force is already what \code{ahrs} expects, so the earlier negation is undone.
+
+\emph{Propagation.} A last, irreducible difference: \code{estkit} propagates the quaternion with
+the exact exponential map $\hat q_{k} = \hat q_{k-1}\otimes\exp(\bm\omega\dt)$, while \code{ahrs}
+takes a first-order Euler step of $\dot q = \frac12 q\otimes[0,\bm\omega]$. The per-step discrepancy
+is $O\bigl((\|\bm\omega\|\dt)^2\bigr)$; at the dataset's peak rate of \SI{14.3}{\degree\per\second}
+and $\dt=\SI{0.01}{\second}$ that is about \SI{5e-5}{\degree} per step, which the filters' own
+feedback keeps bounded at the observed \SI{0.0014}{\degree}.
+
+\subsection{What the cross-validation does and does not establish}
+
+It establishes that the \code{estkit} implementations of the EKF, the UKF, the RTS smoother, the
+SPM plant, Madgwick and Mahony compute what the published algorithms specify, to round-off, and
+that the frame and timing conventions of the datasets are what this report says they are. By
+extension it validates the shared infrastructure --- the linear algebra, the OCV table, the model
+evaluation, the harness timing convention --- on which all seventy estimators depend, since an
+error there would have shown up in the EKF comparison.
+
+It does \emph{not} establish that the remaining sixty-odd estimators are correct; for those the
+evidence is the unit tests, the internal consistency checks (the information filter, the
+square-root EKF and the $U$--$D$ filter must reproduce the EKF to round-off, and do, which is
+reported in Chapter~\ref{ch:ekf}), and the derivations in their own chapters. Nor does it establish
+that the \emph{plants} are realistic: agreement with PyBaMM means two single-particle models agree,
+not that a single-particle model is a lithium-ion cell. The limits of the modelling are discussed
+in Chapters~\ref{ch:ecm} and~\ref{ch:spm}, and the standing recommendation of this report is that
+any conclusion drawn from it be re-checked on measured data from the actual cell before it is used
+in a design.
+
+\section{Threats to validity}
+
+Four are worth stating explicitly, because they bound how far the rankings in Parts~II--XIII can be
+carried. \emph{Synthetic data}: every dataset is generated by a model, and for the ECM plant the
+estimator-side model is a simplification of the same family. The SPM plant exists to break that
+kinship --- a different model class, to which the estimators' ECM is fitted with a
+\SI{4}{\milli\volt} residual (Chapter~\ref{ch:spm}) --- and the two plants are reported separately
+everywhere for exactly this reason; rankings that hold on both are far more trustworthy than
+rankings that hold on one. \emph{Tuning}: every estimator is run with the options its chapter
+documents, taken from the literature's recommended values and from the sensor data sheet, never
+optimised per scenario --- a choice for reproducibility and against peak performance, so a method
+that needs careful per-scenario tuning looks worse here than in its original paper, which is the
+intended signal for an implementer who has twelve cells and one set of gains. \emph{Scenario
+coverage}: twelve cell, six pack and six attitude scenarios are a small sample of a large space, and
+they are switched on one at a time (\code{combined} excepted), so interactions between faults are
+largely untested. \emph{Single-run statistics}: three seeds is enough to see whether a difference is
+robust and not enough to put a confidence interval on it, so differences below about
+\SI{0.02}{\percent} SOC between two estimators should not be interpreted.

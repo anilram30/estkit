@@ -1,0 +1,25 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Deterministic observers — chapter order for the report.
+%
+%  The order is pedagogical: the linear core first (Luenberger, then the same
+%  class with an LQE gain), then the structural extensions that add one term to
+%  the correction (integral action, sliding-mode injection, high gain), then the
+%  observers that add a state to explain the disturbance (ESO, UIO, DOB), then
+%  parameter adaptation, and finally the set-membership observer, which changes
+%  the question from "what is the state" to "what is guaranteed about it".
+%  Later chapters cite the derivations of Luenberger.tex, so keep it first.
+% =============================================================================
+\input{chapters/observers/Luenberger.tex}
+\input{chapters/observers/SSKF.tex}
+\input{chapters/observers/PIObserver.tex}
+\input{chapters/observers/SMO.tex}
+\input{chapters/observers/SMOAdaptive.tex}
+\input{chapters/observers/SuperTwistingSMO.tex}
+\input{chapters/observers/HGO.tex}
+\input{chapters/observers/ESO.tex}
+\input{chapters/observers/UIO.tex}
+\input{chapters/observers/DOB.tex}
+\input{chapters/observers/AdaptiveObserver.tex}
+\input{chapters/observers/IntervalObserver.tex}

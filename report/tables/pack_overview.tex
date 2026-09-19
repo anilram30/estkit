@@ -1,0 +1,12 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3pt}\caption{Pack-level overview: per-cell SOC RMSE [\%] by scenario (mean over seeds), cost per pack step and communication load.}\label{tab:pack_overview}
+\begin{tabular}{lrrrrrrrrr}\toprule estimator & \rotatebox{60}{nominal} & \rotatebox{60}{init\_error} & \rotatebox{60}{current\_bias} & \rotatebox{60}{weak\_cell} & \rotatebox{60}{noise\_step} & \rotatebox{60}{large\_imbalance} & µs/step & kB & msgs \\ \midrule
+Decentralized-EKF & 1.23 & 1.18 & 1.37 & 1.29 & 1.22 & 1.74 & 5.7 & 52.0 & 0 \\
+BarDelta & 0.59 & 0.64 & 0.84 & 0.67 & 0.61 & 1.22 & 0.8 & 5.6 & 12 \\
+Federated & 0.55 & 0.54 & 0.84 & 0.57 & 0.56 & 0.94 & 8.3 & 53.5 & 183 \\
+Consensus & 0.66 & 0.63 & 0.79 & 0.64 & 0.69 & 1.39 & 9.3 & 9.2 & 216 \\
+InfoFusion & 0.55 & 0.54 & 0.84 & 0.57 & 0.56 & 0.94 & 1.9 & 5.5 & 12 \\
+Decentralized-UKF & 1.41 & 1.67 & 1.50 & 2.34 & 1.42 & 1.90 & 16.8 & 57.3 & 0 \\
+Decentralized-ReducedEKF & 1.81 & 1.81 & 1.89 & 2.46 & 1.81 & 1.83 & 4.2 & 51.3 & 0 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,53 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{AWTLS: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_AWTLS}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.15 & 0.02 & 1.07 & 0 & 0.79 & no & 0.05 & 483 \\
+ECM & init\_error & 0.13 & 0.03 & 0.62 & 0 & 2.12 & no & 0.05 & 478 \\
+ECM & current\_bias & 0.36 & 0.22 & 1.40 & 0 & 0.84 & no & 0.61 & 479 \\
+ECM & noise\_step & 0.18 & 0.14 & 1.07 & 0 & 2.89 & no & 0.12 & 479 \\
+ECM & outliers & 0.51 & 0.19 & 2.92 & 16 & 2.05 & no & 0.21 & 480 \\
+ECM & cold & 0.17 & 0.10 & 1.17 & 0 & 1.90 & no & 0.16 & 480 \\
+ECM & hot & 0.21 & 0.10 & 1.01 & 0 & 0.54 & no & 0.03 & 478 \\
+ECM & aged\_cell & 0.55 & 0.54 & 2.96 & 0 & 3.74 & no & 1.52 & 477 \\
+ECM & param\_mismatch & 1.00 & 0.83 & 2.87 & 0 & 2.80 & no & 1.36 & 479 \\
+ECM & sensor\_dropout & 0.71 & 0.53 & 2.27 & 0 & 1.73 & no & 0.46 & 478 \\
+ECM & preisach & 0.71 & 0.64 & 1.67 & 16 & 0.81 & no & 0.20 & 480 \\
+ECM & combined & 15.07 & 9.80 & 29.64 & 1252 & 4.67 & no & 12.44 & 479 \\
+\midrule
+SPM & nominal & 3.14 & 2.77 & 4.31 & 0 & 1.01 & no & 3.73 & 461 \\
+SPM & init\_error & 3.18 & 2.67 & 4.59 & 0 & 2.17 & no & 3.81 & 455 \\
+SPM & current\_bias & 4.34 & 4.71 & 4.87 & 0 & 1.11 & no & 5.69 & 452 \\
+SPM & noise\_step & 2.96 & 2.40 & 4.31 & 0 & 3.14 & no & 3.30 & 453 \\
+SPM & outliers & 1.68 & 1.18 & 3.44 & 450 & 2.27 & no & 1.99 & 455 \\
+SPM & cold & 6.49 & 6.27 & 8.09 & 0 & 4.49 & no & 7.35 & 460 \\
+SPM & hot & 1.75 & 1.52 & 2.42 & 0 & 0.69 & no & 2.16 & 455 \\
+SPM & param\_mismatch & 2.69 & 2.81 & 3.56 & 0 & 1.96 & no & 3.13 & 452 \\
+SPM & sensor\_dropout & 4.67 & 4.45 & 5.96 & 0 & 1.95 & no & 5.31 & 455 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[H]\centering\small\caption{AWTLS: additional outputs (capacity error at the end of the mission in Ah, averaged over the last 10\,\% of the run; interval-bound violation rate).}\label{tab:cellx_AWTLS}
+\begin{tabular}{llrr}\toprule plant & scenario & $\hat Q - Q$ [Ah] & bound violation [\%] \\ \midrule
+ECM & nominal & +0.036 & -- \\
+ECM & init\_error & +0.036 & -- \\
+ECM & current\_bias & +0.301 & -- \\
+ECM & noise\_step & +0.045 & -- \\
+ECM & outliers & -0.045 & -- \\
+ECM & cold & +0.055 & -- \\
+ECM & hot & +0.019 & -- \\
+ECM & aged\_cell & +0.053 & -- \\
+ECM & param\_mismatch & +0.071 & -- \\
+ECM & sensor\_dropout & +0.261 & -- \\
+ECM & preisach & +0.195 & -- \\
+ECM & combined & +2.370 & -- \\
+SPM & nominal & +0.261 & -- \\
+SPM & init\_error & +0.316 & -- \\
+SPM & current\_bias & +0.274 & -- \\
+SPM & noise\_step & +0.259 & -- \\
+SPM & outliers & +0.236 & -- \\
+SPM & cold & +0.340 & -- \\
+SPM & hot & +0.172 & -- \\
+SPM & param\_mismatch & +0.045 & -- \\
+SPM & sensor\_dropout & +0.240 & -- \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,53 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{JointEKF: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_JointEKF}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.11 & 0.05 & 1.05 & 0 & 0.82 & no & 0.05 & 1215 \\
+ECM & init\_error & 0.28 & 0.07 & 1.13 & 0 & 2.13 & no & 0.05 & 1226 \\
+ECM & current\_bias & 0.56 & 0.63 & 1.38 & 0 & 0.82 & no & 0.61 & 1220 \\
+ECM & noise\_step & 0.45 & 0.43 & 1.30 & 0 & 2.92 & no & 0.12 & 1215 \\
+ECM & outliers & 0.97 & 0.24 & 3.71 & 111 & 2.13 & no & 0.21 & 1211 \\
+ECM & cold & 0.27 & 0.12 & 1.15 & 0 & 1.97 & no & 0.16 & 1219 \\
+ECM & hot & 0.15 & 0.09 & 1.01 & 0 & 0.56 & no & 0.03 & 1213 \\
+ECM & aged\_cell & 0.30 & 0.05 & 1.28 & 0 & 1.05 & no & 1.52 & 1213 \\
+ECM & param\_mismatch & 1.28 & 1.20 & 3.88 & 0 & 0.97 & no & 1.36 & 1216 \\
+ECM & sensor\_dropout & 1.37 & 1.42 & 6.25 & 0 & 1.81 & no & 0.46 & 1223 \\
+ECM & preisach & 0.91 & 0.95 & 2.15 & 73 & 0.82 & no & 0.20 & 1219 \\
+ECM & combined & 3.83 & 2.58 & 11.29 & 277 & 2.30 & no & 12.44 & 1219 \\
+\midrule
+SPM & nominal & 2.78 & 2.11 & 5.69 & 0 & 0.82 & no & 3.73 & 1151 \\
+SPM & init\_error & 2.60 & 1.66 & 5.78 & 296 & 2.08 & no & 3.81 & 1149 \\
+SPM & current\_bias & 3.23 & 3.14 & 5.17 & 0 & 0.84 & no & 5.69 & 1153 \\
+SPM & noise\_step & 3.06 & 2.94 & 6.89 & 0 & 3.10 & no & 3.30 & 1157 \\
+SPM & outliers & 3.38 & 4.03 & 4.93 & 72 & 2.22 & no & 1.99 & 1157 \\
+SPM & cold & 4.22 & 3.19 & 8.37 & 462 & 2.31 & no & 7.35 & 1154 \\
+SPM & hot & 1.20 & 0.55 & 3.25 & 0 & 0.54 & no & 2.16 & 1160 \\
+SPM & param\_mismatch & 2.90 & 2.37 & 5.38 & 0 & 0.82 & no & 3.13 & 1159 \\
+SPM & sensor\_dropout & 3.62 & 2.25 & 8.31 & 0 & 1.85 & no & 5.31 & 1161 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[H]\centering\small\caption{JointEKF: additional outputs (capacity error at the end of the mission in Ah, averaged over the last 10\,\% of the run; interval-bound violation rate).}\label{tab:cellx_JointEKF}
+\begin{tabular}{llrr}\toprule plant & scenario & $\hat Q - Q$ [Ah] & bound violation [\%] \\ \midrule
+ECM & nominal & +0.050 & -- \\
+ECM & init\_error & +0.059 & -- \\
+ECM & current\_bias & +0.322 & -- \\
+ECM & noise\_step & +0.068 & -- \\
+ECM & outliers & -0.016 & -- \\
+ECM & cold & +0.026 & -- \\
+ECM & hot & +0.039 & -- \\
+ECM & aged\_cell & +0.047 & -- \\
+ECM & param\_mismatch & +0.102 & -- \\
+ECM & sensor\_dropout & +0.404 & -- \\
+ECM & preisach & +0.231 & -- \\
+ECM & combined & +0.364 & -- \\
+SPM & nominal & +0.095 & -- \\
+SPM & init\_error & +0.204 & -- \\
+SPM & current\_bias & +0.154 & -- \\
+SPM & noise\_step & +0.551 & -- \\
+SPM & outliers & +0.389 & -- \\
+SPM & cold & +0.086 & -- \\
+SPM & hot & +0.189 & -- \\
+SPM & param\_mismatch & +0.135 & -- \\
+SPM & sensor\_dropout & +0.342 & -- \\
+\bottomrule\end{tabular}\end{table}

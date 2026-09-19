@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3.5pt}\caption{Mahony: attitude benchmark (mean over seeds; all angles in degrees; $t_\mathrm{conv}$: first time the attitude error stays below 2$^\circ$ for 30\,s; bias RMSE in deg/s; 312 bytes of state).}\label{tab:imu_Mahony}
+\begin{tabular}{lrrrrrrrrcr}\toprule scenario & RMS & roll & pitch & yaw & max & RMS$_\mathrm{ss}$ & $t_\mathrm{conv}$ [s] & bias RMSE & lost & ns/step \\ \midrule
+nominal & 18.40 & 6.24 & 2.94 & 17.30 & 76.3 & 19.33 & 24 & 1.24 & yes & 130 \\
+init\_error & 18.51 & 6.28 & 2.98 & 17.41 & 76.3 & 19.33 & 70 & 1.28 & yes & 130 \\
+gyro\_bias & 18.44 & 6.25 & 2.94 & 17.35 & 76.3 & 19.33 & 32 & 1.28 & yes & 130 \\
+mag\_disturbance & 20.41 & 6.33 & 3.17 & 19.35 & 76.3 & 19.33 & 24 & 1.35 & yes & 130 \\
+vibration & 18.28 & 6.23 & 2.95 & 17.17 & 75.6 & 19.25 & 71 & 1.23 & yes & 130 \\
+high\_dynamics & 18.75 & 6.42 & 3.01 & 17.63 & 77.3 & 19.62 & -- & 1.26 & yes & 130 \\
+\bottomrule\end{tabular}\end{table}

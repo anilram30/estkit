@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3.5pt}\caption{Complementary: attitude benchmark (mean over seeds; all angles in degrees; $t_\mathrm{conv}$: first time the attitude error stays below 2$^\circ$ for 30\,s; bias RMSE in deg/s; 272 bytes of state).}\label{tab:imu_Complementary}
+\begin{tabular}{lrrrrrrrrcr}\toprule scenario & RMS & roll & pitch & yaw & max & RMS$_\mathrm{ss}$ & $t_\mathrm{conv}$ [s] & bias RMSE & lost & ns/step \\ \midrule
+nominal & 6.57 & 2.78 & 1.18 & 5.80 & 17.5 & 7.91 & 37 & 1.03 & no & 362 \\
+init\_error & 6.79 & 2.88 & 1.37 & 5.98 & 46.3 & 7.91 & 37 & 1.03 & no & 363 \\
+gyro\_bias & 17.58 & 7.41 & 2.20 & 15.89 & 28.5 & 17.44 & -- & 3.80 & no & 373 \\
+mag\_disturbance & 6.71 & 2.78 & 1.18 & 5.97 & 20.1 & 7.91 & 37 & 1.03 & no & 357 \\
+vibration & 6.58 & 2.79 & 1.24 & 5.79 & 17.5 & 7.94 & 37 & 1.03 & no & 384 \\
+high\_dynamics & 6.58 & 2.79 & 1.18 & 5.81 & 17.4 & 7.91 & 37 & 1.03 & no & 364 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,8 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\caption{Cross-validation of the estkit SPM plant (LG M50 parameters, isothermal \SI{25}{\celsius}, no contact resistance) against PyBaMM 26.8.0.0 \texttt{lithium\_ion.SPM} with the \texttt{Chen2020} parameter set: terminal-voltage differences over constant-current discharges from 100\,\% SOC.}\label{tab:val_pybamm}
+\begin{tabular}{ccccc}\toprule C-rate & compared span [s] & RMSE [mV] & max $|\Delta v|$ [mV] & time to cut-off PyBaMM / estkit [s] \\ \midrule
+0.5 & 7230 & 0.64 & 13.01 & 7230 / 7230 \\
+1.0 & 3567 & 1.43 & 25.06 & 3567 / 3567 \\
+2.0 & 1735 & 3.17 & 45.74 & 1735 / 1735 \\
+\bottomrule\end{tabular}\end{table}

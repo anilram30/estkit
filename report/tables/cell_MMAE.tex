@@ -1,0 +1,53 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{MMAE: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_MMAE}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.42 & 0.33 & 1.07 & 0 & 0.80 & no & 0.05 & 1752 \\
+ECM & init\_error & 0.42 & 0.36 & 0.72 & 0 & 2.13 & no & 0.05 & 1786 \\
+ECM & current\_bias & 0.60 & 0.71 & 1.40 & 0 & 0.88 & no & 0.61 & 1775 \\
+ECM & noise\_step & 0.46 & 0.38 & 1.07 & 0 & 2.90 & no & 0.12 & 1782 \\
+ECM & outliers & 0.41 & 0.20 & 2.92 & 2 & 2.05 & no & 0.21 & 1774 \\
+ECM & cold & 1.12 & 1.23 & 1.43 & 0 & 1.90 & no & 0.16 & 1781 \\
+ECM & hot & 0.25 & 0.13 & 1.00 & 0 & 0.56 & no & 0.03 & 1775 \\
+ECM & aged\_cell & 2.10 & 2.12 & 6.31 & 0 & 3.70 & no & 1.52 & 1779 \\
+ECM & param\_mismatch & 1.70 & 1.66 & 3.61 & 0 & 2.80 & no & 1.36 & 1790 \\
+ECM & sensor\_dropout & 0.94 & 0.58 & 3.26 & 0 & 1.73 & no & 0.46 & 1771 \\
+ECM & preisach & 0.81 & 0.27 & 2.26 & 0 & 0.83 & no & 0.20 & 1776 \\
+ECM & combined & 16.13 & 12.56 & 29.81 & -- & 5.14 & no & 12.44 & 1784 \\
+\midrule
+SPM & nominal & 4.65 & 4.69 & 5.48 & 0 & 1.03 & no & 3.73 & 1685 \\
+SPM & init\_error & 4.89 & 4.83 & 5.87 & -- & 2.18 & no & 3.81 & 1681 \\
+SPM & current\_bias & 5.81 & 6.40 & 6.92 & 0 & 1.13 & no & 5.69 & 1686 \\
+SPM & noise\_step & 4.43 & 4.29 & 5.48 & 0 & 3.15 & no & 3.30 & 1743 \\
+SPM & outliers & 3.79 & 3.58 & 5.04 & 3 & 2.27 & no & 1.99 & 1686 \\
+SPM & cold & 8.47 & 8.75 & 13.07 & 0 & 4.49 & no & 7.35 & 1641 \\
+SPM & hot & 3.36 & 3.42 & 3.91 & 0 & 0.70 & no & 2.16 & 1675 \\
+SPM & param\_mismatch & 4.51 & 4.89 & 5.71 & 0 & 1.96 & no & 3.13 & 1682 \\
+SPM & sensor\_dropout & 6.49 & 6.35 & 7.89 & 0 & 1.95 & no & 5.31 & 1682 \\
+\bottomrule\end{tabular}\end{table}
+\begin{table}[H]\centering\small\caption{MMAE: additional outputs (capacity error at the end of the mission in Ah, averaged over the last 10\,\% of the run; interval-bound violation rate).}\label{tab:cellx_MMAE}
+\begin{tabular}{llrr}\toprule plant & scenario & $\hat Q - Q$ [Ah] & bound violation [\%] \\ \midrule
+ECM & nominal & -0.001 & -- \\
+ECM & init\_error & -0.003 & -- \\
+ECM & current\_bias & +0.001 & -- \\
+ECM & noise\_step & -0.005 & -- \\
+ECM & outliers & -0.006 & -- \\
+ECM & cold & -0.064 & -- \\
+ECM & hot & +0.018 & -- \\
+ECM & aged\_cell & +0.410 & -- \\
+ECM & param\_mismatch & -0.011 & -- \\
+ECM & sensor\_dropout & +0.001 & -- \\
+ECM & preisach & +0.001 & -- \\
+ECM & combined & +0.489 & -- \\
+SPM & nominal & -0.029 & -- \\
+SPM & init\_error & -0.028 & -- \\
+SPM & current\_bias & -0.017 & -- \\
+SPM & noise\_step & -0.037 & -- \\
+SPM & outliers & -0.055 & -- \\
+SPM & cold & -0.075 & -- \\
+SPM & hot & -0.048 & -- \\
+SPM & param\_mismatch & -0.046 & -- \\
+SPM & sensor\_dropout & -0.019 & -- \\
+\bottomrule\end{tabular}\end{table}

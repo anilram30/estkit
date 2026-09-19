@@ -1,0 +1,123 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% ---------------------------------------------------------------------------
+%  Additional references for the `attitude` family (IMU / AHRS estimators).
+%  Keys are unique with respect to report/refs.bib, which already contains
+%  higgins1975complementary, madgwick2011, mahony2008, markley2003mekf,
+%  barrau2017iekf, barrau2018review, crassidis2007survey and ahrs2019.
+% ---------------------------------------------------------------------------
+
+% ===== complementary filtering on SO(3) ====================================
+@inproceedings{euston2008,
+  author = {Euston, Mark and Coote, Paul and Mahony, Robert and Kim, Jonghyuk and Hamel, Tarek},
+  title = {A complementary filter for attitude estimation of a fixed-wing {UAV}},
+  booktitle = {Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  address = {Nice, France}, pages = {340--345}, year = {2008} }
+@inproceedings{hamel2006,
+  author = {Hamel, Tarek and Mahony, Robert},
+  title = {Attitude estimation on {SO(3)} based on direct inertial measurements},
+  booktitle = {Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)},
+  address = {Orlando, FL}, pages = {2170--2175}, year = {2006} }
+@article{hua2010,
+  author = {Hua, Minh-Duc},
+  title = {Attitude estimation for accelerated vehicles using {GPS/INS} measurements},
+  journal = {Control Engineering Practice}, volume = {18}, number = {7}, pages = {723--732}, year = {2010} }
+
+% ===== gradient-descent (Madgwick) filter ==================================
+@techreport{madgwick2010,
+  author = {Madgwick, Sebastian O. H.},
+  title = {An efficient orientation filter for inertial and inertial/magnetic sensor arrays},
+  institution = {Department of Mechanical Engineering, University of Bristol},
+  type = {Internal report}, year = {2010} }
+
+% ===== multiplicative / error-state Kalman filtering =======================
+@article{lefferts1982,
+  author = {Lefferts, E. J. and Markley, F. L. and Shuster, M. D.},
+  title = {{K}alman filtering for spacecraft attitude estimation},
+  journal = {Journal of Guidance, Control, and Dynamics},
+  volume = {5}, number = {5}, pages = {417--429}, year = {1982} }
+@article{farrenkopf1978,
+  author = {Farrenkopf, R. L.},
+  title = {Analytic steady-state accuracy solutions for two common spacecraft attitude estimators},
+  journal = {Journal of Guidance and Control},
+  volume = {1}, number = {4}, pages = {282--284}, year = {1978} }
+@article{vanloan1978,
+  author = {Van Loan, Charles F.},
+  title = {Computing integrals involving the matrix exponential},
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {23}, number = {3}, pages = {395--404}, year = {1978} }
+@article{crassidismarkley2003,
+  author = {Crassidis, John L. and Markley, F. Landis},
+  title = {Unscented filtering for spacecraft attitude estimation},
+  journal = {Journal of Guidance, Control, and Dynamics},
+  volume = {26}, number = {4}, pages = {536--542}, year = {2003} }
+@book{markleycrassidis2014,
+  author = {Markley, F. Landis and Crassidis, John L.},
+  title = {Fundamentals of Spacecraft Attitude Determination and Control},
+  publisher = {Springer}, address = {New York}, year = {2014} }
+
+% ===== invariant / geometric filtering =====================================
+@inproceedings{bonnabel2007,
+  author = {Bonnabel, Silv{\`e}re},
+  title = {Left-invariant extended {K}alman filter and attitude estimation},
+  booktitle = {Proceedings of the 46th IEEE Conference on Decision and Control},
+  address = {New Orleans, LA}, pages = {1027--1032}, year = {2007} }
+@article{bonnabel2009,
+  author = {Bonnabel, Silv{\`e}re and Martin, Philippe and Rouchon, Pierre},
+  title = {Non-linear symmetry-preserving observers on {L}ie groups},
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {54}, number = {7}, pages = {1709--1713}, year = {2009} }
+
+% ===== single-frame attitude determination (Wahba's problem) ===============
+@article{black1964,
+  author = {Black, Harold D.},
+  title = {A passive system for determining the attitude of a satellite},
+  journal = {AIAA Journal}, volume = {2}, number = {7}, pages = {1350--1351}, year = {1964} }
+@article{wahba1965,
+  author = {Wahba, Grace},
+  title = {A least squares estimate of satellite attitude},
+  journal = {SIAM Review}, volume = {7}, number = {3}, pages = {409}, year = {1965} }
+@article{shusteroh1981,
+  author = {Shuster, M. D. and Oh, S. D.},
+  title = {Three-axis attitude determination from vector observations},
+  journal = {Journal of Guidance and Control},
+  volume = {4}, number = {1}, pages = {70--77}, year = {1981} }
+@article{markleymortari2000,
+  author = {Markley, F. Landis and Mortari, Daniele},
+  title = {Quaternion attitude estimation using vector observations},
+  journal = {The Journal of the Astronautical Sciences},
+  volume = {48}, number = {2-3}, pages = {359--380}, year = {2000} }
+@techreport{keat1977,
+  author = {Keat, J.},
+  title = {Analysis of least-squares attitude determination routine {DOAID}},
+  institution = {Computer Sciences Corporation},
+  number = {CSC/TM-77/6034}, year = {1977} }
+@article{markley1988,
+  author = {Markley, F. Landis},
+  title = {Attitude determination using vector observations and the singular value decomposition},
+  journal = {The Journal of the Astronautical Sciences},
+  volume = {36}, number = {3}, pages = {245--258}, year = {1988} }
+
+% ===== conventions, strapdown mechanisation, sensor errors =================
+@book{kuipers1999,
+  author = {Kuipers, Jack B.},
+  title = {Quaternions and Rotation Sequences: A Primer with Applications to Orbits, Aerospace and Virtual Reality},
+  publisher = {Princeton University Press}, address = {Princeton, NJ}, year = {1999} }
+@article{shepperd1978,
+  author = {Shepperd, Stanley W.},
+  title = {Quaternion from rotation matrix},
+  journal = {Journal of Guidance and Control},
+  volume = {1}, number = {3}, pages = {223--224}, year = {1978} }
+@book{titterton2004,
+  author = {Titterton, David H. and Weston, John L.},
+  title = {Strapdown Inertial Navigation Technology}, edition = {2nd},
+  publisher = {The Institution of Engineering and Technology}, address = {Stevenage, UK}, year = {2004} }
+@article{gebreegziabher2006,
+  author = {Gebre-Egziabher, Demoz and Elkaim, Gabriel H. and Powell, J. David and Parkinson, Bradford W.},
+  title = {Calibration of strapdown magnetometers in magnetic field domain},
+  journal = {Journal of Aerospace Engineering},
+  volume = {19}, number = {2}, pages = {87--102}, year = {2006} }
+@article{thebault2015igrf,
+  author = {Th{\'e}bault, Erwan and Finlay, Christopher C. and Beggan, Ciar{\'a}n D. and others},
+  title = {International Geomagnetic Reference Field: the 12th generation},
+  journal = {Earth, Planets and Space}, volume = {67}, pages = {79}, year = {2015} }

@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\caption{InfoFusion: pack-level benchmark (12-cell module, eVTOL mission, mean over seeds; all errors in \% SOC). RMSE$_\mathrm{cells}$: per-cell RMSE over all cells; RMSE$_{\min/\mathrm{mean}/\max}$: error of the weakest / mean / strongest-cell SOC; 5544 bytes of state, 12 numbers exchanged per step.}\label{tab:pack_InfoFusion}
+\begin{tabular}{lrrrrrrcr}\toprule scenario & RMSE$_\mathrm{cells}$ & RMSE$_{\min}$ & RMSE$_\mathrm{mean}$ & RMSE$_{\max}$ & max cell err. & RMSE$_\mathrm{ss}$ & div. & ns/step \\ \midrule
+nominal & 0.55 & 0.48 & 0.38 & 0.46 & 3.09 & 0.56 & no & 1897 \\
+init\_error & 0.54 & 0.44 & 0.37 & 0.46 & 2.67 & 0.56 & no & 1891 \\
+current\_bias & 0.84 & 0.91 & 0.74 & 0.81 & 3.46 & 0.92 & no & 1886 \\
+weak\_cell & 0.57 & 0.51 & 0.36 & 0.61 & 3.00 & 0.53 & no & 1891 \\
+noise\_step & 0.56 & 0.51 & 0.38 & 0.45 & 3.09 & 0.58 & no & 1882 \\
+large\_imbalance & 0.94 & 1.65 & 0.66 & 0.64 & 9.40 & 0.71 & no & 1896 \\
+\bottomrule\end{tabular}\end{table}

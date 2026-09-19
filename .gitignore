@@ -1,0 +1,31 @@
+# build trees
+build*/
+# development / scratch results (the recorded final run is tracked, minus raw time series)
+results/dev*/
+results/obs_*/
+results/quick/
+results/validation/
+results/run_all.log
+results/final/ts/
+results/final/validation/
+# LaTeX intermediates and the rendered report (delivered separately)
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.bbl
+report/*.blg
+report/*.fls
+report/*.fdb_latexmk
+report/*.lof
+report/*.lot
+report/*.synctex.gz
+report/main.pdf
+# python
+*.pyc
+__pycache__/
+*.o
+# generated website (built by scripts/site/build_site.py and the pages workflow)
+site/
+# generated catalogue/reference artefacts are committed (docs/CATALOGUE.md, docs/REFERENCES.md,
+# docs/catalogue.json, docs/bib.json) so the README and GitHub render without a build step

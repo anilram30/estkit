@@ -1,0 +1,49 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+State estimation is the core of a battery-management system (BMS): the quantities that
+matter to an aircraft --- state of charge (SOC), state of health (SOH), remaining energy
+and power --- are not measured but inferred from terminal voltage, current and temperature
+through a model of the cell. This report documents \estkit, a header-only C++17 library of
+state estimators and observers written against a single, model-agnostic interface, together
+with a benchmark that exercises the library on the battery-management problem of an electric
+aircraft. Every algorithm is implemented from its primary literature source, without dynamic
+memory, exceptions or dependencies beyond the C++ standard library, so that the same code
+compiles for a desktop benchmark and for a flight-controller class microcontroller in single
+or double precision.
+
+The cell-level benchmark comprises 70 SOC estimators in ten families: Coulomb-counting and
+OCV baselines; classical and sigma-point Kalman filters (EKF, iterated and second-order EKF,
+UKF, cubature and Gauss--Hermite filters, iterated posterior linearisation, information,
+square-root and U-D forms); adaptive filters (Sage--Husa, innovation-based, variational
+Bayesian, strong-tracking, fading-memory, fuzzy, IMM and MMAE); robust and embedded filters
+(Schmidt--Kalman, $H_\infty$, Huber, maximum-correntropy, Student's~$t$, constrained,
+reduced-order, SVSF); deterministic observers (Luenberger, PI, sliding-mode and
+super-twisting, high-gain, extended-state, unknown-input, disturbance, adaptive and interval
+observers); joint and dual state--parameter filters for SOH (joint/dual EKF and UKF, RLS
+identification, approximate weighted total least squares); particle, ensemble and
+Gaussian-sum filters (bootstrap, fast, regularised, auxiliary, Rao--Blackwellised and
+unscented particle filters, EnKF, ETKF, GSF); data-driven hybrids (direct neural regression,
+NN--EKF, ELM--RLS--EKF); moving-horizon estimation in real-time-iteration and converged form;
+and offline smoothers (extended and unscented Rauch--Tung--Striebel, fixed-lag, batch
+nonlinear least squares). Pack-level estimation (decentralised, bar-delta, federated,
+consensus and information-fusion filters on a twelve-cell module), a multi-flight
+capacity-tracking study, and an attitude-estimation benchmark (complementary, Madgwick,
+Mahony, multiplicative and invariant EKF, TRIAD/QUEST) complete the picture.
+
+Two truth plants generate the data: an enhanced equivalent-circuit cell with lumped thermal
+dynamics, Arrhenius impedance, one-state and Preisach hysteresis and cycle/calendar ageing,
+and an electrochemical single-particle model built from the published LG~M50 electrode data
+and validated against PyBaMM. Twelve fault and operating scenarios (initial-SOC error,
+current-sensor bias and gain error, noise steps, outliers, cold and hot operation, ageing,
+parameter mismatch, sensor dropout, Preisach hysteresis and a combined worst case) are run on
+eVTOL, fixed-wing, hover and ground-charging missions with three noise realisations each.
+The Kalman-type implementations are cross-checked against FilterPy and the attitude filters
+against the \texttt{ahrs} library to floating-point precision.
+
+Every estimator is documented in its own chapter --- derivation with every symbol defined,
+algorithm box, implementation notes, cost, and measured behaviour --- and the closing part
+synthesises the close to nine thousand benchmark runs into recommendations for an
+electric-aircraft BMS.

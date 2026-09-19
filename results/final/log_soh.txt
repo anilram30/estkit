@@ -1,0 +1,92 @@
+SOH-capable estimators: MMAE AdaptiveObserver JointEKF JointUKF DualEKF DualUKF AWTLS 
+  MMAE               flight  10: Q_true=4.7389 Ah  Q_est=4.9615 Ah  err=+0.2226  soc_rmse=0.0066
+  MMAE               flight  20: Q_true=4.6133 Ah  Q_est=4.5176 Ah  err=-0.0956  soc_rmse=0.0139
+  MMAE               flight  30: Q_true=4.5148 Ah  Q_est=4.5441 Ah  err=+0.0293  soc_rmse=0.0100
+  MMAE               flight  40: Q_true=4.4306 Ah  Q_est=4.6354 Ah  err=+0.2048  soc_rmse=0.0057
+  MMAE               flight  50: Q_true=4.3552 Ah  Q_est=4.6237 Ah  err=+0.2685  soc_rmse=0.0065
+  MMAE               flight  60: Q_true=4.2866 Ah  Q_est=4.7226 Ah  err=+0.4360  soc_rmse=0.0165
+  MMAE               flight  70: Q_true=4.2226 Ah  Q_est=4.6750 Ah  err=+0.4525  soc_rmse=0.0251
+  MMAE               flight  80: Q_true=4.1626 Ah  Q_est=4.6283 Ah  err=+0.4657  soc_rmse=0.0220
+  MMAE               flight  90: Q_true=4.1060 Ah  Q_est=4.6217 Ah  err=+0.5157  soc_rmse=0.0197
+  MMAE               flight 100: Q_true=4.0520 Ah  Q_est=4.7165 Ah  err=+0.6645  soc_rmse=0.0157
+  MMAE               flight 110: Q_true=4.0005 Ah  Q_est=4.8173 Ah  err=+0.8168  soc_rmse=0.0129
+  MMAE               flight 120: Q_true=3.9510 Ah  Q_est=4.7689 Ah  err=+0.8179  soc_rmse=0.0107
+  AdaptiveObserver   flight  10: Q_true=4.7389 Ah  Q_est=4.9966 Ah  err=+0.2577  soc_rmse=0.0012
+  AdaptiveObserver   flight  20: Q_true=4.6133 Ah  Q_est=4.9881 Ah  err=+0.3748  soc_rmse=0.0011
+  AdaptiveObserver   flight  30: Q_true=4.5148 Ah  Q_est=4.9758 Ah  err=+0.4611  soc_rmse=0.0013
+  AdaptiveObserver   flight  40: Q_true=4.4306 Ah  Q_est=4.9606 Ah  err=+0.5300  soc_rmse=0.0017
+  AdaptiveObserver   flight  50: Q_true=4.3552 Ah  Q_est=4.9425 Ah  err=+0.5873  soc_rmse=0.0020
+  AdaptiveObserver   flight  60: Q_true=4.2866 Ah  Q_est=4.9215 Ah  err=+0.6349  soc_rmse=0.0021
+  AdaptiveObserver   flight  70: Q_true=4.2226 Ah  Q_est=4.8971 Ah  err=+0.6745  soc_rmse=0.0022
+  AdaptiveObserver   flight  80: Q_true=4.1626 Ah  Q_est=4.8694 Ah  err=+0.7068  soc_rmse=0.0024
+  AdaptiveObserver   flight  90: Q_true=4.1060 Ah  Q_est=4.8393 Ah  err=+0.7333  soc_rmse=0.0025
+  AdaptiveObserver   flight 100: Q_true=4.0520 Ah  Q_est=4.8064 Ah  err=+0.7544  soc_rmse=0.0026
+  AdaptiveObserver   flight 110: Q_true=4.0005 Ah  Q_est=4.7716 Ah  err=+0.7711  soc_rmse=0.0023
+  AdaptiveObserver   flight 120: Q_true=3.9510 Ah  Q_est=4.7361 Ah  err=+0.7851  soc_rmse=0.0019
+  JointEKF           flight  10: Q_true=4.7389 Ah  Q_est=4.7837 Ah  err=+0.0448  soc_rmse=0.0009
+  JointEKF           flight  20: Q_true=4.6133 Ah  Q_est=4.6528 Ah  err=+0.0395  soc_rmse=0.0009
+  JointEKF           flight  30: Q_true=4.5148 Ah  Q_est=4.5476 Ah  err=+0.0328  soc_rmse=0.0007
+  JointEKF           flight  40: Q_true=4.4306 Ah  Q_est=4.4604 Ah  err=+0.0299  soc_rmse=0.0007
+  JointEKF           flight  50: Q_true=4.3552 Ah  Q_est=4.3812 Ah  err=+0.0260  soc_rmse=0.0009
+  JointEKF           flight  60: Q_true=4.2866 Ah  Q_est=4.3100 Ah  err=+0.0234  soc_rmse=0.0010
+  JointEKF           flight  70: Q_true=4.2226 Ah  Q_est=4.2430 Ah  err=+0.0204  soc_rmse=0.0012
+  JointEKF           flight  80: Q_true=4.1626 Ah  Q_est=4.1814 Ah  err=+0.0188  soc_rmse=0.0013
+  JointEKF           flight  90: Q_true=4.1060 Ah  Q_est=4.1248 Ah  err=+0.0188  soc_rmse=0.0014
+  JointEKF           flight 100: Q_true=4.0520 Ah  Q_est=4.0715 Ah  err=+0.0194  soc_rmse=0.0015
+  JointEKF           flight 110: Q_true=4.0005 Ah  Q_est=4.0208 Ah  err=+0.0203  soc_rmse=0.0015
+  JointEKF           flight 120: Q_true=3.9510 Ah  Q_est=3.9716 Ah  err=+0.0206  soc_rmse=0.0016
+  JointUKF           flight  10: Q_true=4.7389 Ah  Q_est=4.7859 Ah  err=+0.0470  soc_rmse=0.0010
+  JointUKF           flight  20: Q_true=4.6133 Ah  Q_est=4.6562 Ah  err=+0.0430  soc_rmse=0.0009
+  JointUKF           flight  30: Q_true=4.5148 Ah  Q_est=4.5500 Ah  err=+0.0352  soc_rmse=0.0008
+  JointUKF           flight  40: Q_true=4.4306 Ah  Q_est=4.4640 Ah  err=+0.0334  soc_rmse=0.0006
+  JointUKF           flight  50: Q_true=4.3552 Ah  Q_est=4.3831 Ah  err=+0.0279  soc_rmse=0.0007
+  JointUKF           flight  60: Q_true=4.2866 Ah  Q_est=4.3115 Ah  err=+0.0249  soc_rmse=0.0008
+  JointUKF           flight  70: Q_true=4.2226 Ah  Q_est=4.2447 Ah  err=+0.0221  soc_rmse=0.0011
+  JointUKF           flight  80: Q_true=4.1626 Ah  Q_est=4.1838 Ah  err=+0.0212  soc_rmse=0.0011
+  JointUKF           flight  90: Q_true=4.1060 Ah  Q_est=4.1268 Ah  err=+0.0208  soc_rmse=0.0012
+  JointUKF           flight 100: Q_true=4.0520 Ah  Q_est=4.0730 Ah  err=+0.0209  soc_rmse=0.0013
+  JointUKF           flight 110: Q_true=4.0005 Ah  Q_est=4.0221 Ah  err=+0.0216  soc_rmse=0.0015
+  JointUKF           flight 120: Q_true=3.9510 Ah  Q_est=3.9728 Ah  err=+0.0218  soc_rmse=0.0014
+  DualEKF            flight  10: Q_true=4.7389 Ah  Q_est=4.7687 Ah  err=+0.0298  soc_rmse=0.0016
+  DualEKF            flight  20: Q_true=4.6133 Ah  Q_est=4.6457 Ah  err=+0.0324  soc_rmse=0.0020
+  DualEKF            flight  30: Q_true=4.5148 Ah  Q_est=4.5400 Ah  err=+0.0253  soc_rmse=0.0031
+  DualEKF            flight  40: Q_true=4.4306 Ah  Q_est=4.4581 Ah  err=+0.0275  soc_rmse=0.0032
+  DualEKF            flight  50: Q_true=4.3552 Ah  Q_est=4.3786 Ah  err=+0.0234  soc_rmse=0.0043
+  DualEKF            flight  60: Q_true=4.2866 Ah  Q_est=4.3046 Ah  err=+0.0180  soc_rmse=0.0039
+  DualEKF            flight  70: Q_true=4.2226 Ah  Q_est=4.2468 Ah  err=+0.0242  soc_rmse=0.0051
+  DualEKF            flight  80: Q_true=4.1626 Ah  Q_est=4.1853 Ah  err=+0.0227  soc_rmse=0.0051
+  DualEKF            flight  90: Q_true=4.1060 Ah  Q_est=4.1342 Ah  err=+0.0282  soc_rmse=0.0063
+  DualEKF            flight 100: Q_true=4.0520 Ah  Q_est=4.0760 Ah  err=+0.0240  soc_rmse=0.0054
+  DualEKF            flight 110: Q_true=4.0005 Ah  Q_est=4.0240 Ah  err=+0.0236  soc_rmse=0.0058
+  DualEKF            flight 120: Q_true=3.9510 Ah  Q_est=3.9800 Ah  err=+0.0290  soc_rmse=0.0054
+  DualUKF            flight  10: Q_true=4.7389 Ah  Q_est=4.7965 Ah  err=+0.0576  soc_rmse=0.0006
+  DualUKF            flight  20: Q_true=4.6133 Ah  Q_est=4.6599 Ah  err=+0.0466  soc_rmse=0.0006
+  DualUKF            flight  30: Q_true=4.5148 Ah  Q_est=4.5570 Ah  err=+0.0422  soc_rmse=0.0008
+  DualUKF            flight  40: Q_true=4.4306 Ah  Q_est=4.4684 Ah  err=+0.0378  soc_rmse=0.0010
+  DualUKF            flight  50: Q_true=4.3552 Ah  Q_est=4.3883 Ah  err=+0.0331  soc_rmse=0.0013
+  DualUKF            flight  60: Q_true=4.2866 Ah  Q_est=4.3147 Ah  err=+0.0281  soc_rmse=0.0011
+  DualUKF            flight  70: Q_true=4.2226 Ah  Q_est=4.2493 Ah  err=+0.0268  soc_rmse=0.0017
+  DualUKF            flight  80: Q_true=4.1626 Ah  Q_est=4.1895 Ah  err=+0.0269  soc_rmse=0.0014
+  DualUKF            flight  90: Q_true=4.1060 Ah  Q_est=4.1326 Ah  err=+0.0266  soc_rmse=0.0020
+  DualUKF            flight 100: Q_true=4.0520 Ah  Q_est=4.0746 Ah  err=+0.0225  soc_rmse=0.0017
+  DualUKF            flight 110: Q_true=4.0005 Ah  Q_est=4.0228 Ah  err=+0.0223  soc_rmse=0.0021
+  DualUKF            flight 120: Q_true=3.9510 Ah  Q_est=3.9729 Ah  err=+0.0219  soc_rmse=0.0020
+  AWTLS              flight  10: Q_true=4.7389 Ah  Q_est=4.8455 Ah  err=+0.1066  soc_rmse=0.0015
+  AWTLS              flight  20: Q_true=4.6133 Ah  Q_est=4.7089 Ah  err=+0.0957  soc_rmse=0.0023
+  AWTLS              flight  30: Q_true=4.5148 Ah  Q_est=4.5855 Ah  err=+0.0707  soc_rmse=0.0043
+  AWTLS              flight  40: Q_true=4.4306 Ah  Q_est=4.4805 Ah  err=+0.0499  soc_rmse=0.0059
+  AWTLS              flight  50: Q_true=4.3552 Ah  Q_est=4.3934 Ah  err=+0.0382  soc_rmse=0.0077
+  AWTLS              flight  60: Q_true=4.2866 Ah  Q_est=4.3153 Ah  err=+0.0287  soc_rmse=0.0084
+  AWTLS              flight  70: Q_true=4.2226 Ah  Q_est=4.2464 Ah  err=+0.0239  soc_rmse=0.0089
+  AWTLS              flight  80: Q_true=4.1626 Ah  Q_est=4.1866 Ah  err=+0.0240  soc_rmse=0.0103
+  AWTLS              flight  90: Q_true=4.1060 Ah  Q_est=4.1270 Ah  err=+0.0210  soc_rmse=0.0113
+  AWTLS              flight 100: Q_true=4.0520 Ah  Q_est=4.0587 Ah  err=+0.0067  soc_rmse=0.0120
+  AWTLS              flight 110: Q_true=4.0005 Ah  Q_est=3.9786 Ah  err=-0.0219  soc_rmse=0.0153
+  AWTLS              flight 120: Q_true=3.9510 Ah  Q_est=3.9163 Ah  err=-0.0347  soc_rmse=0.0188
+MMAE               capacity RMSE (flights 11..F) = 0.4860 Ah, final err = +0.8179 Ah, mean flight SOC RMSE = 0.0137, 2277 ns/step
+AdaptiveObserver   capacity RMSE (flights 11..F) = 0.6333 Ah, final err = +0.7851 Ah, mean flight SOC RMSE = 0.0020, 1390 ns/step
+JointEKF           capacity RMSE (flights 11..F) = 0.0263 Ah, final err = +0.0206 Ah, mean flight SOC RMSE = 0.0011, 1748 ns/step
+JointUKF           capacity RMSE (flights 11..F) = 0.0287 Ah, final err = +0.0218 Ah, mean flight SOC RMSE = 0.0010, 3628 ns/step
+DualEKF            capacity RMSE (flights 11..F) = 0.0255 Ah, final err = +0.0290 Ah, mean flight SOC RMSE = 0.0042, 1758 ns/step
+DualUKF            capacity RMSE (flights 11..F) = 0.0330 Ah, final err = +0.0219 Ah, mean flight SOC RMSE = 0.0014, 2876 ns/step
+AWTLS              capacity RMSE (flights 11..F) = 0.0492 Ah, final err = -0.0347 Ah, mean flight SOC RMSE = 0.0084, 986 ns/step

@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3.5pt}\caption{Mahony-Gated: attitude benchmark (mean over seeds; all angles in degrees; $t_\mathrm{conv}$: first time the attitude error stays below 2$^\circ$ for 30\,s; bias RMSE in deg/s; 312 bytes of state).}\label{tab:imu_MahonyGated}
+\begin{tabular}{lrrrrrrrrcr}\toprule scenario & RMS & roll & pitch & yaw & max & RMS$_\mathrm{ss}$ & $t_\mathrm{conv}$ [s] & bias RMSE & lost & ns/step \\ \midrule
+nominal & 2.14 & 0.62 & 0.64 & 1.94 & 8.3 & 2.03 & 24 & 0.14 & no & 132 \\
+init\_error & 3.76 & 1.28 & 0.86 & 3.45 & 46.0 & 2.03 & 71 & 0.36 & no & 132 \\
+gyro\_bias & 2.74 & 0.80 & 0.63 & 2.54 & 13.1 & 2.03 & 49 & 0.35 & no & 134 \\
+mag\_disturbance & 2.31 & 0.66 & 0.66 & 2.10 & 8.7 & 2.03 & 24 & 0.15 & no & 132 \\
+vibration & 2.47 & 0.76 & 0.76 & 2.22 & 9.8 & 2.65 & 37 & 0.15 & no & 132 \\
+high\_dynamics & 4.83 & 1.55 & 1.11 & 4.41 & 16.5 & 6.07 & 259 & 0.20 & no & 130 \\
+\bottomrule\end{tabular}\end{table}

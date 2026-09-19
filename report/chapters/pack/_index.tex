@@ -1,0 +1,28 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  PACK-LEVEL (multi-cell, distributed) estimator family — chapter order
+%
+%  Reading order:
+%    1. the decentralised baseline (one cell filter per cell, no exchange) and
+%       its two variants, which fix the reference cost and the reference error
+%       and show that neither a better cell filter (UKF) nor a smaller cell
+%       model (reduced ECM) is where the pack-level gain lies;
+%    2. bar-delta filtering, which introduces the "common state + per-cell
+%       deviation" decomposition and is the cheapest member of the family;
+%    3. the centralised information-form fusion of all N_c voltage channels,
+%       the optimum of that decomposition and the yardstick for the rest;
+%    4. the federated filter, which distributes that optimum across N_c
+%       processors with Carlson's information-sharing factors and reproduces it
+%       exactly; and
+%    5. the Kalman-consensus filter, which removes the master entirely and pays
+%       a measured 20-50 % accuracy penalty for a purely neighbour-to-neighbour
+%       architecture.
+% =============================================================================
+\input{chapters/pack/DecentralizedEKF.tex}
+\input{chapters/pack/DecentralizedUKF.tex}
+\input{chapters/pack/DecentralizedReducedEKF.tex}
+\input{chapters/pack/BarDelta.tex}
+\input{chapters/pack/InfoFusion.tex}
+\input{chapters/pack/Federated.tex}
+\input{chapters/pack/Consensus.tex}

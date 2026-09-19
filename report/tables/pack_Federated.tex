@@ -1,0 +1,11 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\caption{Federated: pack-level benchmark (12-cell module, eVTOL mission, mean over seeds; all errors in \% SOC). RMSE$_\mathrm{cells}$: per-cell RMSE over all cells; RMSE$_{\min/\mathrm{mean}/\max}$: error of the weakest / mean / strongest-cell SOC; 53472 bytes of state, 183 numbers exchanged per step.}\label{tab:pack_Federated}
+\begin{tabular}{lrrrrrrcr}\toprule scenario & RMSE$_\mathrm{cells}$ & RMSE$_{\min}$ & RMSE$_\mathrm{mean}$ & RMSE$_{\max}$ & max cell err. & RMSE$_\mathrm{ss}$ & div. & ns/step \\ \midrule
+nominal & 0.55 & 0.48 & 0.38 & 0.46 & 3.09 & 0.56 & no & 8346 \\
+init\_error & 0.54 & 0.44 & 0.37 & 0.46 & 2.67 & 0.57 & no & 8320 \\
+current\_bias & 0.84 & 0.91 & 0.75 & 0.82 & 3.46 & 0.92 & no & 8448 \\
+weak\_cell & 0.57 & 0.51 & 0.37 & 0.61 & 3.00 & 0.53 & no & 8368 \\
+noise\_step & 0.56 & 0.51 & 0.38 & 0.45 & 3.09 & 0.59 & no & 8275 \\
+large\_imbalance & 0.94 & 1.65 & 0.66 & 0.64 & 9.40 & 0.71 & no & 8379 \\
+\bottomrule\end{tabular}\end{table}

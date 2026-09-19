@@ -1,0 +1,236 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% ---------------------------------------------------------------------------
+%  Additional references for the foundational (front-matter) chapters:
+%    chapters/front/preliminaries.tex   notation and estimation preliminaries
+%    chapters/front/ecm_model.tex       cell physics and the equivalent-circuit model
+%    chapters/front/spm_plant.tex       the electrochemical single-particle plant
+%  Keys are unique with respect to refs.bib and the other refs_additions_*.bib
+%  files.  DOIs are given only where they have been verified.
+% ---------------------------------------------------------------------------
+
+% ===== Bayesian filtering, estimation theory ================================
+@article{stratonovich1960,
+  author = {Stratonovich, R. L.},
+  title = {Conditional {M}arkov processes},
+  journal = {Theory of Probability and its Applications}, volume = {5}, number = {2},
+  pages = {156--178}, year = {1960} }
+@article{holee1964,
+  author = {Ho, Y. C. and Lee, R. C. K.},
+  title = {A {B}ayesian approach to problems in stochastic estimation and control},
+  journal = {IEEE Transactions on Automatic Control}, volume = {9}, number = {4},
+  pages = {333--339}, year = {1964} }
+@book{vantrees1968,
+  author = {Van Trees, Harry L.},
+  title = {Detection, Estimation, and Modulation Theory, Part {I}},
+  publisher = {Wiley}, address = {New York}, year = {1968} }
+@article{tichavsky1998pcrb,
+  author = {Tichavsk{\'y}, Petr and Muravchik, Carlos H. and Nehorai, Arye},
+  title = {Posterior {C}ram{\'e}r--{R}ao bounds for discrete-time nonlinear filtering},
+  journal = {IEEE Transactions on Signal Processing}, volume = {46}, number = {5},
+  pages = {1386--1396}, year = {1998}, doi = {10.1109/78.668800} }
+@article{masreliez1975,
+  author = {Masreliez, C. Johan},
+  title = {Approximate non-{G}aussian filtering with linear state and observation relations},
+  journal = {IEEE Transactions on Automatic Control}, volume = {20}, number = {1},
+  pages = {107--110}, year = {1975} }
+
+% ===== Observability =======================================================
+@inproceedings{kalman1960controllability,
+  author = {Kalman, Rudolf E.},
+  title = {On the general theory of control systems},
+  booktitle = {Proceedings of the First International Congress of the International Federation of Automatic Control (IFAC), Moscow},
+  volume = {1}, pages = {481--492}, publisher = {Butterworths}, address = {London}, year = {1960} }
+@article{hermannkrener1977,
+  author = {Hermann, Robert and Krener, Arthur J.},
+  title = {Nonlinear controllability and observability},
+  journal = {IEEE Transactions on Automatic Control}, volume = {22}, number = {5},
+  pages = {728--740}, year = {1977}, doi = {10.1109/TAC.1977.1101601} }
+@inproceedings{kreneride2009,
+  author = {Krener, Arthur J. and Ide, Kayo},
+  title = {Measures of unobservability},
+  booktitle = {Proceedings of the 48th IEEE Conference on Decision and Control (CDC)},
+  pages = {6401--6406}, address = {Shanghai, China}, year = {2009} }
+@book{chenct1999linear,
+  author = {Chen, Chi-Tsong},
+  title = {Linear System Theory and Design}, edition = {3rd},
+  publisher = {Oxford University Press}, address = {New York}, year = {1999} }
+
+% ===== Battery electrochemistry and thermodynamics =========================
+@book{newman2004,
+  author = {Newman, John and Thomas-Alyea, Karen E.},
+  title = {Electrochemical Systems}, edition = {3rd},
+  publisher = {Wiley}, address = {Hoboken, NJ}, year = {2004} }
+@article{dreyer2010hysteresis,
+  author = {Dreyer, Wolfgang and Jamnik, Janko and Guhlke, Clemens and Huth, Robert and
+            Mo{\v{s}}kon, Jo{\v{z}}e and Gaber{\v{s}}{\v{c}}ek, Miran},
+  title = {The thermodynamic origin of hysteresis in insertion batteries},
+  journal = {Nature Materials}, volume = {9}, number = {5}, pages = {448--453}, year = {2010} }
+@article{weng2014ocv,
+  author = {Weng, Caihao and Sun, Jing and Peng, Huei},
+  title = {A unified open-circuit-voltage model of lithium-ion batteries for state-of-charge
+           estimation and state-of-health monitoring},
+  journal = {Journal of Power Sources}, volume = {258}, pages = {228--237}, year = {2014} }
+@article{birkl2017degradation,
+  author = {Birkl, Christoph R. and Roberts, Matthew R. and McTurk, Euan and Bruce, Peter G. and Howey, David A.},
+  title = {Degradation diagnostics for lithium ion cells},
+  journal = {Journal of Power Sources}, volume = {341}, pages = {373--386}, year = {2017} }
+@article{waag2013impedance,
+  author = {Waag, Wladislaw and K{\"a}bitz, Stefan and Sauer, Dirk Uwe},
+  title = {Experimental investigation of the lithium-ion battery impedance characteristic at
+           various conditions and aging states and its influence on the application},
+  journal = {Applied Energy}, volume = {102}, pages = {885--897}, year = {2013} }
+@article{smith2010coulombic,
+  author = {Smith, A. J. and Burns, J. C. and Trussler, S. and Dahn, J. R.},
+  title = {Precision measurements of the coulombic efficiency of lithium-ion batteries and of
+           electrode materials for lithium-ion batteries},
+  journal = {Journal of The Electrochemical Society}, volume = {157}, number = {2},
+  pages = {A196--A202}, year = {2010} }
+@article{jaguemont2016cold,
+  author = {Jaguemont, Joris and Boulon, Loic and Dub{\'e}, Yves},
+  title = {A comprehensive review of lithium-ion batteries used in hybrid and electric vehicles
+           at cold temperatures},
+  journal = {Applied Energy}, volume = {164}, pages = {99--114}, year = {2016} }
+
+% ===== Physics-based models and model-order hierarchy ======================
+@article{brosaplanella2022continuum,
+  author = {Brosa Planella, Ferran and Ai, Weilong and Boyce, Adam M. and Ghosh, Abir and
+            Korotkin, Ivan and Sahu, Smita and Sulzer, Valentin and Timms, Robert and
+            Tranter, Thomas G. and Zyskin, Maxim and Cooper, Samuel J. and Edge, Jacqueline S. and
+            Foster, Jamie M. and Marinescu, Monica and Wu, Billy and Richardson, Giles},
+  title = {A continuum of physics-based lithium-ion battery models reviewed},
+  journal = {Progress in Energy}, volume = {4}, number = {4}, pages = {042003}, year = {2022} }
+@article{santhanagopalan2006,
+  author = {Santhanagopalan, Shriram and White, Ralph E.},
+  title = {Online estimation of the state of charge of a lithium ion cell},
+  journal = {Journal of Power Sources}, volume = {161}, number = {2}, pages = {1346--1355}, year = {2006} }
+@article{moura2017spme,
+  author = {Moura, Scott J. and Argomedo, Federico Bribiesca and Klein, Reinhardt and
+            Mirtabatabaei, Anahita and Krstic, Miroslav},
+  title = {Battery state estimation for a single particle model with electrolyte dynamics},
+  journal = {IEEE Transactions on Control Systems Technology}, volume = {25}, number = {2},
+  pages = {453--468}, year = {2017} }
+@article{subramanian2005efficient,
+  author = {Subramanian, Venkat R. and Diwakar, Vijayasekaran D. and Tapriyal, Deepak},
+  title = {Efficient macro-micro scale coupled modeling of batteries},
+  journal = {Journal of The Electrochemical Society}, volume = {152}, number = {10},
+  pages = {A2002--A2008}, year = {2005} }
+@article{bizeray2015,
+  author = {Bizeray, Adrien M. and Zhao, Shi and Duncan, Stephen R. and Howey, David A.},
+  title = {Lithium-ion battery thermal-electrochemical model-based state estimation using
+           orthogonal collocation and a modified extended {K}alman filter},
+  journal = {Journal of Power Sources}, volume = {296}, pages = {400--412}, year = {2015} }
+
+% ===== Numerical methods ===================================================
+@book{patankar1980,
+  author = {Patankar, Suhas V.},
+  title = {Numerical Heat Transfer and Fluid Flow},
+  publisher = {Hemisphere Publishing Corporation}, address = {Washington, DC}, year = {1980} }
+@techreport{thomas1949,
+  author = {Thomas, Llewellyn H.},
+  title = {Elliptic Problems in Linear Difference Equations over a Network},
+  institution = {Watson Scientific Computing Laboratory, Columbia University},
+  address = {New York}, year = {1949} }
+@article{levenberg1944,
+  author = {Levenberg, Kenneth},
+  title = {A method for the solution of certain non-linear problems in least squares},
+  journal = {Quarterly of Applied Mathematics}, volume = {2}, number = {2},
+  pages = {164--168}, year = {1944} }
+@article{marquardt1963,
+  author = {Marquardt, Donald W.},
+  title = {An algorithm for least-squares estimation of nonlinear parameters},
+  journal = {Journal of the Society for Industrial and Applied Mathematics}, volume = {11},
+  number = {2}, pages = {431--441}, year = {1963}, doi = {10.1137/0111030} }
+
+% ---------------------------------------------------------------------------
+%  Entries added for chapters/front/datasets.tex, chapters/front/methodology.tex,
+%  chapters/front/library.tex, the baseline chapters and the appendices.
+%  Bibliographic details were compiled by the authors from the primary
+%  literature and from the reference headers of the source files they document;
+%  no DOIs are given here because they were not independently verified
+%  (see Appendix~\ref{app:validation}).
+% ---------------------------------------------------------------------------
+
+% ===== Flight environment, frames and airborne certification ===============
+@techreport{milhdbk1797,
+  author = {{United States Department of Defense}},
+  title = {Flying Qualities of Piloted Aircraft},
+  number = {MIL-HDBK-1797}, institution = {US Department of Defense}, year = {1997},
+  note = {Appendix on atmospheric disturbance models (Dryden and von K\'arm\'an turbulence spectra)} }
+@book{stevens2015aircraft,
+  author = {Stevens, Brian L. and Lewis, Frank L. and Johnson, Eric N.},
+  title = {Aircraft Control and Simulation: Dynamics, Controls Design, and Autonomous Systems},
+  edition = {3rd}, publisher = {Wiley}, address = {Hoboken, NJ}, year = {2015} }
+@book{groves2013,
+  author = {Groves, Paul D.},
+  title = {Principles of {GNSS}, Inertial, and Multisensor Integrated Navigation Systems},
+  edition = {2nd}, publisher = {Artech House}, address = {Boston, MA}, year = {2013} }
+@techreport{chulliat2020wmm,
+  author = {Chulliat, Arnaud and Brown, William and Alken, Patrick and Beggan, Ciar{\'a}n and
+            Nair, Manoj and Cox, Grace and Woods, Adam and Macmillan, Susan and Meyer, Brian and
+            Paniccia, Michael},
+  title = {The {US/UK} World Magnetic Model for 2020--2025},
+  institution = {National Centers for Environmental Information, NOAA}, year = {2020} }
+
+% ===== Embedded software, arithmetic and coding standards ==================
+@manual{misra2008cpp,
+  title = {{MISRA C++:2008} --- Guidelines for the Use of the {C++} Language in Critical Systems},
+  organization = {MIRA Limited}, address = {Nuneaton, UK}, year = {2008} }
+@manual{ieee754_2019,
+  title = {{IEEE} Standard for Floating-Point Arithmetic},
+  organization = {IEEE}, number = {IEEE Std 754-2019}, year = {2019} }
+@manual{iso2017cpp,
+  title = {{ISO/IEC 14882:2017} --- Programming Languages --- {C++}},
+  organization = {International Organization for Standardization}, address = {Geneva}, year = {2017} }
+@manual{arm2021cortexm7,
+  title = {{Arm Cortex-M7} Processor Technical Reference Manual},
+  organization = {Arm Limited}, address = {Cambridge, UK}, year = {2021} }
+@article{holzmann2006power,
+  author = {Holzmann, Gerard J.},
+  title = {The power of ten: Rules for developing safety-critical code},
+  journal = {Computer}, volume = {39}, number = {6}, pages = {95--99}, year = {2006} }
+
+% ===== Numerical linear algebra and random-number generation ===============
+@article{kautsky1985,
+  author = {Kautsky, J. and Nichols, N. K. and Van Dooren, P.},
+  title = {Robust pole assignment in linear state feedback},
+  journal = {International Journal of Control}, volume = {41}, number = {5},
+  pages = {1129--1155}, year = {1985} }
+@article{anderson1978doubling,
+  author = {Anderson, Brian D. O.},
+  title = {Second-order convergent algorithms for the steady-state {R}iccati equation},
+  journal = {International Journal of Control}, volume = {28}, number = {2},
+  pages = {295--306}, year = {1978} }
+@article{chu2004doubling,
+  author = {Chu, Eric King-wah and Fan, Hung-Yuan and Lin, Wen-Wei and Wang, Chern-Shuh},
+  title = {Structure-preserving algorithms for periodic discrete-time algebraic {R}iccati equations},
+  journal = {International Journal of Control}, volume = {77}, number = {8},
+  pages = {767--788}, year = {2004} }
+@article{gill1974modifying,
+  author = {Gill, Philip E. and Golub, Gene H. and Murray, Walter and Saunders, Michael A.},
+  title = {Methods for modifying matrix factorizations},
+  journal = {Mathematics of Computation}, volume = {28}, number = {126},
+  pages = {505--535}, year = {1974} }
+@article{marsaglia1964polar,
+  author = {Marsaglia, George and Bray, Thomas A.},
+  title = {A convenient method for generating normal variables},
+  journal = {SIAM Review}, volume = {6}, number = {3}, pages = {260--264}, year = {1964} }
+@book{widrow2008quantization,
+  author = {Widrow, Bernard and Koll{\'a}r, Istv{\'a}n},
+  title = {Quantization Noise: Roundoff Error in Digital Computation, Signal Processing,
+           Control, and Communications},
+  publisher = {Cambridge University Press}, address = {Cambridge}, year = {2008} }
+
+% ===== Reference implementations used for cross-validation =================
+@article{harris2020numpy,
+  author = {Harris, Charles R. and Millman, K. Jarrod and van der Walt, St{\'e}fan J. and
+            Gommers, Ralf and Virtanen, Pauli and Cournapeau, David and Wieser, Eric and
+            Taylor, Julian and Berg, Sebastian and Smith, Nathaniel J.},
+  title = {Array programming with {NumPy}},
+  journal = {Nature}, volume = {585}, pages = {357--362}, year = {2020} }
+@article{andersson2019casadi,
+  author = {Andersson, Joel A. E. and Gillis, Joris and Horn, Greg and Rawlings, James B. and
+            Diehl, Moritz},
+  title = {{CasADi}: A software framework for nonlinear optimization and optimal control},
+  journal = {Mathematical Programming Computation}, volume = {11}, number = {1},
+  pages = {1--36}, year = {2019} }

@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{IMM: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_IMM}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.18 & 0.04 & 1.03 & 0 & 0.79 & no & 0.05 & 2076 \\
+ECM & init\_error & 0.16 & 0.04 & 1.69 & 0 & 2.13 & no & 0.05 & 2077 \\
+ECM & current\_bias & 0.55 & 0.62 & 1.35 & 0 & 0.86 & no & 0.61 & 2058 \\
+ECM & noise\_step & 0.18 & 0.05 & 1.03 & 0 & 1.05 & no & 0.12 & 2082 \\
+ECM & outliers & 0.18 & 0.08 & 1.94 & 0 & 0.93 & no & 0.21 & 2075 \\
+ECM & cold & 0.24 & 0.18 & 1.09 & 0 & 1.90 & no & 0.16 & 2064 \\
+ECM & hot & 0.19 & 0.03 & 0.98 & 0 & 0.54 & no & 0.03 & 2063 \\
+ECM & aged\_cell & 0.66 & 0.83 & 1.96 & 0 & 4.48 & no & 1.52 & 2058 \\
+ECM & param\_mismatch & 0.88 & 0.96 & 1.24 & 0 & 3.32 & no & 1.36 & 2065 \\
+ECM & sensor\_dropout & 0.18 & 0.05 & 1.03 & 0 & 1.68 & no & 0.46 & 2058 \\
+ECM & preisach & 0.70 & 0.20 & 2.08 & 73 & 0.82 & no & 0.20 & 2060 \\
+ECM & combined & 2.20 & 1.02 & 8.01 & 833 & 5.45 & no & 12.44 & 2080 \\
+\midrule
+SPM & nominal & 2.77 & 2.81 & 3.47 & 0 & 1.10 & no & 3.73 & 1965 \\
+SPM & init\_error & 3.04 & 3.03 & 3.85 & 29 & 2.21 & no & 3.81 & 1963 \\
+SPM & current\_bias & 3.69 & 4.35 & 4.89 & 0 & 1.23 & no & 5.69 & 1959 \\
+SPM & noise\_step & 2.79 & 2.85 & 3.47 & 0 & 1.94 & no & 3.30 & 2003 \\
+SPM & outliers & 2.12 & 2.25 & 2.38 & 0 & 1.19 & no & 1.99 & 1962 \\
+SPM & cold & 2.41 & 2.22 & 3.19 & 20 & 5.29 & no & 7.35 & 1941 \\
+SPM & hot & 2.10 & 2.17 & 2.48 & 0 & 0.70 & no & 2.16 & 1921 \\
+SPM & param\_mismatch & 2.25 & 2.41 & 2.55 & 0 & 2.31 & no & 3.13 & 1958 \\
+SPM & sensor\_dropout & 1.62 & 1.60 & 2.31 & 0 & 1.99 & no & 5.31 & 1965 \\
+\bottomrule\end{tabular}\end{table}

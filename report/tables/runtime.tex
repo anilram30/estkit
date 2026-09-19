@@ -1,0 +1,77 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{longtable}{llrrrr}
+\caption{Computational cost per sample on the benchmark machine (x86-64, single core, g++ 13 -O2, double precision; median over runs) with the estimator object size, relative cost to the EKF, and an order-of-magnitude projection to a Cortex-M7 class flight processor using the central scaling factor $\kappa = 30$ of Chapter~\ref{ch:metrics} (range 20--90; a measurement on the target supersedes this column). Batch smoothers report the per-sample cost of the whole record.}\label{tab:runtime}\\
+\toprule estimator & family & ns/step & $\times$EKF & bytes & est. Cortex-M7 [µs] \\ \midrule\endfirsthead
+\toprule estimator & family & ns/step & $\times$EKF & bytes & est. Cortex-M7 [µs] \\ \midrule\endhead
+CoulombCounting & baselines & 79 & 0.2 & 4184 & 2 \\
+CoulombOCVHybrid & baselines & 211 & 0.4 & 4192 & 6 \\
+OCVLookup & baselines & 1310 & 2.7 & 4192 & 39 \\
+LKF & kalman & 334 & 0.7 & 4680 & 10 \\
+EKF & kalman & 477 & 1.0 & 4336 & 14 \\
+UD-EKF & kalman & 484 & 1.0 & 4480 & 15 \\
+IEKF & kalman & 596 & 1.2 & 4336 & 18 \\
+SR-EKF & kalman & 821 & 1.7 & 4440 & 25 \\
+EIF & kalman & 1221 & 2.6 & 4472 & 37 \\
+CKF & kalman & 1252 & 2.6 & 4560 & 38 \\
+CDKF & kalman & 1375 & 2.9 & 4312 & 41 \\
+UKF & kalman & 1442 & 3.0 & 4776 & 43 \\
+SR-UKF & kalman & 1554 & 3.3 & 4896 & 47 \\
+SCKF & kalman & 1581 & 3.3 & 4696 & 47 \\
+IPLF & kalman & 2032 & 4.3 & 4784 & 61 \\
+CKF5 & kalman & 4014 & 8.4 & 5624 & 120 \\
+SO-EKF & kalman & 4202 & 8.8 & 4496 & 126 \\
+GHKF & kalman & 11990 & 25.1 & 10784 & 360 \\
+IAE-AKF & adaptive\_kalman & 500 & 1.0 & 5040 & 15 \\
+Fading-EKF & adaptive\_kalman & 501 & 1.0 & 4384 & 15 \\
+STF & adaptive\_kalman & 532 & 1.1 & 4680 & 16 \\
+SageHusa-AKF & adaptive\_kalman & 545 & 1.1 & 4808 & 16 \\
+Fuzzy-AKF & adaptive\_kalman & 727 & 1.5 & 4816 & 22 \\
+VB-AKF & adaptive\_kalman & 872 & 1.8 & 4408 & 26 \\
+MMAE & adaptive\_kalman & 1752 & 3.7 & 13200 & 53 \\
+IMM & adaptive\_kalman & 2076 & 4.4 & 4976 & 62 \\
+ReducedOrder-EKF & robust\_kalman & 331 & 0.7 & 4272 & 10 \\
+SVSF & robust\_kalman & 583 & 1.2 & 4376 & 17 \\
+Constrained-EKF & robust\_kalman & 586 & 1.2 & 4416 & 18 \\
+Huber-EKF & robust\_kalman & 642 & 1.3 & 4368 & 19 \\
+StudentT-KF & robust\_kalman & 696 & 1.5 & 4568 & 21 \\
+Hinf-EKF & robust\_kalman & 798 & 1.7 & 4408 & 24 \\
+MC-EKF & robust\_kalman & 998 & 2.1 & 4384 & 30 \\
+Schmidt-KF & robust\_kalman & 1293 & 2.7 & 8856 & 39 \\
+SuperTwisting-SMO & observers & 142 & 0.3 & 4280 & 4 \\
+SSKF & observers & 416 & 0.9 & 4632 & 12 \\
+Luenberger & observers & 478 & 1.0 & 4632 & 14 \\
+HGO & observers & 479 & 1.0 & 4680 & 14 \\
+SMO-Adaptive & observers & 511 & 1.1 & 4800 & 15 \\
+SMO & observers & 517 & 1.1 & 4800 & 16 \\
+UIO & observers & 581 & 1.2 & 5072 & 17 \\
+DOB & observers & 587 & 1.2 & 4784 & 18 \\
+IntervalObserver & observers & 808 & 1.7 & 9024 & 24 \\
+AdaptiveObserver & observers & 900 & 1.9 & 4864 & 27 \\
+PI-Observer & observers & 1373 & 2.9 & 4824 & 41 \\
+ESO & observers & 1479 & 3.1 & 4784 & 44 \\
+AWTLS & soh & 483 & 1.0 & 8776 & 14 \\
+RLS-EKF & soh & 496 & 1.0 & 8904 & 15 \\
+JointEKF & soh & 1215 & 2.5 & 8752 & 36 \\
+DualEKF & soh & 1272 & 2.7 & 4752 & 38 \\
+DualUKF & soh & 2371 & 5.0 & 5512 & 71 \\
+JointUKF & soh & 3103 & 6.5 & 9600 & 93 \\
+GSF & particle & 1749 & 3.7 & 9192 & 52 \\
+EnKF & particle & 10283 & 21.6 & 6776 & 308 \\
+ETKF & particle & 10551 & 22.1 & 5304 & 317 \\
+PF-Fast & particle & 15960 & 33.5 & 9664 & 479 \\
+UPF & particle & 18614 & 39.0 & 25360 & 558 \\
+RBPF & particle & 39896 & 83.7 & 34016 & 1197 \\
+PF-Bootstrap & particle & 76444 & 160.3 & 46472 & 2293 \\
+PF-Regularized & particle & 81850 & 171.7 & 46464 & 2456 \\
+PF-Auxiliary & particle & 104352 & 218.8 & 54584 & 3131 \\
+NN-Direct & learning & 484 & 1.0 & 15152 & 15 \\
+NN-EKF & learning & 1059 & 2.2 & 4376 & 32 \\
+ELM-RLS-EKF & learning & 3292 & 6.9 & 11704 & 99 \\
+MHE-RTI & optimization & 17270 & 36.2 & 26928 & 518 \\
+MHE & optimization & 32403 & 68.0 & 26928 & 972 \\
+ERTS & smoothers & 907 & 1.9 & 12.5\,MB & 27 \\
+URTS & smoothers & 2473 & 5.2 & 12.5\,MB & 74 \\
+Batch-NLS & smoothers & 4662 & 9.8 & 17.4\,MB & 140 \\
+FixedLag-EKF & smoothers & 9915 & 20.8 & 19992 & 297 \\
+\bottomrule\end{longtable}

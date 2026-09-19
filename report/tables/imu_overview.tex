@@ -1,0 +1,14 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{3pt}\caption{Attitude estimators: RMS attitude error [deg] by scenario (mean over seeds) and cost per 100\,Hz sample.}\label{tab:imu_overview}
+\begin{tabular}{lrrrrrrrr}\toprule estimator & \rotatebox{60}{nominal} & \rotatebox{60}{init\_error} & \rotatebox{60}{gyro\_bias} & \rotatebox{60}{mag\_disturbance} & \rotatebox{60}{vibration} & \rotatebox{60}{high\_dynamics} & ns/step & bytes \\ \midrule
+Complementary & 6.57 & 6.79 & 17.58 & 6.71 & 6.58 & 6.58 & 362 & 272 \\
+Madgwick & 17.60 & 17.74 & 17.62 & 19.01 & 14.78 & 18.43 & 112 & 272 \\
+Madgwick-Gated & 5.78 & 6.17 & 5.79 & 5.78 & 3.22 & 5.34 & 138 & 272 \\
+Mahony & 18.40 & 18.51 & 18.44 & 20.41 & 18.28 & 18.75 & 130 & 312 \\
+Mahony-Gated & 2.14 & 3.76 & 2.74 & 2.31 & 2.47 & 4.83 & 132 & 312 \\
+MEKF & 2.48 & 2.50 & 2.48 & 2.86 & 2.14 & 3.33 & 2037 & 608 \\
+InvariantEKF & 2.49 & 2.49 & 2.49 & 2.88 & 2.14 & 3.30 & 1910 & 608 \\
+TRIAD & 19.59 & 19.59 & 19.59 & 20.97 & 27.26 & 20.98 & 129 & 120 \\
+QUEST & 19.22 & 19.22 & 19.22 & 20.63 & 25.89 & 20.63 & 214 & 120 \\
+\bottomrule\end{tabular}\end{table}

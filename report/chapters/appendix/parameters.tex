@@ -1,0 +1,370 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Appendix: parameter tables
+% =============================================================================
+\chapter{Parameter tables}
+\label{app:params}
+
+Every numerical value used anywhere in this report is collected here, with its unit, its symbol in
+the text, the source file that defines it and a note on its provenance. The provenance column is
+the important one: some of these numbers are published measurements, some are derived from them,
+and some are representative values chosen to give the benchmark a realistic character without
+claiming to describe any particular cell. Mixing the three silently would make the whole study
+harder to reuse, so they are labelled:
+
+\begin{description}[leftmargin=2.2cm,style=nextline,topsep=2pt,itemsep=1pt]
+\item[\textsf{published}] taken from the cited source.
+\item[\textsf{derived}] computed from published values by an identity stated in the text.
+\item[\textsf{fitted}] obtained by the identification tool in this repository, with the residual
+reported.
+\item[\textsf{representative}] chosen by the authors to be of the right order and character for the
+class of cell or sensor described. Not measured, and not to be cited as data.
+\end{description}
+
+\section{Nominal equivalent-circuit cell}
+
+The default cell is a \SI{5}{\ampere\hour} NMC811/graphite 21700-class high-power cell, modelled by
+the two-RC ``enhanced self-correcting'' circuit of Plett~\cite{plett2004ekf1,plett2015bms1}. The
+open-circuit voltage comes from the LG~M50 electrode potentials of Chen
+et~al.~\cite{chen2020parameterization}; the impedance values are representative of a high-power
+design and are \emph{not} the M50's.
+
+\begin{table}[H]\centering\small
+\caption{Nominal ECM parameters, \code{CellParams::nominal()} in
+\code{include/estkit/battery/cell.hpp}. Current sign convention: discharge positive. Values are
+quoted at the reference temperature $T_{\text{ref}} = \SI{298.15}{\kelvin}$.}
+\label{tab:ap-ecm}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.19\textwidth}rl>{\raggedright\arraybackslash}p{0.3\textwidth}@{}}\toprule
+symbol & field & value & unit & provenance \\ \midrule
+\multicolumn{5}{@{}l}{\emph{Electrical}}\\
+$Q$ & \code{Q\_Ah} & 5.0 & \si{\ampere\hour} & representative (matches \code{Chen2020::Q\_nom\_Ah}) \\
+$\eta_c$ & \code{eta\_c} & 0.995 & -- & representative; coulombic efficiency on charge only \\
+$R_0$ & \code{R0} & 12.0 & \si{\milli\ohm} & representative (high-power design) \\
+$R_1$ & \code{R1} & 6.0 & \si{\milli\ohm} & representative \\
+$\tau_1$ & \code{tau1} & 5.0 & \si{\second} & representative (charge-transfer branch) \\
+$R_2$ & \code{R2} & 8.0 & \si{\milli\ohm} & representative \\
+$\tau_2$ & \code{tau2} & 120.0 & \si{\second} & representative (diffusion branch) \\
+$M$ & \code{M} & 5.0 & \si{\milli\volt} & representative; one-state hysteresis magnitude \\
+$\gamma$ & \code{gamma} & 50.0 & -- & representative; hysteresis rate constant \\ \midrule
+\multicolumn{5}{@{}l}{\emph{Arrhenius temperature dependence,} $p(T) = p\,\exp\!\bigl[\tfrac{E_a}{R}\bigl(\tfrac1T-\tfrac1{T_{\text{ref}}}\bigr)\bigr]$}\\
+$E_{a,R_0}$ & \code{Ea\_R0} & 20\,000 & \si{\joule\per\mole} & representative~\cite[\S2.10]{plett2015bms1} \\
+$E_{a,R_1}$ & \code{Ea\_R1} & 25\,000 & \si{\joule\per\mole} & representative \\
+$E_{a,R_2}$ & \code{Ea\_R2} & 30\,000 & \si{\joule\per\mole} & representative \\
+$E_{a,\tau}$ & \code{Ea\_tau} & 25\,000 & \si{\joule\per\mole} & representative; applies to both $\tau_1,\tau_2$ \\
+$T_{\text{ref}}$ & \code{T\_ref} & 298.15 & \si{\kelvin} & definition \\ \midrule
+\multicolumn{5}{@{}l}{\emph{Lumped thermal model}~\cite{lin2014thermal,bernardi1985energy}}\\
+$C_{\text{th}}$ & \code{C\_th} & 70.0 & \si{\joule\per\kelvin} & derived: \SI{70}{\gram} at \SI{1000}{\joule\per\kilo\gram\per\kelvin} \\
+$R_{\text{th}}$ & \code{R\_th} & 3.0 & \si{\kelvin\per\watt} & representative; cell-to-ambient \\ \midrule
+\multicolumn{5}{@{}l}{\emph{Ageing}, $Q_{\text{loss}} = B\,e^{-E_a/RT}A_h^{z}$ \emph{(cycle)} $+\;A\,e^{-E_a/RT}\sqrt{t_d}$ \emph{(calendar)}~\cite{wang2011cyclelife,schmalstieg2014aging}}\\
+$B$ & \code{age\_B} & 454.0 & $\si{\ampere\hour}^{-z}$ & representative; calibrated to \SI{20.1}{\percent} loss at \SI{10000}{\ampere\hour}, \SI{25}{\celsius} \\
+$E_{a,\text{cyc}}$ & \code{age\_Ea} & 31\,700 & \si{\joule\per\mole} & published~\cite{wang2011cyclelife} \\
+$z$ & \code{age\_z} & 0.55 & -- & published~\cite{wang2011cyclelife} \\
+$A$ & \code{age\_cal\_A} & 36.4 & $\si{\day}^{-1/2}$ & representative; calibrated to \SI{5.0}{\percent} after 2 years at \SI{25}{\celsius} \\
+$E_{a,\text{cal}}$ & \code{age\_cal\_Ea} & 24\,500 & \si{\joule\per\mole} & representative \\
+$g_R$ & \code{age\_R\_gain} & 2.5 & -- & representative; $R_0 = R_{0,\text{ref}}(1 + g_R\,Q_{\text{loss}})$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering\small
+\caption{Temperature-scheduled values of the nominal ECM, for reference. The impedance rises by
+$2.9\times$ and the diffusion time constant by $3.8\times$ between \SI{45}{\celsius} and
+\SI{-10}{\celsius}; this is the mechanism behind the \code{cold} and \code{hot} scenarios.}
+\label{tab:ap-arrhenius}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+ & \SI{-10}{\celsius} & \SI{0}{\celsius} & \SI{25}{\celsius} & \SI{45}{\celsius} \\ \midrule
+$R_0$ [\si{\milli\ohm}] & 35.09 & 25.11 & 12.00 & 7.23 \\
+$\tau_1$ [\si{\second}] & 19.12 & 12.60 & 5.00 & 2.73 \\
+$\tau_2$ [\si{\second}] & 458.9 & 302.0 & 120.0 & 65.4 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Open-circuit voltage}
+
+\begin{table}[H]\centering\small
+\caption{OCV model. The full-cell equilibrium potential is $\ocv(z) = U_p(y(z)) - U_n(x(z))$ with
+the electrode potentials of~\cite{chen2020parameterization}; the estimators use the 241-point
+lookup table, the plants the closed form.}
+\label{tab:ap-ocv}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.19\textwidth}rl>{\raggedright\arraybackslash}p{0.3\textwidth}@{}}\toprule
+symbol & field & value & unit & provenance \\ \midrule
+$U_n(x)$ & \code{Chen2020::U\_n} & --- & \si{\volt} & published: graphite fit, 5 terms~\cite{chen2020parameterization} \\
+$U_p(y)$ & \code{Chen2020::U\_p} & --- & \si{\volt} & published: NMC811 fit, 4 terms~\cite{chen2020parameterization} \\
+$\ocv(0)$ & --- & 2.8535 & \si{\volt} & derived \\
+$\ocv(1)$ & --- & 4.1809 & \si{\volt} & derived \\
+$\min_z \partial\ocv/\partial z$ & --- & 0.197 & \si{\volt} & derived; at $z = 0.895$ (graphite plateau) \\
+$\partial\ocv/\partial z$ at $z=0.5$ & --- & 0.938 & \si{\volt} & derived \\
+$N_{\text{pts}}$ & \code{OcvTable<241>} & 241 & -- & table size; grid $z\in[-0.1,1.1]$, $\Delta z = 0.005$ \\
+--- & table error & $<3$ & \si{\milli\volt} & derived; linear interpolation vs closed form \\
+$\partial U/\partial T$ & \code{entropic\_dUdT} & \multicolumn{1}{l}{$10^{-4}(-2 + 3z - 1.5z^2)$} & \si{\volt\per\kelvin} & representative; $-0.05$ to $-\SI{0.2}{\milli\volt\per\kelvin}$, cf.~\cite{forgez2010thermal} \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Single-particle-model plant}
+
+\begin{table}[H]\centering\small
+\caption{SPM electrode parameters, \code{struct Chen2020} in \code{cell.hpp}; all
+\textsf{published} from Chen et~al.~\cite{chen2020parameterization} (the LG~M50 parameter set as
+distributed with PyBaMM~\cite{sulzer2021pybamm}) except where noted.}
+\label{tab:ap-spm}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.17\textwidth}rr>{\raggedright\arraybackslash}p{0.3\textwidth}@{}}\toprule
+symbol & field & negative (graphite) & positive (NMC811) & unit \\ \midrule
+$L$ & \code{L\_n}, \code{L\_p} & \num{85.2e-6} & \num{75.6e-6} & \si{\metre} \\
+$\varepsilon$ & \code{eps\_n}, \code{eps\_p} & 0.750 & 0.665 & -- \\
+$R_{\text{part}}$ & \code{R\_n}, \code{R\_p} & \num{5.86e-6} & \num{5.22e-6} & \si{\metre} \\
+$c_{\max}$ & \code{cmax\_n}, \code{cmax\_p} & 33\,133 & 63\,104 & \si{\mole\per\metre\cubed} \\
+$D$ & \code{D\_n}, \code{D\_p} & \num{3.3e-14} & \num{4.0e-15} & \si{\metre\squared\per\second} \\
+$k$ & \code{k\_n}, \code{k\_p} & \num{6.48e-7} & \num{3.42e-6} & \si{\ampere\per\metre\squared}$(\si{\metre\cubed\per\mole})^{1.5}$ \\
+$E_{a,k}$ & \code{Ea\_k\_n}, \code{Ea\_k\_p} & 35\,000 & 17\,800 & \si{\joule\per\mole} \\
+$E_{a,D}$ & \code{Ea\_D\_n}, \code{Ea\_D\_p} & 30\,000 & 30\,000 & \si{\joule\per\mole} (representative) \\
+$x_{100}$, $y_{100}$ & \code{x100}, \code{y100} & 0.9014 & 0.2700 & -- \\
+$x_{0}$, $y_{0}$ & derived & 0.04342 & 0.84259 & -- \\
+$a = 3\varepsilon/R_{\text{part}}$ & derived & \num{3.84e5} & \num{3.82e5} & \si{\per\metre} \\
+$q = F\varepsilon L A c_{\max}$ & \code{q\_n()}, \code{q\_p()} & 20\,979 & 31\,436 & \si{\coulomb} (5.828 and 8.732\,\si{\ampere\hour}) \\
+$\Delta x$, $\Delta y$ & \code{dx()}, \code{dy()} & 0.85798 & 0.57259 & -- \\ \midrule
+\multicolumn{5}{@{}l}{\emph{Shared}}\\
+$A_{\text{elec}}$ & \code{A\_elec} & \multicolumn{2}{c}{0.1027} & \si{\metre\squared} \\
+$c_e$ & \code{c\_e} & \multicolumn{2}{c}{1000} & \si{\mole\per\metre\cubed} \\
+$Q_{\text{nom}}$ & \code{Q\_nom\_Ah} & \multicolumn{2}{c}{5.0} & \si{\ampere\hour} \\
+$N_r$ & \code{SpmPlant<20>} & \multicolumn{2}{c}{20} & finite-volume shells per particle \\ \midrule
+\multicolumn{5}{@{}l}{\emph{``Power-cell'' scaling applied in the benchmark (\code{make\_dataset("spm",\dots)})}}\\
+$r_{\text{scale}}$ & \code{r\_scale} & \multicolumn{2}{c}{0.5} & particle radii (representative) \\
+$k_{\text{scale}}$ & \code{k\_scale} & \multicolumn{2}{c}{3} & reaction-rate constants (representative) \\
+$R_{\text{ohm}}$ & \code{R\_ohm\_ref} & \multicolumn{2}{c}{5.0} & \si{\milli\ohm}, lumped (representative) \\
+$E_{a,R_{\text{ohm}}}$ & \code{Ea\_R\_ohm} & \multicolumn{2}{c}{20\,000} & \si{\joule\per\mole} \\
+\bottomrule\end{tabular}
+\end{table}
+
+Setting $r_{\text{scale}} = k_{\text{scale}} = 1$ and $R_{\text{ohm}} = 0$ reproduces the published
+M50 parameters exactly; that configuration is the one cross-validated against PyBaMM in
+Appendix~\ref{app:validation}.
+
+\section{Equivalent-circuit model fitted to the SPM plant}
+
+The estimators are never given the SPM's electrochemical parameters. When the benchmark runs on the
+SPM plant they are given the 2-RC circuit below, identified against it by
+\code{tools/ident\_spm\_ecm} --- so the \code{spm} columns of every results table measure
+performance under a genuine structural model error.
+
+\begin{table}[H]\centering\small
+\caption{\code{CellParams::ecm\_fitted\_to\_spm()} in \code{benchmarks/cell\_params\_fit.cpp}. All values
+\textsf{fitted} by Levenberg--Marquardt on log-parameters against the power-cell SPM
+(HPPC-style pulse train plus a fixed-wing mission, isothermal); activation energies by regressing
+$\ln p$ on $1/T$ over fits at $-10$, $10$, $25$ and \SI{45}{\celsius}. Residual voltage RMSE
+\SI{4.02}{\milli\volt} at \SI{25}{\celsius}. Parameters not listed keep their nominal values
+(Table~\ref{tab:ap-ecm}).}
+\label{tab:ap-ecmfit}
+\begin{tabular}{@{}llrrl@{}}\toprule
+symbol & field & fitted & nominal & unit \\ \midrule
+$R_0$ & \code{R0} & 9.521 & 12.0 & \si{\milli\ohm} \\
+$R_1$ & \code{R1} & 2.077 & 6.0 & \si{\milli\ohm} \\
+$\tau_1$ & \code{tau1} & 15.13 & 5.0 & \si{\second} \\
+$R_2$ & \code{R2} & 2.547 & 8.0 & \si{\milli\ohm} \\
+$\tau_2$ & \code{tau2} & 555.8 & 120.0 & \si{\second} \\
+$M$ & \code{M} & 0 & 5.0 & \si{\milli\volt} (the SPM has no hysteresis) \\
+$E_{a,R_0}$ & \code{Ea\_R0} & 20\,185 & 20\,000 & \si{\joule\per\mole} \\
+$E_{a,R_1}$ & \code{Ea\_R1} & 17\,142 & 25\,000 & \si{\joule\per\mole} \\
+$E_{a,R_2}$ & \code{Ea\_R2} & 42\,140 & 30\,000 & \si{\joule\per\mole} \\
+$E_{a,\tau}$ & \code{Ea\_tau} & 0 & 25\,000 & \si{\joule\per\mole} \\
+\bottomrule\end{tabular}
+\end{table}
+
+Two features of this fit are worth carrying into the results chapters. The time constants come out
+practically temperature independent ($E_{a,\tau}\approx0$) while $E_{a,R_2}$ is
+\SI{42}{\kilo\joule\per\mole}: the temperature dependence of the solid-diffusion impedance is
+absorbed entirely into the \emph{magnitude} $R_2$ rather than into $\tau_2$. And the
+\SI{4}{\milli\volt} residual is irreducible for a constant-parameter 2-RC circuit, because
+Butler--Volmer kinetics are nonlinear in the current and the diffusion impedance depends on SOC.
+That \SI{4}{\milli\volt} is the noise floor of every \code{spm} result in this report.
+
+\section{Hysteresis}
+
+\begin{table}[H]\centering\small
+\caption{Hysteresis models. The estimator always uses the one-state model; the plant uses the
+one-state model except in the \code{preisach} scenario.}
+\label{tab:ap-hyst}
+\begin{tabular}{@{}llrl>{\raggedright\arraybackslash}p{0.36\textwidth}@{}}\toprule
+model & field & value & unit & note \\ \midrule
+One-state (Plett) & \code{M} & 5.0 & \si{\milli\volt} & $h_{k+1} = a_h h_k + (a_h-1)\sgn(i)$, $a_h = e^{-|\eta i \gamma \dt/(3600Q)|}$ \\
+ & \code{gamma} & 50.0 & -- & rate constant \\
+Preisach & \code{preisach\_M} & 15.0 & \si{\milli\volt} & major-loop half-width, \code{Preisach<32>}; the plant applies $-\mu^\T r$, so the charging branch lies above the discharging branch \\
+ & $L$ & 32 & -- & relay grid; $N_{\text{rel}} = L(L-1)/2 = 496$ relays \\
+ & \code{width} & 0.15 & -- & Gaussian weight $\mu(\alpha,\beta)\propto e^{-((\alpha-\beta)/0.15)^2}$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Sensors and estimator configuration}
+
+\begin{table}[H]\centering\small
+\caption{Nominal sensor model (\code{struct Scenario} defaults) and the configuration handed to
+every estimator (\code{struct EstimatorConfig}). See Chapter~\ref{ch:datasets},
+Tables~\ref{tab:ds-sensors} and~\ref{tab:ds-cfg}.}
+\label{tab:ap-sensors}
+\begin{tabular}{@{}llrl>{\raggedright\arraybackslash}p{0.36\textwidth}@{}}\toprule
+symbol & field & value & unit & note \\ \midrule
+$\sigma_v$ & \code{sigma\_v} & 2.0 & \si{\milli\volt} & voltage-sensor noise, std \\
+$\sigma_i$ & \code{sigma\_i} & 50.0 & \si{\milli\ampere} & current-sensor noise, std \\
+$\sigma_T$ & \code{sigma\_T} & 0.2 & \si{\kelvin} & temperature-sensor noise, std \\
+$q_v$ & \code{v\_quant} & 1.0 & \si{\milli\volt} & ADC step (mid-tread) \\
+$q_i$ & \code{i\_quant} & 10.0 & \si{\milli\ampere} & ADC step (mid-tread) \\
+$\kappa$ & \code{current\_gain} & 1.005 & -- & scale-factor error, $+\SI{0.5}{\percent}$ \\
+$b_i$ & \code{current\_bias} & 20.0 & \si{\milli\ampere} & offset, \SI{0.4}{\percent} of 1\,C \\
+$T_{\text{amb}}$, $T_0$ & \code{T\_amb}, \code{T0} & 298.15 & \si{\kelvin} & \SI{25}{\celsius} \\ \midrule
+$\dt$ & \code{dt} & 0.1 & \si{\second} & \SI{10}{\hertz} \\
+$\sigma_{\soc_0}$ & \code{sigma\_z0} & 0.1 & -- & assumed initial SOC std, \emph{all} scenarios \\
+$\soc_0$ & \code{z0} & $0.95 + \Delta$ & -- & clamped to $[0.02,1]$; $\Delta$ from the scenario \\ \midrule
+\multicolumn{5}{@{}l}{\emph{Model noise construction} (\code{EcmModel::Q}, \code{EcmModel::R})}\\
+$\mQ$ & --- & $\bm b\bm b^\T\sigma_i^2 + \diag(\bm q_f^2)$ & -- & $\bm b = \partial f/\partial i$ \\
+$\bm q_f$ & \code{q\_floor} & $(10^{-5}, 10^{-4}, 10^{-4}, 10^{-3})$ & -- & process-noise std floors on $(\soc,v_1,v_2,h)$ \\
+$\mR$ & --- & $\sigma_v^2 + (R_0(T)\sigma_i)^2$ & \si{\volt\squared} & includes the current feed-through \\
+$\mP_0$ & \code{P0} & $\diag(\sigma_{\soc_0}^2, 0.002^2, 0.005^2, 0.5^2)$ & -- & \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Mission profiles}
+
+\begin{table}[H]\centering\small
+\caption{Summary of the four mission profiles (details in Chapter~\ref{ch:datasets},
+Tables~\ref{tab:ds-evtol}--\ref{tab:ds-hover}). ``Realised'' charge includes the AR(1) gusts and the
+manoeuvre pulses at seed~1; peak values are for seed~1 on the ECM plant at \SI{25}{\celsius}
+ambient.}
+\label{tab:ap-profiles}
+\begin{tabular}{@{}lrrrrrrr@{}}\toprule
+profile & $T$ [\si{\second}] & $n$ & $\soc_0$ & nominal [\si{\ampere\hour}] & realised [\si{\ampere\hour}] & $\soc_{\text{end}}$ & $T_{\text{peak}}$ [\si{\celsius}] \\ \midrule
+\code{evtol}          & 2010 & 20\,100 & 0.95 & 3.746 & 3.763 & 0.196 & 36.9 \\
+\code{fixed\_wing}    & 2880 & 28\,800 & 0.95 & 3.942 & 3.959 & 0.157 & 31.9 \\
+\code{hover\_hold}    & 1140 & 11\,400 & 0.95 & 3.950 & 3.997 & 0.149 & 41.3 \\
+\code{ground\_charge} & 3600 & 36\,000 & 0.20 & $-5.000$ & $-4.008$ & 0.999 & 26.7 \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering\small
+\caption{Load-disturbance model, \code{generate\_current()}.}
+\label{tab:ap-gust}
+\begin{tabular}{@{}llrl@{}}\toprule
+symbol & meaning & value & note \\ \midrule
+$\tau_g$ & gust correlation time & \SI{2}{\second} & AR(1) coefficient $a = e^{-\dt/\tau_g} = 0.9512$ \\
+$\gamma_s$ & gust fraction & 0.05--0.15 & per segment; relative r.m.s.\ load fluctuation \\
+--- & pulse amplitude & $\times1.3$ & manoeuvre pulse \\
+--- & pulse duration & \SI{3}{\second} & \\
+--- & pulse period & \SI{120}{\second} & first at \SI{60}{\second} into a segment, only if $\gamma_s > 0.07$ \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Fault and operating scenarios}
+
+The twelve cell-level scenarios are defined in Chapter~\ref{ch:datasets},
+Table~\ref{tab:ds-scenarios}; their numerical parameters are repeated here in a single compact form
+for reference.
+
+\begin{table}[H]\centering\small
+\caption{Scenario parameters. Blank means the nominal value of Table~\ref{tab:ap-sensors}.
+``est.'' = the value the estimator is given; ``truth'' = a change to the plant.}
+\label{tab:ap-scen}
+\begin{tabular}{@{}lrrrrrl@{}}\toprule
+scenario & $\Delta\soc_0$ (est.) & $b_i$ [\si{\ampere}] & $\kappa$ & $T_{\text{amb}}$ [\si{\celsius}] & $\delta Q$ (truth) & other \\ \midrule
+\code{nominal}         &       & 0.02 & 1.005 & 25 &      & \\
+\code{init\_error}     & $-0.35$ & 0.02 & 1.005 & 25 &    & \\
+\code{current\_bias}   &       & 0.25 & 1.02  & 25 &      & \\
+\code{noise\_step}     &       & 0.02 & 1.005 & 25 &      & $\sigma_v: 2\to\SI{20}{\milli\volt}$ at \SI{600}{\second} \\
+\code{outliers}        &       & 0.02 & 1.005 & 25 &      & $p = 0.05$, $\pm\SI{50}{\milli\volt}$ \\
+\code{cold}            &       & 0.02 & 1.005 & $-10$ &   & $T_0 = T_{\text{amb}}$ \\
+\code{hot}             &       & 0.02 & 1.005 & $+45$ &   & $T_0 = T_{\text{amb}}$ \\
+\code{aged\_cell}      &       & 0.02 & 1.005 & 25 & 0.15 & $R_0 \times (1+2.5\times0.15)$ \\
+\code{param\_mismatch} &       & 0.02 & 1.005 & 25 &      & est.: $R_0{\times}0.7$, $R_1{\times}1.3$, $\tau_2{\times}1.5$ \\
+\code{sensor\_dropout} &       & 0.02 & 1.005 & 25 &      & $v$ stuck, \SI{200}{\second}--\SI{215}{\second} \\
+\code{preisach}        &       & 0.02 & 1.005 & 25 &      & truth: Preisach, $M_p = \SI{15}{\milli\volt}$ \\
+\code{combined}        & $-0.25$ & 0.15 & 1.02  & 0 & 0.10 & \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Pack}
+
+\begin{table}[H]\centering\small
+\caption{Pack dataset parameters, \code{pack/pack\_dataset.hpp}. The shared current sensor uses the
+nominal model of Table~\ref{tab:ap-sensors}; each cell has its own voltage and temperature channel.}
+\label{tab:ap-pack}
+\begin{tabular}{@{}llrl>{\raggedright\arraybackslash}p{0.36\textwidth}@{}}\toprule
+symbol & field & value & unit & note \\ \midrule
+$N_c$ & \code{kPackCells} & 12 & -- & cells in series, one shared current \\
+$s_Q$ & \code{spread\_Q} & 2.0 & \si{\percent} & relative capacity std \\
+$s_R$ & \code{spread\_R0} & 8.0 & \si{\percent} & relative resistance std; one draw scales $R_0,R_1,R_2$ together \\
+$s_z$ & \code{spread\_z0} & 0.015 & -- & absolute initial-SOC imbalance std \\
+$s_T$ & \code{spread\_T} & 1.5 & \si{\kelvin} & per-cell ambient offset (thermal gradient) \\
+--- & \code{weak\_cell} & 5 & -- & index of the weak cell (\code{weak\_cell} scenario) \\
+--- & \code{weak\_capacity\_loss} & 12.0 & \si{\percent} & \\
+--- & \code{weak\_R\_scale} & 1.3 & -- & applied to $R_0, R_1$ of the weak cell \\
+--- & \code{spread\_z0} (large) & 0.05 & -- & \code{large\_imbalance} scenario \\
+--- & \code{spread\_Q} (large) & 5.0 & \si{\percent} & \code{large\_imbalance} scenario \\
+\bottomrule\end{tabular}
+\end{table}
+
+At seed~1 the nominal draw gives capacities from \SIrange{4.789}{5.120}{\ampere\hour} and initial
+SOCs from \numrange{0.933}{0.970}; the true cell-SOC spread grows to \num{6.3} percentage points by
+the end of the eVTOL mission, and to \num{15.0} points in the \code{weak\_cell} scenario.
+
+\section{Inertial dataset}
+
+\begin{table}[H]\centering\small
+\caption{IMU dataset parameters, \code{attitude/imu\_dataset.hpp}. Noise figures are per sample at
+\SI{100}{\hertz}. Frames: navigation NED, body FRD, $q$ maps body to navigation.}
+\label{tab:ap-imu}
+\begin{tabular}{@{}llrl>{\raggedright\arraybackslash}p{0.36\textwidth}@{}}\toprule
+symbol & field & value & unit & note \\ \midrule
+$\dt$ & \code{dt} & 0.01 & \si{\second} & \SI{100}{\hertz} \\
+$T$ & \code{duration\_s} & 900 & \si{\second} & $n = \num{90000}$ \\
+$g$ & \code{g} & 9.80665 & \si{\metre\per\second\squared} & \\
+$\sigma_g$ & \code{gyro\_noise} & 0.1 & \si{\degree\per\second} & \\
+$\bm b^g_0$ & \code{gyro\_bias0} & $(+1,-0.6,+0.4)\times0.5$ & \si{\degree\per\second} & \SI{3.0}{\degree\per\second} in \code{gyro\_bias} \\
+$\sigma_{b^g}$ & \code{gyro\_bias\_rw} & 0.002 & \si{\degree\per\second} & per $\sqrt{\text{sample}}$ \\
+$\sigma_a$ & \code{accel\_noise} & 0.05 & \si{\metre\per\second\squared} & $+1.0$ in \code{vibration} \\
+$\bm b^a$ & \code{accel\_bias} & $(+1,-1,+0.5)\times0.02$ & \si{\metre\per\second\squared} & constant \\
+$\sigma_m$ & \code{mag\_noise} & 0.5 & \si{\micro\tesla} & \\
+$\bm b^m$ & hard-iron & $(0.30,-0.15,0.25)$ & \si{\micro\tesla} & residual after calibration, $\norm{\bm b^m}=\SI{0.42}{\micro\tesla}$ = \SI{0.8}{\percent} of field \\
+$|m_{\text{nav}}|$ & --- & 48.0 & \si{\micro\tesla} & inclination \SI{65}{\degree}, declination 0 \\
+$m_{\text{nav}}$ & \code{mag\_ref\_nav} & $(20.286, 0, 43.503)$ & \si{\micro\tesla} & derived \\
+$\tau_{\text{lp}}$ & --- & 2.0 & \si{\second} & low-pass on the scripted Euler angles \\
+$\gamma$ offset & --- & 3.0 & \si{\degree} & constant angle of attack, $\gamma = \theta - \SI{3}{\degree}$ \\
+--- & \code{init\_error\_deg} & 30 & \si{\degree} & per axis $\Rightarrow$ \SI{46.62}{\degree} total \\
+--- & \code{mag\_disturb\_uT} & 25 & \si{\micro\tesla} & nav-east, $t\in[300,320)\,\si{\second}$ \\
+--- & \code{turbulence} & 1 (3) & -- & scale factor; 3 in \code{high\_dynamics} \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{State-of-health protocol}
+
+\begin{table}[H]\centering\small
+\caption{Multi-flight ageing protocol, \code{benchmarks/bench\_soh.cpp}.}
+\label{tab:ap-soh}
+\begin{tabular}{@{}llrl@{}}\toprule
+quantity & flag & value & note \\ \midrule
+flights & \code{--flights} & 120 & one cycle per simulated day \\
+ageing acceleration & \code{--accel} & 3 & capacity-loss increment multiplied per step \\
+mission & \code{--profile} & \code{evtol} & \SI{2010}{\second} \\
+rest 1 & --- & \SI{1200}{\second} & after the flight \\
+recharge & --- & $\le\SI{5400}{\second}$ & 1\,C CC to \SI{4.20}{\volt}, CV taper to $C/20$ \\
+rest 2 & --- & \SI{1200}{\second} & after the recharge \\
+calendar step & \code{age\_calendar(1)} & \SI{1}{\day} & between cycles; RC and thermal states relax \\
+$\hat Q_f$ window & --- & last \SI{10}{\percent} & of the flight phase only \\
+scoring window & --- & flights 11--120 & first ten discarded \\
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Random-number streams}
+
+\begin{table}[H]\centering\small
+\caption{Seed derivation. The generator is xoshiro256$^{**}$ with \code{splitmix64}
+seeding~\cite{blackman2021xoshiro}; $s$ is the benchmark seed.}
+\label{tab:ap-seeds}
+\begin{tabular}{@{}ll>{\raggedright\arraybackslash}p{0.5\textwidth}@{}}\toprule
+stream & seed & used for \\ \midrule
+load & $7919\,s + 17$ & AR(1) gusts (the manoeuvre pulses are deterministic) \\
+sensors & $104729\,s + 3$ & voltage, current and temperature noise; outliers \\
+cell spread & $31337\,s + 11$ & pack per-cell $Q$, $R$, $\soc_0$, $T_{\text{amb}}$ \\
+inertial & $7919\,s + 101$ & gyro/accelerometer/magnetometer noise, gyro-bias random walk \\
+SOH & 12345 (load), 777 (sensors) & fixed, independent of the estimator under test \\
+estimator & \code{EstimatorConfig::seed} $= s$ & particle-filter resampling, ensemble initialisation \\
+\bottomrule\end{tabular}
+\end{table}

@@ -1,0 +1,29 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{SMO: cell-level benchmark on the eVTOL mission (mean over seeds; RMSE and max error in \% SOC; $t_\mathrm{conv}$: first time the error stays below 2\,\% for 60\,s, -- = never; EKF reference: steady-state RMSE of the plain EKF on the same data).}\label{tab:cell_SMO}
+\begin{tabular}{llrrrrrcrr}\toprule
+plant & scenario & RMSE & RMSE$_\mathrm{ss}$ & max & $t_\mathrm{conv}$ [s] & RMSE$_v$ [mV] & div. & EKF ref. & ns/step \\ \midrule
+ECM & nominal & 0.20 & 0.08 & 0.60 & 0 & 0.82 & no & 0.05 & 517 \\
+ECM & init\_error & 4.06 & 0.08 & 33.69 & 323 & 5.26 & no & 0.05 & 551 \\
+ECM & current\_bias & 0.90 & 0.86 & 1.88 & 0 & 0.87 & no & 0.61 & 539 \\
+ECM & noise\_step & 0.33 & 0.33 & 1.19 & 0 & 3.24 & no & 0.12 & 2233 \\
+ECM & outliers & 0.19 & 0.17 & 0.94 & 0 & 2.22 & no & 0.21 & 1024 \\
+ECM & cold & 1.56 & 0.46 & 6.21 & 0 & 2.17 & no & 0.16 & 394 \\
+ECM & hot & 0.18 & 0.04 & 0.59 & 0 & 0.59 & no & 0.03 & 524 \\
+ECM & aged\_cell & 2.24 & 2.21 & 6.10 & 0 & 3.36 & no & 1.52 & 664 \\
+ECM & param\_mismatch & 1.44 & 1.49 & 5.36 & 0 & 2.68 & no & 1.36 & 619 \\
+ECM & sensor\_dropout & 0.21 & 0.08 & 1.79 & 0 & 1.73 & no & 0.46 & 512 \\
+ECM & preisach & 0.84 & 1.01 & 1.68 & 0 & 0.86 & no & 0.20 & 558 \\
+ECM & combined & 5.21 & 2.11 & 24.28 & 824 & 5.99 & no & 12.44 & 491 \\
+\midrule
+SPM & nominal & 0.82 & 0.63 & 3.66 & 0 & 1.06 & no & 3.73 & 350 \\
+SPM & init\_error & 6.68 & 2.23 & 33.71 & 1479 & 5.02 & no & 3.81 & 366 \\
+SPM & current\_bias & 0.73 & 0.62 & 3.55 & 0 & 1.13 & no & 5.69 & 371 \\
+SPM & noise\_step & 0.86 & 0.70 & 3.66 & 0 & 3.37 & no & 3.30 & 1220 \\
+SPM & outliers & 0.85 & 0.62 & 4.12 & 0 & 2.35 & no & 1.99 & 609 \\
+SPM & cold & 2.94 & 3.54 & 9.66 & 0 & 4.48 & no & 7.35 & 400 \\
+SPM & hot & 0.78 & 0.63 & 4.50 & 0 & 0.75 & no & 2.16 & 356 \\
+SPM & param\_mismatch & 1.81 & 1.24 & 5.65 & 0 & 1.89 & no & 3.13 & 332 \\
+SPM & sensor\_dropout & 0.88 & 0.62 & 6.57 & 0 & 1.98 & no & 5.31 & 357 \\
+\bottomrule\end{tabular}\end{table}

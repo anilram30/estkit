@@ -1,0 +1,7 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}\caption{Cross-validation of the estkit Madgwick ($\beta=0.1$) and Mahony ($k_P=1$, $k_I=0.1$) filters against the \texttt{ahrs} 0.4.0 Python library on the nominal flight dataset (90000 samples, \SI{100}{\hertz}): angular distance between the two implementations' quaternions, and attitude RMS error of each against the truth.}\label{tab:val_ahrs}
+\begin{tabular}{lcccc}\toprule filter & max $\angle(\hat q_{\mathrm{estkit}}, \hat q_{\mathrm{ahrs}})$ [deg] & mean [deg] & RMS err.\ estkit [deg] & RMS err.\ ahrs [deg] \\ \midrule
+Madgwick & 0.0014 & 0.0004 & 17.604 & 17.604 \\
+Mahony & 0.0014 & 0.0004 & 22.639 & 22.639 \\
+\bottomrule\end{tabular}\end{table}

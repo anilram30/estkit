@@ -1,0 +1,5759 @@
+[
+ {
+  "name": "CoulombOCVHybrid",
+  "family": "baselines",
+  "family_label": "Baselines",
+  "level": "cell",
+  "chapter_title": "OCV-Corrected Coulomb Counting (Hybrid)",
+  "chapter_label": "ch:coulombocvhybrid",
+  "chapter_file": "report/chapters/baselines/CoulombOCVHybrid.tex",
+  "headers": [
+   "include/estkit/battery/baselines.hpp"
+  ],
+  "state": "n_x = 4 propagated open-loop; corrected while i < 0.3 C",
+  "cost": "O(n_x) under load, + n_b=40 bisection steps when correcting; \u2248 211 ns/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "ng2009coulomb",
+    "text": "Ng, K. S., Moo, C. S., Chen, Y. P. and Hsieh, Y. C. (2009). Enhanced coulomb counting method for estimating state-of-charge and state-of-health of lithium-ion batteries. *Applied Energy* 86(9), 1506\u20131511. doi:[10.1016/j.apenergy.2008.11.021](https://doi.org/10.1016/j.apenergy.2008.11.021)",
+    "doi": "10.1016/j.apenergy.2008.11.021"
+   },
+   {
+    "key": "plett2015bms1",
+    "text": "Plett, G. L. (2015). Battery Management Systems, Volume I: Battery Modeling. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "hu2012comparative",
+    "text": "Hu, X., Li, S. and Peng, H. (2012). A comparative study of equivalent circuit models for Li-ion batteries. *Journal of Power Sources* 198, 359\u2013367. doi:[10.1016/j.jpowsour.2011.10.013](https://doi.org/10.1016/j.jpowsour.2011.10.013)",
+    "doi": "10.1016/j.jpowsour.2011.10.013"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 9.41,
+    "cold": 0.21,
+    "combined": 1.33,
+    "current_bias": 1.94,
+    "hot": 0.24,
+    "init_error": 4.42,
+    "noise_step": 0.17,
+    "nominal": 0.17,
+    "outliers": 0.05,
+    "param_mismatch": 0.16,
+    "preisach": 2.28,
+    "sensor_dropout": 0.17
+   },
+   "spm": {
+    "cold": 3.5,
+    "current_bias": 2.9,
+    "hot": 0.46,
+    "init_error": 5.23,
+    "noise_step": 0.66,
+    "nominal": 0.66,
+    "outliers": 0.83,
+    "param_mismatch": 0.99,
+    "sensor_dropout": 0.66
+   },
+   "geo_mean": 0.53,
+   "worst": 9.41,
+   "nominal": 0.17,
+   "ns_per_step": 211,
+   "bytes": 4192,
+   "rank": 58
+  }
+ },
+ {
+  "name": "CoulombCounting",
+  "family": "baselines",
+  "family_label": "Baselines",
+  "level": "cell",
+  "chapter_title": "Coulomb Counting (ampere-hour integration)",
+  "chapter_label": "ch:coulombcounting",
+  "chapter_file": "report/chapters/baselines/CoulombCounting.tex",
+  "headers": [
+   "include/estkit/battery/baselines.hpp"
+  ],
+  "state": "n_x = 4 propagated open-loop; only is reported",
+  "cost": "O(n_x), \u2248 79 ns/step measured, no heap, no feedback",
+  "estimates": "",
+  "references": [
+   {
+    "key": "ng2009coulomb",
+    "text": "Ng, K. S., Moo, C. S., Chen, Y. P. and Hsieh, Y. C. (2009). Enhanced coulomb counting method for estimating state-of-charge and state-of-health of lithium-ion batteries. *Applied Energy* 86(9), 1506\u20131511. doi:[10.1016/j.apenergy.2008.11.021](https://doi.org/10.1016/j.apenergy.2008.11.021)",
+    "doi": "10.1016/j.apenergy.2008.11.021"
+   },
+   {
+    "key": "plett2015bms1",
+    "text": "Plett, G. L. (2015). Battery Management Systems, Volume I: Battery Modeling. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "lin2018sensorbias",
+    "text": "Lin, X. (2018). Theoretical analysis of battery SOC estimation errors under sensor bias and variance. *IEEE Transactions on Industrial Electronics* 65(9), 7220\u20137230. doi:[10.1109/TIE.2018.2795521](https://doi.org/10.1109/TIE.2018.2795521)",
+    "doi": "10.1109/TIE.2018.2795521"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 10.05,
+    "cold": 0.44,
+    "combined": 20.94,
+    "current_bias": 3.2,
+    "hot": 0.24,
+    "init_error": 35.35,
+    "noise_step": 0.36,
+    "nominal": 0.36,
+    "outliers": 0.35,
+    "param_mismatch": 0.36,
+    "preisach": 0.36,
+    "sensor_dropout": 0.36
+   },
+   "spm": {
+    "cold": 0.47,
+    "current_bias": 3.31,
+    "hot": 0.47,
+    "init_error": 35.46,
+    "noise_step": 0.47,
+    "nominal": 0.47,
+    "outliers": 0.46,
+    "param_mismatch": 0.47,
+    "sensor_dropout": 0.47
+   },
+   "geo_mean": 1.15,
+   "worst": 35.35,
+   "nominal": 0.36,
+   "ns_per_step": 79,
+   "bytes": 4184,
+   "rank": 68
+  }
+ },
+ {
+  "name": "OCVLookup",
+  "family": "baselines",
+  "family_label": "Baselines",
+  "level": "cell",
+  "chapter_title": "Open-Circuit-Voltage Inversion (OCV Lookup)",
+  "chapter_label": "ch:ocvlookup",
+  "chapter_file": "report/chapters/baselines/OCVLookup.tex",
+  "headers": [
+   "include/estkit/battery/baselines.hpp"
+  ],
+  "state": "n_x = 4; replaced each step, v_1,v_2,h propagate open-loop",
+  "cost": "O(n_b) with n_b=40 bisection steps, \u2248 1310 ns/step, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2015bms1",
+    "text": "Plett, G. L. (2015). Battery Management Systems, Volume I: Battery Modeling. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "weng2014ocv",
+    "text": "Weng, C., Sun, J. and Peng, H. (2014). A unified open-circuit-voltage model of lithium-ion batteries for state-of-charge estimation and state-of-health monitoring. *Journal of Power Sources* 258, 228\u2013237.",
+    "doi": ""
+   },
+   {
+    "key": "hu2012comparative",
+    "text": "Hu, X., Li, S. and Peng, H. (2012). A comparative study of equivalent circuit models for Li-ion batteries. *Journal of Power Sources* 198, 359\u2013367. doi:[10.1016/j.jpowsour.2011.10.013](https://doi.org/10.1016/j.jpowsour.2011.10.013)",
+    "doi": "10.1016/j.jpowsour.2011.10.013"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.38,
+    "cold": 1.56,
+    "combined": 1.15,
+    "current_bias": 2.13,
+    "hot": 1.24,
+    "init_error": 1.3,
+    "noise_step": 1.31,
+    "nominal": 1.3,
+    "outliers": 1.31,
+    "param_mismatch": 0.41,
+    "preisach": 2.15,
+    "sensor_dropout": 1.3
+   },
+   "spm": {
+    "cold": 6.11,
+    "current_bias": 2.49,
+    "hot": 1.98,
+    "init_error": 2.03,
+    "noise_step": 2.03,
+    "nominal": 2.03,
+    "outliers": 2.03,
+    "param_mismatch": 0.6,
+    "sensor_dropout": 2.03
+   },
+   "geo_mean": 1.29,
+   "worst": 2.15,
+   "nominal": 1.3,
+   "ns_per_step": 1310,
+   "bytes": 4192,
+   "rank": 69
+  }
+ },
+ {
+  "name": "SO-EKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Second-Order Extended Kalman Filter (SO-EKF)",
+  "chapter_label": "ch:soekf",
+  "chapter_file": "report/chapters/kalman/SOEKF.tex",
+  "headers": [
+   "include/estkit/filters/soekf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^4) traces, 2n_x(n_x+1) model calls per Hessian; 3.9\u20134.2 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "athans1968",
+    "text": "Athans, M., Wishner, R. P. and Bertolini, A. (1968). Suboptimal state estimation for continuous-time nonlinear systems from discrete noisy measurements. *IEEE Transactions on Automatic Control* 13(5), 504\u2013514. doi:[10.1109/TAC.1968.1098986](https://doi.org/10.1109/TAC.1968.1098986)",
+    "doi": "10.1109/TAC.1968.1098986"
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "bass1966",
+    "text": "Bass, R. W., Norum, V. D. and Schwartz, L. (1966). Optimal multichannel nonlinear filtering. *Journal of Mathematical Analysis and Applications* 16(1), 152\u2013164.",
+    "doi": ""
+   },
+   {
+    "key": "maybeck1982vol2",
+    "text": "Maybeck, P. S. (1982). Stochastic Models, Estimation, and Control, Volume 2. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "gelb1974",
+    "text": "Gelb, A. (1974). Applied Optimal Estimation. MIT Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.56,
+    "cold": 0.13,
+    "combined": 1.28,
+    "current_bias": 0.62,
+    "hot": 0.03,
+    "init_error": 0.08,
+    "noise_step": 0.14,
+    "nominal": 0.04,
+    "outliers": 0.3,
+    "param_mismatch": 0.89,
+    "preisach": 0.2,
+    "sensor_dropout": 0.18
+   },
+   "spm": {
+    "cold": 8.16,
+    "current_bias": 5.58,
+    "hot": 2.13,
+    "init_error": 4.13,
+    "noise_step": 3.19,
+    "nominal": 3.52,
+    "outliers": 1.27,
+    "param_mismatch": 4.14,
+    "sensor_dropout": 5.13
+   },
+   "geo_mean": 0.23,
+   "worst": 1.56,
+   "nominal": 0.04,
+   "ns_per_step": 4202,
+   "bytes": 4496,
+   "rank": 13
+  }
+ },
+ {
+  "name": "UKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Unscented Kalman Filter (UKF)",
+  "chapter_label": "ch:ukf",
+  "chapter_file": "report/chapters/kalman/UKF.tex",
+  "headers": [
+   "include/estkit/filters/ukf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) plus 2(2n_x+1) model calls; 1.34\u20131.46 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "julier2000newmethod",
+    "text": "Julier, S. J., Uhlmann, J. K. and Durrant-Whyte, H. F. (2000). A new method for the nonlinear transformation of means and covariances in filters and estimators. *IEEE Transactions on Automatic Control* 45(3), 477\u2013482. doi:[10.1109/9.847726](https://doi.org/10.1109/9.847726)",
+    "doi": "10.1109/9.847726"
+   },
+   {
+    "key": "wan2000ukf",
+    "text": "Wan, E. A. and van der Merwe, R. (2000). The unscented Kalman filter for nonlinear estimation. In *Proc. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium (AS-SPCC)*, pp. 153\u2013158. doi:[10.1109/ASSPCC.2000.882463](https://doi.org/10.1109/ASSPCC.2000.882463)",
+    "doi": "10.1109/ASSPCC.2000.882463"
+   },
+   {
+    "key": "julier2004unscented",
+    "text": "Julier, S. J. and Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE* 92(3), 401\u2013422. doi:[10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141)",
+    "doi": "10.1109/JPROC.2003.823141"
+   },
+   {
+    "key": "plett2006spkf1",
+    "text": "Plett, G. L. (2006). Sigma-point Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 1: Introduction and state estimation. *Journal of Power Sources* 161(2), 1356\u20131368. doi:[10.1016/j.jpowsour.2006.06.003](https://doi.org/10.1016/j.jpowsour.2006.06.003)",
+    "doi": "10.1016/j.jpowsour.2006.06.003"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.36,
+    "cold": 0.07,
+    "combined": 1.19,
+    "current_bias": 0.57,
+    "hot": 0.03,
+    "init_error": 0.07,
+    "noise_step": 0.11,
+    "nominal": 0.04,
+    "outliers": 0.18,
+    "param_mismatch": 1.37,
+    "preisach": 0.23,
+    "sensor_dropout": 0.86
+   },
+   "spm": {
+    "cold": 8.29,
+    "current_bias": 6.46,
+    "hot": 2.36,
+    "init_error": 4.54,
+    "noise_step": 3.24,
+    "nominal": 3.96,
+    "outliers": 1.76,
+    "param_mismatch": 4.95,
+    "sensor_dropout": 7.26
+   },
+   "geo_mean": 0.24,
+   "worst": 1.37,
+   "nominal": 0.04,
+   "ns_per_step": 1442,
+   "bytes": 4776,
+   "rank": 14
+  }
+ },
+ {
+  "name": "SR-UKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Square-Root Unscented Kalman Filter (SR-UKF)",
+  "chapter_label": "ch:srukf",
+  "chapter_file": "report/chapters/kalman/SRUKF.tex",
+  "headers": [
+   "include/estkit/filters/srukf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) (QR + rank-one updates), 18 model calls; 1.42\u20131.57 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "vandermerwe2001srukf",
+    "text": "van der Merwe, R. and Wan, E. A. (2001). The square-root unscented Kalman filter for state and parameter-estimation. In *Proc. IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)*, pp. 3461\u20133464. doi:[10.1109/ICASSP.2001.940586](https://doi.org/10.1109/ICASSP.2001.940586)",
+    "doi": "10.1109/ICASSP.2001.940586"
+   },
+   {
+    "key": "wan2000ukf",
+    "text": "Wan, E. A. and van der Merwe, R. (2000). The unscented Kalman filter for nonlinear estimation. In *Proc. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium (AS-SPCC)*, pp. 153\u2013158. doi:[10.1109/ASSPCC.2000.882463](https://doi.org/10.1109/ASSPCC.2000.882463)",
+    "doi": "10.1109/ASSPCC.2000.882463"
+   },
+   {
+    "key": "gillgolub1974",
+    "text": "Gill, P. E., Golub, G. H., Murray, W. and Saunders, M. A. (1974). Methods for modifying matrix factorizations. *Mathematics of Computation* 28(126), 505\u2013535.",
+    "doi": ""
+   },
+   {
+    "key": "plett2006spkf1",
+    "text": "Plett, G. L. (2006). Sigma-point Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 1: Introduction and state estimation. *Journal of Power Sources* 161(2), 1356\u20131368. doi:[10.1016/j.jpowsour.2006.06.003](https://doi.org/10.1016/j.jpowsour.2006.06.003)",
+    "doi": "10.1016/j.jpowsour.2006.06.003"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.36,
+    "cold": 0.07,
+    "combined": 1.19,
+    "current_bias": 0.57,
+    "hot": 0.03,
+    "init_error": 0.07,
+    "noise_step": 0.11,
+    "nominal": 0.04,
+    "outliers": 0.18,
+    "param_mismatch": 1.37,
+    "preisach": 0.23,
+    "sensor_dropout": 0.86
+   },
+   "spm": {
+    "cold": 8.29,
+    "current_bias": 6.46,
+    "hot": 2.36,
+    "init_error": 4.54,
+    "noise_step": 3.24,
+    "nominal": 3.96,
+    "outliers": 1.76,
+    "param_mismatch": 4.95,
+    "sensor_dropout": 7.26
+   },
+   "geo_mean": 0.24,
+   "worst": 1.37,
+   "nominal": 0.04,
+   "ns_per_step": 1554,
+   "bytes": 4896,
+   "rank": 15
+  }
+ },
+ {
+  "name": "IEKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Iterated Extended Kalman Filter (IEKF)",
+  "chapter_label": "ch:iekf",
+  "chapter_file": "report/chapters/kalman/IEKF.tex",
+  "headers": [
+   "include/estkit/filters/iekf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(J n_x^3), J5 iterations; 0.56\u20130.60 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "bellcathey1993",
+    "text": "Bell, B. M. and Cathey, F. W. (1993). The iterated Kalman filter update as a Gauss-Newton method. *IEEE Transactions on Automatic Control* 38(2), 294\u2013297. doi:[10.1109/9.250476](https://doi.org/10.1109/9.250476)",
+    "doi": "10.1109/9.250476"
+   },
+   {
+    "key": "gelb1974",
+    "text": "Gelb, A. (1974). Applied Optimal Estimation. MIT Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.69,
+    "cold": 0.15,
+    "combined": 2.13,
+    "current_bias": 0.64,
+    "hot": 0.03,
+    "init_error": 0.06,
+    "noise_step": 0.27,
+    "nominal": 0.08,
+    "outliers": 0.36,
+    "param_mismatch": 1.5,
+    "preisach": 0.21,
+    "sensor_dropout": 0.19
+   },
+   "spm": {
+    "cold": 7.49,
+    "current_bias": 5.67,
+    "hot": 2.12,
+    "init_error": 3.13,
+    "noise_step": 4.05,
+    "nominal": 3.66,
+    "outliers": 1.73,
+    "param_mismatch": 2.87,
+    "sensor_dropout": 5.18
+   },
+   "geo_mean": 0.28,
+   "worst": 2.13,
+   "nominal": 0.08,
+   "ns_per_step": 596,
+   "bytes": 4336,
+   "rank": 23
+  }
+ },
+ {
+  "name": "SR-EKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Square-Root Extended Kalman Filter (SR-EKF)",
+  "chapter_label": "ch:srekf",
+  "chapter_file": "report/chapters/kalman/SREKF.tex",
+  "headers": [
+   "include/estkit/filters/srekf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) (two Householder QRs); 0.78\u20130.83 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "kaminski1971",
+    "text": "Kaminski, P. G., Bryson, A. E. and Schmidt, S. F. (1971). Discrete square root filtering: A survey of current techniques. *IEEE Transactions on Automatic Control* 16(6), 727\u2013736. doi:[10.1109/TAC.1971.1099816](https://doi.org/10.1109/TAC.1971.1099816)",
+    "doi": "10.1109/TAC.1971.1099816"
+   },
+   {
+    "key": "kailath2000",
+    "text": "Kailath, T., Sayed, A. H. and Hassibi, B. (2000). Linear Estimation. Prentice Hall.",
+    "doi": ""
+   },
+   {
+    "key": "potter1963",
+    "text": "Potter, J. E. and Stern, R. G. (1963). Statistical filtering of space navigation measurements. In *Proc. AIAA Guidance and Control Conference*. doi:[10.2514/6.1963-333](https://doi.org/10.2514/6.1963-333)",
+    "doi": "10.2514/6.1963-333"
+   },
+   {
+    "key": "carlson1973",
+    "text": "Carlson, N. A. (1973). Fast triangular formulation of the square root filter. *AIAA Journal* 11(9), 1259\u20131265.",
+    "doi": ""
+   },
+   {
+    "key": "verhaegen1986",
+    "text": "Verhaegen, M. and Van Dooren, P. (1986). Numerical aspects of different Kalman filter implementations. *IEEE Transactions on Automatic Control* 31(10), 907\u2013917. doi:[10.1109/TAC.1986.1104128](https://doi.org/10.1109/TAC.1986.1104128)",
+    "doi": "10.1109/TAC.1986.1104128"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.52,
+    "cold": 0.16,
+    "combined": 12.44,
+    "current_bias": 0.61,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.12,
+    "nominal": 0.05,
+    "outliers": 0.21,
+    "param_mismatch": 1.36,
+    "preisach": 0.2,
+    "sensor_dropout": 0.46
+   },
+   "spm": {
+    "cold": 7.35,
+    "current_bias": 5.69,
+    "hot": 2.16,
+    "init_error": 3.81,
+    "noise_step": 3.3,
+    "nominal": 3.73,
+    "outliers": 1.99,
+    "param_mismatch": 3.13,
+    "sensor_dropout": 5.31
+   },
+   "geo_mean": 0.3,
+   "worst": 12.44,
+   "nominal": 0.05,
+   "ns_per_step": 821,
+   "bytes": 4440,
+   "rank": 26
+  }
+ },
+ {
+  "name": "EIF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Extended Information Filter (EIF)",
+  "chapter_label": "ch:eif",
+  "chapter_file": "report/chapters/kalman/EIF.tex",
+  "headers": [
+   "include/estkit/filters/eif.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3), three n_x\u00d7 n_x inversions; 1.17\u20131.24 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "mutambara1998",
+    "text": "Mutambara, A. G. O. (1998). Decentralized Estimation and Control for Multisensor Systems. CRC Press.",
+    "doi": ""
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   },
+   {
+    "key": "maybeck1979",
+    "text": "Maybeck, P. S. (1979). Stochastic Models, Estimation, and Control, Volume 1. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "thrun2005",
+    "text": "Thrun, S., Burgard, W. and Fox, D. (2005). Probabilistic Robotics. MIT Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.52,
+    "cold": 0.16,
+    "combined": 12.44,
+    "current_bias": 0.61,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.12,
+    "nominal": 0.05,
+    "outliers": 0.21,
+    "param_mismatch": 1.36,
+    "preisach": 0.2,
+    "sensor_dropout": 0.46
+   },
+   "spm": {
+    "cold": 7.35,
+    "current_bias": 5.69,
+    "hot": 2.16,
+    "init_error": 3.81,
+    "noise_step": 3.3,
+    "nominal": 3.73,
+    "outliers": 1.99,
+    "param_mismatch": 3.13,
+    "sensor_dropout": 5.31
+   },
+   "geo_mean": 0.3,
+   "worst": 12.44,
+   "nominal": 0.05,
+   "ns_per_step": 1221,
+   "bytes": 4472,
+   "rank": 27
+  }
+ },
+ {
+  "name": "UD-EKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "U-D Factorised Kalman Filter (UD-EKF)",
+  "chapter_label": "ch:udekf",
+  "chapter_file": "report/chapters/kalman/UDEKF.tex",
+  "headers": [
+   "include/estkit/filters/udkf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^2(n_x+n_q)), no square roots; 0.45\u20130.49 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "bierman1977",
+    "text": "Bierman, G. J. (1977). Factorization Methods for Discrete Sequential Estimation. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "thornton1976ud",
+    "text": "Thornton, C. L. and Bierman, G. J. (1977). Gram-Schmidt algorithms for covariance propagation. *International Journal of Control* 25(2), 243\u2013260. doi:[10.1080/00207177708922227](https://doi.org/10.1080/00207177708922227)",
+    "doi": "10.1080/00207177708922227"
+   },
+   {
+    "key": "kaminski1971",
+    "text": "Kaminski, P. G., Bryson, A. E. and Schmidt, S. F. (1971). Discrete square root filtering: A survey of current techniques. *IEEE Transactions on Automatic Control* 16(6), 727\u2013736. doi:[10.1109/TAC.1971.1099816](https://doi.org/10.1109/TAC.1971.1099816)",
+    "doi": "10.1109/TAC.1971.1099816"
+   },
+   {
+    "key": "grewal2014",
+    "text": "Grewal, M. S. and Andrews, A. P. (2014). Kalman Filtering: Theory and Practice Using MATLAB. Wiley, 4th ed..",
+    "doi": ""
+   },
+   {
+    "key": "verhaegen1986",
+    "text": "Verhaegen, M. and Van Dooren, P. (1986). Numerical aspects of different Kalman filter implementations. *IEEE Transactions on Automatic Control* 31(10), 907\u2013917. doi:[10.1109/TAC.1986.1104128](https://doi.org/10.1109/TAC.1986.1104128)",
+    "doi": "10.1109/TAC.1986.1104128"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.52,
+    "cold": 0.16,
+    "combined": 12.44,
+    "current_bias": 0.61,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.12,
+    "nominal": 0.05,
+    "outliers": 0.21,
+    "param_mismatch": 1.36,
+    "preisach": 0.2,
+    "sensor_dropout": 0.46
+   },
+   "spm": {
+    "cold": 7.35,
+    "current_bias": 5.69,
+    "hot": 2.16,
+    "init_error": 3.81,
+    "noise_step": 3.3,
+    "nominal": 3.73,
+    "outliers": 1.99,
+    "param_mismatch": 3.13,
+    "sensor_dropout": 5.31
+   },
+   "geo_mean": 0.3,
+   "worst": 12.44,
+   "nominal": 0.05,
+   "ns_per_step": 484,
+   "bytes": 4480,
+   "rank": 28
+  }
+ },
+ {
+  "name": "EKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Extended Kalman Filter (EKF)",
+  "chapter_label": "ch:ekf",
+  "chapter_file": "report/chapters/kalman/EKF.tex",
+  "headers": [
+   "include/estkit/filters/ekf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3 + n_x^2 n_y), 443\u2013482 ns/step measured, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "kalman1960",
+    "text": "Kalman, R. E. (1960). A new approach to linear filtering and prediction problems. *Journal of Basic Engineering* 82(1), 35\u201345. doi:[10.1115/1.3662552](https://doi.org/10.1115/1.3662552)",
+    "doi": "10.1115/1.3662552"
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "bucyjoseph1968",
+    "text": "Bucy, R. S. and Joseph, P. D. (1968). Filtering for Stochastic Processes with Applications to Guidance. Interscience Publishers.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.52,
+    "cold": 0.16,
+    "combined": 12.44,
+    "current_bias": 0.61,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.12,
+    "nominal": 0.05,
+    "outliers": 0.21,
+    "param_mismatch": 1.36,
+    "preisach": 0.2,
+    "sensor_dropout": 0.46
+   },
+   "spm": {
+    "cold": 7.35,
+    "current_bias": 5.69,
+    "hot": 2.16,
+    "init_error": 3.81,
+    "noise_step": 3.3,
+    "nominal": 3.73,
+    "outliers": 1.99,
+    "param_mismatch": 3.13,
+    "sensor_dropout": 5.31
+   },
+   "geo_mean": 0.3,
+   "worst": 12.44,
+   "nominal": 0.05,
+   "ns_per_step": 477,
+   "bytes": 4336,
+   "rank": 29
+  }
+ },
+ {
+  "name": "IPLF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Iterated Posterior Linearisation Filter (IPLF)",
+  "chapter_label": "ch:iplf",
+  "chapter_file": "report/chapters/kalman/IPLF.tex",
+  "headers": [
+   "include/estkit/filters/iplf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(J n_x^3) plus (J+1)(2n_x+1) model calls; 1.92\u20132.08 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "garciafernandez2015iplf",
+    "text": "Garcia-Fernandez, A. F., Svensson, L., Morelande, M. R. and S\u00e4rkk\u00e4, S. (2015). Posterior linearization filter: Principles and implementation using sigma points. *IEEE Transactions on Signal Processing* 63(20), 5561\u20135573. doi:[10.1109/TSP.2015.2454485](https://doi.org/10.1109/TSP.2015.2454485)",
+    "doi": "10.1109/TSP.2015.2454485"
+   },
+   {
+    "key": "garciafernandez2017ipls",
+    "text": "Garcia-Fernandez, A. F., Svensson, L. and S\u00e4rkk\u00e4, S. (2017). Iterated posterior linearization smoother. *IEEE Transactions on Automatic Control* 62(4), 2056\u20132063.",
+    "doi": ""
+   },
+   {
+    "key": "julier2000newmethod",
+    "text": "Julier, S. J., Uhlmann, J. K. and Durrant-Whyte, H. F. (2000). A new method for the nonlinear transformation of means and covariances in filters and estimators. *IEEE Transactions on Automatic Control* 45(3), 477\u2013482. doi:[10.1109/9.847726](https://doi.org/10.1109/9.847726)",
+    "doi": "10.1109/9.847726"
+   },
+   {
+    "key": "bellcathey1993",
+    "text": "Bell, B. M. and Cathey, F. W. (1993). The iterated Kalman filter update as a Gauss-Newton method. *IEEE Transactions on Automatic Control* 38(2), 294\u2013297. doi:[10.1109/9.250476](https://doi.org/10.1109/9.250476)",
+    "doi": "10.1109/9.250476"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.16,
+    "cold": 0.5,
+    "combined": 1.72,
+    "current_bias": 0.57,
+    "hot": 0.02,
+    "init_error": 0.07,
+    "noise_step": 0.19,
+    "nominal": 0.08,
+    "outliers": 0.26,
+    "param_mismatch": 0.53,
+    "preisach": 0.2,
+    "sensor_dropout": 0.79
+   },
+   "spm": {
+    "cold": 7.54,
+    "current_bias": 6.31,
+    "hot": 2.33,
+    "init_error": 4.01,
+    "noise_step": 5.55,
+    "nominal": 3.74,
+    "outliers": 1.02,
+    "param_mismatch": 3.68,
+    "sensor_dropout": 6.3
+   },
+   "geo_mean": 0.3,
+   "worst": 2.16,
+   "nominal": 0.08,
+   "ns_per_step": 2032,
+   "bytes": 4784,
+   "rank": 31
+  }
+ },
+ {
+  "name": "SCKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Square-Root Cubature Kalman Filter (SCKF)",
+  "chapter_label": "ch:sckf",
+  "chapter_file": "report/chapters/kalman/SCKF.tex",
+  "headers": [
+   "include/estkit/filters/sckf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) (two QRs) plus 4n_x model calls; 1.49\u20131.62 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "arasaratnam2009ckf",
+    "text": "Arasaratnam, I. and Haykin, S. (2009). Cubature Kalman filters. *IEEE Transactions on Automatic Control* 54(6), 1254\u20131269. doi:[10.1109/TAC.2009.2019800](https://doi.org/10.1109/TAC.2009.2019800)",
+    "doi": "10.1109/TAC.2009.2019800"
+   },
+   {
+    "key": "kailath2000",
+    "text": "Kailath, T., Sayed, A. H. and Hassibi, B. (2000). Linear Estimation. Prentice Hall.",
+    "doi": ""
+   },
+   {
+    "key": "kaminski1971",
+    "text": "Kaminski, P. G., Bryson, A. E. and Schmidt, S. F. (1971). Discrete square root filtering: A survey of current techniques. *IEEE Transactions on Automatic Control* 16(6), 727\u2013736. doi:[10.1109/TAC.1971.1099816](https://doi.org/10.1109/TAC.1971.1099816)",
+    "doi": "10.1109/TAC.1971.1099816"
+   },
+   {
+    "key": "golubvanloan2013",
+    "text": "Golub, G. H. and Van Loan, C. F. (2013). Matrix Computations. Johns Hopkins University Press, 4th ed..",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.79,
+    "cold": 0.11,
+    "combined": 11.26,
+    "current_bias": 0.55,
+    "hot": 0.04,
+    "init_error": 0.09,
+    "noise_step": 0.15,
+    "nominal": 0.05,
+    "outliers": 0.07,
+    "param_mismatch": 1.59,
+    "preisach": 0.24,
+    "sensor_dropout": 1.92
+   },
+   "spm": {
+    "cold": 8.72,
+    "current_bias": 6.65,
+    "hot": 2.73,
+    "init_error": 4.69,
+    "noise_step": 3.77,
+    "nominal": 4.62,
+    "outliers": 2.21,
+    "param_mismatch": 4.81,
+    "sensor_dropout": 8.24
+   },
+   "geo_mean": 0.33,
+   "worst": 11.26,
+   "nominal": 0.05,
+   "ns_per_step": 1581,
+   "bytes": 4696,
+   "rank": 37
+  }
+ },
+ {
+  "name": "CKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Cubature Kalman Filter (CKF)",
+  "chapter_label": "ch:ckf",
+  "chapter_file": "report/chapters/kalman/CKF.tex",
+  "headers": [
+   "include/estkit/filters/ckf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) plus 4n_x model calls; 1.18\u20131.26 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "arasaratnam2009ckf",
+    "text": "Arasaratnam, I. and Haykin, S. (2009). Cubature Kalman filters. *IEEE Transactions on Automatic Control* 54(6), 1254\u20131269. doi:[10.1109/TAC.2009.2019800](https://doi.org/10.1109/TAC.2009.2019800)",
+    "doi": "10.1109/TAC.2009.2019800"
+   },
+   {
+    "key": "ito2000gaussian",
+    "text": "Ito, K. and Xiong, K. (2000). Gaussian filters for nonlinear filtering problems. *IEEE Transactions on Automatic Control* 45(5), 910\u2013927. doi:[10.1109/9.855552](https://doi.org/10.1109/9.855552)",
+    "doi": "10.1109/9.855552"
+   },
+   {
+    "key": "sarkka2013",
+    "text": "S\u00e4rkk\u00e4, S. (2013). Bayesian Filtering and Smoothing. Cambridge University Press. doi:[10.1017/CBO9781139344203](https://doi.org/10.1017/CBO9781139344203)",
+    "doi": "10.1017/CBO9781139344203"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.79,
+    "cold": 0.11,
+    "combined": 11.26,
+    "current_bias": 0.55,
+    "hot": 0.04,
+    "init_error": 0.09,
+    "noise_step": 0.15,
+    "nominal": 0.05,
+    "outliers": 0.07,
+    "param_mismatch": 1.59,
+    "preisach": 0.24,
+    "sensor_dropout": 1.92
+   },
+   "spm": {
+    "cold": 8.72,
+    "current_bias": 6.65,
+    "hot": 2.73,
+    "init_error": 4.69,
+    "noise_step": 3.77,
+    "nominal": 4.62,
+    "outliers": 2.21,
+    "param_mismatch": 4.81,
+    "sensor_dropout": 8.24
+   },
+   "geo_mean": 0.33,
+   "worst": 11.26,
+   "nominal": 0.05,
+   "ns_per_step": 1252,
+   "bytes": 4560,
+   "rank": 38
+  }
+ },
+ {
+  "name": "CDKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Second-Order Divided-Difference Filter (CDKF/DD2)",
+  "chapter_label": "ch:cdkf",
+  "chapter_file": "report/chapters/kalman/CDKF.tex",
+  "headers": [
+   "include/estkit/filters/cdkf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) plus 2(2n_x+1) model calls; 1.28\u20131.39 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "norgaard2000",
+    "text": "N\u00f8rgaard, M., Poulsen, N. K. and Ravn, O. (2000). New developments in state estimation for nonlinear systems. *Automatica* 36(11), 1627\u20131638. doi:[10.1016/S0005-1098(00)00089-3](https://doi.org/10.1016/S0005-1098(00)00089-3)",
+    "doi": "10.1016/S0005-1098(00)00089-3"
+   },
+   {
+    "key": "ito2000gaussian",
+    "text": "Ito, K. and Xiong, K. (2000). Gaussian filters for nonlinear filtering problems. *IEEE Transactions on Automatic Control* 45(5), 910\u2013927. doi:[10.1109/9.855552](https://doi.org/10.1109/9.855552)",
+    "doi": "10.1109/9.855552"
+   },
+   {
+    "key": "schei1997",
+    "text": "Schei, T. S. (1997). A finite-difference method for linearization in nonlinear estimation algorithms. *Automatica* 33(11), 2053\u20132058.",
+    "doi": ""
+   },
+   {
+    "key": "vandermerwe2001srukf",
+    "text": "van der Merwe, R. and Wan, E. A. (2001). The square-root unscented Kalman filter for state and parameter-estimation. In *Proc. IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP)*, pp. 3461\u20133464. doi:[10.1109/ICASSP.2001.940586](https://doi.org/10.1109/ICASSP.2001.940586)",
+    "doi": "10.1109/ICASSP.2001.940586"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.54,
+    "cold": 0.09,
+    "combined": 11.96,
+    "current_bias": 0.55,
+    "hot": 0.04,
+    "init_error": 0.12,
+    "noise_step": 0.14,
+    "nominal": 0.05,
+    "outliers": 0.08,
+    "param_mismatch": 1.79,
+    "preisach": 0.24,
+    "sensor_dropout": 1.86
+   },
+   "spm": {
+    "cold": 8.74,
+    "current_bias": 6.63,
+    "hot": 2.71,
+    "init_error": 4.68,
+    "noise_step": 3.76,
+    "nominal": 4.61,
+    "outliers": 2.27,
+    "param_mismatch": 4.9,
+    "sensor_dropout": 8.24
+   },
+   "geo_mean": 0.33,
+   "worst": 11.96,
+   "nominal": 0.05,
+   "ns_per_step": 1375,
+   "bytes": 4312,
+   "rank": 39
+  }
+ },
+ {
+  "name": "GHKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Gauss\u2013Hermite Quadrature Kalman Filter (GHKF)",
+  "chapter_label": "ch:ghkf",
+  "chapter_file": "report/chapters/kalman/GHKF.tex",
+  "headers": [
+   "include/estkit/filters/ghkf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(m^n_x n_x^2); 11.2\u201312.1 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "ito2000gaussian",
+    "text": "Ito, K. and Xiong, K. (2000). Gaussian filters for nonlinear filtering problems. *IEEE Transactions on Automatic Control* 45(5), 910\u2013927. doi:[10.1109/9.855552](https://doi.org/10.1109/9.855552)",
+    "doi": "10.1109/9.855552"
+   },
+   {
+    "key": "arasaratnam2007ghqf",
+    "text": "Arasaratnam, I., Haykin, S. and Elliott, R. J. (2007). Discrete-time nonlinear filtering algorithms using Gauss\u2013Hermite quadrature. *Proceedings of the IEEE* 95(5), 953\u2013977.",
+    "doi": ""
+   },
+   {
+    "key": "wu2006numerical",
+    "text": "Wu, Y., Hu, D., Wu, M. and Hu, X. (2006). A numerical-integration perspective on Gaussian filters. *IEEE Transactions on Signal Processing* 54(8), 2910\u20132921.",
+    "doi": ""
+   },
+   {
+    "key": "golubwelsch1969",
+    "text": "Golub, G. H. and Welsch, J. H. (1969). Calculation of Gauss quadrature rules. *Mathematics of Computation* 23(106), 221\u2013230.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.54,
+    "cold": 0.09,
+    "combined": 11.96,
+    "current_bias": 0.55,
+    "hot": 0.04,
+    "init_error": 0.12,
+    "noise_step": 0.14,
+    "nominal": 0.05,
+    "outliers": 0.08,
+    "param_mismatch": 1.79,
+    "preisach": 0.24,
+    "sensor_dropout": 1.86
+   },
+   "spm": {
+    "cold": 8.74,
+    "current_bias": 6.63,
+    "hot": 2.71,
+    "init_error": 4.68,
+    "noise_step": 3.76,
+    "nominal": 4.61,
+    "outliers": 2.27,
+    "param_mismatch": 4.9,
+    "sensor_dropout": 8.24
+   },
+   "geo_mean": 0.33,
+   "worst": 11.96,
+   "nominal": 0.05,
+   "ns_per_step": 11990,
+   "bytes": 10784,
+   "rank": 40
+  }
+ },
+ {
+  "name": "CKF5",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Fifth-Degree Cubature Kalman Filter (CKF5)",
+  "chapter_label": "ch:ckf5",
+  "chapter_file": "report/chapters/kalman/CKF5.tex",
+  "headers": [
+   "include/estkit/filters/ckf_high_degree.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^4) plus 2(2n_x^2+1) model calls; 3.7\u20134.1 \u00b5s/step",
+  "estimates": "",
+  "references": [
+   {
+    "key": "jia2013highdegree",
+    "text": "Jia, B., Xin, M. and Cheng, Y. (2013). High-degree cubature Kalman filter. *Automatica* 49(2), 510\u2013518. doi:[10.1016/j.automatica.2012.11.014](https://doi.org/10.1016/j.automatica.2012.11.014)",
+    "doi": "10.1016/j.automatica.2012.11.014"
+   },
+   {
+    "key": "arasaratnam2009ckf",
+    "text": "Arasaratnam, I. and Haykin, S. (2009). Cubature Kalman filters. *IEEE Transactions on Automatic Control* 54(6), 1254\u20131269. doi:[10.1109/TAC.2009.2019800](https://doi.org/10.1109/TAC.2009.2019800)",
+    "doi": "10.1109/TAC.2009.2019800"
+   },
+   {
+    "key": "stroud1971",
+    "text": "Stroud, A. H. (1971). Approximate Calculation of Multiple Integrals. Prentice-Hall.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.54,
+    "cold": 0.09,
+    "combined": 11.96,
+    "current_bias": 0.55,
+    "hot": 0.04,
+    "init_error": 0.12,
+    "noise_step": 0.14,
+    "nominal": 0.05,
+    "outliers": 0.08,
+    "param_mismatch": 1.79,
+    "preisach": 0.24,
+    "sensor_dropout": 1.86
+   },
+   "spm": {
+    "cold": 8.74,
+    "current_bias": 6.63,
+    "hot": 2.71,
+    "init_error": 4.68,
+    "noise_step": 3.76,
+    "nominal": 4.61,
+    "outliers": 2.27,
+    "param_mismatch": 4.9,
+    "sensor_dropout": 8.24
+   },
+   "geo_mean": 0.33,
+   "worst": 11.96,
+   "nominal": 0.05,
+   "ns_per_step": 4014,
+   "bytes": 5624,
+   "rank": 41
+  }
+ },
+ {
+  "name": "LKF",
+  "family": "kalman",
+  "family_label": "Classical & sigma-point Kalman",
+  "level": "cell",
+  "chapter_title": "Linear Kalman Filter on a Frozen Linearisation (LKF)",
+  "chapter_label": "ch:lkf",
+  "chapter_file": "report/chapters/kalman/LKF.tex",
+  "headers": [
+   "include/estkit/filters/kf_linear.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3), 320\u2013336 ns/step; gain schedule computable offline",
+  "estimates": "",
+  "references": [
+   {
+    "key": "kalman1960",
+    "text": "Kalman, R. E. (1960). A new approach to linear filtering and prediction problems. *Journal of Basic Engineering* 82(1), 35\u201345. doi:[10.1115/1.3662552](https://doi.org/10.1115/1.3662552)",
+    "doi": "10.1115/1.3662552"
+   },
+   {
+    "key": "kalmanbucy1961",
+    "text": "Kalman, R. E. and Bucy, R. S. (1961). New results in linear filtering and prediction theory. *Journal of Basic Engineering* 83(1), 95\u2013108. doi:[10.1115/1.3658902](https://doi.org/10.1115/1.3658902)",
+    "doi": "10.1115/1.3658902"
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   },
+   {
+    "key": "sorenson1970gauss",
+    "text": "Sorenson, H. W. (1970). Least-squares estimation: from Gauss to Kalman. *IEEE Spectrum* 7(7), 63\u201368.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.14,
+    "cold": 12.49,
+    "combined": 7.0,
+    "current_bias": 1.36,
+    "hot": 1.62,
+    "init_error": 2.19,
+    "noise_step": 1.19,
+    "nominal": 1.19,
+    "outliers": 1.19,
+    "param_mismatch": 1.19,
+    "preisach": 1.06,
+    "sensor_dropout": 1.2
+   },
+   "spm": {
+    "cold": 1.47,
+    "current_bias": 2.65,
+    "hot": 1.44,
+    "init_error": 0.55,
+    "noise_step": 1.72,
+    "nominal": 1.72,
+    "outliers": 1.71,
+    "param_mismatch": 2.86,
+    "sensor_dropout": 1.7
+   },
+   "geo_mean": 1.81,
+   "worst": 12.49,
+   "nominal": 1.19,
+   "ns_per_step": 334,
+   "bytes": 4680,
+   "rank": 70
+  }
+ },
+ {
+  "name": "IMM",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Interacting multiple model estimator (IMM)",
+  "chapter_label": "ch:imm",
+  "chapter_file": "report/chapters/adaptive_kalman/IMM.tex",
+  "headers": [
+   "include/estkit/filters/imm.hpp"
+  ],
+  "state": "n_x = 4 (cell model), r = 3 modes \u2014 generic in n_x,n_u,n_y and in r (template `int NM`)",
+  "cost": "r\u00d7 EKF +\\ O(r^2 n_x^2) mixing; \u2248 2080 ns/step, r(n_x+n_x^2) extra reals, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "blom1988imm",
+    "text": "Blom, H. A. P. and Bar-Shalom, Y. (1988). The interacting multiple model algorithm for systems with Markovian switching coefficients. *IEEE Transactions on Automatic Control* 33(8), 780\u2013783. doi:[10.1109/9.1299](https://doi.org/10.1109/9.1299)",
+    "doi": "10.1109/9.1299"
+   },
+   {
+    "key": "barshalom2001",
+    "text": "Bar-Shalom, Y., Li, X. R. and Kirubarajan, T. (2001). Estimation with Applications to Tracking and Navigation: Theory, Algorithms and Software. Wiley. doi:[10.1002/0471221279](https://doi.org/10.1002/0471221279)",
+    "doi": "10.1002/0471221279"
+   },
+   {
+    "key": "lijilkov2005mm",
+    "text": "Li, X. R. and Jilkov, V. P. (2005). Survey of maneuvering target tracking. Part V: Multiple-model methods. *IEEE Transactions on Aerospace and Electronic Systems* 41(4), 1255\u20131321. doi:[10.1109/TAES.2005.1561886](https://doi.org/10.1109/TAES.2005.1561886)",
+    "doi": "10.1109/TAES.2005.1561886"
+   },
+   {
+    "key": "magill1965mmae",
+    "text": "Magill, D. T. (1965). Optimal adaptive estimation of sampled stochastic processes. *IEEE Transactions on Automatic Control* 10(4), 434\u2013439. doi:[10.1109/TAC.1965.1098191](https://doi.org/10.1109/TAC.1965.1098191)",
+    "doi": "10.1109/TAC.1965.1098191"
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.83,
+    "cold": 0.18,
+    "combined": 1.02,
+    "current_bias": 0.62,
+    "hot": 0.03,
+    "init_error": 0.04,
+    "noise_step": 0.05,
+    "nominal": 0.04,
+    "outliers": 0.08,
+    "param_mismatch": 0.96,
+    "preisach": 0.2,
+    "sensor_dropout": 0.05
+   },
+   "spm": {
+    "cold": 2.22,
+    "current_bias": 4.35,
+    "hot": 2.17,
+    "init_error": 3.03,
+    "noise_step": 2.85,
+    "nominal": 2.81,
+    "outliers": 2.25,
+    "param_mismatch": 2.41,
+    "sensor_dropout": 1.6
+   },
+   "geo_mean": 0.16,
+   "worst": 1.02,
+   "nominal": 0.04,
+   "ns_per_step": 2076,
+   "bytes": 4976,
+   "rank": 1
+  }
+ },
+ {
+  "name": "IAE-AKF",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Innovation-based adaptive estimation (IAE-AKF)",
+  "chapter_label": "ch:iaeakf",
+  "chapter_file": "report/chapters/adaptive_kalman/IAEAKF.tex",
+  "headers": [
+   "include/estkit/filters/iae_akf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y; window N is a template parameter",
+  "cost": "EKF + O(n_y^2); \u2248 500 ns/step measured; N n_y reals of buffer, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "mehra1970",
+    "text": "Mehra, R. K. (1970). On the identification of variances and adaptive Kalman filtering. *IEEE Transactions on Automatic Control* 15(2), 175\u2013184. doi:[10.1109/TAC.1970.1099422](https://doi.org/10.1109/TAC.1970.1099422)",
+    "doi": "10.1109/TAC.1970.1099422"
+   },
+   {
+    "key": "mohamed1999adaptive",
+    "text": "Mohamed, A. H. and Schwarz, K. P. (1999). Adaptive Kalman filtering for INS/GPS. *Journal of Geodesy* 73(4), 193\u2013203. doi:[10.1007/s001900050236](https://doi.org/10.1007/s001900050236)",
+    "doi": "10.1007/s001900050236"
+   },
+   {
+    "key": "maybeck1979",
+    "text": "Maybeck, P. S. (1979). Stochastic Models, Estimation, and Control, Volume 1. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.21,
+    "cold": 0.16,
+    "combined": 2.01,
+    "current_bias": 0.62,
+    "hot": 0.03,
+    "init_error": 0.07,
+    "noise_step": 0.04,
+    "nominal": 0.04,
+    "outliers": 0.11,
+    "param_mismatch": 1.01,
+    "preisach": 0.2,
+    "sensor_dropout": 0.05
+   },
+   "spm": {
+    "cold": 2.54,
+    "current_bias": 5.45,
+    "hot": 2.19,
+    "init_error": 3.56,
+    "noise_step": 3.02,
+    "nominal": 3.02,
+    "outliers": 2.58,
+    "param_mismatch": 1.2,
+    "sensor_dropout": 3.19
+   },
+   "geo_mean": 0.18,
+   "worst": 2.01,
+   "nominal": 0.04,
+   "ns_per_step": 500,
+   "bytes": 5040,
+   "rank": 2
+  }
+ },
+ {
+  "name": "VB-AKF",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Variational Bayesian adaptive Kalman filter (VB-AKF)",
+  "chapter_label": "ch:vbakf",
+  "chapter_file": "report/chapters/adaptive_kalman/VBAKF.tex",
+  "headers": [
+   "include/estkit/filters/vb_akf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "N_vb\u00d7 an EKF measurement update, O(N_vbn_x^2 n_y); \u2248 870 ns/step, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "sarkka2009vb",
+    "text": "S\u00e4rkk\u00e4, S. and Nummenmaa, A. (2009). Recursive noise adaptive Kalman filtering by variational Bayesian approximations. *IEEE Transactions on Automatic Control* 54(3), 596\u2013600. doi:[10.1109/TAC.2008.2008348](https://doi.org/10.1109/TAC.2008.2008348)",
+    "doi": "10.1109/TAC.2008.2008348"
+   },
+   {
+    "key": "sarkka2013",
+    "text": "S\u00e4rkk\u00e4, S. (2013). Bayesian Filtering and Smoothing. Cambridge University Press. doi:[10.1017/CBO9781139344203](https://doi.org/10.1017/CBO9781139344203)",
+    "doi": "10.1017/CBO9781139344203"
+   },
+   {
+    "key": "bishop2006prml",
+    "text": "Bishop, C. M. (2006). Pattern Recognition and Machine Learning. Springer.",
+    "doi": ""
+   },
+   {
+    "key": "beal2003vb",
+    "text": "Beal, M. J. (2003). Variational Algorithms for Approximate Bayesian Inference. PhD thesis, Gatsby Computational Neuroscience Unit, University College London.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.27,
+    "cold": 0.18,
+    "combined": 1.87,
+    "current_bias": 0.61,
+    "hot": 0.03,
+    "init_error": 0.06,
+    "noise_step": 0.05,
+    "nominal": 0.05,
+    "outliers": 0.05,
+    "param_mismatch": 0.79,
+    "preisach": 0.2,
+    "sensor_dropout": 0.1
+   },
+   "spm": {
+    "cold": 2.31,
+    "current_bias": 5.51,
+    "hot": 2.25,
+    "init_error": 3.64,
+    "noise_step": 3.18,
+    "nominal": 3.18,
+    "outliers": 3.53,
+    "param_mismatch": 0.66,
+    "sensor_dropout": 3.51
+   },
+   "geo_mean": 0.18,
+   "worst": 1.87,
+   "nominal": 0.05,
+   "ns_per_step": 872,
+   "bytes": 4408,
+   "rank": 3
+  }
+ },
+ {
+  "name": "SageHusa-AKF",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Sage\u2013Husa adaptive extended Kalman filter (SageHusa-AKF)",
+  "chapter_label": "ch:sagehusaakf",
+  "chapter_file": "report/chapters/adaptive_kalman/SageHusaAKF.tex",
+  "headers": [
+   "include/estkit/filters/sage_husa_akf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3), EKF + O(n_y^2 n_x); \u2248 545 ns/step measured, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "sagehusa1969",
+    "text": "Sage, A. P. and Husa, G. W. (1969). Adaptive filtering with unknown prior statistics. In *Proc. Joint Automatic Control Conference*, pp. 760\u2013769. doi:[10.1109/JACC.1969.4169352](https://doi.org/10.1109/JACC.1969.4169352)",
+    "doi": "10.1109/JACC.1969.4169352"
+   },
+   {
+    "key": "sagemelsa1971",
+    "text": "Sage, A. P. and Melsa, J. L. (1971). Estimation Theory with Applications to Communications and Control. McGraw-Hill.",
+    "doi": ""
+   },
+   {
+    "key": "maybeck1979",
+    "text": "Maybeck, P. S. (1979). Stochastic Models, Estimation, and Control, Volume 1. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.3,
+    "cold": 0.22,
+    "combined": 1.98,
+    "current_bias": 0.62,
+    "hot": 0.04,
+    "init_error": 0.07,
+    "noise_step": 0.04,
+    "nominal": 0.04,
+    "outliers": 0.06,
+    "param_mismatch": 0.76,
+    "preisach": 0.2,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 2.65,
+    "current_bias": 5.57,
+    "hot": 2.07,
+    "init_error": 3.87,
+    "noise_step": 3.34,
+    "nominal": 3.33,
+    "outliers": 3.19,
+    "param_mismatch": 1.13,
+    "sensor_dropout": 3.57
+   },
+   "geo_mean": 0.18,
+   "worst": 1.98,
+   "nominal": 0.04,
+   "ns_per_step": 545,
+   "bytes": 4808,
+   "rank": 4
+  }
+ },
+ {
+  "name": "Fuzzy-AKF",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Fuzzy-logic adaptive Kalman filter (Fuzzy-AKF)",
+  "chapter_label": "ch:fuzzyakf",
+  "chapter_file": "report/chapters/adaptive_kalman/FuzzyAKF.tex",
+  "headers": [
+   "include/estkit/filters/fuzzy_akf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y; window N and grid N_g are template parameters",
+  "cost": "EKF + O(n_y^2) + 3N_g flops; \u2248 730 ns/step, N n_y reals of buffer, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "loebis2004fuzzy",
+    "text": "Loebis, D., Sutton, R., Chudley, J. and Naeem, W. (2004). Adaptive tuning of a Kalman filter via fuzzy logic for an intelligent AUV navigation system. *Control Engineering Practice* 12(12), 1531\u20131539. doi:[10.1016/j.conengprac.2003.11.008](https://doi.org/10.1016/j.conengprac.2003.11.008)",
+    "doi": "10.1016/j.conengprac.2003.11.008"
+   },
+   {
+    "key": "mamdani1975",
+    "text": "Mamdani, E. H. and Assilian, S. (1975). An experiment in linguistic synthesis with a fuzzy logic controller. *International Journal of Man-Machine Studies* 7(1), 1\u201313. doi:[10.1016/S0020-7373(75)80002-2](https://doi.org/10.1016/S0020-7373(75)80002-2)",
+    "doi": "10.1016/S0020-7373(75)80002-2"
+   },
+   {
+    "key": "zadeh1965",
+    "text": "Zadeh, L. A. (1965). Fuzzy sets. *Information and Control* 8(3), 338\u2013353. doi:[10.1016/S0019-9958(65)90241-X](https://doi.org/10.1016/S0019-9958(65)90241-X)",
+    "doi": "10.1016/S0019-9958(65)90241-X"
+   },
+   {
+    "key": "mohamed1999adaptive",
+    "text": "Mohamed, A. H. and Schwarz, K. P. (1999). Adaptive Kalman filtering for INS/GPS. *Journal of Geodesy* 73(4), 193\u2013203. doi:[10.1007/s001900050236](https://doi.org/10.1007/s001900050236)",
+    "doi": "10.1007/s001900050236"
+   },
+   {
+    "key": "jwo2007fuzzy",
+    "text": "Jwo, D. J. and Wang, S. H. (2007). Adaptive fuzzy strong tracking extended Kalman filtering for GPS navigation. *IEEE Sensors Journal* 7(5), 778\u2013789.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.25,
+    "cold": 0.2,
+    "combined": 2.56,
+    "current_bias": 0.64,
+    "hot": 0.03,
+    "init_error": 0.08,
+    "noise_step": 0.05,
+    "nominal": 0.05,
+    "outliers": 0.05,
+    "param_mismatch": 0.96,
+    "preisach": 0.2,
+    "sensor_dropout": 0.06
+   },
+   "spm": {
+    "cold": 3.09,
+    "current_bias": 5.16,
+    "hot": 2.14,
+    "init_error": 3.43,
+    "noise_step": 3.2,
+    "nominal": 3.18,
+    "outliers": 2.7,
+    "param_mismatch": 1.99,
+    "sensor_dropout": 3.36
+   },
+   "geo_mean": 0.18,
+   "worst": 2.56,
+   "nominal": 0.05,
+   "ns_per_step": 727,
+   "bytes": 4816,
+   "rank": 5
+  }
+ },
+ {
+  "name": "Fading-EKF",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Fading-memory extended Kalman filter (Fading-EKF)",
+  "chapter_label": "ch:fadingekf",
+  "chapter_file": "report/chapters/adaptive_kalman/FadingEKF.tex",
+  "headers": [
+   "include/estkit/filters/fading_kf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "EKF + n_x^2 multiplies + O(n_x^2) clamp; \u2248 500 ns/step, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "sorenson1971fading",
+    "text": "Sorenson, H. W. and Sacks, J. E. (1971). Recursive fading memory filtering. *Information Sciences* 3(2), 101\u2013119. doi:[10.1016/S0020-0255(71)80001-4](https://doi.org/10.1016/S0020-0255(71)80001-4)",
+    "doi": "10.1016/S0020-0255(71)80001-4"
+   },
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.78,
+    "cold": 0.25,
+    "combined": 1.18,
+    "current_bias": 0.66,
+    "hot": 0.02,
+    "init_error": 0.05,
+    "noise_step": 0.16,
+    "nominal": 0.05,
+    "outliers": 0.09,
+    "param_mismatch": 1.31,
+    "preisach": 0.86,
+    "sensor_dropout": 0.05
+   },
+   "spm": {
+    "cold": 3.45,
+    "current_bias": 0.87,
+    "hot": 0.35,
+    "init_error": 0.48,
+    "noise_step": 0.43,
+    "nominal": 0.36,
+    "outliers": 0.45,
+    "param_mismatch": 1.95,
+    "sensor_dropout": 0.31
+   },
+   "geo_mean": 0.23,
+   "worst": 1.78,
+   "nominal": 0.05,
+   "ns_per_step": 501,
+   "bytes": 4384,
+   "rank": 12
+  }
+ },
+ {
+  "name": "STF",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Strong tracking filter (STF)",
+  "chapter_label": "ch:stf",
+  "chapter_file": "report/chapters/adaptive_kalman/STF.tex",
+  "headers": [
+   "include/estkit/filters/stf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "EKF + one n_x\u00d7 n_x scale-and-add + O(n_y^2 n_x); \u2248 530 ns/step, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "zhoufrank1996stf",
+    "text": "Zhou, D. H. and Frank, P. M. (1996). Strong tracking filtering of nonlinear time-varying stochastic systems with coloured noise: application to parameter estimation and empirical robustness analysis. *International Journal of Control* 65(2), 295\u2013307. doi:[10.1080/00207179608921698](https://doi.org/10.1080/00207179608921698)",
+    "doi": "10.1080/00207179608921698"
+   },
+   {
+    "key": "xia1994adaptive",
+    "text": "Xia, Q., Rao, M., Ying, Y. and Shen, X. (1994). Adaptive fading Kalman filter with an application. *Automatica* 30(8), 1333\u20131338.",
+    "doi": ""
+   },
+   {
+    "key": "jwo2007fuzzy",
+    "text": "Jwo, D. J. and Wang, S. H. (2007). Adaptive fuzzy strong tracking extended Kalman filtering for GPS navigation. *IEEE Sensors Journal* 7(5), 778\u2013789.",
+    "doi": ""
+   },
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.68,
+    "cold": 0.36,
+    "combined": 2.71,
+    "current_bias": 0.84,
+    "hot": 0.08,
+    "init_error": 0.1,
+    "noise_step": 2.34,
+    "nominal": 0.1,
+    "outliers": 1.38,
+    "param_mismatch": 1.84,
+    "preisach": 0.98,
+    "sensor_dropout": 0.1
+   },
+   "spm": {
+    "cold": 5.12,
+    "current_bias": 0.72,
+    "hot": 0.74,
+    "init_error": 0.66,
+    "noise_step": 2.53,
+    "nominal": 0.66,
+    "outliers": 1.64,
+    "param_mismatch": 1.75,
+    "sensor_dropout": 0.66
+   },
+   "geo_mean": 0.56,
+   "worst": 2.71,
+   "nominal": 0.1,
+   "ns_per_step": 532,
+   "bytes": 4680,
+   "rank": 59
+  }
+ },
+ {
+  "name": "MMAE",
+  "family": "adaptive_kalman",
+  "family_label": "Adaptive Kalman",
+  "level": "cell",
+  "chapter_title": "Multiple-model adaptive estimation (MMAE)",
+  "chapter_label": "ch:mmae",
+  "chapter_file": "report/chapters/adaptive_kalman/MMAE.tex",
+  "headers": [
+   "include/estkit/filters/mmae.hpp"
+  ],
+  "state": "n_x = 4 (cell model), r = 3 parameter hypotheses \u2014 generic in n_x,n_u,n_y,n_ and r",
+  "cost": "r\u00d7 EKF; \u2248 1750 ns/step; r model copies, no heap",
+  "estimates": "SOC and capacity (registered with `.with_capacity()`)",
+  "references": [
+   {
+    "key": "magill1965mmae",
+    "text": "Magill, D. T. (1965). Optimal adaptive estimation of sampled stochastic processes. *IEEE Transactions on Automatic Control* 10(4), 434\u2013439. doi:[10.1109/TAC.1965.1098191](https://doi.org/10.1109/TAC.1965.1098191)",
+    "doi": "10.1109/TAC.1965.1098191"
+   },
+   {
+    "key": "maybeck1979",
+    "text": "Maybeck, P. S. (1979). Stochastic Models, Estimation, and Control, Volume 1. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "hanlon2000mmae",
+    "text": "Hanlon, P. D. and Maybeck, P. S. (2000). Multiple-model adaptive estimation using a residual correlation Kalman filter bank. *IEEE Transactions on Aerospace and Electronic Systems* 36(2), 393\u2013406.",
+    "doi": ""
+   },
+   {
+    "key": "barshalom2001",
+    "text": "Bar-Shalom, Y., Li, X. R. and Kirubarajan, T. (2001). Estimation with Applications to Tracking and Navigation: Theory, Algorithms and Software. Wiley. doi:[10.1002/0471221279](https://doi.org/10.1002/0471221279)",
+    "doi": "10.1002/0471221279"
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.12,
+    "cold": 1.23,
+    "combined": 12.56,
+    "current_bias": 0.71,
+    "hot": 0.13,
+    "init_error": 0.36,
+    "noise_step": 0.38,
+    "nominal": 0.33,
+    "outliers": 0.2,
+    "param_mismatch": 1.66,
+    "preisach": 0.27,
+    "sensor_dropout": 0.58
+   },
+   "spm": {
+    "cold": 8.75,
+    "current_bias": 6.4,
+    "hot": 3.42,
+    "init_error": 4.83,
+    "noise_step": 4.29,
+    "nominal": 4.69,
+    "outliers": 3.58,
+    "param_mismatch": 4.89,
+    "sensor_dropout": 6.35
+   },
+   "geo_mean": 0.66,
+   "worst": 12.56,
+   "nominal": 0.33,
+   "ns_per_step": 1752,
+   "bytes": 13200,
+   "rank": 63,
+   "soh": {
+    "capacity_rmse_mAh": 486.0,
+    "final_err_mAh": 817.9,
+    "soc_rmse_pct": 1.37
+   }
+  }
+ },
+ {
+  "name": "StudentT-KF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Student's t filter (StudentT-KF)",
+  "chapter_label": "ch:studenttkf",
+  "chapter_file": "report/chapters/robust_kalman/StudentTKF.tex",
+  "headers": [
+   "include/estkit/filters/student_t_kf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(N_fp n_x^2 n_y + n_x^3); 696 ns/step, 4568 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "roth2013studentt",
+    "text": "Roth, M., \u00d6zkan, E. and Gustafsson, F. (2013). A Student's t filter for heavy tailed process and measurement noise. In *Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*, pp. 5770\u20135774. doi:[10.1109/ICASSP.2013.6638770](https://doi.org/10.1109/ICASSP.2013.6638770)",
+    "doi": "10.1109/ICASSP.2013.6638770"
+   },
+   {
+    "key": "agamennoni2012heavytailed",
+    "text": "Agamennoni, G., Nieto, J. I. and Nebot, E. M. (2012). Approximate inference in state-space models with heavy-tailed noise. *IEEE Transactions on Signal Processing* 60(10), 5024\u20135037.",
+    "doi": ""
+   },
+   {
+    "key": "huang2016robustt",
+    "text": "Huang, Y., Zhang, Y., Li, N. and Chambers, J. A. (2016). A robust Student's t based cubature filter. In *Proceedings of the 19th International Conference on Information Fusion (FUSION)*, pp. 9\u201316.",
+    "doi": ""
+   },
+   {
+    "key": "kotz2004multivariatet",
+    "text": "Kotz, S. and Nadarajah, S. (2004). Multivariate t Distributions and Their Applications. Cambridge University Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.69,
+    "cold": 0.18,
+    "combined": 4.46,
+    "current_bias": 0.62,
+    "hot": 0.03,
+    "init_error": 0.04,
+    "noise_step": 0.06,
+    "nominal": 0.04,
+    "outliers": 0.05,
+    "param_mismatch": 0.77,
+    "preisach": 0.2,
+    "sensor_dropout": 0.12
+   },
+   "spm": {
+    "cold": 4.75,
+    "current_bias": 5.67,
+    "hot": 2.22,
+    "init_error": 3.87,
+    "noise_step": 3.65,
+    "nominal": 3.62,
+    "outliers": 3.55,
+    "param_mismatch": 1.8,
+    "sensor_dropout": 4.64
+   },
+   "geo_mean": 0.19,
+   "worst": 4.46,
+   "nominal": 0.04,
+   "ns_per_step": 696,
+   "bytes": 4568,
+   "rank": 6
+  }
+ },
+ {
+  "name": "Huber-EKF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Huber-based robust EKF (Huber-EKF)",
+  "chapter_label": "ch:huberekf",
+  "chapter_file": "report/chapters/robust_kalman/HuberEKF.tex",
+  "headers": [
+   "include/estkit/filters/huber_kf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(N_it n_x^2 n_y) on top of an EKF; 642 ns/step, 4368 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "huber1964",
+    "text": "Huber, P. J. (1964). Robust estimation of a location parameter. *The Annals of Mathematical Statistics* 35(1), 73\u2013101. doi:[10.1214/aoms/1177703732](https://doi.org/10.1214/aoms/1177703732)",
+    "doi": "10.1214/aoms/1177703732"
+   },
+   {
+    "key": "karlgaard2007huber",
+    "text": "Karlgaard, C. D. and Schaub, H. (2007). Huber-based divided difference filtering. *Journal of Guidance, Control, and Dynamics* 30(3), 885\u2013891. doi:[10.2514/1.27968](https://doi.org/10.2514/1.27968)",
+    "doi": "10.2514/1.27968"
+   },
+   {
+    "key": "huber2009robust",
+    "text": "Huber, P. J. and Ronchetti, E. M. (2009). Robust Statistics. Wiley, 2nd ed..",
+    "doi": ""
+   },
+   {
+    "key": "bucyjoseph1968",
+    "text": "Bucy, R. S. and Joseph, P. D. (1968). Filtering for Stochastic Processes with Applications to Guidance. Interscience Publishers.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.73,
+    "cold": 0.13,
+    "combined": 3.77,
+    "current_bias": 0.63,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.06,
+    "nominal": 0.05,
+    "outliers": 0.06,
+    "param_mismatch": 0.8,
+    "preisach": 0.2,
+    "sensor_dropout": 0.12
+   },
+   "spm": {
+    "cold": 5.26,
+    "current_bias": 5.54,
+    "hot": 2.14,
+    "init_error": 3.82,
+    "noise_step": 3.32,
+    "nominal": 3.34,
+    "outliers": 3.57,
+    "param_mismatch": 1.97,
+    "sensor_dropout": 4.2
+   },
+   "geo_mean": 0.19,
+   "worst": 3.77,
+   "nominal": 0.05,
+   "ns_per_step": 642,
+   "bytes": 4368,
+   "rank": 7
+  }
+ },
+ {
+  "name": "MC-EKF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Maximum-correntropy Kalman filter (MC-EKF)",
+  "chapter_label": "ch:mcekf",
+  "chapter_file": "report/chapters/robust_kalman/MCEKF.tex",
+  "headers": [
+   "include/estkit/filters/mckf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(N_fp n_x^3); 999 ns/step, 4384 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "chen2017mckf",
+    "text": "Chen, B., Liu, X., Zhao, H. and Principe, J. C. (2017). Maximum correntropy Kalman filter. *Automatica* 76, 70\u201377. doi:[10.1016/j.automatica.2016.10.004](https://doi.org/10.1016/j.automatica.2016.10.004)",
+    "doi": "10.1016/j.automatica.2016.10.004"
+   },
+   {
+    "key": "liu2007correntropy",
+    "text": "Liu, W., Pokharel, P. P. and Principe, J. C. (2007). Correntropy: properties and applications in non-Gaussian signal processing. *IEEE Transactions on Signal Processing* 55(11), 5286\u20135298.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "bucyjoseph1968",
+    "text": "Bucy, R. S. and Joseph, P. D. (1968). Filtering for Stochastic Processes with Applications to Guidance. Interscience Publishers.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.41,
+    "cold": 0.16,
+    "combined": 3.23,
+    "current_bias": 0.62,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.07,
+    "nominal": 0.05,
+    "outliers": 0.07,
+    "param_mismatch": 1.16,
+    "preisach": 0.2,
+    "sensor_dropout": 0.14
+   },
+   "spm": {
+    "cold": 4.98,
+    "current_bias": 5.52,
+    "hot": 2.18,
+    "init_error": 3.95,
+    "noise_step": 3.22,
+    "nominal": 3.25,
+    "outliers": 3.54,
+    "param_mismatch": 2.12,
+    "sensor_dropout": 4.09
+   },
+   "geo_mean": 0.2,
+   "worst": 3.23,
+   "nominal": 0.05,
+   "ns_per_step": 998,
+   "bytes": 4384,
+   "rank": 9
+  }
+ },
+ {
+  "name": "ReducedOrder-EKF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Reduced-order EKF (ReducedOrder-EKF)",
+  "chapter_label": "ch:reducedorderekf",
+  "chapter_file": "report/chapters/robust_kalman/ReducedOrderEKF.tex",
+  "headers": [
+   "include/estkit/battery/ecm_model_reduced.hpp"
+  ],
+  "state": "n_x = 3: [, v_1, h]; the slow RC branch is quasi-static",
+  "cost": "O(n_x^3); 331 ns/step, 4272 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   },
+   {
+    "key": "plett2016bms2",
+    "text": "Plett, G. L. (2016). Battery Management Systems, Volume II: Equivalent-Circuit Methods. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "plett2004ekf2",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 2. Modeling and identification. *Journal of Power Sources* 134(2), 262\u2013276. doi:[10.1016/j.jpowsour.2004.02.032](https://doi.org/10.1016/j.jpowsour.2004.02.032)",
+    "doi": "10.1016/j.jpowsour.2004.02.032"
+   },
+   {
+    "key": "chen2020parameterization",
+    "text": "Chen, C. H., Brosa Planella, F., O'Regan, K., Gastol, D., Widanage, W. D. and Kendrick, E. (2020). Development of experimental techniques for parameterization of multi-scale lithium-ion battery models. *Journal of The Electrochemical Society* 167(8), 080534. doi:[10.1149/1945-7111/ab9050](https://doi.org/10.1149/1945-7111/ab9050)",
+    "doi": "10.1149/1945-7111/ab9050"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.12,
+    "cold": 0.33,
+    "combined": 1.69,
+    "current_bias": 0.85,
+    "hot": 0.02,
+    "init_error": 0.07,
+    "noise_step": 0.1,
+    "nominal": 0.07,
+    "outliers": 0.08,
+    "param_mismatch": 1.53,
+    "preisach": 0.99,
+    "sensor_dropout": 0.07
+   },
+   "spm": {
+    "cold": 3.71,
+    "current_bias": 0.85,
+    "hot": 0.64,
+    "init_error": 0.7,
+    "noise_step": 0.71,
+    "nominal": 0.7,
+    "outliers": 0.7,
+    "param_mismatch": 1.31,
+    "sensor_dropout": 0.7
+   },
+   "geo_mean": 0.26,
+   "worst": 2.12,
+   "nominal": 0.07,
+   "ns_per_step": 331,
+   "bytes": 4272,
+   "rank": 21
+  }
+ },
+ {
+  "name": "Constrained-EKF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Constrained EKF by estimate projection (Constrained-EKF)",
+  "chapter_label": "ch:constrainedekf",
+  "chapter_file": "report/chapters/robust_kalman/ConstrainedEKF.tex",
+  "headers": [
+   "include/estkit/filters/constrained_ekf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "EKF +\\;O(m^3+m n_x) with m n_x active bounds; 586 ns/step, 4416 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "simon2010constraints",
+    "text": "Simon, D. (2010). Kalman filtering with state constraints: a survey of linear and nonlinear algorithms. *IET Control Theory & Applications* 4(8), 1303\u20131318. doi:[10.1049/iet-cta.2009.0032](https://doi.org/10.1049/iet-cta.2009.0032)",
+    "doi": "10.1049/iet-cta.2009.0032"
+   },
+   {
+    "key": "simonchia2002",
+    "text": "Simon, D. and Chia, T. L. (2002). Kalman filtering with state equality constraints. *IEEE Transactions on Aerospace and Electronic Systems* 38(1), 128\u2013136.",
+    "doi": ""
+   },
+   {
+    "key": "nocedal2006",
+    "text": "Nocedal, J. and Wright, S. J. (2006). Numerical Optimization. Springer, 2nd ed.. doi:[10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5)",
+    "doi": "10.1007/978-0-387-40065-5"
+   },
+   {
+    "key": "bucyjoseph1968",
+    "text": "Bucy, R. S. and Joseph, P. D. (1968). Filtering for Stochastic Processes with Applications to Guidance. Interscience Publishers.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.52,
+    "cold": 0.16,
+    "combined": 11.84,
+    "current_bias": 0.61,
+    "hot": 0.03,
+    "init_error": 0.05,
+    "noise_step": 0.1,
+    "nominal": 0.05,
+    "outliers": 0.21,
+    "param_mismatch": 1.36,
+    "preisach": 0.2,
+    "sensor_dropout": 0.47
+   },
+   "spm": {
+    "cold": 7.35,
+    "current_bias": 5.69,
+    "hot": 2.16,
+    "init_error": 3.81,
+    "noise_step": 3.3,
+    "nominal": 3.73,
+    "outliers": 1.99,
+    "param_mismatch": 3.13,
+    "sensor_dropout": 5.31
+   },
+   "geo_mean": 0.29,
+   "worst": 11.84,
+   "nominal": 0.05,
+   "ns_per_step": 586,
+   "bytes": 4416,
+   "rank": 25
+  }
+ },
+ {
+  "name": "Hinf-EKF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Game-theoretic H_H-infinity filter (Hinf-EKF)",
+  "chapter_label": "ch:hinfekf",
+  "chapter_file": "report/chapters/robust_kalman/HinfEKF.tex",
+  "headers": [
+   "include/estkit/filters/hinf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3); 799 ns/step, 4408 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   },
+   {
+    "key": "shen1997hinf",
+    "text": "Shen, X. and Deng, L. (1997). Game theory approach to discrete H\u221e filter design. *IEEE Transactions on Signal Processing* 45(4), 1092\u20131095. doi:[10.1109/78.564201](https://doi.org/10.1109/78.564201)",
+    "doi": "10.1109/78.564201"
+   },
+   {
+    "key": "hassibi1996hinf",
+    "text": "Hassibi, B., Sayed, A. H. and Kailath, T. (1996). Linear estimation in Krein spaces\u2014Part II: Applications. *IEEE Transactions on Automatic Control* 41(1), 34\u201349. doi:[10.1109/9.481606](https://doi.org/10.1109/9.481606)",
+    "doi": "10.1109/9.481606"
+   },
+   {
+    "key": "kailath2000",
+    "text": "Kailath, T., Sayed, A. H. and Hassibi, B. (2000). Linear Estimation. Prentice Hall.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.06,
+    "cold": 1.45,
+    "combined": 4.88,
+    "current_bias": 0.39,
+    "hot": 0.03,
+    "init_error": 0.03,
+    "noise_step": 0.2,
+    "nominal": 0.04,
+    "outliers": 0.1,
+    "param_mismatch": 1.69,
+    "preisach": 0.33,
+    "sensor_dropout": 0.93
+   },
+   "spm": {
+    "cold": 8.76,
+    "current_bias": 3.3,
+    "hot": 3.38,
+    "init_error": 5.18,
+    "noise_step": 6.42,
+    "nominal": 4.08,
+    "outliers": 1.52,
+    "param_mismatch": 6.28,
+    "sensor_dropout": 5.06
+   },
+   "geo_mean": 0.32,
+   "worst": 4.88,
+   "nominal": 0.04,
+   "ns_per_step": 798,
+   "bytes": 4408,
+   "rank": 33
+  }
+ },
+ {
+  "name": "SVSF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Smooth variable structure filter (SVSF)",
+  "chapter_label": "ch:svsf",
+  "chapter_file": "report/chapters/robust_kalman/SVSF.tex",
+  "headers": [
+   "include/estkit/filters/svsf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y, requires n_y n_x",
+  "cost": "O(n_x^3); 582 ns/step, 4376 B, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "habibi2007svsf",
+    "text": "Habibi, S. (2007). The smooth variable structure filter. *Proceedings of the IEEE* 95(5), 1026\u20131059. doi:[10.1109/JPROC.2007.893255](https://doi.org/10.1109/JPROC.2007.893255)",
+    "doi": "10.1109/JPROC.2007.893255"
+   },
+   {
+    "key": "gadsden2010svsfcov",
+    "text": "Gadsden, S. A. and Habibi, S. R. (2010). A new form of the smooth variable structure filter with a covariance derivation. In *Proceedings of the 49th IEEE Conference on Decision and Control (CDC)*, pp. 7389\u20137394.",
+    "doi": ""
+   },
+   {
+    "key": "utkin1992",
+    "text": "Utkin, V. I. (1992). Sliding Modes in Control and Optimization. Springer. doi:[10.1007/978-3-642-84379-2](https://doi.org/10.1007/978-3-642-84379-2)",
+    "doi": "10.1007/978-3-642-84379-2"
+   },
+   {
+    "key": "gadsden2011svsfkf",
+    "text": "Gadsden, S. A., Al-Shabi, M. and Habibi, S. R. (2011). Estimation strategies for the condition monitoring of a battery system in a hybrid electric vehicle. *ISRN Signal Processing* 2011, 120351.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.02,
+    "cold": 0.11,
+    "combined": 1.91,
+    "current_bias": 0.55,
+    "hot": 0.03,
+    "init_error": 0.04,
+    "noise_step": 1.71,
+    "nominal": 0.04,
+    "outliers": 1.8,
+    "param_mismatch": 1.75,
+    "preisach": 0.22,
+    "sensor_dropout": 0.58
+   },
+   "spm": {
+    "cold": 6.91,
+    "current_bias": 5.87,
+    "hot": 2.37,
+    "init_error": 3.93,
+    "noise_step": 17.24,
+    "nominal": 3.73,
+    "outliers": 17.12,
+    "param_mismatch": 4.08,
+    "sensor_dropout": 6.06
+   },
+   "geo_mean": 0.36,
+   "worst": 1.91,
+   "nominal": 0.04,
+   "ns_per_step": 583,
+   "bytes": 4376,
+   "rank": 49
+  }
+ },
+ {
+  "name": "Schmidt-KF",
+  "family": "robust_kalman",
+  "family_label": "Robust & embedded Kalman",
+  "level": "cell",
+  "chapter_title": "Schmidt\u2013Kalman consider filter (Schmidt-KF)",
+  "chapter_label": "ch:schmidtkf",
+  "chapter_file": "report/chapters/robust_kalman/SchmidtKF.tex",
+  "headers": [
+   "include/estkit/filters/schmidt_kf.hpp"
+  ],
+  "state": "n_x = 4 solve-for + n_c = 2 consider states (generic in n_x,n_c,n_u,n_y)",
+  "cost": "O((n_x+n_c)^3); 1294 ns/step, 8856 B for the cell model, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "schmidt1966",
+    "text": "Schmidt, S. F. (1966). Application of state-space methods to navigation problems. In *Advances in Control Systems*, pp. 293\u2013340. doi:[10.1016/B978-1-4831-6716-9.50011-4](https://doi.org/10.1016/B978-1-4831-6716-9.50011-4)",
+    "doi": "10.1016/B978-1-4831-6716-9.50011-4"
+   },
+   {
+    "key": "tapley2004",
+    "text": "Tapley, B. D., Schutz, B. E. and Born, G. H. (2004). Statistical Orbit Determination. Elsevier Academic Press.",
+    "doi": ""
+   },
+   {
+    "key": "bucyjoseph1968",
+    "text": "Bucy, R. S. and Joseph, P. D. (1968). Filtering for Stochastic Processes with Applications to Guidance. Interscience Publishers.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.59,
+    "cold": 1.54,
+    "combined": 1.09,
+    "current_bias": 0.33,
+    "hot": 0.21,
+    "init_error": 0.46,
+    "noise_step": 1.14,
+    "nominal": 0.46,
+    "outliers": 0.83,
+    "param_mismatch": 0.45,
+    "preisach": 0.55,
+    "sensor_dropout": 0.46
+   },
+   "spm": {
+    "cold": 2.44,
+    "current_bias": 0.71,
+    "hot": 0.44,
+    "init_error": 0.6,
+    "noise_step": 1.26,
+    "nominal": 0.51,
+    "outliers": 0.95,
+    "param_mismatch": 0.75,
+    "sensor_dropout": 0.5
+   },
+   "geo_mean": 0.58,
+   "worst": 1.54,
+   "nominal": 0.46,
+   "ns_per_step": 1293,
+   "bytes": 8856,
+   "rank": 61
+  }
+ },
+ {
+  "name": "DOB",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Augmented-State Disturbance Observer (DOB)",
+  "chapter_label": "ch:dob",
+  "chapter_file": "report/chapters/observers/DOB.tex",
+  "headers": [
+   "include/estkit/observers/dob.hpp"
+  ],
+  "state": "n_x + 1 = 5 (cell model)",
+  "cost": "O((n_x+1)^2) steady state; \u2248 0.6 \u00b5s/step measured (dominated by the start-up DARE)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "ohnishi1996dob",
+    "text": "Ohnishi, K., Shibata, M. and Murakami, T. (1996). Motion control for advanced mechatronics. *IEEE/ASME Transactions on Mechatronics* 1(1), 56\u201367. doi:[10.1109/3516.491410](https://doi.org/10.1109/3516.491410)",
+    "doi": "10.1109/3516.491410"
+   },
+   {
+    "key": "chen2016dobsurvey",
+    "text": "Chen, W. H., Yang, J., Guo, L. and Li, S. (2016). Disturbance-observer-based control and related methods\u2014An overview. *IEEE Transactions on Industrial Electronics* 63(2), 1083\u20131095. doi:[10.1109/TIE.2015.2478397](https://doi.org/10.1109/TIE.2015.2478397)",
+    "doi": "10.1109/TIE.2015.2478397"
+   },
+   {
+    "key": "johnson1971dac",
+    "text": "Johnson, C. D. (1971). Accommodation of external disturbances in linear regulator and servomechanism problems. *IEEE Transactions on Automatic Control* 16(6), 635\u2013644.",
+    "doi": ""
+   },
+   {
+    "key": "friedland1969bias",
+    "text": "Friedland, B. (1969). Treatment of bias in recursive filtering. *IEEE Transactions on Automatic Control* 14(4), 359\u2013367.",
+    "doi": ""
+   },
+   {
+    "key": "zhao2017observability",
+    "text": "Zhao, S., Duncan, S. R. and Howey, D. A. (2017). Observability analysis and state estimation of lithium-ion batteries in the presence of sensor biases. *IEEE Transactions on Control Systems Technology* 25(1), 326\u2013333. doi:[10.1109/TCST.2016.2542115](https://doi.org/10.1109/TCST.2016.2542115)",
+    "doi": "10.1109/TCST.2016.2542115"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.98,
+    "cold": 0.02,
+    "combined": 2.35,
+    "current_bias": 0.18,
+    "hot": 0.04,
+    "init_error": 0.24,
+    "noise_step": 0.22,
+    "nominal": 0.02,
+    "outliers": 0.12,
+    "param_mismatch": 1.6,
+    "preisach": 0.54,
+    "sensor_dropout": 0.14
+   },
+   "spm": {
+    "cold": 3.33,
+    "current_bias": 0.97,
+    "hot": 0.7,
+    "init_error": 0.74,
+    "noise_step": 0.95,
+    "nominal": 0.69,
+    "outliers": 0.87,
+    "param_mismatch": 1.34,
+    "sensor_dropout": 0.69
+   },
+   "geo_mean": 0.22,
+   "worst": 2.35,
+   "nominal": 0.02,
+   "ns_per_step": 587,
+   "bytes": 4784,
+   "rank": 11
+  }
+ },
+ {
+  "name": "AdaptiveObserver",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Adaptive Observer for Joint State and Parameter Estimation (AdaptiveObserver)",
+  "chapter_label": "ch:adaptiveobserver",
+  "chapter_file": "report/chapters/observers/AdaptiveObserver.tex",
+  "headers": [
+   "include/estkit/observers/adaptive_observer.hpp"
+  ],
+  "state": "n_x = 4 states + n_ = 2 parameters + an n_x\u00d7 n_ sensitivity",
+  "cost": "O(n_x n_) plus 2n_ model evaluations; \u2248 0.9 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "kreisselmeier1977",
+    "text": "Kreisselmeier, G. (1977). Adaptive observers with exponential rate of convergence. *IEEE Transactions on Automatic Control* 22(1), 2\u20138. doi:[10.1109/TAC.1977.1101401](https://doi.org/10.1109/TAC.1977.1101401)",
+    "doi": "10.1109/TAC.1977.1101401"
+   },
+   {
+    "key": "zhang2002adaptiveobserver",
+    "text": "Zhang, Q. (2002). Adaptive observer for multiple-input-multiple-output (MIMO) linear time-varying systems. *IEEE Transactions on Automatic Control* 47(3), 525\u2013529. doi:[10.1109/9.989154](https://doi.org/10.1109/9.989154)",
+    "doi": "10.1109/9.989154"
+   },
+   {
+    "key": "zhang2001forgetting",
+    "text": "Zhang, Q. and Clavel, A. (2001). Adaptive observer with exponential forgetting factor for linear time varying systems. In *Proc. 40th IEEE Conference on Decision and Control*, pp. 3886\u20133891.",
+    "doi": ""
+   },
+   {
+    "key": "ioannou1996robust",
+    "text": "Ioannou, P. A. and Sun, J. (1996). Robust Adaptive Control. Prentice Hall.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.13,
+    "cold": 0.25,
+    "combined": 0.8,
+    "current_bias": 0.74,
+    "hot": 0.04,
+    "init_error": 0.06,
+    "noise_step": 0.32,
+    "nominal": 0.05,
+    "outliers": 0.17,
+    "param_mismatch": 0.83,
+    "preisach": 0.97,
+    "sensor_dropout": 0.07
+   },
+   "spm": {
+    "cold": 1.79,
+    "current_bias": 0.38,
+    "hot": 0.55,
+    "init_error": 2.67,
+    "noise_step": 0.53,
+    "nominal": 0.45,
+    "outliers": 0.47,
+    "param_mismatch": 1.02,
+    "sensor_dropout": 0.48
+   },
+   "geo_mean": 0.25,
+   "worst": 1.13,
+   "nominal": 0.05,
+   "ns_per_step": 900,
+   "bytes": 4864,
+   "rank": 16,
+   "soh": {
+    "capacity_rmse_mAh": 633.3,
+    "final_err_mAh": 785.1,
+    "soc_rmse_pct": 0.2
+   }
+  }
+ },
+ {
+  "name": "UIO",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Unknown-Input Observer (UIO)",
+  "chapter_label": "ch:uio",
+  "chapter_file": "report/chapters/observers/UIO.tex",
+  "headers": [
+   "include/estkit/observers/uio.hpp"
+  ],
+  "state": "n_x = 4 plus an n_x-dimensional internal state ; n_y = 1",
+  "cost": "O(n_x^2) steady state; \u2248 0.6 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "chen1996uio",
+    "text": "Chen, J., Patton, R. J. and Zhang, H. Y. (1996). Design of unknown input observers and robust fault detection filters. *International Journal of Control* 63(1), 85\u2013105. doi:[10.1080/00207179608921833](https://doi.org/10.1080/00207179608921833)",
+    "doi": "10.1080/00207179608921833"
+   },
+   {
+    "key": "chenpatton1999",
+    "text": "Chen, J. and Patton, R. J. (1999). Robust Model-Based Fault Diagnosis for Dynamic Systems. Kluwer Academic Publishers. doi:[10.1007/978-1-4615-5149-2](https://doi.org/10.1007/978-1-4615-5149-2)",
+    "doi": "10.1007/978-1-4615-5149-2"
+   },
+   {
+    "key": "darouach1994uio",
+    "text": "Darouach, M., Zasadzinski, M. and Xu, S. J. (1994). Full-order observers for linear systems with unknown inputs. *IEEE Transactions on Automatic Control* 39(3), 606\u2013609.",
+    "doi": ""
+   },
+   {
+    "key": "houmuller1992uio",
+    "text": "Hou, M. and M\u00fcller, P. C. (1992). Design of observers for linear systems with unknown inputs. *IEEE Transactions on Automatic Control* 37(6), 871\u2013875.",
+    "doi": ""
+   },
+   {
+    "key": "zhao2017observability",
+    "text": "Zhao, S., Duncan, S. R. and Howey, D. A. (2017). Observability analysis and state estimation of lithium-ion batteries in the presence of sensor biases. *IEEE Transactions on Control Systems Technology* 25(1), 326\u2013333. doi:[10.1109/TCST.2016.2542115](https://doi.org/10.1109/TCST.2016.2542115)",
+    "doi": "10.1109/TCST.2016.2542115"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.9,
+    "cold": 0.18,
+    "combined": 1.8,
+    "current_bias": 0.71,
+    "hot": 0.05,
+    "init_error": 0.06,
+    "noise_step": 0.29,
+    "nominal": 0.07,
+    "outliers": 0.13,
+    "param_mismatch": 1.37,
+    "preisach": 0.88,
+    "sensor_dropout": 0.06
+   },
+   "spm": {
+    "cold": 2.23,
+    "current_bias": 0.44,
+    "hot": 0.95,
+    "init_error": 3.63,
+    "noise_step": 0.81,
+    "nominal": 0.46,
+    "outliers": 0.67,
+    "param_mismatch": 0.93,
+    "sensor_dropout": 0.52
+   },
+   "geo_mean": 0.28,
+   "worst": 1.9,
+   "nominal": 0.07,
+   "ns_per_step": 581,
+   "bytes": 5072,
+   "rank": 22
+  }
+ },
+ {
+  "name": "SSKF",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Steady-State Kalman (LQE) Observer (SSKF)",
+  "chapter_label": "ch:sskf",
+  "chapter_file": "report/chapters/observers/SSKF.tex",
+  "headers": [
+   "include/estkit/observers/luenberger.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^2) steady state; one DARE solve at reset; \u2248 0.5 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "kalman1960",
+    "text": "Kalman, R. E. (1960). A new approach to linear filtering and prediction problems. *Journal of Basic Engineering* 82(1), 35\u201345. doi:[10.1115/1.3662552](https://doi.org/10.1115/1.3662552)",
+    "doi": "10.1115/1.3662552"
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   },
+   {
+    "key": "luenberger1971",
+    "text": "Luenberger, D. G. (1971). An introduction to observers. *IEEE Transactions on Automatic Control* 16(6), 596\u2013602. doi:[10.1109/TAC.1971.1099826](https://doi.org/10.1109/TAC.1971.1099826)",
+    "doi": "10.1109/TAC.1971.1099826"
+   },
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.18,
+    "cold": 0.31,
+    "combined": 2.03,
+    "current_bias": 0.85,
+    "hot": 0.04,
+    "init_error": 0.07,
+    "noise_step": 0.33,
+    "nominal": 0.08,
+    "outliers": 0.17,
+    "param_mismatch": 1.49,
+    "preisach": 1.0,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 3.35,
+    "current_bias": 0.57,
+    "hot": 0.61,
+    "init_error": 2.59,
+    "noise_step": 0.68,
+    "nominal": 0.61,
+    "outliers": 0.6,
+    "param_mismatch": 1.27,
+    "sensor_dropout": 0.6
+   },
+   "geo_mean": 0.33,
+   "worst": 2.18,
+   "nominal": 0.08,
+   "ns_per_step": 416,
+   "bytes": 4632,
+   "rank": 34
+  }
+ },
+ {
+  "name": "IntervalObserver",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Cooperative Interval Observer (IntervalObserver)",
+  "chapter_label": "ch:intervalobserver",
+  "chapter_file": "report/chapters/observers/IntervalObserver.tex",
+  "headers": [
+   "include/estkit/observers/interval_observer.hpp"
+  ],
+  "state": "2n_x = 8 (lower and upper trajectories) + n_x for the embedded point estimator",
+  "cost": "O(n_x n_u) plus n_samp Jacobian evaluations; \u2248 0.8 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "gouze2000interval",
+    "text": "Gouze, J. L., Rapaport, A. and Hadj-Sadok, M. Z. (2000). Interval observers for uncertain biological systems. *Ecological Modelling* 133(1\u20132), 45\u201356. doi:[10.1016/S0304-3800(00)00279-9](https://doi.org/10.1016/S0304-3800(00)00279-9)",
+    "doi": "10.1016/S0304-3800(00)00279-9"
+   },
+   {
+    "key": "raissi2012interval",
+    "text": "Ra\u00efssi, T., Efimov, D. and Zolghadri, A. (2012). Interval state estimation for a class of nonlinear systems. *IEEE Transactions on Automatic Control* 57(1), 260\u2013265. doi:[10.1109/TAC.2011.2164820](https://doi.org/10.1109/TAC.2011.2164820)",
+    "doi": "10.1109/TAC.2011.2164820"
+   },
+   {
+    "key": "mazenc2011interval",
+    "text": "Mazenc, F. and Bernard, O. (2011). Interval observers for linear time-invariant systems with disturbances. *Automatica* 47(1), 140\u2013147.",
+    "doi": ""
+   },
+   {
+    "key": "efimov2016interval",
+    "text": "Efimov, D. and Ra\u00efssi, T. (2016). Design of interval observers for uncertain dynamical systems. *Automation and Remote Control* 77(2), 191\u2013225.",
+    "doi": ""
+   },
+   {
+    "key": "smith1995monotone",
+    "text": "Smith, H. L. (1995). Monotone Dynamical Systems: An Introduction to the Theory of Competitive and Cooperative Systems. American Mathematical Society.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.18,
+    "cold": 0.31,
+    "combined": 2.03,
+    "current_bias": 0.85,
+    "hot": 0.04,
+    "init_error": 0.07,
+    "noise_step": 0.33,
+    "nominal": 0.08,
+    "outliers": 0.17,
+    "param_mismatch": 1.49,
+    "preisach": 1.0,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 3.35,
+    "current_bias": 0.57,
+    "hot": 0.61,
+    "init_error": 2.59,
+    "noise_step": 0.68,
+    "nominal": 0.61,
+    "outliers": 0.6,
+    "param_mismatch": 1.27,
+    "sensor_dropout": 0.6
+   },
+   "geo_mean": 0.33,
+   "worst": 2.18,
+   "nominal": 0.08,
+   "ns_per_step": 808,
+   "bytes": 9024,
+   "rank": 35
+  }
+ },
+ {
+  "name": "SuperTwisting-SMO",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Super-Twisting Sliding-Mode Observer (SuperTwisting-SMO)",
+  "chapter_label": "ch:supertwistingsmo",
+  "chapter_file": "report/chapters/observers/SuperTwistingSMO.tex",
+  "headers": [
+   "include/estkit/observers/super_twisting.hpp"
+  ],
+  "state": "n_x + 1 = 5 (4 model states + 1 injection integrator); n_y = 1",
+  "cost": "O(n_x), one square root; \u2248 0.14 \u00b5s/step \u2014 cheapest in the study",
+  "estimates": "",
+  "references": [
+   {
+    "key": "levant1993",
+    "text": "Levant, A. (1993). Sliding order and sliding accuracy in sliding mode control. *International Journal of Control* 58(6), 1247\u20131263. doi:[10.1080/00207179308923053](https://doi.org/10.1080/00207179308923053)",
+    "doi": "10.1080/00207179308923053"
+   },
+   {
+    "key": "davila2005",
+    "text": "Davila, J., Fridman, L. and Levant, A. (2005). Second-order sliding-mode observer for mechanical systems. *IEEE Transactions on Automatic Control* 50(11), 1785\u20131789. doi:[10.1109/TAC.2005.858636](https://doi.org/10.1109/TAC.2005.858636)",
+    "doi": "10.1109/TAC.2005.858636"
+   },
+   {
+    "key": "moreno2008",
+    "text": "Moreno, J. A. and Osorio, M. (2008). A Lyapunov approach to second-order sliding mode controllers and observers. In *Proc. 47th IEEE Conference on Decision and Control*, pp. 2856\u20132861. doi:[10.1109/CDC.2008.4739356](https://doi.org/10.1109/CDC.2008.4739356)",
+    "doi": "10.1109/CDC.2008.4739356"
+   },
+   {
+    "key": "moreno2012strict",
+    "text": "Moreno, J. A. and Osorio, M. (2012). Strict Lyapunov functions for the super-twisting algorithm. *IEEE Transactions on Automatic Control* 57(4), 1035\u20131040.",
+    "doi": ""
+   },
+   {
+    "key": "utkin1992",
+    "text": "Utkin, V. I. (1992). Sliding Modes in Control and Optimization. Springer. doi:[10.1007/978-3-642-84379-2](https://doi.org/10.1007/978-3-642-84379-2)",
+    "doi": "10.1007/978-3-642-84379-2"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.49,
+    "cold": 0.37,
+    "combined": 2.46,
+    "current_bias": 0.99,
+    "hot": 0.04,
+    "init_error": 0.09,
+    "noise_step": 0.16,
+    "nominal": 0.09,
+    "outliers": 0.09,
+    "param_mismatch": 1.73,
+    "preisach": 1.1,
+    "sensor_dropout": 0.09
+   },
+   "spm": {
+    "cold": 5.12,
+    "current_bias": 1.41,
+    "hot": 0.82,
+    "init_error": 0.96,
+    "noise_step": 1.0,
+    "nominal": 0.96,
+    "outliers": 0.96,
+    "param_mismatch": 1.29,
+    "sensor_dropout": 0.96
+   },
+   "geo_mean": 0.33,
+   "worst": 2.49,
+   "nominal": 0.09,
+   "ns_per_step": 142,
+   "bytes": 4280,
+   "rank": 36
+  }
+ },
+ {
+  "name": "HGO",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "High-Gain Observer with Anti-Peaking Saturation (HGO)",
+  "chapter_label": "ch:hgo",
+  "chapter_file": "report/chapters/observers/HGO.tex",
+  "headers": [
+   "include/estkit/observers/hgo.hpp"
+  ],
+  "state": "n_x = 4 (cell model); n_y = 1 (static assertion)",
+  "cost": "O(n_x) steady state; \u2248 0.5 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "khalil2002",
+    "text": "Khalil, H. K. (2002). Nonlinear Systems. Prentice Hall, 3rd ed..",
+    "doi": ""
+   },
+   {
+    "key": "khalilpraly2014hgo",
+    "text": "Khalil, H. K. and Praly, L. (2014). High-gain observers in nonlinear feedback control. *International Journal of Robust and Nonlinear Control* 24(6), 993\u20131015. doi:[10.1002/rnc.3051](https://doi.org/10.1002/rnc.3051)",
+    "doi": "10.1002/rnc.3051"
+   },
+   {
+    "key": "esfandiari1992saturation",
+    "text": "Esfandiari, F. and Khalil, H. K. (1992). Output feedback stabilization of fully linearizable systems. *International Journal of Control* 56(5), 1007\u20131037.",
+    "doi": ""
+   },
+   {
+    "key": "khalil2017hgo",
+    "text": "Khalil, H. K. (2017). High-Gain Observers in Nonlinear Feedback Control. SIAM.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.18,
+    "cold": 0.4,
+    "combined": 2.11,
+    "current_bias": 0.85,
+    "hot": 0.04,
+    "init_error": 0.07,
+    "noise_step": 0.33,
+    "nominal": 0.08,
+    "outliers": 0.17,
+    "param_mismatch": 1.49,
+    "preisach": 1.0,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 3.49,
+    "current_bias": 0.57,
+    "hot": 0.61,
+    "init_error": 1.86,
+    "noise_step": 0.68,
+    "nominal": 0.61,
+    "outliers": 0.6,
+    "param_mismatch": 1.27,
+    "sensor_dropout": 0.6
+   },
+   "geo_mean": 0.34,
+   "worst": 2.18,
+   "nominal": 0.08,
+   "ns_per_step": 479,
+   "bytes": 4680,
+   "rank": 42
+  }
+ },
+ {
+  "name": "Luenberger",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Luenberger Observer with Gain Scheduling (Luenberger)",
+  "chapter_label": "ch:luenberger",
+  "chapter_file": "report/chapters/observers/Luenberger.tex",
+  "headers": [
+   "include/estkit/observers/luenberger.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(n_x^3) only when the gain is re-designed; \u2248 0.5 \u00b5s/step measured, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "luenberger1964",
+    "text": "Luenberger, D. G. (1964). Observing the state of a linear system. *IEEE Transactions on Military Electronics* 8(2), 74\u201380. doi:[10.1109/TME.1964.4323124](https://doi.org/10.1109/TME.1964.4323124)",
+    "doi": "10.1109/TME.1964.4323124"
+   },
+   {
+    "key": "luenberger1971",
+    "text": "Luenberger, D. G. (1971). An introduction to observers. *IEEE Transactions on Automatic Control* 16(6), 596\u2013602. doi:[10.1109/TAC.1971.1099826](https://doi.org/10.1109/TAC.1971.1099826)",
+    "doi": "10.1109/TAC.1971.1099826"
+   },
+   {
+    "key": "ackermann1972",
+    "text": "Ackermann, J. (1972). Der Entwurf linearer Regelungssysteme im Zustandsraum. *Regelungstechnik und Prozess-Datenverarbeitung* 20(7), 297\u2013300.",
+    "doi": ""
+   },
+   {
+    "key": "ogata2010",
+    "text": "Ogata, K. (2010). Modern Control Engineering. Prentice Hall, 5th ed..",
+    "doi": ""
+   },
+   {
+    "key": "franklin1998digital",
+    "text": "Franklin, G. F., Powell, J. D. and Workman, M. L. (1998). Digital Control of Dynamic Systems. Addison-Wesley, 3rd ed..",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.18,
+    "cold": 0.4,
+    "combined": 2.13,
+    "current_bias": 0.85,
+    "hot": 0.04,
+    "init_error": 0.07,
+    "noise_step": 0.33,
+    "nominal": 0.08,
+    "outliers": 0.17,
+    "param_mismatch": 1.49,
+    "preisach": 1.0,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 3.35,
+    "current_bias": 0.57,
+    "hot": 0.61,
+    "init_error": 2.59,
+    "noise_step": 0.68,
+    "nominal": 0.61,
+    "outliers": 0.6,
+    "param_mismatch": 1.27,
+    "sensor_dropout": 0.6
+   },
+   "geo_mean": 0.34,
+   "worst": 2.18,
+   "nominal": 0.08,
+   "ns_per_step": 478,
+   "bytes": 4632,
+   "rank": 43
+  }
+ },
+ {
+  "name": "SMO",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Sliding-Mode Observer with Boundary Layer (SMO)",
+  "chapter_label": "ch:smo",
+  "chapter_file": "report/chapters/observers/SMO.tex",
+  "headers": [
+   "include/estkit/observers/smo.hpp"
+  ],
+  "state": "n_x = 4 (cell model); n_y = 1 (static assertion)",
+  "cost": "O(n_x) steady state; \u2248 0.55 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "utkin1992",
+    "text": "Utkin, V. I. (1992). Sliding Modes in Control and Optimization. Springer. doi:[10.1007/978-3-642-84379-2](https://doi.org/10.1007/978-3-642-84379-2)",
+    "doi": "10.1007/978-3-642-84379-2"
+   },
+   {
+    "key": "slotine1987sliding",
+    "text": "Slotine, J. J. E., Hedrick, J. K. and Misawa, E. A. (1987). On sliding observers for nonlinear systems. *Journal of Dynamic Systems, Measurement, and Control* 109(3), 245\u2013252.",
+    "doi": ""
+   },
+   {
+    "key": "kim2006smo",
+    "text": "Kim, I. S. (2006). The novel state of charge estimation method for lithium battery using sliding mode observer. *Journal of Power Sources* 163(1), 584\u2013590. doi:[10.1016/j.jpowsour.2006.09.006](https://doi.org/10.1016/j.jpowsour.2006.09.006)",
+    "doi": "10.1016/j.jpowsour.2006.09.006"
+   },
+   {
+    "key": "kim2008smo",
+    "text": "Kim, I. S. (2008). Nonlinear state of charge estimator for hybrid electric vehicle battery. *IEEE Transactions on Power Electronics* 23(4), 2027\u20132034. doi:[10.1109/TPEL.2008.924629](https://doi.org/10.1109/TPEL.2008.924629)",
+    "doi": "10.1109/TPEL.2008.924629"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.21,
+    "cold": 0.46,
+    "combined": 2.11,
+    "current_bias": 0.86,
+    "hot": 0.04,
+    "init_error": 0.08,
+    "noise_step": 0.33,
+    "nominal": 0.08,
+    "outliers": 0.17,
+    "param_mismatch": 1.49,
+    "preisach": 1.01,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 3.54,
+    "current_bias": 0.62,
+    "hot": 0.63,
+    "init_error": 2.23,
+    "noise_step": 0.7,
+    "nominal": 0.63,
+    "outliers": 0.62,
+    "param_mismatch": 1.24,
+    "sensor_dropout": 0.62
+   },
+   "geo_mean": 0.35,
+   "worst": 2.21,
+   "nominal": 0.08,
+   "ns_per_step": 517,
+   "bytes": 4800,
+   "rank": 44
+  }
+ },
+ {
+  "name": "SMO-Adaptive",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Adaptive-Switching-Gain Sliding-Mode Observer (SMO-Adaptive)",
+  "chapter_label": "ch:smoadaptive",
+  "chapter_file": "report/chapters/observers/SMOAdaptive.tex",
+  "headers": [
+   "include/estkit/observers/smo.hpp"
+  ],
+  "state": "n_x = 4 (cell model); n_y = 1 (static assertion)",
+  "cost": "O(n_x) steady state; \u2248 0.54 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "chen2014adaptivesmo",
+    "text": "Chen, X., Shen, W., Cao, Z. and Kapoor, A. (2014). A novel approach for state of charge estimation based on adaptive switching gain sliding mode observer in electric vehicles. *Journal of Power Sources* 246, 667\u2013678. doi:[10.1016/j.jpowsour.2013.08.039](https://doi.org/10.1016/j.jpowsour.2013.08.039)",
+    "doi": "10.1016/j.jpowsour.2013.08.039"
+   },
+   {
+    "key": "plestan2010adaptive",
+    "text": "Plestan, F., Shtessel, Y., Bregeault, V. and Poznyak, A. (2010). New methodologies for adaptive sliding mode control. *International Journal of Control* 83(9), 1907\u20131919.",
+    "doi": ""
+   },
+   {
+    "key": "ioannou1984sigma",
+    "text": "Ioannou, P. A. and Kokotovic, P. V. (1984). Instability analysis and improvement of robustness of adaptive control. *Automatica* 20(5), 583\u2013594.",
+    "doi": ""
+   },
+   {
+    "key": "utkin1992",
+    "text": "Utkin, V. I. (1992). Sliding Modes in Control and Optimization. Springer. doi:[10.1007/978-3-642-84379-2](https://doi.org/10.1007/978-3-642-84379-2)",
+    "doi": "10.1007/978-3-642-84379-2"
+   },
+   {
+    "key": "kim2008smo",
+    "text": "Kim, I. S. (2008). Nonlinear state of charge estimator for hybrid electric vehicle battery. *IEEE Transactions on Power Electronics* 23(4), 2027\u20132034. doi:[10.1109/TPEL.2008.924629](https://doi.org/10.1109/TPEL.2008.924629)",
+    "doi": "10.1109/TPEL.2008.924629"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.2,
+    "cold": 0.44,
+    "combined": 2.08,
+    "current_bias": 0.86,
+    "hot": 0.04,
+    "init_error": 0.08,
+    "noise_step": 0.4,
+    "nominal": 0.08,
+    "outliers": 0.17,
+    "param_mismatch": 1.49,
+    "preisach": 1.01,
+    "sensor_dropout": 0.08
+   },
+   "spm": {
+    "cold": 3.26,
+    "current_bias": 0.58,
+    "hot": 0.62,
+    "init_error": 2.37,
+    "noise_step": 0.86,
+    "nominal": 0.61,
+    "outliers": 0.62,
+    "param_mismatch": 1.26,
+    "sensor_dropout": 0.6
+   },
+   "geo_mean": 0.35,
+   "worst": 2.2,
+   "nominal": 0.08,
+   "ns_per_step": 511,
+   "bytes": 4800,
+   "rank": 46
+  }
+ },
+ {
+  "name": "ESO",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Extended State Observer (ESO)",
+  "chapter_label": "ch:eso",
+  "chapter_file": "report/chapters/observers/ESO.tex",
+  "headers": [
+   "include/estkit/observers/eso.hpp"
+  ],
+  "state": "n_x + 1 = 5 (cell model); n_y = 1 (static assertion)",
+  "cost": "O((n_x+1)^2) steady state; \u2248 1.5 \u00b5s/step measured (dominated by the start-up DARE)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "han2009adrc",
+    "text": "Han, J. (2009). From PID to active disturbance rejection control. *IEEE Transactions on Industrial Electronics* 56(3), 900\u2013906. doi:[10.1109/TIE.2008.2011621](https://doi.org/10.1109/TIE.2008.2011621)",
+    "doi": "10.1109/TIE.2008.2011621"
+   },
+   {
+    "key": "gao2003bandwidth",
+    "text": "Gao, Z. (2003). Scaling and bandwidth-parameterization based controller tuning. In *Proc. American Control Conference*, pp. 4989\u20134996. doi:[10.1109/ACC.2003.1242516](https://doi.org/10.1109/ACC.2003.1242516)",
+    "doi": "10.1109/ACC.2003.1242516"
+   },
+   {
+    "key": "zheng2007adrcstability",
+    "text": "Zheng, Q., Gao, L. Q. and Gao, Z. (2007). On stability analysis of active disturbance rejection control for nonlinear time-varying plants with unknown dynamics. In *Proc. 46th IEEE Conference on Decision and Control*, pp. 3501\u20133506.",
+    "doi": ""
+   },
+   {
+    "key": "luenberger1971",
+    "text": "Luenberger, D. G. (1971). An introduction to observers. *IEEE Transactions on Automatic Control* 16(6), 596\u2013602. doi:[10.1109/TAC.1971.1099826](https://doi.org/10.1109/TAC.1971.1099826)",
+    "doi": "10.1109/TAC.1971.1099826"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.64,
+    "cold": 0.75,
+    "combined": 2.54,
+    "current_bias": 0.99,
+    "hot": 0.05,
+    "init_error": 0.1,
+    "noise_step": 0.42,
+    "nominal": 0.1,
+    "outliers": 0.25,
+    "param_mismatch": 1.69,
+    "preisach": 1.1,
+    "sensor_dropout": 0.1
+   },
+   "spm": {
+    "cold": 5.32,
+    "current_bias": 1.43,
+    "hot": 0.86,
+    "init_error": 0.92,
+    "noise_step": 2.13,
+    "nominal": 0.98,
+    "outliers": 1.09,
+    "param_mismatch": 1.33,
+    "sensor_dropout": 0.97
+   },
+   "geo_mean": 0.43,
+   "worst": 2.64,
+   "nominal": 0.1,
+   "ns_per_step": 1479,
+   "bytes": 4784,
+   "rank": 51
+  }
+ },
+ {
+  "name": "PI-Observer",
+  "family": "observers",
+  "family_label": "Deterministic observers",
+  "level": "cell",
+  "chapter_title": "Proportional-Integral Observer (PI-Observer)",
+  "chapter_label": "ch:piobserver",
+  "chapter_file": "report/chapters/observers/PIObserver.tex",
+  "headers": [
+   "include/estkit/observers/pi_observer.hpp"
+  ],
+  "state": "n_x + n_y = 5 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O((n_x+n_y)^2) steady state; \u2248 1.3 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "wojciechowski1978",
+    "text": "Wojciechowski, B. (1978). Analysis and synthesis of proportional-integral observers for single-input-single-output time-invariant continuous systems. PhD thesis, Gliwice Technical University.",
+    "doi": ""
+   },
+   {
+    "key": "beale1989pi",
+    "text": "Beale, S. and Shafai, B. (1989). Robust control system design with a proportional integral observer. *International Journal of Control* 50(1), 97\u2013111. doi:[10.1080/00207178908953350](https://doi.org/10.1080/00207178908953350)",
+    "doi": "10.1080/00207178908953350"
+   },
+   {
+    "key": "shafai1996ltrpi",
+    "text": "Shafai, B., Beale, S., Niemann, H. H. and Stoustrup, J. L. (1996). LTR design of discrete-time proportional-integral observers. *IEEE Transactions on Automatic Control* 41(7), 1056\u20131062.",
+    "doi": ""
+   },
+   {
+    "key": "johnson1971dac",
+    "text": "Johnson, C. D. (1971). Accommodation of external disturbances in linear regulator and servomechanism problems. *IEEE Transactions on Automatic Control* 16(6), 635\u2013644.",
+    "doi": ""
+   },
+   {
+    "key": "luenberger1971",
+    "text": "Luenberger, D. G. (1971). An introduction to observers. *IEEE Transactions on Automatic Control* 16(6), 596\u2013602. doi:[10.1109/TAC.1971.1099826](https://doi.org/10.1109/TAC.1971.1099826)",
+    "doi": "10.1109/TAC.1971.1099826"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.63,
+    "cold": 0.77,
+    "combined": 1.98,
+    "current_bias": 0.99,
+    "hot": 0.05,
+    "init_error": 0.11,
+    "noise_step": 0.51,
+    "nominal": 0.11,
+    "outliers": 0.37,
+    "param_mismatch": 1.59,
+    "preisach": 1.08,
+    "sensor_dropout": 0.11
+   },
+   "spm": {
+    "cold": 5.28,
+    "current_bias": 1.45,
+    "hot": 0.81,
+    "init_error": 0.97,
+    "noise_step": 1.79,
+    "nominal": 0.97,
+    "outliers": 1.02,
+    "param_mismatch": 1.33,
+    "sensor_dropout": 0.99
+   },
+   "geo_mean": 0.46,
+   "worst": 2.63,
+   "nominal": 0.11,
+   "ns_per_step": 1373,
+   "bytes": 4824,
+   "rank": 54
+  }
+ },
+ {
+  "name": "AWTLS",
+  "family": "soh",
+  "family_label": "Joint / dual state\u2013parameter (SOH)",
+  "level": "cell",
+  "chapter_title": "Recursive approximate weighted total least squares for cell capacity (AWTLS)",
+  "chapter_label": "ch:awtls",
+  "chapter_file": "report/chapters/soh/AWTLS.tex",
+  "headers": [
+   "include/estkit/parameter/awtls_capacity.hpp"
+  ],
+  "state": "n_x=4 (inner EKF) + six recursive scalars",
+  "cost": "O(n_x^3) every step; one quartic solve every 300 second; 0.44 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2011awtls",
+    "text": "Plett, G. L. (2011). Recursive approximate weighted total least squares estimation of battery cell total capacity. *Journal of Power Sources* 196(4), 2319\u20132331. doi:[10.1016/j.jpowsour.2010.09.048](https://doi.org/10.1016/j.jpowsour.2010.09.048)",
+    "doi": "10.1016/j.jpowsour.2010.09.048"
+   },
+   {
+    "key": "plett2016bms2",
+    "text": "Plett, G. L. (2016). Battery Management Systems, Volume II: Equivalent-Circuit Methods. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "zhao2017observability",
+    "text": "Zhao, S., Duncan, S. R. and Howey, D. A. (2017). Observability analysis and state estimation of lithium-ion batteries in the presence of sensor biases. *IEEE Transactions on Control Systems Technology* 25(1), 326\u2013333. doi:[10.1109/TCST.2016.2542115](https://doi.org/10.1109/TCST.2016.2542115)",
+    "doi": "10.1109/TCST.2016.2542115"
+   },
+   {
+    "key": "golubvanloan2013",
+    "text": "Golub, G. H. and Van Loan, C. F. (2013). Matrix Computations. Johns Hopkins University Press, 4th ed..",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.54,
+    "cold": 0.1,
+    "combined": 9.8,
+    "current_bias": 0.22,
+    "hot": 0.1,
+    "init_error": 0.03,
+    "noise_step": 0.14,
+    "nominal": 0.02,
+    "outliers": 0.19,
+    "param_mismatch": 0.83,
+    "preisach": 0.64,
+    "sensor_dropout": 0.53
+   },
+   "spm": {
+    "cold": 6.27,
+    "current_bias": 4.71,
+    "hot": 1.52,
+    "init_error": 2.67,
+    "noise_step": 2.4,
+    "nominal": 2.77,
+    "outliers": 1.18,
+    "param_mismatch": 2.81,
+    "sensor_dropout": 4.45
+   },
+   "geo_mean": 0.25,
+   "worst": 9.8,
+   "nominal": 0.02,
+   "ns_per_step": 483,
+   "bytes": 8776,
+   "rank": 18,
+   "soh": {
+    "capacity_rmse_mAh": 49.2,
+    "final_err_mAh": -34.7,
+    "soc_rmse_pct": 0.84
+   }
+  }
+ },
+ {
+  "name": "JointEKF",
+  "family": "soh",
+  "family_label": "Joint / dual state\u2013parameter (SOH)",
+  "level": "cell",
+  "chapter_title": "Joint state and parameter estimation with the extended Kalman filter (Joint EKF)",
+  "chapter_label": "ch:jointekf",
+  "chapter_file": "report/chapters/soh/JointEKF.tex",
+  "headers": [
+   "include/estkit/parameter/joint_ekf.hpp"
+  ],
+  "state": "n_a = n_x + n_p = 4 + 2 = 6 (cell model) \u2014 generic in n_x, n_u, n_y, n_p",
+  "cost": "O\\!((n_x+n_p)^3); 1.87 \u00b5s/step measured, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "ljung1979ekf",
+    "text": "Ljung, L. (1979). Asymptotic behavior of the extended Kalman filter as a parameter estimator for linear systems. *IEEE Transactions on Automatic Control* 24(1), 36\u201350.",
+    "doi": ""
+   },
+   {
+    "key": "wannelson2001dual",
+    "text": "Wan, E. A. and Nelson, A. T. (2001). Dual extended Kalman filter methods. In *Kalman Filtering and Neural Networks*, pp. 123\u2013173.",
+    "doi": ""
+   },
+   {
+    "key": "jazwinski1970",
+    "text": "Jazwinski, A. H. (1970). Stochastic Processes and Filtering Theory. Academic Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.05,
+    "cold": 0.12,
+    "combined": 2.58,
+    "current_bias": 0.63,
+    "hot": 0.09,
+    "init_error": 0.07,
+    "noise_step": 0.43,
+    "nominal": 0.05,
+    "outliers": 0.24,
+    "param_mismatch": 1.2,
+    "preisach": 0.95,
+    "sensor_dropout": 1.42
+   },
+   "spm": {
+    "cold": 3.19,
+    "current_bias": 3.14,
+    "hot": 0.55,
+    "init_error": 1.66,
+    "noise_step": 2.94,
+    "nominal": 2.11,
+    "outliers": 4.03,
+    "param_mismatch": 2.37,
+    "sensor_dropout": 2.25
+   },
+   "geo_mean": 0.3,
+   "worst": 2.58,
+   "nominal": 0.05,
+   "ns_per_step": 1215,
+   "bytes": 8752,
+   "rank": 30,
+   "soh": {
+    "capacity_rmse_mAh": 26.3,
+    "final_err_mAh": 20.6,
+    "soc_rmse_pct": 0.11
+   }
+  }
+ },
+ {
+  "name": "JointUKF",
+  "family": "soh",
+  "family_label": "Joint / dual state\u2013parameter (SOH)",
+  "level": "cell",
+  "chapter_title": "Joint state and parameter estimation with a sigma-point filter (Joint SPKF)",
+  "chapter_label": "ch:jointukf",
+  "chapter_file": "report/chapters/soh/JointUKF.tex",
+  "headers": [
+   "include/estkit/parameter/joint_ukf.hpp"
+  ],
+  "state": "n_a = n_x + n_p = 6; 2n_a+1=13 sigma points",
+  "cost": "O(n_a^3) for the Cholesky, 13 model evaluations; 4.8 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2006spkf2",
+    "text": "Plett, G. L. (2006). Sigma-point Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 2: Simultaneous state and parameter estimation. *Journal of Power Sources* 161(2), 1369\u20131384. doi:[10.1016/j.jpowsour.2006.06.004](https://doi.org/10.1016/j.jpowsour.2006.06.004)",
+    "doi": "10.1016/j.jpowsour.2006.06.004"
+   },
+   {
+    "key": "plett2006spkf1",
+    "text": "Plett, G. L. (2006). Sigma-point Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 1: Introduction and state estimation. *Journal of Power Sources* 161(2), 1356\u20131368. doi:[10.1016/j.jpowsour.2006.06.003](https://doi.org/10.1016/j.jpowsour.2006.06.003)",
+    "doi": "10.1016/j.jpowsour.2006.06.003"
+   },
+   {
+    "key": "wan2000ukf",
+    "text": "Wan, E. A. and van der Merwe, R. (2000). The unscented Kalman filter for nonlinear estimation. In *Proc. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium (AS-SPCC)*, pp. 153\u2013158. doi:[10.1109/ASSPCC.2000.882463](https://doi.org/10.1109/ASSPCC.2000.882463)",
+    "doi": "10.1109/ASSPCC.2000.882463"
+   },
+   {
+    "key": "julier2004unscented",
+    "text": "Julier, S. J. and Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE* 92(3), 401\u2013422. doi:[10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141)",
+    "doi": "10.1109/JPROC.2003.823141"
+   },
+   {
+    "key": "ljung1979ekf",
+    "text": "Ljung, L. (1979). Asymptotic behavior of the extended Kalman filter as a parameter estimator for linear systems. *IEEE Transactions on Automatic Control* 24(1), 36\u201350.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.06,
+    "cold": 0.16,
+    "combined": 1.51,
+    "current_bias": 0.58,
+    "hot": 0.08,
+    "init_error": 0.05,
+    "noise_step": 0.55,
+    "nominal": 0.11,
+    "outliers": 0.37,
+    "param_mismatch": 0.49,
+    "preisach": 0.94,
+    "sensor_dropout": 1.86
+   },
+   "spm": {
+    "cold": 2.49,
+    "current_bias": 1.51,
+    "hot": 0.48,
+    "init_error": 0.82,
+    "noise_step": 4.28,
+    "nominal": 1.4,
+    "outliers": 6.29,
+    "param_mismatch": 0.92,
+    "sensor_dropout": 2.2
+   },
+   "geo_mean": 0.31,
+   "worst": 1.86,
+   "nominal": 0.11,
+   "ns_per_step": 3103,
+   "bytes": 9600,
+   "rank": 32,
+   "soh": {
+    "capacity_rmse_mAh": 28.7,
+    "final_err_mAh": 21.8,
+    "soc_rmse_pct": 0.1
+   }
+  }
+ },
+ {
+  "name": "DualEKF",
+  "family": "soh",
+  "family_label": "Joint / dual state\u2013parameter (SOH)",
+  "level": "cell",
+  "chapter_title": "Dual extended Kalman filter (Dual EKF)",
+  "chapter_label": "ch:dualekf",
+  "chapter_file": "report/chapters/soh/DualEKF.tex",
+  "headers": [
+   "include/estkit/parameter/dual_ekf.hpp"
+  ],
+  "state": "two filters: n_x=4 (state) and n_p=2 (parameters)",
+  "cost": "O(n_x^3+n_p^3+n_x^2 n_p); 1.12 \u00b5s/step measured, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "wannelson2001dual",
+    "text": "Wan, E. A. and Nelson, A. T. (2001). Dual extended Kalman filter methods. In *Kalman Filtering and Neural Networks*, pp. 123\u2013173.",
+    "doi": ""
+   },
+   {
+    "key": "ljung1979ekf",
+    "text": "Ljung, L. (1979). Asymptotic behavior of the extended Kalman filter as a parameter estimator for linear systems. *IEEE Transactions on Automatic Control* 24(1), 36\u201350.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.66,
+    "cold": 0.41,
+    "combined": 2.01,
+    "current_bias": 0.79,
+    "hot": 0.07,
+    "init_error": 0.08,
+    "noise_step": 0.31,
+    "nominal": 0.08,
+    "outliers": 0.34,
+    "param_mismatch": 1.94,
+    "preisach": 0.94,
+    "sensor_dropout": 0.28
+   },
+   "spm": {
+    "cold": 2.06,
+    "current_bias": 1.45,
+    "hot": 0.6,
+    "init_error": 0.86,
+    "noise_step": 1.52,
+    "nominal": 0.86,
+    "outliers": 1.07,
+    "param_mismatch": 1.18,
+    "sensor_dropout": 1.69
+   },
+   "geo_mean": 0.39,
+   "worst": 2.01,
+   "nominal": 0.08,
+   "ns_per_step": 1272,
+   "bytes": 4752,
+   "rank": 50,
+   "soh": {
+    "capacity_rmse_mAh": 25.5,
+    "final_err_mAh": 29.0,
+    "soc_rmse_pct": 0.42
+   }
+  }
+ },
+ {
+  "name": "DualUKF",
+  "family": "soh",
+  "family_label": "Joint / dual state\u2013parameter (SOH)",
+  "level": "cell",
+  "chapter_title": "Dual sigma-point Kalman filter (Dual SPKF)",
+  "chapter_label": "ch:dualukf",
+  "chapter_file": "report/chapters/soh/DualUKF.tex",
+  "headers": [
+   "include/estkit/parameter/dual_ukf.hpp"
+  ],
+  "state": "two filters: n_x=4 (9 sigma points) and n_p=2 (5 sigma points)",
+  "cost": "O(n_x^3+n_p^3), 9+5 model evaluations; 2.38 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2006spkf2",
+    "text": "Plett, G. L. (2006). Sigma-point Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 2: Simultaneous state and parameter estimation. *Journal of Power Sources* 161(2), 1369\u20131384. doi:[10.1016/j.jpowsour.2006.06.004](https://doi.org/10.1016/j.jpowsour.2006.06.004)",
+    "doi": "10.1016/j.jpowsour.2006.06.004"
+   },
+   {
+    "key": "wannelson2001dual",
+    "text": "Wan, E. A. and Nelson, A. T. (2001). Dual extended Kalman filter methods. In *Kalman Filtering and Neural Networks*, pp. 123\u2013173.",
+    "doi": ""
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "julier2004unscented",
+    "text": "Julier, S. J. and Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE* 92(3), 401\u2013422. doi:[10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141)",
+    "doi": "10.1109/JPROC.2003.823141"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.11,
+    "cold": 1.61,
+    "combined": 2.1,
+    "current_bias": 0.71,
+    "hot": 0.04,
+    "init_error": 0.12,
+    "noise_step": 0.27,
+    "nominal": 0.09,
+    "outliers": 0.77,
+    "param_mismatch": 2.7,
+    "preisach": 1.28,
+    "sensor_dropout": 4.12
+   },
+   "spm": {
+    "cold": 6.59,
+    "current_bias": 5.59,
+    "hot": 0.86,
+    "init_error": 1.74,
+    "noise_step": 2.99,
+    "nominal": 3.68,
+    "outliers": 4.63,
+    "param_mismatch": 2.39,
+    "sensor_dropout": 6.44
+   },
+   "geo_mean": 0.51,
+   "worst": 4.12,
+   "nominal": 0.09,
+   "ns_per_step": 2371,
+   "bytes": 5512,
+   "rank": 57,
+   "soh": {
+    "capacity_rmse_mAh": 33.0,
+    "final_err_mAh": 21.9,
+    "soc_rmse_pct": 0.14
+   }
+  }
+ },
+ {
+  "name": "RLS-EKF",
+  "family": "soh",
+  "family_label": "Joint / dual state\u2013parameter (SOH)",
+  "level": "cell",
+  "chapter_title": "Online impedance identification by recursive least squares with an EKF (RLS-EKF)",
+  "chapter_label": "ch:rlsekf",
+  "chapter_file": "report/chapters/soh/RLSEKF.tex",
+  "headers": [
+   "include/estkit/parameter/rls_ekf.hpp"
+  ],
+  "state": "n_x=4 (EKF) + n_=4 (regression vector)",
+  "cost": "O(n_x^3) every step, O(n_^2) every tenth step; 0.50 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2004ekf2",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 2. Modeling and identification. *Journal of Power Sources* 134(2), 262\u2013276. doi:[10.1016/j.jpowsour.2004.02.032](https://doi.org/10.1016/j.jpowsour.2004.02.032)",
+    "doi": "10.1016/j.jpowsour.2004.02.032"
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "ljung1999",
+    "text": "Ljung, L. (1999). System Identification: Theory for the User. Prentice Hall, 2nd ed..",
+    "doi": ""
+   },
+   {
+    "key": "plett2016bms2",
+    "text": "Plett, G. L. (2016). Battery Management Systems, Volume II: Equivalent-Circuit Methods. Artech House.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 4.23,
+    "cold": 1.03,
+    "combined": 2.0,
+    "current_bias": 0.3,
+    "hot": 0.37,
+    "init_error": 0.49,
+    "noise_step": 0.48,
+    "nominal": 0.5,
+    "outliers": 0.6,
+    "param_mismatch": 0.62,
+    "preisach": 0.66,
+    "sensor_dropout": 0.16
+   },
+   "spm": {
+    "cold": 10.68,
+    "current_bias": 6.12,
+    "hot": 2.08,
+    "init_error": 4.33,
+    "noise_step": 3.95,
+    "nominal": 4.7,
+    "outliers": 2.44,
+    "param_mismatch": 3.94,
+    "sensor_dropout": 7.21
+   },
+   "geo_mean": 0.64,
+   "worst": 4.23,
+   "nominal": 0.5,
+   "ns_per_step": 496,
+   "bytes": 8904,
+   "rank": 62
+  }
+ },
+ {
+  "name": "GSF",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Gaussian-sum filter (GSF)",
+  "chapter_label": "ch:gsf",
+  "chapter_file": "report/chapters/particle/GSF.tex",
+  "headers": [
+   "include/estkit/particle/gsf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "1.75 \u00b5s/step (3.7\u00d7 EKF; N_c EKF cycles +O(N_c^2n_x^2))",
+  "estimates": "",
+  "references": [
+   {
+    "key": "alspach1972gsf",
+    "text": "Alspach, D. L. and Sorenson, H. W. (1972). Nonlinear Bayesian estimation using Gaussian sum approximations. *IEEE Transactions on Automatic Control* 17(4), 439\u2013448. doi:[10.1109/TAC.1972.1100034](https://doi.org/10.1109/TAC.1972.1100034)",
+    "doi": "10.1109/TAC.1972.1100034"
+   },
+   {
+    "key": "sorenson1971gsum",
+    "text": "Sorenson, H. W. and Alspach, D. L. (1971). Recursive Bayesian estimation using Gaussian sums. *Automatica* 7(4), 465\u2013479. doi:[10.1016/0005-1098(71)90097-5](https://doi.org/10.1016/0005-1098(71)90097-5)",
+    "doi": "10.1016/0005-1098(71)90097-5"
+   },
+   {
+    "key": "salmond1990mixture",
+    "text": "Salmond, D. J. (1990). Mixture reduction algorithms for target tracking in clutter. In *Signal and Data Processing of Small Targets 1990, Proc. SPIE*, pp. 434\u2013445.",
+    "doi": ""
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 3.12,
+    "cold": 0.15,
+    "combined": 3.33,
+    "current_bias": 0.55,
+    "hot": 0.03,
+    "init_error": 0.1,
+    "noise_step": 0.09,
+    "nominal": 0.05,
+    "outliers": 0.12,
+    "param_mismatch": 2.2,
+    "preisach": 0.2,
+    "sensor_dropout": 0.1
+   },
+   "spm": {
+    "cold": 5.14,
+    "current_bias": 3.86,
+    "hot": 1.7,
+    "init_error": 3.99,
+    "noise_step": 1.21,
+    "nominal": 1.39,
+    "outliers": 1.25,
+    "param_mismatch": 3.5,
+    "sensor_dropout": 1.85
+   },
+   "geo_mean": 0.25,
+   "worst": 3.33,
+   "nominal": 0.05,
+   "ns_per_step": 1749,
+   "bytes": 9192,
+   "rank": 17
+  }
+ },
+ {
+  "name": "RBPF",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Marginalised (Rao\u2013Blackwellised) particle filter (RBPF)",
+  "chapter_label": "ch:rbpf",
+  "chapter_file": "report/chapters/particle/RBPF.tex",
+  "headers": [
+   "include/estkit/particle/rbpf.hpp"
+  ],
+  "state": "n_x = n_n + n_l = 2 + 2 (cell model) \u2014 generic in n_n, n_l, n_u, n_y",
+  "cost": "39.9 \u00b5s/step (84\u00d7 EKF); O(N(n_l^3 + c_f + c_h)), no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "schon2005marginalized",
+    "text": "Sch\u00f6n, T., Gustafsson, F. and Nordlund, P. J. (2005). Marginalized particle filters for mixed linear/nonlinear state-space models. *IEEE Transactions on Signal Processing* 53(7), 2279\u20132289. doi:[10.1109/TSP.2005.849151](https://doi.org/10.1109/TSP.2005.849151)",
+    "doi": "10.1109/TSP.2005.849151"
+   },
+   {
+    "key": "doucet2000rbpf",
+    "text": "Doucet, A., de Freitas, N., Murphy, K. and Russell, S. (2000). Rao-Blackwellised particle filtering for dynamic Bayesian networks. In *Proc. 16th Conference on Uncertainty in Artificial Intelligence (UAI)*, pp. 176\u2013183.",
+    "doi": ""
+   },
+   {
+    "key": "chenliu2000mkf",
+    "text": "Chen, R. and Liu, J. S. (2000). Mixture Kalman filters. *Journal of the Royal Statistical Society: Series B (Statistical Methodology)* 62(3), 493\u2013508. doi:[10.1111/1467-9868.00246](https://doi.org/10.1111/1467-9868.00246)",
+    "doi": "10.1111/1467-9868.00246"
+   },
+   {
+    "key": "casella1996rao",
+    "text": "Casella, G. and Robert, C. P. (1996). Rao-Blackwellisation of sampling schemes. *Biometrika* 83(1), 81\u201394. doi:[10.1093/biomet/83.1.81](https://doi.org/10.1093/biomet/83.1.81)",
+    "doi": "10.1093/biomet/83.1.81"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.25,
+    "cold": 0.18,
+    "combined": 2.05,
+    "current_bias": 0.12,
+    "hot": 0.07,
+    "init_error": 0.35,
+    "noise_step": 1.12,
+    "nominal": 0.06,
+    "outliers": 0.68,
+    "param_mismatch": 1.53,
+    "preisach": 0.4,
+    "sensor_dropout": 0.07
+   },
+   "spm": {
+    "cold": 3.92,
+    "current_bias": 2.37,
+    "hot": 1.88,
+    "init_error": 4.71,
+    "noise_step": 2.76,
+    "nominal": 0.76,
+    "outliers": 1.4,
+    "param_mismatch": 1.92,
+    "sensor_dropout": 1.11
+   },
+   "geo_mean": 0.36,
+   "worst": 2.25,
+   "nominal": 0.06,
+   "ns_per_step": 39896,
+   "bytes": 34016,
+   "rank": 48
+  }
+ },
+ {
+  "name": "PF-Regularized",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Regularised particle filter (PF-Regularized)",
+  "chapter_label": "ch:pfregularized",
+  "chapter_file": "report/chapters/particle/PFRegularized.tex",
+  "headers": [
+   "include/estkit/particle/pf_regularized.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "81.9 \u00b5s/step (172\u00d7 EKF; one extra Cholesky per resampling)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "musso2001regularized",
+    "text": "Musso, C., Oudjane, N. and Le Gland, F. c. (2001). Improving regularised particle filters. In *Sequential Monte Carlo Methods in Practice*, pp. 247\u2013271. doi:[10.1007/978-1-4757-3437-912](https://doi.org/10.1007/978-1-4757-3437-912)",
+    "doi": "10.1007/978-1-4757-3437-912"
+   },
+   {
+    "key": "arulampalam2002",
+    "text": "Arulampalam, M. S., Maskell, S., Gordon, N. and Clapp, T. (2002). A tutorial on particle filters for online nonlinear/non-Gaussian Bayesian tracking. *IEEE Transactions on Signal Processing* 50(2), 174\u2013188. doi:[10.1109/78.978374](https://doi.org/10.1109/78.978374)",
+    "doi": "10.1109/78.978374"
+   },
+   {
+    "key": "silverman1986",
+    "text": "Silverman, B. W. (1986). Density Estimation for Statistics and Data Analysis. Chapman & Hall.",
+    "doi": ""
+   },
+   {
+    "key": "gordon1993",
+    "text": "Gordon, N. J., Salmond, D. J. and Smith, A. F. M. (1993). Novel approach to nonlinear/non-Gaussian Bayesian state estimation. *IEE Proceedings F (Radar and Signal Processing)* 140(2), 107\u2013113. doi:[10.1049/ip-f-2.1993.0015](https://doi.org/10.1049/ip-f-2.1993.0015)",
+    "doi": "10.1049/ip-f-2.1993.0015"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.51,
+    "cold": 0.24,
+    "combined": 2.51,
+    "current_bias": 0.9,
+    "hot": 0.06,
+    "init_error": 0.11,
+    "noise_step": 0.5,
+    "nominal": 0.12,
+    "outliers": 0.34,
+    "param_mismatch": 1.88,
+    "preisach": 1.0,
+    "sensor_dropout": 0.12
+   },
+   "spm": {
+    "cold": 3.91,
+    "current_bias": 0.67,
+    "hot": 0.54,
+    "init_error": 0.71,
+    "noise_step": 1.15,
+    "nominal": 0.64,
+    "outliers": 0.81,
+    "param_mismatch": 1.35,
+    "sensor_dropout": 0.7
+   },
+   "geo_mean": 0.43,
+   "worst": 2.51,
+   "nominal": 0.12,
+   "ns_per_step": 81850,
+   "bytes": 46464,
+   "rank": 52
+  }
+ },
+ {
+  "name": "PF-Auxiliary",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Auxiliary particle filter (PF-Auxiliary)",
+  "chapter_label": "ch:pfauxiliary",
+  "chapter_file": "report/chapters/particle/PFAuxiliary.tex",
+  "headers": [
+   "include/estkit/particle/pf_auxiliary.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "104.4 \u00b5s/step (219\u00d7 EKF; 3N model evaluations)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "pitt1999auxiliary",
+    "text": "Pitt, M. K. and Shephard, N. (1999). Filtering via simulation: Auxiliary particle filters. *Journal of the American Statistical Association* 94(446), 590\u2013599. doi:[10.1080/01621459.1999.10474153](https://doi.org/10.1080/01621459.1999.10474153)",
+    "doi": "10.1080/01621459.1999.10474153"
+   },
+   {
+    "key": "arulampalam2002",
+    "text": "Arulampalam, M. S., Maskell, S., Gordon, N. and Clapp, T. (2002). A tutorial on particle filters for online nonlinear/non-Gaussian Bayesian tracking. *IEEE Transactions on Signal Processing* 50(2), 174\u2013188. doi:[10.1109/78.978374](https://doi.org/10.1109/78.978374)",
+    "doi": "10.1109/78.978374"
+   },
+   {
+    "key": "gordon1993",
+    "text": "Gordon, N. J., Salmond, D. J. and Smith, A. F. M. (1993). Novel approach to nonlinear/non-Gaussian Bayesian state estimation. *IEE Proceedings F (Radar and Signal Processing)* 140(2), 107\u2013113. doi:[10.1049/ip-f-2.1993.0015](https://doi.org/10.1049/ip-f-2.1993.0015)",
+    "doi": "10.1049/ip-f-2.1993.0015"
+   },
+   {
+    "key": "cappe2007overview",
+    "text": "Cappe, O., Godsill, S. J. and Moulines, E. (2007). An overview of existing methods and recent advances in sequential Monte Carlo. *Proceedings of the IEEE* 95(5), 899\u2013924. doi:[10.1109/JPROC.2007.893250](https://doi.org/10.1109/JPROC.2007.893250)",
+    "doi": "10.1109/JPROC.2007.893250"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.39,
+    "cold": 0.33,
+    "combined": 2.09,
+    "current_bias": 0.91,
+    "hot": 0.07,
+    "init_error": 0.12,
+    "noise_step": 0.34,
+    "nominal": 0.15,
+    "outliers": 0.36,
+    "param_mismatch": 1.63,
+    "preisach": 1.07,
+    "sensor_dropout": 0.12
+   },
+   "spm": {
+    "cold": 4.0,
+    "current_bias": 0.89,
+    "hot": 0.59,
+    "init_error": 0.84,
+    "noise_step": 1.01,
+    "nominal": 0.62,
+    "outliers": 1.24,
+    "param_mismatch": 1.01,
+    "sensor_dropout": 0.69
+   },
+   "geo_mean": 0.44,
+   "worst": 2.39,
+   "nominal": 0.15,
+   "ns_per_step": 104352,
+   "bytes": 54584,
+   "rank": 53
+  }
+ },
+ {
+  "name": "PF-Bootstrap",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Bootstrap particle filter (PF-Bootstrap)",
+  "chapter_label": "ch:pfbootstrap",
+  "chapter_file": "report/chapters/particle/PFBootstrap.tex",
+  "headers": [
+   "include/estkit/particle/pf_bootstrap.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "O(N(n_x^2 + c_f + c_h)); 76.4 \u00b5s/step (160\u00d7 EKF), no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "gordon1993",
+    "text": "Gordon, N. J., Salmond, D. J. and Smith, A. F. M. (1993). Novel approach to nonlinear/non-Gaussian Bayesian state estimation. *IEE Proceedings F (Radar and Signal Processing)* 140(2), 107\u2013113. doi:[10.1049/ip-f-2.1993.0015](https://doi.org/10.1049/ip-f-2.1993.0015)",
+    "doi": "10.1049/ip-f-2.1993.0015"
+   },
+   {
+    "key": "arulampalam2002",
+    "text": "Arulampalam, M. S., Maskell, S., Gordon, N. and Clapp, T. (2002). A tutorial on particle filters for online nonlinear/non-Gaussian Bayesian tracking. *IEEE Transactions on Signal Processing* 50(2), 174\u2013188. doi:[10.1109/78.978374](https://doi.org/10.1109/78.978374)",
+    "doi": "10.1109/78.978374"
+   },
+   {
+    "key": "kitagawa1996",
+    "text": "Kitagawa, G. (1996). Monte Carlo filter and smoother for non-Gaussian nonlinear state space models. *Journal of Computational and Graphical Statistics* 5(1), 1\u201325. doi:[10.1080/10618600.1996.10474692](https://doi.org/10.1080/10618600.1996.10474692)",
+    "doi": "10.1080/10618600.1996.10474692"
+   },
+   {
+    "key": "doucet2000smc",
+    "text": "Doucet, A., Godsill, S. and Andrieu, C. (2000). On sequential Monte Carlo sampling methods for Bayesian filtering. *Statistics and Computing* 10(3), 197\u2013208. doi:[10.1023/A:1008935410038](https://doi.org/10.1023/A:1008935410038)",
+    "doi": "10.1023/A:1008935410038"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.54,
+    "cold": 0.33,
+    "combined": 2.76,
+    "current_bias": 0.87,
+    "hot": 0.08,
+    "init_error": 0.13,
+    "noise_step": 0.51,
+    "nominal": 0.16,
+    "outliers": 0.36,
+    "param_mismatch": 1.72,
+    "preisach": 1.08,
+    "sensor_dropout": 0.13
+   },
+   "spm": {
+    "cold": 4.39,
+    "current_bias": 1.1,
+    "hot": 0.97,
+    "init_error": 0.93,
+    "noise_step": 1.11,
+    "nominal": 0.73,
+    "outliers": 0.96,
+    "param_mismatch": 1.67,
+    "sensor_dropout": 0.73
+   },
+   "geo_mean": 0.48,
+   "worst": 2.76,
+   "nominal": 0.16,
+   "ns_per_step": 76444,
+   "bytes": 46472,
+   "rank": 55
+  }
+ },
+ {
+  "name": "PF-Fast",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Embedded bootstrap particle filter (PF-Fast)",
+  "chapter_label": "ch:pffast",
+  "chapter_file": "report/chapters/particle/PFFast.tex",
+  "headers": [
+   "include/estkit/particle/pf_fast.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "16.0 \u00b5s/step (33\u00d7 EKF; 4.8\u00d7 faster than PF-Bootstrap)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "gordon1993",
+    "text": "Gordon, N. J., Salmond, D. J. and Smith, A. F. M. (1993). Novel approach to nonlinear/non-Gaussian Bayesian state estimation. *IEE Proceedings F (Radar and Signal Processing)* 140(2), 107\u2013113. doi:[10.1049/ip-f-2.1993.0015](https://doi.org/10.1049/ip-f-2.1993.0015)",
+    "doi": "10.1049/ip-f-2.1993.0015"
+   },
+   {
+    "key": "kitagawa1996",
+    "text": "Kitagawa, G. (1996). Monte Carlo filter and smoother for non-Gaussian nonlinear state space models. *Journal of Computational and Graphical Statistics* 5(1), 1\u201325. doi:[10.1080/10618600.1996.10474692](https://doi.org/10.1080/10618600.1996.10474692)",
+    "doi": "10.1080/10618600.1996.10474692"
+   },
+   {
+    "key": "arulampalam2002",
+    "text": "Arulampalam, M. S., Maskell, S., Gordon, N. and Clapp, T. (2002). A tutorial on particle filters for online nonlinear/non-Gaussian Bayesian tracking. *IEEE Transactions on Signal Processing* 50(2), 174\u2013188. doi:[10.1109/78.978374](https://doi.org/10.1109/78.978374)",
+    "doi": "10.1109/78.978374"
+   },
+   {
+    "key": "gustafsson2010pf",
+    "text": "Gustafsson, F. (2010). Particle filter theory and practice with positioning applications. *IEEE Aerospace and Electronic Systems Magazine* 25(7), 53\u201382. doi:[10.1109/MAES.2010.5546308](https://doi.org/10.1109/MAES.2010.5546308)",
+    "doi": "10.1109/MAES.2010.5546308"
+   },
+   {
+    "key": "hol2006resampling",
+    "text": "Hol, J. D., Sch\u00f6n, T. B. and Gustafsson, F. (2006). On resampling algorithms for particle filters. In *Proc. IEEE Nonlinear Statistical Signal Processing Workshop (NSSPW)*, pp. 79\u201382. doi:[10.1109/NSSPW.2006.4378824](https://doi.org/10.1109/NSSPW.2006.4378824)",
+    "doi": "10.1109/NSSPW.2006.4378824"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.62,
+    "cold": 0.57,
+    "combined": 2.52,
+    "current_bias": 0.91,
+    "hot": 0.14,
+    "init_error": 0.18,
+    "noise_step": 0.68,
+    "nominal": 0.18,
+    "outliers": 0.39,
+    "param_mismatch": 1.75,
+    "preisach": 1.0,
+    "sensor_dropout": 0.2
+   },
+   "spm": {
+    "cold": 4.37,
+    "current_bias": 1.01,
+    "hot": 0.87,
+    "init_error": 0.89,
+    "noise_step": 0.94,
+    "nominal": 0.91,
+    "outliers": 1.28,
+    "param_mismatch": 1.78,
+    "sensor_dropout": 1.05
+   },
+   "geo_mean": 0.58,
+   "worst": 2.62,
+   "nominal": 0.18,
+   "ns_per_step": 15960,
+   "bytes": 9664,
+   "rank": 60
+  }
+ },
+ {
+  "name": "UPF",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Unscented particle filter (UPF)",
+  "chapter_label": "ch:upf",
+  "chapter_file": "report/chapters/particle/UPF.tex",
+  "headers": [
+   "include/estkit/particle/upf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "18.6 \u00b5s/step (39\u00d7 EKF); N(2n_x+1) evaluations of h",
+  "estimates": "",
+  "references": [
+   {
+    "key": "vandermerwe2000upf",
+    "text": "van der Merwe, R., Doucet, A., de Freitas, N. and Wan, E. (2000). The unscented particle filter. Cambridge University Engineering Department, CUED/F-INFENG/TR 380.",
+    "doi": ""
+   },
+   {
+    "key": "doucet2000smc",
+    "text": "Doucet, A., Godsill, S. and Andrieu, C. (2000). On sequential Monte Carlo sampling methods for Bayesian filtering. *Statistics and Computing* 10(3), 197\u2013208. doi:[10.1023/A:1008935410038](https://doi.org/10.1023/A:1008935410038)",
+    "doi": "10.1023/A:1008935410038"
+   },
+   {
+    "key": "wan2000ukf",
+    "text": "Wan, E. A. and van der Merwe, R. (2000). The unscented Kalman filter for nonlinear estimation. In *Proc. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium (AS-SPCC)*, pp. 153\u2013158. doi:[10.1109/ASSPCC.2000.882463](https://doi.org/10.1109/ASSPCC.2000.882463)",
+    "doi": "10.1109/ASSPCC.2000.882463"
+   },
+   {
+    "key": "julier2004unscented",
+    "text": "Julier, S. J. and Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE* 92(3), 401\u2013422. doi:[10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141)",
+    "doi": "10.1109/JPROC.2003.823141"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.74,
+    "cold": 0.74,
+    "combined": 2.64,
+    "current_bias": 0.99,
+    "hot": 0.29,
+    "init_error": 0.41,
+    "noise_step": 0.86,
+    "nominal": 0.38,
+    "outliers": 0.61,
+    "param_mismatch": 1.81,
+    "preisach": 1.16,
+    "sensor_dropout": 0.49
+   },
+   "spm": {
+    "cold": 5.04,
+    "current_bias": 1.71,
+    "hot": 1.42,
+    "init_error": 0.84,
+    "noise_step": 1.44,
+    "nominal": 1.07,
+    "outliers": 1.32,
+    "param_mismatch": 1.89,
+    "sensor_dropout": 1.34
+   },
+   "geo_mean": 0.84,
+   "worst": 2.74,
+   "nominal": 0.38,
+   "ns_per_step": 18614,
+   "bytes": 25360,
+   "rank": 64
+  }
+ },
+ {
+  "name": "EnKF",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Ensemble Kalman filter (EnKF)",
+  "chapter_label": "ch:enkf",
+  "chapter_file": "report/chapters/particle/EnKF.tex",
+  "headers": [
+   "include/estkit/particle/enkf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "10.3 \u00b5s/step (22\u00d7 EKF); O(N(c_f+c_h+n_xn_y)+n_y^3)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "evensen1994",
+    "text": "Evensen, G. (1994). Sequential data assimilation with a nonlinear quasi-geostrophic model using Monte Carlo methods to forecast error statistics. *Journal of Geophysical Research: Oceans* 99(C5), 10143\u201310162. doi:[10.1029/94JC00572](https://doi.org/10.1029/94JC00572)",
+    "doi": "10.1029/94JC00572"
+   },
+   {
+    "key": "burgers1998",
+    "text": "Burgers, G., van Leeuwen, P. J. and Evensen, G. (1998). Analysis scheme in the ensemble Kalman filter. *Monthly Weather Review* 126(6), 1719\u20131724. doi:[10.1175/1520-0493(1998)126<1719:ASITEK>2.0.CO;2](https://doi.org/10.1175/1520-0493(1998)126<1719:ASITEK>2.0.CO;2)",
+    "doi": "10.1175/1520-0493(1998)126<1719:ASITEK>2.0.CO;2"
+   },
+   {
+    "key": "evensen2003",
+    "text": "Evensen, G. (2003). The ensemble Kalman filter: theoretical formulation and practical implementation. *Ocean Dynamics* 53(4), 343\u2013367. doi:[10.1007/s10236-003-0036-9](https://doi.org/10.1007/s10236-003-0036-9)",
+    "doi": "10.1007/s10236-003-0036-9"
+   },
+   {
+    "key": "anderson1999inflation",
+    "text": "Anderson, J. L. and Anderson, S. L. (1999). A Monte Carlo implementation of the nonlinear filtering problem to produce ensemble assimilations and forecasts. *Monthly Weather Review* 127(12), 2741\u20132758.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 2.11,
+    "cold": 1.07,
+    "combined": 3.75,
+    "current_bias": 0.84,
+    "hot": 0.14,
+    "init_error": 0.27,
+    "noise_step": 1.99,
+    "nominal": 0.27,
+    "outliers": 0.96,
+    "param_mismatch": 3.58,
+    "preisach": 1.0,
+    "sensor_dropout": 0.33
+   },
+   "spm": {
+    "cold": 14.97,
+    "current_bias": 1.88,
+    "hot": 1.3,
+    "init_error": 1.42,
+    "noise_step": 11.94,
+    "nominal": 1.67,
+    "outliers": 13.68,
+    "param_mismatch": 8.27,
+    "sensor_dropout": 1.8
+   },
+   "geo_mean": 0.86,
+   "worst": 3.75,
+   "nominal": 0.27,
+   "ns_per_step": 10283,
+   "bytes": 6776,
+   "rank": 65
+  }
+ },
+ {
+  "name": "ETKF",
+  "family": "particle",
+  "family_label": "Particle, ensemble & Gaussian-sum",
+  "level": "cell",
+  "chapter_title": "Ensemble transform Kalman filter (ETKF)",
+  "chapter_label": "ch:etkf",
+  "chapter_file": "report/chapters/particle/ETKF.tex",
+  "headers": [
+   "include/estkit/particle/etkf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y",
+  "cost": "10.6 \u00b5s/step (22\u00d7 EKF); one N\u00d7 N symmetric eigendecomposition",
+  "estimates": "",
+  "references": [
+   {
+    "key": "bishop2001etkf",
+    "text": "Bishop, C. H., Etherton, B. J. and Majumdar, S. J. (2001). Adaptive sampling with the ensemble transform Kalman filter. Part I: Theoretical aspects. *Monthly Weather Review* 129(3), 420\u2013436. doi:[10.1175/1520-0493(2001)129<0420:ASWTET>2.0.CO;2](https://doi.org/10.1175/1520-0493(2001)129<0420:ASWTET>2.0.CO;2)",
+    "doi": "10.1175/1520-0493(2001)129<0420:ASWTET>2.0.CO;2"
+   },
+   {
+    "key": "hunt2007letkf",
+    "text": "Hunt, B. R., Kostelich, E. J. and Szunyogh, I. (2007). Efficient data assimilation for spatiotemporal chaos: A local ensemble transform Kalman filter. *Physica D: Nonlinear Phenomena* 230(1-2), 112\u2013126. doi:[10.1016/j.physd.2006.11.008](https://doi.org/10.1016/j.physd.2006.11.008)",
+    "doi": "10.1016/j.physd.2006.11.008"
+   },
+   {
+    "key": "tippett2003srf",
+    "text": "Tippett, M. K., Anderson, J. L., Bishop, C. H., Hamill, T. M. and Whitaker, J. S. (2003). Ensemble square root filters. *Monthly Weather Review* 131(7), 1485\u20131490.",
+    "doi": ""
+   },
+   {
+    "key": "golubvanloan2013",
+    "text": "Golub, G. H. and Van Loan, C. F. (2013). Matrix Computations. Johns Hopkins University Press, 4th ed..",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 4.61,
+    "cold": 0.71,
+    "combined": 4.81,
+    "current_bias": 2.08,
+    "hot": 0.26,
+    "init_error": 0.86,
+    "noise_step": 1.72,
+    "nominal": 0.43,
+    "outliers": 1.12,
+    "param_mismatch": 0.78,
+    "preisach": 0.78,
+    "sensor_dropout": 1.08
+   },
+   "spm": {
+    "cold": 9.42,
+    "current_bias": 5.4,
+    "hot": 2.77,
+    "init_error": 6.72,
+    "noise_step": 5.04,
+    "nominal": 3.82,
+    "outliers": 0.34,
+    "param_mismatch": 3.22,
+    "sensor_dropout": 3.38
+   },
+   "geo_mean": 1.12,
+   "worst": 4.81,
+   "nominal": 0.43,
+   "ns_per_step": 10551,
+   "bytes": 5304,
+   "rank": 66
+  }
+ },
+ {
+  "name": "ELM-RLS-EKF",
+  "family": "learning",
+  "family_label": "Data-driven hybrids",
+  "level": "cell",
+  "chapter_title": "Online extreme-learning-machine residual EKF (ELM-RLS-EKF)",
+  "chapter_label": "ch:elmrlsekf",
+  "chapter_file": "report/chapters/learning/ELMRLSEKF.tex",
+  "headers": [
+   "include/estkit/learning/elm_rls_ekf.hpp"
+  ],
+  "state": "n_x = 4; n_ = n_h + n_ = 26 learned weights",
+  "cost": "EKF O(n_x^3) plus RLS O(n_^2); measured 3.3 \u00b5s, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "huang2006elm",
+    "text": "Huang, G. B., Zhu, Q. Y. and Siew, C. K. (2006). Extreme learning machine: Theory and applications. *Neurocomputing* 70(1\u20133), 489\u2013501. doi:[10.1016/j.neucom.2005.12.126](https://doi.org/10.1016/j.neucom.2005.12.126)",
+    "doi": "10.1016/j.neucom.2005.12.126"
+   },
+   {
+    "key": "liang2006oselm",
+    "text": "Liang, N. Y., Huang, G. B., Saratchandran, P. and Sundararajan, N. (2006). A fast and accurate online sequential learning algorithm for feedforward networks. *IEEE Transactions on Neural Networks* 17(6), 1411\u20131423. doi:[10.1109/TNN.2006.880583](https://doi.org/10.1109/TNN.2006.880583)",
+    "doi": "10.1109/TNN.2006.880583"
+   },
+   {
+    "key": "pao1994rvfl",
+    "text": "Pao, Y. H., Park, G. H. and Sobajic, D. J. (1994). Learning and generalization characteristics of the random vector functional-link net. *Neurocomputing* 6(2), 163\u2013180.",
+    "doi": ""
+   },
+   {
+    "key": "ljung1999",
+    "text": "Ljung, L. (1999). System Identification: Theory for the User. Prentice Hall, 2nd ed..",
+    "doi": ""
+   },
+   {
+    "key": "friedland1969bias",
+    "text": "Friedland, B. (1969). Treatment of bias in recursive filtering. *IEEE Transactions on Automatic Control* 14(4), 359\u2013367.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.49,
+    "cold": 0.06,
+    "combined": 12.43,
+    "current_bias": 0.64,
+    "hot": 0.02,
+    "init_error": 0.06,
+    "noise_step": 0.1,
+    "nominal": 0.03,
+    "outliers": 0.24,
+    "param_mismatch": 1.55,
+    "preisach": 0.2,
+    "sensor_dropout": 0.37
+   },
+   "spm": {
+    "cold": 6.65,
+    "current_bias": 4.54,
+    "hot": 1.41,
+    "init_error": 3.28,
+    "noise_step": 2.34,
+    "nominal": 2.59,
+    "outliers": 1.23,
+    "param_mismatch": 3.14,
+    "sensor_dropout": 4.76
+   },
+   "geo_mean": 0.25,
+   "worst": 12.43,
+   "nominal": 0.03,
+   "ns_per_step": 3292,
+   "bytes": 11704,
+   "rank": 19
+  }
+ },
+ {
+  "name": "NN-EKF",
+  "family": "learning",
+  "family_label": "Data-driven hybrids",
+  "level": "cell",
+  "chapter_title": "Hybrid neural residual EKF (NN-EKF)",
+  "chapter_label": "ch:nnekf",
+  "chapter_file": "report/chapters/learning/NNEKF.tex",
+  "headers": [
+   "include/estkit/learning/nn_ekf.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 the EKF itself is generic in n_x,n_u,n_y",
+  "cost": "EKF O(n_x^3) + three 3\\!-\\!10\\!-\\!1 forward passes (120 MAC, 30 `tanh`)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "charkhgard2010nnekf",
+    "text": "Charkhgard, M. and Farrokhi, M. (2010). State-of-charge estimation for lithium-ion batteries using neural networks and EKF. *IEEE Transactions on Industrial Electronics* 57(12), 4178\u20134187. doi:[10.1109/TIE.2010.2043035](https://doi.org/10.1109/TIE.2010.2043035)",
+    "doi": "10.1109/TIE.2010.2043035"
+   },
+   {
+    "key": "hornik1989",
+    "text": "Hornik, K., Stinchcombe, M. and White, H. (1989). Multilayer feedforward networks are universal approximators. *Neural Networks* 2(5), 359\u2013366. doi:[10.1016/0893-6080(89)90020-8](https://doi.org/10.1016/0893-6080(89)90020-8)",
+    "doi": "10.1016/0893-6080(89)90020-8"
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "kingma2015adam",
+    "text": "Kingma, D. P. and Ba, J. (2015). Adam: A method for stochastic optimization. In *Proc. 3rd International Conference on Learning Representations (ICLR)*.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.44,
+    "cold": 0.19,
+    "combined": 9.58,
+    "current_bias": 0.82,
+    "hot": 0.43,
+    "init_error": 0.28,
+    "noise_step": 0.29,
+    "nominal": 0.28,
+    "outliers": 0.3,
+    "param_mismatch": 0.78,
+    "preisach": 0.1,
+    "sensor_dropout": 0.45
+   },
+   "spm": {
+    "cold": 7.61,
+    "current_bias": 4.87,
+    "hot": 1.51,
+    "init_error": 2.5,
+    "noise_step": 2.56,
+    "nominal": 2.54,
+    "outliers": 2.46,
+    "param_mismatch": 0.76,
+    "sensor_dropout": 3.16
+   },
+   "geo_mean": 0.5,
+   "worst": 9.58,
+   "nominal": 0.28,
+   "ns_per_step": 1059,
+   "bytes": 4376,
+   "rank": 56
+  }
+ },
+ {
+  "name": "NN-Direct",
+  "family": "learning",
+  "family_label": "Data-driven hybrids",
+  "level": "cell",
+  "chapter_title": "Direct neural state-of-charge regression (NN-Direct)",
+  "chapter_label": "ch:nndirect",
+  "chapter_file": "report/chapters/learning/NNDirect.tex",
+  "headers": [
+   "include/estkit/learning/nn_direct.hpp"
+  ],
+  "state": "none \u2014 the method has no state-space model; n_ = 8 input features",
+  "cost": "288 multiply\u2013accumulates + 32 `tanh`; \u22480.4 \u00b5s, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "chemali2018dnn",
+    "text": "Chemali, E., Kollmeyer, P. J., Preindl, M. and Emadi, A. (2018). State-of-charge estimation of Li-ion batteries using deep neural networks: A machine learning approach. *Journal of Power Sources* 400, 242\u2013250. doi:[10.1016/j.jpowsour.2018.06.104](https://doi.org/10.1016/j.jpowsour.2018.06.104)",
+    "doi": "10.1016/j.jpowsour.2018.06.104"
+   },
+   {
+    "key": "hornik1989",
+    "text": "Hornik, K., Stinchcombe, M. and White, H. (1989). Multilayer feedforward networks are universal approximators. *Neural Networks* 2(5), 359\u2013366. doi:[10.1016/0893-6080(89)90020-8](https://doi.org/10.1016/0893-6080(89)90020-8)",
+    "doi": "10.1016/0893-6080(89)90020-8"
+   },
+   {
+    "key": "kingma2015adam",
+    "text": "Kingma, D. P. and Ba, J. (2015). Adam: A method for stochastic optimization. In *Proc. 3rd International Conference on Learning Representations (ICLR)*.",
+    "doi": ""
+   },
+   {
+    "key": "rumelhart1986backprop",
+    "text": "Rumelhart, D. E., Hinton, G. E. and Williams, R. J. (1986). Learning representations by back-propagating errors. *Nature* 323(6088), 533\u2013536. doi:[10.1038/323533a0](https://doi.org/10.1038/323533a0)",
+    "doi": "10.1038/323533a0"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.76,
+    "cold": 0.69,
+    "combined": 4.09,
+    "current_bias": 1.27,
+    "hot": 0.3,
+    "init_error": 1.17,
+    "noise_step": 1.31,
+    "nominal": 1.17,
+    "outliers": 1.21,
+    "param_mismatch": 1.17,
+    "preisach": 0.82,
+    "sensor_dropout": 1.17
+   },
+   "spm": {
+    "cold": 1.89,
+    "current_bias": 4.16,
+    "hot": 1.46,
+    "init_error": 5.12,
+    "noise_step": 5.13,
+    "nominal": 5.12,
+    "outliers": 5.13,
+    "param_mismatch": 5.12,
+    "sensor_dropout": 5.12
+   },
+   "geo_mean": 1.14,
+   "worst": 4.09,
+   "nominal": 1.17,
+   "ns_per_step": 484,
+   "bytes": 15152,
+   "rank": 67
+  }
+ },
+ {
+  "name": "MHE",
+  "family": "optimization",
+  "family_label": "Moving-horizon estimation",
+  "level": "cell",
+  "chapter_title": "Moving-horizon estimation (MHE)",
+  "chapter_label": "ch:mhe",
+  "chapter_file": "report/chapters/optimization/MHE.tex",
+  "headers": [
+   "include/estkit/optimization/mhe.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y; horizon N = 20",
+  "cost": "O(n_it N n_x^3), linear in N; measured 32 \u00b5s, no heap",
+  "estimates": "",
+  "references": [
+   {
+    "key": "rao2003mhe",
+    "text": "Rao, C. V., Rawlings, J. B. and Mayne, D. Q. (2003). Constrained state estimation for nonlinear discrete-time systems: Stability and moving horizon approximations. *IEEE Transactions on Automatic Control* 48(2), 246\u2013258. doi:[10.1109/TAC.2002.808470](https://doi.org/10.1109/TAC.2002.808470)",
+    "doi": "10.1109/TAC.2002.808470"
+   },
+   {
+    "key": "rawlings2017mpc",
+    "text": "Rawlings, J. B., Mayne, D. Q. and Diehl, M. M. (2017). Model Predictive Control: Theory, Computation, and Design. Nob Hill Publishing, 2nd ed..",
+    "doi": ""
+   },
+   {
+    "key": "robertson1996mhe",
+    "text": "Robertson, D. G., Lee, J. H. and Rawlings, J. B. (1996). A moving horizon-based approach for least-squares estimation. *AIChE Journal* 42(8), 2209\u20132224.",
+    "doi": ""
+   },
+   {
+    "key": "bertsekas1982projnewton",
+    "text": "Bertsekas, D. P. (1982). Projected Newton methods for optimization problems with simple constraints. *SIAM Journal on Control and Optimization* 20(2), 221\u2013246. doi:[10.1137/0320018](https://doi.org/10.1137/0320018)",
+    "doi": "10.1137/0320018"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.79,
+    "cold": 0.77,
+    "combined": 0.69,
+    "current_bias": 0.09,
+    "hot": 0.04,
+    "init_error": 0.1,
+    "noise_step": 0.98,
+    "nominal": 0.11,
+    "outliers": 0.49,
+    "param_mismatch": 1.98,
+    "preisach": 0.46,
+    "sensor_dropout": 0.41
+   },
+   "spm": {
+    "cold": 5.63,
+    "current_bias": 5.88,
+    "hot": 2.99,
+    "init_error": 4.25,
+    "noise_step": 5.95,
+    "nominal": 3.45,
+    "outliers": 2.57,
+    "param_mismatch": 5.73,
+    "sensor_dropout": 5.88
+   },
+   "geo_mean": 0.35,
+   "worst": 1.98,
+   "nominal": 0.11,
+   "ns_per_step": 32403,
+   "bytes": 26928,
+   "rank": 45
+  }
+ },
+ {
+  "name": "MHE-RTI",
+  "family": "optimization",
+  "family_label": "Moving-horizon estimation",
+  "level": "cell",
+  "chapter_title": "Real-time-iteration moving-horizon estimation (MHE-RTI)",
+  "chapter_label": "ch:mherti",
+  "chapter_file": "report/chapters/optimization/MHERTI.tex",
+  "headers": [
+   "include/estkit/optimization/mhe.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x,n_u,n_y; horizon N = 20",
+  "cost": "exactly one assemble\u2013factor\u2013solve, O(N n_x^3); measured 17 \u00b5s, data-independent",
+  "estimates": "",
+  "references": [
+   {
+    "key": "diehl2005rti",
+    "text": "Diehl, M., Bock, H. G. and Schl\u00f6der, J. P. (2005). A real-time iteration scheme for nonlinear optimization in optimal feedback control. *SIAM Journal on Control and Optimization* 43(5), 1714\u20131736. doi:[10.1137/S0363012902400713](https://doi.org/10.1137/S0363012902400713)",
+    "doi": "10.1137/S0363012902400713"
+   },
+   {
+    "key": "kuhl2011rtimhe",
+    "text": "K\u00fchl, P., Diehl, M., Kraus, T., Schl\u00f6der, J. P. and Bock, H. G. (2011). A real-time algorithm for moving horizon state and parameter estimation. *Computers & Chemical Engineering* 35(1), 71\u201383. doi:[10.1016/j.compchemeng.2010.07.012](https://doi.org/10.1016/j.compchemeng.2010.07.012)",
+    "doi": "10.1016/j.compchemeng.2010.07.012"
+   },
+   {
+    "key": "rao2003mhe",
+    "text": "Rao, C. V., Rawlings, J. B. and Mayne, D. Q. (2003). Constrained state estimation for nonlinear discrete-time systems: Stability and moving horizon approximations. *IEEE Transactions on Automatic Control* 48(2), 246\u2013258. doi:[10.1109/TAC.2002.808470](https://doi.org/10.1109/TAC.2002.808470)",
+    "doi": "10.1109/TAC.2002.808470"
+   },
+   {
+    "key": "rawlings2017mpc",
+    "text": "Rawlings, J. B., Mayne, D. Q. and Diehl, M. M. (2017). Model Predictive Control: Theory, Computation, and Design. Nob Hill Publishing, 2nd ed..",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 0.71,
+    "cold": 0.76,
+    "combined": 0.5,
+    "current_bias": 0.1,
+    "hot": 0.04,
+    "init_error": 0.11,
+    "noise_step": 1.23,
+    "nominal": 0.08,
+    "outliers": 0.7,
+    "param_mismatch": 2.19,
+    "preisach": 0.46,
+    "sensor_dropout": 0.43
+   },
+   "spm": {
+    "cold": 5.75,
+    "current_bias": 6.45,
+    "hot": 3.1,
+    "init_error": 4.28,
+    "noise_step": 7.82,
+    "nominal": 4.55,
+    "outliers": 4.31,
+    "param_mismatch": 3.0,
+    "sensor_dropout": 7.65
+   },
+   "geo_mean": 0.35,
+   "worst": 2.19,
+   "nominal": 0.08,
+   "ns_per_step": 17270,
+   "bytes": 26928,
+   "rank": 47
+  }
+ },
+ {
+  "name": "URTS",
+  "family": "smoothers",
+  "family_label": "Smoothers (offline)",
+  "level": "cell",
+  "chapter_title": "Unscented Rauch\u2013Tung\u2013Striebel smoother (URTS)",
+  "chapter_label": "ch:urts",
+  "chapter_file": "report/chapters/smoothers/URTS.tex",
+  "headers": [
+   "include/estkit/smoothers/urts.hpp"
+  ],
+  "state": "n_x=4, 2n_x+1=9 sigma points",
+  "cost": "O(n_x^3) plus 3n_x+1 extra model evaluations; 2.50 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "sarkka2008urts",
+    "text": "S\u00e4rkk\u00e4, S. (2008). Unscented Rauch\u2013Tung\u2013Striebel smoother. *IEEE Transactions on Automatic Control* 53(3), 845\u2013849. doi:[10.1109/TAC.2008.919531](https://doi.org/10.1109/TAC.2008.919531)",
+    "doi": "10.1109/TAC.2008.919531"
+   },
+   {
+    "key": "sarkka2013",
+    "text": "S\u00e4rkk\u00e4, S. (2013). Bayesian Filtering and Smoothing. Cambridge University Press. doi:[10.1017/CBO9781139344203](https://doi.org/10.1017/CBO9781139344203)",
+    "doi": "10.1017/CBO9781139344203"
+   },
+   {
+    "key": "rauch1965rts",
+    "text": "Rauch, H. E., Tung, F. and Striebel, C. T. (1965). Maximum likelihood estimates of linear dynamic systems. *AIAA Journal* 3(8), 1445\u20131450. doi:[10.2514/3.3166](https://doi.org/10.2514/3.3166)",
+    "doi": "10.2514/3.3166"
+   },
+   {
+    "key": "julier2004unscented",
+    "text": "Julier, S. J. and Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE* 92(3), 401\u2013422. doi:[10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141)",
+    "doi": "10.1109/JPROC.2003.823141"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.68,
+    "cold": 0.1,
+    "combined": 0.67,
+    "current_bias": 0.41,
+    "hot": 0.02,
+    "init_error": 0.04,
+    "noise_step": 0.06,
+    "nominal": 0.04,
+    "outliers": 0.12,
+    "param_mismatch": 1.35,
+    "preisach": 0.49,
+    "sensor_dropout": 0.59
+   },
+   "spm": {
+    "cold": 10.24,
+    "current_bias": 5.95,
+    "hot": 2.09,
+    "init_error": 4.13,
+    "noise_step": 1.86,
+    "nominal": 3.54,
+    "outliers": 1.43,
+    "param_mismatch": 4.65,
+    "sensor_dropout": 6.75
+   },
+   "geo_mean": 0.2,
+   "worst": 1.68,
+   "nominal": 0.04,
+   "ns_per_step": 2473,
+   "bytes": 12547056,
+   "rank": 8
+  }
+ },
+ {
+  "name": "Batch-NLS",
+  "family": "smoothers",
+  "family_label": "Smoothers (offline)",
+  "level": "cell",
+  "chapter_title": "Full-information estimation by sparse Gauss\u2013Newton (Batch-NLS)",
+  "chapter_label": "ch:batchnls",
+  "chapter_file": "report/chapters/smoothers/BatchNLS.tex",
+  "headers": [
+   "include/estkit/smoothers/batch_nls.hpp"
+  ],
+  "state": "",
+  "cost": "O(n_x^3) per sample per iteration (block-tridiagonal); 4.6 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "rawlings2017mpc",
+    "text": "Rawlings, J. B., Mayne, D. Q. and Diehl, M. M. (2017). Model Predictive Control: Theory, Computation, and Design. Nob Hill Publishing, 2nd ed..",
+    "doi": ""
+   },
+   {
+    "key": "nocedal2006",
+    "text": "Nocedal, J. and Wright, S. J. (2006). Numerical Optimization. Springer, 2nd ed.. doi:[10.1007/978-0-387-40065-5](https://doi.org/10.1007/978-0-387-40065-5)",
+    "doi": "10.1007/978-0-387-40065-5"
+   },
+   {
+    "key": "bell1994iks",
+    "text": "Bell, B. M. (1994). The iterated Kalman smoother as a Gauss\u2013Newton method. *SIAM Journal on Optimization* 4(3), 626\u2013636.",
+    "doi": ""
+   },
+   {
+    "key": "rao2003mhe",
+    "text": "Rao, C. V., Rawlings, J. B. and Mayne, D. Q. (2003). Constrained state estimation for nonlinear discrete-time systems: Stability and moving horizon approximations. *IEEE Transactions on Automatic Control* 48(2), 246\u2013258. doi:[10.1109/TAC.2002.808470](https://doi.org/10.1109/TAC.2002.808470)",
+    "doi": "10.1109/TAC.2002.808470"
+   },
+   {
+    "key": "golubvanloan2013",
+    "text": "Golub, G. H. and Van Loan, C. F. (2013). Matrix Computations. Johns Hopkins University Press, 4th ed..",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.94,
+    "cold": 0.17,
+    "combined": 4.97,
+    "current_bias": 0.41,
+    "hot": 0.02,
+    "init_error": 0.04,
+    "noise_step": 0.07,
+    "nominal": 0.04,
+    "outliers": 0.07,
+    "param_mismatch": 1.35,
+    "preisach": 0.48,
+    "sensor_dropout": 0.09
+   },
+   "spm": {
+    "cold": 7.55,
+    "current_bias": 4.84,
+    "hot": 1.83,
+    "init_error": 3.02,
+    "noise_step": 4.83,
+    "nominal": 3.01,
+    "outliers": 2.4,
+    "param_mismatch": 3.39,
+    "sensor_dropout": 2.89
+   },
+   "geo_mean": 0.21,
+   "worst": 4.97,
+   "nominal": 0.04,
+   "ns_per_step": 4662,
+   "bytes": 17371352,
+   "rank": 10
+  }
+ },
+ {
+  "name": "ERTS",
+  "family": "smoothers",
+  "family_label": "Smoothers (offline)",
+  "level": "cell",
+  "chapter_title": "Extended Rauch\u2013Tung\u2013Striebel smoother (ERTS)",
+  "chapter_label": "ch:erts",
+  "chapter_file": "report/chapters/smoothers/ERTS.tex",
+  "headers": [
+   "include/estkit/smoothers/rts.hpp"
+  ],
+  "state": "n_x = 4 (cell model) \u2014 generic in n_x, n_u, n_y and in the forward filter",
+  "cost": "O(n_x^3) forward +\\ O(n_x^3) backward; 0.90 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "rauch1965rts",
+    "text": "Rauch, H. E., Tung, F. and Striebel, C. T. (1965). Maximum likelihood estimates of linear dynamic systems. *AIAA Journal* 3(8), 1445\u20131450. doi:[10.2514/3.3166](https://doi.org/10.2514/3.3166)",
+    "doi": "10.2514/3.3166"
+   },
+   {
+    "key": "sarkka2013",
+    "text": "S\u00e4rkk\u00e4, S. (2013). Bayesian Filtering and Smoothing. Cambridge University Press. doi:[10.1017/CBO9781139344203](https://doi.org/10.1017/CBO9781139344203)",
+    "doi": "10.1017/CBO9781139344203"
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   },
+   {
+    "key": "gelb1974",
+    "text": "Gelb, A. (1974). Applied Optimal Estimation. MIT Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.59,
+    "cold": 0.12,
+    "combined": 11.0,
+    "current_bias": 0.41,
+    "hot": 0.02,
+    "init_error": 0.04,
+    "noise_step": 0.07,
+    "nominal": 0.04,
+    "outliers": 0.2,
+    "param_mismatch": 1.32,
+    "preisach": 0.43,
+    "sensor_dropout": 0.3
+   },
+   "spm": {
+    "cold": 9.14,
+    "current_bias": 5.26,
+    "hot": 1.93,
+    "init_error": 3.45,
+    "noise_step": 2.04,
+    "nominal": 3.46,
+    "outliers": 1.53,
+    "param_mismatch": 3.2,
+    "sensor_dropout": 5.02
+   },
+   "geo_mean": 0.25,
+   "worst": 11.0,
+   "nominal": 0.04,
+   "ns_per_step": 907,
+   "bytes": 12547032,
+   "rank": 20
+  }
+ },
+ {
+  "name": "FixedLag-EKF",
+  "family": "smoothers",
+  "family_label": "Smoothers (offline)",
+  "level": "cell",
+  "chapter_title": "Fixed-lag smoothing by state augmentation (FixedLag-EKF)",
+  "chapter_label": "ch:fixedlagekf",
+  "chapter_file": "report/chapters/smoothers/FixedLagEKF.tex",
+  "headers": [
+   "include/estkit/smoothers/fixed_lag.hpp"
+  ],
+  "state": "augmented n_x(L+1)=4\u00d711=44; implemented blockwise",
+  "cost": "O(L n_x^3) time update +\\ O(L^2 n_x^2 n_y) measurement update; 9.9 \u00b5s/step measured",
+  "estimates": "",
+  "references": [
+   {
+    "key": "moore1973fixedlag",
+    "text": "Moore, J. B. (1973). Discrete-time fixed-lag smoothing algorithms. *Automatica* 9(2), 163\u2013173. doi:[10.1016/0005-1098(73)90071-X](https://doi.org/10.1016/0005-1098(73)90071-X)",
+    "doi": "10.1016/0005-1098(73)90071-X"
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   },
+   {
+    "key": "rauch1965rts",
+    "text": "Rauch, H. E., Tung, F. and Striebel, C. T. (1965). Maximum likelihood estimates of linear dynamic systems. *AIAA Journal* 3(8), 1445\u20131450. doi:[10.2514/3.3166](https://doi.org/10.2514/3.3166)",
+    "doi": "10.2514/3.3166"
+   },
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   }
+  ],
+  "results": {
+   "ecm": {
+    "aged_cell": 1.55,
+    "cold": 0.14,
+    "combined": 12.41,
+    "current_bias": 0.58,
+    "hot": 0.03,
+    "init_error": 0.04,
+    "noise_step": 0.12,
+    "nominal": 0.04,
+    "outliers": 0.23,
+    "param_mismatch": 1.33,
+    "preisach": 0.22,
+    "sensor_dropout": 0.43
+   },
+   "spm": {
+    "cold": 7.32,
+    "current_bias": 5.66,
+    "hot": 2.13,
+    "init_error": 3.78,
+    "noise_step": 3.27,
+    "nominal": 3.7,
+    "outliers": 1.96,
+    "param_mismatch": 3.1,
+    "sensor_dropout": 5.27
+   },
+   "geo_mean": 0.29,
+   "worst": 12.41,
+   "nominal": 0.04,
+   "ns_per_step": 9915,
+   "bytes": 19992,
+   "rank": 24
+  }
+ },
+ {
+  "name": "BarDelta",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Bar-Delta Pack Filtering (BarDelta)",
+  "chapter_label": "ch:bardelta",
+  "chapter_file": "report/chapters/pack/BarDelta.tex",
+  "headers": [
+   "include/estkit/pack/bar_delta.hpp"
+  ],
+  "state": "",
+  "cost": "542 ns for N_c=12 cells (45 ns per cell)",
+  "estimates": "",
+  "references": [
+   {
+    "key": "plett2009bardelta",
+    "text": "Plett, G. L. (2009). Efficient battery pack state estimation using bar-delta filtering. In *Proc. 24th International Battery, Hybrid and Fuel Cell Electric Vehicle Symposium (EVS24)*.",
+    "doi": ""
+   },
+   {
+    "key": "plett2016bms2",
+    "text": "Plett, G. L. (2016). Battery Management Systems, Volume II: Equivalent-Circuit Methods. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 0.84,
+    "init_error": 0.64,
+    "large_imbalance": 1.22,
+    "noise_step": 0.61,
+    "nominal": 0.59,
+    "weak_cell": 0.67
+   },
+   "nominal": 0.59,
+   "ns_per_step": 808,
+   "bytes": 5616,
+   "messages": 12
+  }
+ },
+ {
+  "name": "Consensus",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Kalman-Consensus Pack Filter (Consensus)",
+  "chapter_label": "ch:consensus",
+  "chapter_file": "report/chapters/pack/Consensus.tex",
+  "headers": [
+   "include/estkit/pack/consensus.hpp"
+  ],
+  "state": "",
+  "cost": "6344 ns for all N_c=12 nodes (529 ns per node)",
+  "estimates": "N_c nodes on a graph G (ring by default, degree d=2)",
+  "references": [
+   {
+    "key": "olfatisaber2007dkf",
+    "text": "Olfati-Saber, R. (2007). Distributed Kalman filtering for sensor networks. In *Proc. 46th IEEE Conference on Decision and Control*, pp. 5492\u20135498. doi:[10.1109/CDC.2007.4434303](https://doi.org/10.1109/CDC.2007.4434303)",
+    "doi": "10.1109/CDC.2007.4434303"
+   },
+   {
+    "key": "olfatisaber2007consensus",
+    "text": "Olfati-Saber, R., Fax, J. A. and Murray, R. M. (2007). Consensus and cooperation in networked multi-agent systems. *Proceedings of the IEEE* 95(1), 215\u2013233. doi:[10.1109/JPROC.2006.887293](https://doi.org/10.1109/JPROC.2006.887293)",
+    "doi": "10.1109/JPROC.2006.887293"
+   },
+   {
+    "key": "olfatisaber2009kcf",
+    "text": "Olfati-Saber, R. (2009). Kalman-consensus filter: optimality, stability, and performance. In *Proc. 48th IEEE Conference on Decision and Control (CDC) held jointly with the 28th Chinese Control Conference*, pp. 7036\u20137042.",
+    "doi": ""
+   },
+   {
+    "key": "olfatisaber2005embedded",
+    "text": "Olfati-Saber, R. (2005). Distributed Kalman filter with embedded consensus filters. In *Proc. 44th IEEE Conference on Decision and Control and European Control Conference (CDC-ECC)*, pp. 8179\u20138184.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 0.79,
+    "init_error": 0.63,
+    "large_imbalance": 1.39,
+    "noise_step": 0.69,
+    "nominal": 0.66,
+    "weak_cell": 0.64
+   },
+   "nominal": 0.66,
+   "ns_per_step": 9291,
+   "bytes": 9224,
+   "messages": 216
+  }
+ },
+ {
+  "name": "Decentralized-EKF",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Decentralised Pack Filtering (Decentralized-EKF)",
+  "chapter_label": "ch:decentralizedekf",
+  "chapter_file": "report/chapters/pack/DecentralizedEKF.tex",
+  "headers": [
+   "include/estkit/pack/pack_estimator.hpp"
+  ],
+  "state": "",
+  "cost": "3860 ns for N_c=12 cells (322 ns per cell)",
+  "estimates": "N_c independent 4-state EKFs, one per cell",
+  "references": [
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   },
+   {
+    "key": "plett2016bms2",
+    "text": "Plett, G. L. (2016). Battery Management Systems, Volume II: Equivalent-Circuit Methods. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "plett2015bms1",
+    "text": "Plett, G. L. (2015). Battery Management Systems, Volume I: Battery Modeling. Artech House.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 1.37,
+    "init_error": 1.18,
+    "large_imbalance": 1.74,
+    "noise_step": 1.22,
+    "nominal": 1.23,
+    "weak_cell": 1.29
+   },
+   "nominal": 1.23,
+   "ns_per_step": 5656,
+   "bytes": 52032,
+   "messages": 0
+  }
+ },
+ {
+  "name": "Decentralized-ReducedEKF",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Decentralised Reduced-Order Pack Filter (Decentralized-ReducedEKF)",
+  "chapter_label": "ch:decentralizedreducedekf",
+  "chapter_file": "report/chapters/pack/DecentralizedReducedEKF.tex",
+  "headers": [
+   "include/estkit/pack/pack_common.hpp"
+  ],
+  "state": "",
+  "cost": "2775 ns for N_c=12 cells (231 ns per cell)",
+  "estimates": "N_c independent 3-state EKFs, =[,v_1,h]^",
+  "references": [
+   {
+    "key": "simon2006",
+    "text": "Simon, D. (2006). Optimal State Estimation: Kalman, H\u221e, and Nonlinear Approaches. Wiley. doi:[10.1002/0470045345](https://doi.org/10.1002/0470045345)",
+    "doi": "10.1002/0470045345"
+   },
+   {
+    "key": "plett2016bms2",
+    "text": "Plett, G. L. (2016). Battery Management Systems, Volume II: Equivalent-Circuit Methods. Artech House.",
+    "doi": ""
+   },
+   {
+    "key": "plett2004ekf3",
+    "text": "Plett, G. L. (2004). Extended Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 3. State and parameter estimation. *Journal of Power Sources* 134(2), 277\u2013292. doi:[10.1016/j.jpowsour.2004.02.033](https://doi.org/10.1016/j.jpowsour.2004.02.033)",
+    "doi": "10.1016/j.jpowsour.2004.02.033"
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 1.89,
+    "init_error": 1.81,
+    "large_imbalance": 1.83,
+    "noise_step": 1.81,
+    "nominal": 1.81,
+    "weak_cell": 2.46
+   },
+   "nominal": 1.81,
+   "ns_per_step": 4190,
+   "bytes": 51264,
+   "messages": 0
+  }
+ },
+ {
+  "name": "Decentralized-UKF",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Decentralised Sigma-Point Pack Filter (Decentralized-UKF)",
+  "chapter_label": "ch:decentralizedukf",
+  "chapter_file": "report/chapters/pack/DecentralizedUKF.tex",
+  "headers": [
+   "include/estkit/pack/pack_estimator.hpp"
+  ],
+  "state": "",
+  "cost": "11900 ns for N_c=12 cells (992 ns per cell)",
+  "estimates": "N_c independent scaled-UKFs, 2n_x+1=9 sigma points each",
+  "references": [
+   {
+    "key": "julier2000newmethod",
+    "text": "Julier, S. J., Uhlmann, J. K. and Durrant-Whyte, H. F. (2000). A new method for the nonlinear transformation of means and covariances in filters and estimators. *IEEE Transactions on Automatic Control* 45(3), 477\u2013482. doi:[10.1109/9.847726](https://doi.org/10.1109/9.847726)",
+    "doi": "10.1109/9.847726"
+   },
+   {
+    "key": "wan2000ukf",
+    "text": "Wan, E. A. and van der Merwe, R. (2000). The unscented Kalman filter for nonlinear estimation. In *Proc. IEEE Adaptive Systems for Signal Processing, Communications, and Control Symposium (AS-SPCC)*, pp. 153\u2013158. doi:[10.1109/ASSPCC.2000.882463](https://doi.org/10.1109/ASSPCC.2000.882463)",
+    "doi": "10.1109/ASSPCC.2000.882463"
+   },
+   {
+    "key": "julier2004unscented",
+    "text": "Julier, S. J. and Uhlmann, J. K. (2004). Unscented filtering and nonlinear estimation. *Proceedings of the IEEE* 92(3), 401\u2013422. doi:[10.1109/JPROC.2003.823141](https://doi.org/10.1109/JPROC.2003.823141)",
+    "doi": "10.1109/JPROC.2003.823141"
+   },
+   {
+    "key": "plett2006spkf1",
+    "text": "Plett, G. L. (2006). Sigma-point Kalman filtering for battery management systems of LiPB-based HEV battery packs\u2014Part 1: Introduction and state estimation. *Journal of Power Sources* 161(2), 1356\u20131368. doi:[10.1016/j.jpowsour.2006.06.003](https://doi.org/10.1016/j.jpowsour.2006.06.003)",
+    "doi": "10.1016/j.jpowsour.2006.06.003"
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 1.5,
+    "init_error": 1.67,
+    "large_imbalance": 1.9,
+    "noise_step": 1.42,
+    "nominal": 1.41,
+    "weak_cell": 2.34
+   },
+   "nominal": 1.41,
+   "ns_per_step": 16786,
+   "bytes": 57312,
+   "messages": 0
+  }
+ },
+ {
+  "name": "Federated",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Federated Pack Filter (Federated)",
+  "chapter_label": "ch:federated",
+  "chapter_file": "report/chapters/pack/Federated.tex",
+  "headers": [
+   "include/estkit/pack/federated.hpp"
+  ],
+  "state": "",
+  "cost": "5684 ns for all N_c=12 nodes (474 ns per node)",
+  "estimates": "N_c local EKFs on the common ^4 + one master fusion",
+  "references": [
+   {
+    "key": "carlson1990federated",
+    "text": "Carlson, N. A. (1990). Federated square root filter for decentralized parallel processes. *IEEE Transactions on Aerospace and Electronic Systems* 26(3), 517\u2013525. doi:[10.1109/7.106130](https://doi.org/10.1109/7.106130)",
+    "doi": "10.1109/7.106130"
+   },
+   {
+    "key": "carlson1994federatedsim",
+    "text": "Carlson, N. A. and Berarducci, M. P. (1994). Federated Kalman filter simulation results. *Navigation: Journal of the Institute of Navigation* 41(3), 297\u2013321.",
+    "doi": ""
+   },
+   {
+    "key": "carlson1988plans",
+    "text": "Carlson, N. A. (1988). Federated filter for fault-tolerant integrated navigation systems. In *Proc. IEEE Position Location and Navigation Symposium (PLANS '88)*, pp. 110\u2013119.",
+    "doi": ""
+   },
+   {
+    "key": "mutambara1998",
+    "text": "Mutambara, A. G. O. (1998). Decentralized Estimation and Control for Multisensor Systems. CRC Press.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 0.84,
+    "init_error": 0.54,
+    "large_imbalance": 0.94,
+    "noise_step": 0.56,
+    "nominal": 0.55,
+    "weak_cell": 0.57
+   },
+   "nominal": 0.55,
+   "ns_per_step": 8346,
+   "bytes": 53472,
+   "messages": 183
+  }
+ },
+ {
+  "name": "InfoFusion",
+  "family": "pack",
+  "family_label": "Pack-level & distributed",
+  "level": "pack",
+  "chapter_title": "Centralised Information-Form Fusion (InfoFusion)",
+  "chapter_label": "ch:infofusion",
+  "chapter_file": "report/chapters/pack/InfoFusion.tex",
+  "headers": [
+   "include/estkit/pack/distributed_information.hpp"
+  ],
+  "state": "",
+  "cost": "1463 ns for N_c=12 cells; two 4\u00d74 inversions",
+  "estimates": "",
+  "references": [
+   {
+    "key": "mutambara1998",
+    "text": "Mutambara, A. G. O. (1998). Decentralized Estimation and Control for Multisensor Systems. CRC Press.",
+    "doi": ""
+   },
+   {
+    "key": "grime1994decentralized",
+    "text": "Grime, S. and Durrant-Whyte, H. F. (1994). Data fusion in decentralized sensor networks. *Control Engineering Practice* 2(5), 849\u2013863.",
+    "doi": ""
+   },
+   {
+    "key": "sun2004fusion",
+    "text": "Sun, S. L. and Deng, Z. L. (2004). Multi-sensor optimal information fusion Kalman filter. *Automatica* 40(6), 1017\u20131023.",
+    "doi": ""
+   },
+   {
+    "key": "andersonmoore1979",
+    "text": "Anderson, B. D. O. and Moore, J. B. (1979). Optimal Filtering. Prentice-Hall.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "pack": {
+    "current_bias": 0.84,
+    "init_error": 0.54,
+    "large_imbalance": 0.94,
+    "noise_step": 0.56,
+    "nominal": 0.55,
+    "weak_cell": 0.57
+   },
+   "nominal": 0.55,
+   "ns_per_step": 1897,
+   "bytes": 5544,
+   "messages": 12
+  }
+ },
+ {
+  "name": "Complementary",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Quaternion Complementary Filter (Complementary)",
+  "chapter_label": "ch:att-complementary",
+  "chapter_file": "report/chapters/attitude/Complementary.tex",
+  "headers": [
+   "include/estkit/attitude/complementary.hpp"
+  ],
+  "state": "unit quaternion q S^3 (4 reals); no bias state, no covariance",
+  "cost": "\u2248300 flops, six transcendental calls; 0.26\u20130.33 \u00b5s/step, 272 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "higgins1975complementary",
+    "text": "Higgins, W. T. (1975). A comparison of complementary and Kalman filtering. *IEEE Transactions on Aerospace and Electronic Systems* AES-11(3), 321\u2013325. doi:[10.1109/TAES.1975.308081](https://doi.org/10.1109/TAES.1975.308081)",
+    "doi": "10.1109/TAES.1975.308081"
+   },
+   {
+    "key": "euston2008",
+    "text": "Euston, M., Coote, P., Mahony, R., Kim, J. and Hamel, T. (2008). A complementary filter for attitude estimation of a fixed-wing UAV. In *Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, pp. 340\u2013345.",
+    "doi": ""
+   },
+   {
+    "key": "titterton2004",
+    "text": "Titterton, D. H. and Weston, J. L. (2004). Strapdown Inertial Navigation Technology. The Institution of Engineering and Technology, 2nd ed..",
+    "doi": ""
+   },
+   {
+    "key": "markleycrassidis2014",
+    "text": "Markley, F. L. and Crassidis, J. L. (2014). Fundamentals of Spacecraft Attitude Determination and Control. Springer.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 17.58,
+    "high_dynamics": 6.58,
+    "init_error": 6.79,
+    "mag_disturbance": 6.71,
+    "nominal": 6.57,
+    "vibration": 6.58
+   },
+   "nominal": 6.57,
+   "ns_per_step": 362,
+   "bytes": 272
+  }
+ },
+ {
+  "name": "InvariantEKF",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Right-Invariant Extended Kalman Filter (InvariantEKF)",
+  "chapter_label": "ch:att-iekf",
+  "chapter_file": "report/chapters/attitude/InvariantEKF.tex",
+  "headers": [
+   "include/estkit/attitude/iekf_attitude.hpp"
+  ],
+  "state": "q S^3, b^3; error [;]^6, in the NAV frame; ^6\u00d76",
+  "cost": "\u22482.9\u00d710^3 MACs; 1.91 \u00b5s/step, 608 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "barrau2017iekf",
+    "text": "Barrau, A. and Bonnabel, S. (2017). The invariant extended Kalman filter as a stable observer. *IEEE Transactions on Automatic Control* 62(4), 1797\u20131812. doi:[10.1109/TAC.2016.2594085](https://doi.org/10.1109/TAC.2016.2594085)",
+    "doi": "10.1109/TAC.2016.2594085"
+   },
+   {
+    "key": "barrau2018review",
+    "text": "Barrau, A. and Bonnabel, S. (2018). Invariant Kalman filtering. *Annual Review of Control, Robotics, and Autonomous Systems* 1, 237\u2013257. doi:[10.1146/annurev-control-060117-105010](https://doi.org/10.1146/annurev-control-060117-105010)",
+    "doi": "10.1146/annurev-control-060117-105010"
+   },
+   {
+    "key": "bonnabel2007",
+    "text": "Bonnabel, S. (2007). Left-invariant extended Kalman filter and attitude estimation. In *Proceedings of the 46th IEEE Conference on Decision and Control*, pp. 1027\u20131032.",
+    "doi": ""
+   },
+   {
+    "key": "bonnabel2009",
+    "text": "Bonnabel, S., Martin, P. and Rouchon, P. (2009). Non-linear symmetry-preserving observers on Lie groups. *IEEE Transactions on Automatic Control* 54(7), 1709\u20131713.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 2.49,
+    "high_dynamics": 3.3,
+    "init_error": 2.49,
+    "mag_disturbance": 2.88,
+    "nominal": 2.49,
+    "vibration": 2.14
+   },
+   "nominal": 2.49,
+   "ns_per_step": 1910,
+   "bytes": 608
+  }
+ },
+ {
+  "name": "MEKF",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Multiplicative Extended Kalman Filter (MEKF)",
+  "chapter_label": "ch:att-mekf",
+  "chapter_file": "report/chapters/attitude/MEKF.tex",
+  "headers": [
+   "include/estkit/attitude/mekf.hpp"
+  ],
+  "state": "q S^3, b^3; error [;b]^6, ^6\u00d76",
+  "cost": "\u22482.9\u00d710^3 MACs; 2.04 \u00b5s/step, 608 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "lefferts1982",
+    "text": "Lefferts, E. J., Markley, F. L. and Shuster, M. D. (1982). Kalman filtering for spacecraft attitude estimation. *Journal of Guidance, Control, and Dynamics* 5(5), 417\u2013429.",
+    "doi": ""
+   },
+   {
+    "key": "markley2003mekf",
+    "text": "Markley, F. L. (2003). Attitude error representations for Kalman filtering. *Journal of Guidance, Control, and Dynamics* 26(2), 311\u2013317. doi:[10.2514/2.5048](https://doi.org/10.2514/2.5048)",
+    "doi": "10.2514/2.5048"
+   },
+   {
+    "key": "crassidis2007survey",
+    "text": "Crassidis, J. L., Markley, F. L. and Cheng, Y. (2007). Survey of nonlinear attitude estimation methods. *Journal of Guidance, Control, and Dynamics* 30(1), 12\u201328. doi:[10.2514/1.22452](https://doi.org/10.2514/1.22452)",
+    "doi": "10.2514/1.22452"
+   },
+   {
+    "key": "farrenkopf1978",
+    "text": "Farrenkopf, R. L. (1978). Analytic steady-state accuracy solutions for two common spacecraft attitude estimators. *Journal of Guidance and Control* 1(4), 282\u2013284.",
+    "doi": ""
+   },
+   {
+    "key": "bucyjoseph1968",
+    "text": "Bucy, R. S. and Joseph, P. D. (1968). Filtering for Stochastic Processes with Applications to Guidance. Interscience Publishers.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 2.48,
+    "high_dynamics": 3.33,
+    "init_error": 2.5,
+    "mag_disturbance": 2.86,
+    "nominal": 2.48,
+    "vibration": 2.14
+   },
+   "nominal": 2.48,
+   "ns_per_step": 2037,
+   "bytes": 608
+  }
+ },
+ {
+  "name": "Madgwick",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Gradient-Descent MARG Filter (Madgwick)",
+  "chapter_label": "ch:att-madgwick",
+  "chapter_file": "report/chapters/attitude/Madgwick.tex",
+  "headers": [
+   "include/estkit/attitude/madgwick.hpp"
+  ],
+  "state": "unit quaternion q S^3 and gyro bias b^3 (7 reals)",
+  "cost": "\u2248300 flops, one `sqrt`; 112 / 138 ns per step, 272 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "madgwick2011",
+    "text": "Madgwick, S. O. H., Harrison, A. J. L. and Vaidyanathan, R. (2011). Estimation of IMU and MARG orientation using a gradient descent algorithm. In *Proc. IEEE International Conference on Rehabilitation Robotics (ICORR)*, pp. 1\u20137. doi:[10.1109/ICORR.2011.5975346](https://doi.org/10.1109/ICORR.2011.5975346)",
+    "doi": "10.1109/ICORR.2011.5975346"
+   },
+   {
+    "key": "madgwick2010",
+    "text": "Madgwick, S. O. H. (2010). An efficient orientation filter for inertial and inertial/magnetic sensor arrays.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 17.62,
+    "high_dynamics": 18.43,
+    "init_error": 17.74,
+    "mag_disturbance": 19.01,
+    "nominal": 17.6,
+    "vibration": 14.78
+   },
+   "nominal": 17.6,
+   "ns_per_step": 112,
+   "bytes": 272
+  }
+ },
+ {
+  "name": "Madgwick-Gated",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Gradient-Descent MARG Filter (Madgwick)",
+  "chapter_label": "ch:att-madgwick",
+  "chapter_file": "report/chapters/attitude/Madgwick.tex",
+  "headers": [
+   "include/estkit/attitude/madgwick.hpp"
+  ],
+  "state": "unit quaternion q S^3 and gyro bias b^3 (7 reals)",
+  "cost": "\u2248300 flops, one `sqrt`; 112 / 138 ns per step, 272 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "madgwick2011",
+    "text": "Madgwick, S. O. H., Harrison, A. J. L. and Vaidyanathan, R. (2011). Estimation of IMU and MARG orientation using a gradient descent algorithm. In *Proc. IEEE International Conference on Rehabilitation Robotics (ICORR)*, pp. 1\u20137. doi:[10.1109/ICORR.2011.5975346](https://doi.org/10.1109/ICORR.2011.5975346)",
+    "doi": "10.1109/ICORR.2011.5975346"
+   },
+   {
+    "key": "madgwick2010",
+    "text": "Madgwick, S. O. H. (2010). An efficient orientation filter for inertial and inertial/magnetic sensor arrays.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 5.79,
+    "high_dynamics": 5.34,
+    "init_error": 6.17,
+    "mag_disturbance": 5.78,
+    "nominal": 5.78,
+    "vibration": 3.22
+   },
+   "nominal": 5.78,
+   "ns_per_step": 138,
+   "bytes": 272
+  }
+ },
+ {
+  "name": "Mahony",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Explicit Complementary Filter on SO(3)SO(3) (Mahony)",
+  "chapter_label": "ch:att-mahony",
+  "chapter_file": "report/chapters/attitude/Mahony.tex",
+  "headers": [
+   "include/estkit/attitude/mahony.hpp"
+  ],
+  "state": "unit quaternion q S^3 and gyro bias b^3 (7 reals)",
+  "cost": "\u2248150 flops, one ; 130 / 132 ns per step, 312 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "mahony2008",
+    "text": "Mahony, R., Hamel, T. and Pflimlin, J. M. (2008). Nonlinear complementary filters on the special orthogonal group. *IEEE Transactions on Automatic Control* 53(5), 1203\u20131218. doi:[10.1109/TAC.2008.923738](https://doi.org/10.1109/TAC.2008.923738)",
+    "doi": "10.1109/TAC.2008.923738"
+   },
+   {
+    "key": "hamel2006",
+    "text": "Hamel, T. and Mahony, R. (2006). Attitude estimation on SO(3) based on direct inertial measurements. In *Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)*, pp. 2170\u20132175.",
+    "doi": ""
+   },
+   {
+    "key": "euston2008",
+    "text": "Euston, M., Coote, P., Mahony, R., Kim, J. and Hamel, T. (2008). A complementary filter for attitude estimation of a fixed-wing UAV. In *Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, pp. 340\u2013345.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 18.44,
+    "high_dynamics": 18.75,
+    "init_error": 18.51,
+    "mag_disturbance": 20.41,
+    "nominal": 18.4,
+    "vibration": 18.28
+   },
+   "nominal": 18.4,
+   "ns_per_step": 130,
+   "bytes": 312
+  }
+ },
+ {
+  "name": "Mahony-Gated",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Explicit Complementary Filter on SO(3)SO(3) (Mahony)",
+  "chapter_label": "ch:att-mahony",
+  "chapter_file": "report/chapters/attitude/Mahony.tex",
+  "headers": [
+   "include/estkit/attitude/mahony.hpp"
+  ],
+  "state": "unit quaternion q S^3 and gyro bias b^3 (7 reals)",
+  "cost": "\u2248150 flops, one ; 130 / 132 ns per step, 312 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "mahony2008",
+    "text": "Mahony, R., Hamel, T. and Pflimlin, J. M. (2008). Nonlinear complementary filters on the special orthogonal group. *IEEE Transactions on Automatic Control* 53(5), 1203\u20131218. doi:[10.1109/TAC.2008.923738](https://doi.org/10.1109/TAC.2008.923738)",
+    "doi": "10.1109/TAC.2008.923738"
+   },
+   {
+    "key": "hamel2006",
+    "text": "Hamel, T. and Mahony, R. (2006). Attitude estimation on SO(3) based on direct inertial measurements. In *Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)*, pp. 2170\u20132175.",
+    "doi": ""
+   },
+   {
+    "key": "euston2008",
+    "text": "Euston, M., Coote, P., Mahony, R., Kim, J. and Hamel, T. (2008). A complementary filter for attitude estimation of a fixed-wing UAV. In *Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)*, pp. 340\u2013345.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 2.74,
+    "high_dynamics": 4.83,
+    "init_error": 3.76,
+    "mag_disturbance": 2.31,
+    "nominal": 2.14,
+    "vibration": 2.47
+   },
+   "nominal": 2.14,
+   "ns_per_step": 132,
+   "bytes": 312
+  }
+ },
+ {
+  "name": "QUEST",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Quaternion Estimator for Wahba's Problem (QUEST)",
+  "chapter_label": "ch:att-quest",
+  "chapter_file": "report/chapters/attitude/QUEST.tex",
+  "headers": [
+   "include/estkit/attitude/triad_quest.hpp"
+  ],
+  "state": "none: q_k is a function of (f_k,m_k) alone",
+  "cost": "\u2248250 flops, 8 Newton steps; 214 ns/step, 120 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "wahba1965",
+    "text": "Wahba, G. (1965). A least squares estimate of satellite attitude. *SIAM Review* 7(3), 409.",
+    "doi": ""
+   },
+   {
+    "key": "shusteroh1981",
+    "text": "Shuster, M. D. and Oh, S. D. (1981). Three-axis attitude determination from vector observations. *Journal of Guidance and Control* 4(1), 70\u201377.",
+    "doi": ""
+   },
+   {
+    "key": "markleymortari2000",
+    "text": "Markley, F. L. and Mortari, D. (2000). Quaternion attitude estimation using vector observations. *The Journal of the Astronautical Sciences* 48(2-3), 359\u2013380.",
+    "doi": ""
+   },
+   {
+    "key": "keat1977",
+    "text": "Keat, J. (1977). Analysis of least-squares attitude determination routine DOAID. Computer Sciences Corporation, CSC/TM-77/6034.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 19.22,
+    "high_dynamics": 20.63,
+    "init_error": 19.22,
+    "mag_disturbance": 20.63,
+    "nominal": 19.22,
+    "vibration": 25.89
+   },
+   "nominal": 19.22,
+   "ns_per_step": 214,
+   "bytes": 120
+  }
+ },
+ {
+  "name": "TRIAD",
+  "family": "attitude",
+  "family_label": "Attitude (AHRS)",
+  "level": "attitude",
+  "chapter_title": "Single-Frame Attitude Determination: TRIAD",
+  "chapter_label": "ch:att-triad",
+  "chapter_file": "report/chapters/attitude/TRIAD.tex",
+  "headers": [
+   "include/estkit/attitude/triad_quest.hpp"
+  ],
+  "state": "none: q_k is a function of (f_k,m_k) alone",
+  "cost": "\u2248120 flops, one `sqrt`; 129 ns/step, 120 bytes",
+  "estimates": "",
+  "references": [
+   {
+    "key": "black1964",
+    "text": "Black, H. D. (1964). A passive system for determining the attitude of a satellite. *AIAA Journal* 2(7), 1350\u20131351.",
+    "doi": ""
+   },
+   {
+    "key": "shusteroh1981",
+    "text": "Shuster, M. D. and Oh, S. D. (1981). Three-axis attitude determination from vector observations. *Journal of Guidance and Control* 4(1), 70\u201377.",
+    "doi": ""
+   },
+   {
+    "key": "markleymortari2000",
+    "text": "Markley, F. L. and Mortari, D. (2000). Quaternion attitude estimation using vector observations. *The Journal of the Astronautical Sciences* 48(2-3), 359\u2013380.",
+    "doi": ""
+   }
+  ],
+  "results": {
+   "imu": {
+    "gyro_bias": 19.59,
+    "high_dynamics": 20.98,
+    "init_error": 19.59,
+    "mag_disturbance": 20.97,
+    "nominal": 19.59,
+    "vibration": 27.26
+   },
+   "nominal": 19.59,
+   "ns_per_step": 129,
+   "bytes": 120
+  }
+ }
+]

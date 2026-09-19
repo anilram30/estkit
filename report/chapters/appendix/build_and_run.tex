@@ -1,0 +1,306 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Appendix: building and running the benchmark
+% =============================================================================
+\chapter{Building and running the benchmark}
+\label{app:build}
+
+Everything in this report can be regenerated from the source tree with a C++17 compiler, CMake and
+Python~3. This appendix is the operational reference: build options, targets, the exact command-line
+interface of every executable, the output file formats, and a worked example of reproducing one
+number from the tables.
+
+\section{Prerequisites}
+
+A C++17 compiler (the library is developed against GCC~13 and Clang~18 and compiles warning-free
+under \code{-Wall -Wextra -Wpedantic -Werror}), CMake $\ge 3.16$, and --- only for the figures,
+tables and cross-validation --- Python~3 with \code{numpy}, \code{pandas} and \code{matplotlib}, plus
+\code{filterpy}, \code{pybamm} and \code{ahrs} for Appendix~\ref{app:validation}. The C++ library
+itself has \emph{no} dependency beyond the standard library; there is no linear-algebra package to
+install.
+
+\section{Build}
+
+\begin{lstlisting}[language=bash]
+# double-precision build (the default)
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j2
+
+# single-precision build, for the float32 study of Section "The single-precision build"
+cmake -S . -B build_f -DCMAKE_BUILD_TYPE=Release -DESTKIT_FLOAT=ON
+cmake --build build_f -j2
+
+ctest --test-dir build          # or: ./build/unit_tests
+\end{lstlisting}
+
+\begin{table}[H]\centering\small
+\caption{CMake options (\code{CMakeLists.txt}).}
+\label{tab:ab-cmake}
+\begin{tabular}{@{}llp{0.52\textwidth}@{}}\toprule
+option & default & effect \\ \midrule
+\code{CMAKE\_BUILD\_TYPE} & \code{Release} & set automatically if the user leaves it empty \\
+\code{ESTKIT\_FLOAT} & \code{OFF} & defines \code{ESTKIT\_REAL=float} on the interface target, making \code{estkit::Real} single precision \\
+\code{ESTKIT\_WERROR} & \code{ON} & adds \code{-Werror} to the warning set \\
+\code{ESTKIT\_NATIVE} & \code{OFF} & adds \code{-march=native}. Left off for all published timings so that the generated code stays at the SSE2 baseline \\
+\bottomrule\end{tabular}
+\end{table}
+
+The warning set is \code{-Wall -Wextra -Wpedantic -Wno-unused-parameter}, and every target is
+compiled with \code{-O2}. \code{-Wno-unused-parameter} is needed because the model concept requires
+signatures such as \code{Q(const Vec<NX>\& x, const Vec<NU>\& u)} whose arguments a particular model
+may legitimately ignore.
+
+\begin{table}[H]\centering\small
+\caption{CMake targets.}
+\label{tab:ab-targets}
+\begin{tabular}{@{}llp{0.48\textwidth}@{}}\toprule
+target & kind & contents \\ \midrule
+\code{estkit} (\code{estkit::estkit}) & INTERFACE & the header-only library: adds \code{include/} and \code{cxx\_std\_17} \\
+\code{estkit\_registry} & STATIC & the twelve \code{benchmarks/registry\_*.cpp} translation units plus \code{benchmarks/cell\_params\_fit.cpp} \\
+\code{bench\_cell} & executable & cell-level SOC benchmark, 70 estimators \\
+\code{bench\_pack} & executable & 12-cell module benchmark, 7 architectures \\
+\code{bench\_imu} & executable & attitude benchmark, 9 filters \\
+\code{bench\_soh} & executable & multi-flight capacity-tracking benchmark \\
+\code{unit\_tests} & executable & registered with CTest as \code{unit\_tests} \\
+\code{ident\_spm\_ecm} & tool & identifies a 2-RC ECM against the SPM plant \\
+\code{export\_validation} & tool & dumps datasets and C++ trajectories for the Python cross-checks \\
+\code{export\_model\_curves} & tool & dumps OCV, Arrhenius, hysteresis and ageing curves for the figures \\
+\bottomrule\end{tabular}
+\end{table}
+
+Splitting the registries across twelve translation units is a build-time necessity, not a
+stylistic choice: instantiating seventy filter templates in one unit is slow and memory-hungry, and
+\code{-j2} over twelve units is not.
+
+\section{Command-line reference}
+
+\subsection{\code{bench\_cell}}
+
+\begin{lstlisting}[language=bash]
+bench_cell [--plant ecm|spm|all] [--profile evtol|fixed_wing|hover_hold|ground_charge|all]
+           [--scenario NAME|all] [--only NAME[,NAME...]] [--group NAME] [--seeds K]
+           [--out DIR] [--timeseries 0|1] [--ts-decimate N] [--reps R] [--list]
+\end{lstlisting}
+
+\begin{table}[H]\centering\small
+\begin{tabular}{@{}llp{0.52\textwidth}@{}}\toprule
+flag & default & meaning \\ \midrule
+\code{--plant} & \code{ecm} & truth plant. \code{all} runs both. On \code{spm} the \code{preisach} and \code{aged\_cell} scenarios are skipped (undefined for that plant) \\
+\code{--profile} & \code{evtol} & mission profile; \code{all} runs all four \\
+\code{--scenario} & \code{all} & one of the twelve names, or \code{all} \\
+\code{--only} & (none) & comma-separated list of registered estimator names to run \\
+\code{--group} & (none) & restrict to one family (\code{baselines}, \code{kalman}, \code{adaptive\_kalman}, \code{robust\_kalman}, \code{observers}, \code{soh}, \code{particle}, \code{learning}, \code{optimization}, \code{smoothers}) \\
+\code{--seeds} & 1 & runs seeds $1\dots K$; each seed is a different flight \emph{and} a different noise realisation \\
+\code{--out} & \code{results} & output directory; created if absent. Summary rows are \emph{appended} \\
+\code{--timeseries} & 1 & write per-run time series for seed~1 \\
+\code{--ts-decimate} & 10 & sub-sampling factor for the time series \\
+\code{--reps} & 2 & timing repetitions; the minimum is reported \\
+\code{--list} & --- & print \code{name group} for all 70 estimators and exit \\
+\bottomrule\end{tabular}
+\end{table}
+
+\subsection{\code{bench\_pack}}
+\begin{lstlisting}[language=bash]
+bench_pack [--profile evtol] [--scenario NAME|all] [--only NAME[,NAME...]] [--seeds K]
+           [--out DIR] [--reps R] [--timeseries 0|1] [--list]
+\end{lstlisting}
+Scenario names: \code{nominal}, \code{init\_error}, \code{current\_bias}, \code{weak\_cell},
+\code{noise\_step}, \code{large\_imbalance}. Defaults: \code{--profile evtol},
+\code{--scenario all}, \code{--seeds 1}, \code{--reps 2}, \code{--out results}.
+
+\subsection{\code{bench\_imu}}
+\begin{lstlisting}[language=bash]
+bench_imu [--scenario NAME|all] [--only NAME[,NAME...]] [--seeds K] [--out DIR]
+          [--reps R] [--timeseries 0|1] [--list] [--export-dataset FILE]
+\end{lstlisting}
+Scenario names: \code{nominal}, \code{init\_error}, \code{gyro\_bias}, \code{mag\_disturbance},
+\code{vibration}, \code{high\_dynamics}. \code{--export-dataset} writes the nominal seed-1 dataset
+as a CSV and exits without running any filter; it also prints the reference magnetic field, which
+the cross-validation scripts need.
+
+\subsection{\code{bench\_soh}}
+\begin{lstlisting}[language=bash]
+bench_soh [--flights F] [--accel A] [--only NAME[,NAME...]] [--out DIR] [--profile NAME]
+\end{lstlisting}
+Defaults \code{--flights 120}, \code{--accel 3}, \code{--profile evtol}, \code{--out results}.
+There is no \code{--seeds} and no \code{--reps}: the ageing trajectory is deterministic
+(\code{Rng(12345)} for the load, \code{Rng(777)} for the sensors) so that every estimator sees the
+identical cell history, and the study is long enough that timing needs no repetition. Only
+estimators that report a finite capacity after two steps take part; the list of those selected is
+printed at start-up.
+
+\subsection{Tools}
+\begin{lstlisting}[language=bash]
+ident_spm_ecm [--out FILE.csv] [--r_scale S] [--k_scale S] [--R_ohm OHM]
+export_validation  <out_dir>          # default results/validation
+export_model_curves <out_dir>         # default results/model
+\end{lstlisting}
+\code{ident\_spm\_ecm} writes the fitted parameters to \code{--out} and the full identification
+record (current, SPM voltage, ECM voltage) to the same path with \code{\_record} appended before
+the extension. The values in Table~\ref{tab:ap-ecmfit} come from
+\code{--r\_scale 0.5 --k\_scale 3 --R\_ohm 0.005}.
+
+\section{The full run}
+
+\code{scripts/run\_all.sh [SEEDS]} (default \code{SEEDS=3}) reproduces \code{results/final} from
+scratch. It removes the previous output and both build directories, configures and builds the
+double and float trees, and then:
+
+\begin{enumerate}[leftmargin=*,topsep=2pt,itemsep=1pt]
+\item runs \code{unit\_tests} in both precisions (a failure stops the script --- \code{set -euo
+pipefail});
+\item runs \code{ident\_spm\_ecm --r\_scale 0.5 --k\_scale 3 --R\_ohm 0.005};
+\item \code{bench\_cell --plant ecm --profile evtol --scenario all --seeds \$SEEDS --reps 2};
+\item the same on \code{--plant spm};
+\item \code{bench\_cell --plant ecm} for \code{fixed\_wing}, \code{hover\_hold} and
+\code{ground\_charge}, one seed, \code{--timeseries 0};
+\item the float build on \code{--plant ecm --profile evtol}, one seed, into \code{results/final/float};
+\item \code{bench\_pack --scenario all --seeds \$SEEDS --reps 2};
+\item \code{bench\_imu --scenario all --seeds \$SEEDS --reps 2}, then
+\code{bench\_imu --export-dataset};
+\item \code{bench\_soh --flights 120 --accel 3}.
+\end{enumerate}
+
+Each step's console output is redirected to a \code{log\_*.txt} file in the output directory, so the
+per-run progress lines are preserved alongside the CSVs. On a single core the whole suite takes a
+few hours, dominated by the particle filters on the three-seed cell runs.
+
+The report artefacts are then produced by
+\begin{lstlisting}[language=bash]
+python3 scripts/make_tables.py          results/final report/tables
+python3 scripts/make_figures.py         results/final report/figures
+python3 scripts/make_results_figures.py results/final report/figures
+\end{lstlisting}
+which read only the CSVs (the third script produces the synthesis figures of Part~XIV). \code{make\_figures.py} additionally reads \code{results/model} (from
+\code{export\_model\_curves}) for the model-characteristic figures. Neither script is ever edited to
+change a number: if a table is wrong, the benchmark is re-run.
+
+\section{Output file formats}
+
+All outputs are comma-separated with a header line and no quoting. Summary files are opened in
+append mode and the header is written only when the file is empty, so several invocations
+accumulate into one table --- which is how the four mission profiles end up in a single
+\code{summary\_ecm.csv}.
+
+\begin{table}[H]\centering\small
+\caption{\code{<out>/summary\_ecm.csv} and \code{<out>/summary\_spm.csv} --- one row per
+(estimator, profile, scenario, seed).}
+\label{tab:ab-sumcell}
+\begin{tabular}{@{}llp{0.50\textwidth}@{}}\toprule
+column & unit & meaning \\ \midrule
+\code{plant} & --- & \code{ecm} or \code{spm} \\
+\code{estimator}, \code{group} & --- & registered name and family \\
+\code{profile}, \code{scenario}, \code{seed} & --- & run identification \\
+\code{rmse}, \code{rmse\_ss}, \code{mae} & SOC & \eqref{eq:me-rmse}--\eqref{eq:me-mae}; fractions, not percent \\
+\code{max\_err}, \code{final\_err} & SOC & $e_{\max}$ (unsigned) and $e_{n-1}$ (signed) \\
+\code{conv\_time} & \si{\second} & Definition~\ref{def:me-conv}; $-1$ if never \\
+\code{diverged} & --- & 0/1, Definition~\ref{def:me-div} \\
+\code{rmse\_v} & \si{\volt} & \eqref{eq:me-rmsev}, against the \emph{true} voltage; \code{nan} if the estimator reports none \\
+\code{ns\_per\_step} & \si{\nano\second} & \eqref{eq:me-nsstep} \\
+\code{bytes} & B & \code{sizeof} of the estimator object \\
+\code{capacity\_err\_end} & \si{\ampere\hour} & \eqref{eq:me-cap}; \code{nan} unless SOH-capable \\
+\code{bound\_violation}, \code{bound\_width} & --- , SOC & \eqref{eq:me-bounds}; \code{nan} unless the estimator reports an interval \\
+\code{real\_type} & --- & \code{double} or \code{float} \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering\small
+\caption{Time-series files. Row spacing is \code{--ts-decimate} samples
+(\SI{1}{\hertz} for the cell and pack benchmarks, \SI{10}{\hertz} for the attitude benchmark).}
+\label{tab:ab-ts}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}p{0.6\textwidth}@{}}\toprule
+file & columns \\ \midrule
+\code{ts/<plant>\_\_<est>\_\_<profile>\_\_<scen>\_\_s1.csv} &
+\code{t, i\_meas, v\_meas, T\_true, soc\_true, soc\_est, soc\_std, v\_pred, soc\_lower, soc\_upper, capacity\_est, capacity\_true, v\_true} \\[2pt]
+\code{ts/pack\_\_<est>\_\_<profile>\_\_<scen>\_\_s1.csv} &
+\code{t, i\_meas, soc\_true\_min, soc\_true\_mean, soc\_true\_max, soc\_est\_min, soc\_est\_mean, soc\_est\_max}, then \code{soc\_true\_c, soc\_est\_c} for $c=0\dots11$ \\[2pt]
+\code{ts/imu\_\_<est>\_\_<scen>\_\_s1.csv} &
+\code{t, roll\_true, pitch\_true, yaw\_true, roll\_est, pitch\_est, yaw\_est, angle\_err\_deg, bias\_est\_x, bias\_true\_x} (angles in degrees, bias in \si{\degree\per\second}) \\
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[H]\centering\small
+\caption{The remaining summary files.}
+\label{tab:ab-sumrest}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}p{0.6\textwidth}@{}}\toprule
+file & columns \\ \midrule
+\code{summary\_pack.csv} & \code{estimator, group, profile, scenario, seed, rmse\_cells, rmse\_min, rmse\_mean, rmse\_max, max\_cell\_err, ss\_rmse\_cells, diverged, ns\_per\_step, bytes, messages} \\[2pt]
+\code{summary\_imu.csv} & \code{estimator, group, scenario, seed, rms\_angle\_deg, rms\_roll\_deg, rms\_pitch\_deg, rms\_yaw\_deg, max\_angle\_deg, ss\_rms\_angle\_deg, conv\_time, bias\_rmse\_dps, diverged, ns\_per\_step, bytes} \\[2pt]
+\code{soh\_flights.csv} & \code{estimator, flight, Q\_true, Q\_est, Q\_err, soc\_rmse\_flight, ah\_throughput} --- one row per estimator per flight \\[2pt]
+\code{summary\_soh.csv} & \code{estimator, group, flights, accel, capacity\_rmse\_Ah, capacity\_mae\_Ah, final\_capacity\_err\_Ah, mean\_soc\_rmse, ns\_per\_step} \\[2pt]
+\code{imu\_nominal\_seed1.csv} & \code{t, gx, gy, gz, ax, ay, az, mx, my, mz, qw, qx, qy, qz, bgx, bgy, bgz} --- gyro in \si{\radian\per\second}, specific force in \si{\metre\per\second\squared}, magnetometer in \si{\micro\tesla}, truth quaternion (body$\to$nav) and truth gyro bias \\[2pt]
+\code{ident\_spm\_ecm.csv} & \code{R0, R1, tau1, R2, tau2, rmse\_mV, Ea\_R0, Ea\_R1, Ea\_R2, Ea\_tau1, Ea\_tau2} \\[2pt]
+\code{ident\_spm\_ecm\_record.csv} & \code{t, i, v\_spm, v\_ecm} --- the identification profile and both voltages \\
+\bottomrule\end{tabular}
+\end{table}
+
+\code{export\_model\_curves} writes seven files into its output directory --- \code{ocv.csv},
+\code{arrhenius.csv}, \code{preisach.csv}, \code{hysteresis\_onestate.csv}, \code{aging.csv},
+\code{aging\_calendar.csv} and \code{spm\_pulse.csv} --- consumed only by
+\code{make\_figures.py}. The files written by \code{export\_validation} are listed in
+Appendix~\ref{app:validation}.
+
+\section{Figure and table generators}
+
+\code{scripts/make\_tables.py <results> <tables>} writes, per estimator, one
+\code{tables/cell\_<NAME>.tex} in which non-alphanumeric characters are stripped from the name
+(\code{SR-EKF} $\to$ \code{cell\_SREKF.tex}). Metrics are averaged over seeds; SOC quantities are
+multiplied by 100 so the tables read in percentage points; \code{conv\_time} $=-1$ prints as
+``--''. Each table also carries an ``EKF ref.'' column --- the plain EKF's steady-state RMSE on the
+same plant and scenario --- so every chapter can be read without cross-referencing. It additionally
+writes the overview tables (\code{overview\_ecm.tex}, \code{overview\_spm.tex},
+\code{runtime.tex}, \code{profiles.tex}, \code{ranking.tex}) and the pack, attitude and SOH
+summaries.
+
+\code{scripts/make\_figures.py <results> <figures>} writes, per estimator, the four ECM scenario
+figures (\code{nominal}, \code{init\_error}, \code{current\_bias}, \code{combined}) and two SPM ones
+(\code{nominal}, \code{cold}), named \code{cell\_<NAME>\_<scenario>.png} and
+\code{cellspm\_<NAME>\_<scenario>.png}; the dataset figures; the per-family bar charts; the
+accuracy-versus-cost scatter; the float-versus-double comparison; and the pack, attitude and SOH
+figures. A figure whose input time series is absent is silently skipped, which is why running
+\code{bench\_cell} with \code{--timeseries 0} suppresses the corresponding plots.
+\code{scripts/make\_results\_figures.py <results> <figures>} writes the four synthesis figures of
+Part~XIV (the SPM and \code{combined} error traces, the ranking bar chart and the ECM-versus-SPM
+scatter).
+
+\section{Building the report}
+
+The report is a \code{book}-class document built with \code{pdflatex} and \code{bibtex}
+(TeX~Live 2023 or later; the packages used are listed in \code{report/preamble.tex}). From
+\code{report/},
+\begin{lstlisting}[language=bash]
+pdflatex main && bibtex main && pdflatex main && pdflatex main   # or: latexmk -pdf main.tex
+\end{lstlisting}
+produces \code{main.pdf}. The bibliography is split into \code{refs.bib} and one
+\code{refs\_additions\_<family>.bib} per family; a key must appear in exactly one of them.
+
+\section{Reproducing a single number}
+
+Take the entry ``ECM, \code{current\_bias}, $\text{RMSE}_{\text{ss}} = 3.20\,\%$'' in the
+Coulomb-counting table of Chapter~\ref{ch:coulombcounting}.
+
+\begin{lstlisting}[language=bash]
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j2
+./build/bench_cell --plant ecm --profile evtol --scenario current_bias \
+                   --only CoulombCounting --seeds 3 --reps 2 --out /tmp/one
+\end{lstlisting}
+
+The console prints one line per seed, and \code{/tmp/one/summary\_ecm.csv} carries the three rows.
+The table value is the mean of the \code{rmse\_ss} column over the three seeds, multiplied by 100.
+Three points make this exact rather than approximate:
+
+\begin{itemize}[leftmargin=*,topsep=2pt,itemsep=1pt]
+\item the dataset is a pure function of the seed, so the flight and the noise are identical to those
+of the published run (\S\ref{sec:me-timing});
+\item \code{--only} does not change the dataset --- the data are generated before the estimator loop
+and do not depend on which estimators are selected;
+\item the estimate trajectory is independent of \code{--reps}, which affects only the timing column.
+\end{itemize}
+
+Only \code{ns\_per\_step} will differ, because it is a wall-clock measurement on your machine. If a
+row does not reproduce, the first thing to check is \code{real\_type}: a \code{float} build
+reproduces the estimates to about four digits, not to the last bit.
+
+Use \code{--out} with a scratch directory rather than \code{results/final}, because summary rows are
+appended and a second run into the same directory will duplicate them.

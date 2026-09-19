@@ -1,0 +1,15 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Joint / dual state-parameter estimation and state-of-health (SOH) family.
+%  Order: the two augmented-state (joint) filters first, because they are the
+%  most direct statement of the idea and introduce the notation the rest reuse;
+%  then the two decoupled (dual) filters, which refine it; then the two
+%  battery-specific estimators, one for impedance and one for capacity.
+% =============================================================================
+\input{chapters/soh/JointEKF.tex}
+\input{chapters/soh/JointUKF.tex}
+\input{chapters/soh/DualEKF.tex}
+\input{chapters/soh/DualUKF.tex}
+\input{chapters/soh/RLSEKF.tex}
+\input{chapters/soh/AWTLS.tex}

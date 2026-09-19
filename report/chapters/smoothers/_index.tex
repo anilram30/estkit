@@ -1,0 +1,13 @@
+% Copyright 2026 Sreeram Anil
+% SPDX-License-Identifier: CC-BY-4.0
+% =============================================================================
+%  Smoothing family.  Order: the two fixed-interval smoothers first (extended,
+%  then unscented, which generalises it), because they introduce the backward
+%  recursion that the rest of the family refers to; then the recursive fixed-lag
+%  smoother, which is the on-vehicle special case; then the full-information
+%  batch estimator, which is the reference optimum the other three approximate.
+% =============================================================================
+\input{chapters/smoothers/ERTS.tex}
+\input{chapters/smoothers/URTS.tex}
+\input{chapters/smoothers/FixedLagEKF.tex}
+\input{chapters/smoothers/BatchNLS.tex}
