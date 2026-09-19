@@ -107,7 +107,10 @@ instrumented flight produce the pack, state-of-health and attitude data sets —
 - The plain **EKF** fails the combined-fault scenario (**12.44 %**) by covariance collapse, while the **UKF** (1.19 %), the adaptive filters and moving-horizon estimation stay under ~1 %.
 - On the electrochemical plant the ranking **inverts**: every converged Kalman filter parks on a ~4 % bias with a clean innovation, while the **fading-memory EKF (0.36 % vs the EKF's 3.73 %)** and the fixed-gain observers lead.
 - At module level, averaging inside the filter (**bar-delta**, **information fusion**) halves the per-cell error of twelve independent EKFs at a fraction of the cost.
-- No estimator needs double precision; the best twelve run within 5× the cost of the EKF.
+- Single precision is enough for almost everything — but not universally: under the combined fault
+  the sigma-point filters (**UKF**, **SR-UKF**, unscented RTS) lose covariance positive-definiteness in
+  float32 on some toolchains (macOS Clang, MSVC) while holding on GCC 13 and Clang 18; the EKF-family
+  and observer filters are unaffected. The best twelve run within 5× the cost of the EKF.
 
 Explore it interactively: **[the benchmark explorer ↗](https://anilram30.github.io/estkit/benchmark.html)**.
 
