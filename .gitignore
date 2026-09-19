@@ -26,6 +26,6 @@ report/main.pdf
 __pycache__/
 *.o
 # generated website (built by scripts/site/build_site.py and the pages workflow)
-site/
+/site/
 # generated catalogue/reference artefacts are committed (docs/CATALOGUE.md, docs/REFERENCES.md,
 # docs/catalogue.json, docs/bib.json) so the README and GitHub render without a build step

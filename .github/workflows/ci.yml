@@ -46,7 +46,10 @@ jobs:
       - name: Install pandas
         run: python -m pip install --quiet pandas
       - name: Benchmark accuracy regression
-        run: python scripts/ci_regression.py --build ${{ runner.os == 'Windows' && 'build/Release' || 'build' }}
+        # The reference numbers are recorded in double precision on Linux; float32 diverges by
+        # design (see the report's numerics chapter) and MSVC's math differs, so gate double-only.
+        if: matrix.float == 'OFF' && runner.os != 'Windows'
+        run: python scripts/ci_regression.py --build build
 
   sanitizers:
     name: "AddressSanitizer + UBSan (Clang)"
