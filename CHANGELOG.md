@@ -15,3 +15,6 @@ First public release.
 - Cross-validation against FilterPy (1e-15 / 2.5e-12 / 7e-9), PyBaMM (0.6–3.2 mV) and ahrs (0.0014°).
 - Report: 958 pages, one chapter per estimator, LaTeX sources included.
 - Single-precision build (`-DESTKIT_FLOAT=ON`), warning-free with `-Wall -Wextra -Wpedantic -Werror`.
+- Installable CMake package: `find_package(estkit 1.0 CONFIG REQUIRED)` provides `estkit::estkit`;
+  `FetchContent`/`add_subdirectory` builds the library target only. Both paths are exercised in CI
+  on Linux, macOS and Windows (`tests/package`).

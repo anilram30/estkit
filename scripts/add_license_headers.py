@@ -67,7 +67,9 @@ if __name__ == '__main__':
     root = args[0] if args else '.'
     missing, done = [], 0
     for d, dirs, files in os.walk(root):
-        dirs[:] = [x for x in dirs if x not in SKIP_DIRS]
+        # also skip local build trees and install prefixes (build*/, _prefix/, __pycache__/):
+        # they hold generated files, some of which (CMake export scripts) carry no header.
+        dirs[:] = [x for x in dirs if x not in SKIP_DIRS and not x.startswith('build') and not x.startswith('_')]
         for fn in files:
             if fn in SKIP_FILES:
                 continue

@@ -1,0 +1,15 @@
+# Copyright 2026 Sreeram Anil
+# SPDX-License-Identifier: Apache-2.0
+#
+# CMake package configuration file for estkit.
+#
+#   find_package(estkit 1.0 CONFIG REQUIRED)
+#   target_link_libraries(my_app PRIVATE estkit::estkit)
+#
+# estkit is header-only: the imported target carries only the include directory
+# and the C++17 requirement, so the package is architecture independent.
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/estkitTargets.cmake")
+
+check_required_components(estkit)

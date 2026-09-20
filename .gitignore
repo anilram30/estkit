@@ -1,5 +1,6 @@
-# build trees
+# build trees and local install prefixes
 build*/
+/_prefix/
 # development / scratch results (the recorded final run is tracked, minus raw time series)
 results/dev*/
 results/obs_*/

@@ -83,3 +83,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/add_license_headers.py --check
+
+  package:
+    name: "CMake package (${{ matrix.os }})"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install estkit into a prefix
+        run: |
+          cmake -S . -B build_install -DCMAKE_BUILD_TYPE=Release -DESTKIT_BUILD_BENCHMARKS=OFF -DESTKIT_BUILD_TESTS=OFF -DESTKIT_BUILD_EXAMPLES=OFF
+          cmake --install build_install --config Release --prefix "${{ runner.temp }}/estkit-prefix"
+      - name: Build a downstream project with find_package(estkit CONFIG REQUIRED)
+        run: |
+          cmake -S tests/package -B build_pkg -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{ runner.temp }}/estkit-prefix"
+          cmake --build build_pkg --config Release -j
+      - name: Run the consumer
+        run: ctest --test-dir build_pkg -C Release --output-on-failure
+      - name: Build a downstream project with add_subdirectory (subproject mode)
+        run: |
+          cmake -S tests/package/subproject -B build_sub -DCMAKE_BUILD_TYPE=Release
+          cmake --build build_sub --config Release -j
+          ctest --test-dir build_sub -C Release --output-on-failure
