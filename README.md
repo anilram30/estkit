@@ -183,7 +183,8 @@ If you use estkit, its benchmark or its report, please cite it — see [CITATION
 
 ## A note on tooling
 
-AI tools were used as development and documentation aids due to the scale of the project. 
-The engineering decisions, algorithm implementations, benchmark methodology, validation procedures, and reported results are the author’s. 
+AI tools were used as development and documentation aids due to the scale of the project and its extensive technical documentation. 
+All engineering decisions, algorithm implementations, benchmark design, validation procedures, and reported results are the author’s. 
 Every estimator is verified against its primary reference and, where a reference implementation exists, cross-validated in CI.
+
 
